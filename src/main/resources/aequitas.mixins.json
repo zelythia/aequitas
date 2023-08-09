@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.zelythia.aequitas.client.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [],
+  "client": [
+    "SpriteMixin"
+  ],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
