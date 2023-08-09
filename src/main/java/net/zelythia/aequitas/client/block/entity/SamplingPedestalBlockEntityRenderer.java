@@ -41,7 +41,6 @@ public class SamplingPedestalBlockEntityRenderer extends BlockEntityRenderer<Sam
             matrices.multiply(new Vector3f(0,1,0).getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 4));
 
             ItemStack stack = blockEntity.getStack(0);
-            if(stack.isEmpty()) stack = blockEntity.getLastConsumedItem();
 
             int lightAbove = WorldRenderer.getLightmapCoordinates(blockEntity.getWorld(), blockEntity.getPos().up());
             MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.GROUND, lightAbove, overlay, matrices, vertexConsumers);

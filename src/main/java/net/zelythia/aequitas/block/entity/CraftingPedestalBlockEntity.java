@@ -30,7 +30,7 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
     // 1 = Output slot
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(2, ItemStack.EMPTY);
 
-    private List<SamplingPedestalBlockEntity> samplingPedestals = new ArrayList<>();
+    private final List<SamplingPedestalBlockEntity> samplingPedestals = new ArrayList<>();
 
     private static final int detectionRadius = 3;
     private static final int maxSamplingPedestals = 8;
@@ -93,7 +93,7 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
             for(int z = -detectionRadius; z <= detectionRadius; z++){
                 BlockEntity be = world.getBlockEntity(pos.add(x, 0, z));
                 if(be instanceof SamplingPedestalBlockEntity){
-                    this.samplingPedestals.add((SamplingPedestalBlockEntity) be);
+                    if(!((SamplingPedestalBlockEntity) be).getStack(0).isEmpty()) this.samplingPedestals.add((SamplingPedestalBlockEntity) be);
                 }
                 if(samplingPedestals.size()==maxSamplingPedestals) break collecting;
             }
@@ -109,15 +109,17 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
 
                 for(SamplingPedestalBlockEntity samplingPedestal: samplingPedestals){
 
-                    if(samplingPedestal.getValue() == 0){
-                        samplingPedestal.consumeItem(1);
-                    }
+                    if(!samplingPedestal.getStack(0).isEmpty()){
 
-                    long transferred_essence = samplingPedestal.transferEssence(100);
-                    this.stored_essence += transferred_essence;
+                        samplingPedestal.addTransferableValue(100);
 
-                    if(transferred_essence > 0){
-                        NetworkingHandler.sendParticle(this, samplingPedestal.getPos(), this.getPos(), samplingPedestal.getLastConsumedItem());
+                        long value = samplingPedestal.consumeItem();
+                        if(value != -1){
+                            NetworkingHandler.sendParticle(this, samplingPedestal.getPos(), this.getPos(), samplingPedestal.getStack(0));
+                            this.stored_essence += value;
+                        }
+
+
                     }
                 }
 
