@@ -87,18 +87,30 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
             if(this.getStack(1).getCount() >= this.getStack(1).getMaxCount()) return;
         }
 
+
+
         samplingPedestals.clear();
         collecting:
-        for(int x = -detectionRadius; x <= detectionRadius; x++){
-            for(int z = -detectionRadius; z <= detectionRadius; z++){
-                BlockEntity be = world.getBlockEntity(pos.add(x, 0, z));
-                if(be instanceof SamplingPedestalBlockEntity){
-                    if(!((SamplingPedestalBlockEntity) be).getStack(0).isEmpty()) this.samplingPedestals.add((SamplingPedestalBlockEntity) be);
+        for(int r = 2; r<= detectionRadius; r++){
+            int x = -r;
+            while(x<=2*r){
+                for(int z = -r; z <=r; z++){
+                    BlockEntity be = world.getBlockEntity(pos.add(x, 0, z));
+                    if(be instanceof SamplingPedestalBlockEntity){
+                        if(!((SamplingPedestalBlockEntity) be).getStack(0).isEmpty()) this.samplingPedestals.add((SamplingPedestalBlockEntity) be);
+                    }
+                    if(samplingPedestals.size()==maxSamplingPedestals) break collecting;
+
+                    BlockEntity be2 = world.getBlockEntity(pos.add(z, 0, x));
+                    if(be2 instanceof SamplingPedestalBlockEntity){
+                        if(!((SamplingPedestalBlockEntity) be2).getStack(0).isEmpty()) this.samplingPedestals.add((SamplingPedestalBlockEntity) be2);
+                    }
+                    if(samplingPedestals.size()==maxSamplingPedestals) break collecting;
                 }
-                if(samplingPedestals.size()==maxSamplingPedestals) break collecting;
+
+                x+=2*r;
             }
         }
-
 
 
         long required_value = EssenceHandler.getEssenceValue(this.getStack(0).getItem());
