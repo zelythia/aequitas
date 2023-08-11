@@ -70,15 +70,16 @@ public class CraftingPedestalScreenHandler extends ScreenHandler {
     @Override
     public ItemStack transferSlot(PlayerEntity player, int index) {
         ItemStack itemStack = ItemStack.EMPTY;
-        Slot slot = (Slot)this.slots.get(index);
+        Slot slot = this.slots.get(index);
         if (slot != null && slot.hasStack()) {
             ItemStack itemStack2 = slot.getStack();
             itemStack = itemStack2.copy();
+            //Block to inventory
             if (index < this.inventory.size()) {
                 if (!this.insertItem(itemStack2, this.inventory.size(), this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            //Shifting from player inventory to block
+            //Inventory to Block
             } else {
                 if(!this.slots.get(0).hasStack()){
                     ItemStack s = itemStack2.copy();
@@ -87,9 +88,8 @@ public class CraftingPedestalScreenHandler extends ScreenHandler {
 
                     itemStack2.decrement(1);
                     slot.markDirty();
-                    return ItemStack.EMPTY;
                 }
-
+                return ItemStack.EMPTY;
             }
 
             if (itemStack2.isEmpty()) {
