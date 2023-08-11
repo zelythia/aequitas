@@ -31,7 +31,14 @@
   "mixins": [
     "aequitas.mixins.json"
   ],
-
+  "custom": {
+    "waila:plugins": [
+      {
+        "id": "aequitas:plugin",
+        "initializer": "net.zelythia.aequitas.compat.wthit.WailaIntegration"
+      }
+    ]
+  },
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",

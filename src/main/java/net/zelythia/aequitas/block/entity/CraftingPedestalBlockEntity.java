@@ -5,6 +5,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.screen.NamedScreenHandlerFactory;
@@ -33,7 +34,7 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
     private final List<SamplingPedestalBlockEntity> samplingPedestals = new ArrayList<>();
 
     private static final int detectionRadius = 3;
-    private static final int maxSamplingPedestals = 8;
+    private static final int maxSamplingPedestals = 800;
 
 
     private int craft_delay;
@@ -74,6 +75,14 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
         Inventories.fromTag(tag, this.inventory);
     }
 
+    public long getStoredEssence(){
+        return stored_essence;
+    }
+
+    public Item getTargetItem(){
+        return this.getStack(0).getItem();
+    }
+
     @Override
     public void tick() {
 
@@ -86,7 +95,6 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
             if(!this.getStack(1).isStackable()) return;
             if(this.getStack(1).getCount() >= this.getStack(1).getMaxCount()) return;
         }
-
 
 
         samplingPedestals.clear();
