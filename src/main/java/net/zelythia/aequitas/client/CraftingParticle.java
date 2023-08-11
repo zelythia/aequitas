@@ -19,13 +19,13 @@ import java.util.stream.Stream;
 public class CraftingParticle extends SpriteBillboardParticle {
 
 
-    private double startX;
-    private double startZ;
+    private final double startX;
+    private final double startZ;
     public double max_distance; //squared for calculation
 
 
     public CraftingParticle(ClientWorld clientWorld, double x, double y, double z, double velX, double velY, double velZ) {
-        super(clientWorld, x+ (Math.random() * 2.0 - 1.0) * 0.1, y+(Math.random() * 2.0 - 1.0) * 0.1, z+(Math.random() * 2.0 - 1.0) * 0.1);
+        super(clientWorld, x, y, z);
         this.startX = this.x;
         this.startZ = this.z;
 
@@ -42,37 +42,16 @@ public class CraftingParticle extends SpriteBillboardParticle {
         this.prevPosX = this.x;
         this.prevPosY = this.y;
         this.prevPosZ = this.z;
-        if(Vec2d.distanceSq(startX, startZ, this.x, this.z) >= max_distance-3){
+        if(Vec2d.distanceSq(startX, startZ, this.x, this.z) >= max_distance){
             this.markDead();
         }
         else{
             this.velocityY = calculateHeight(Vec2d.distance(startX, startZ, this.x, this.z));
-            this.move(this.velocityX, this.velocityY, this.velocityZ);
+            move(this.velocityX, this.velocityY, this.velocityZ);
         }
-    }
-
-    @Override
-    public void move(double dx, double dy, double dz) {
-
-        if (dx != 0.0 || dy != 0.0 || dz != 0.0) {
-
-            this.setBoundingBox(this.getBoundingBox().offset(dx, dy, dz));
-            this.repositionFromBoundingBox();
-        }
-
-        this.onGround = dy != dy && dy < 0.0;
-        if (dx != dx) {
-            this.velocityX = 0.0;
-        }
-
-        if (dz != dz) {
-            this.velocityZ = 0.0;
-        }
-
     }
 
     private double calculateHeight(double x){
-
         return (2*x-Math.sqrt(this.max_distance-3))*-0.02;
     }
 

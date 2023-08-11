@@ -20,6 +20,7 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.Style;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec2f;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.EssenceHandler;
 import net.zelythia.aequitas.client.block.entity.SamplingPedestalBlockEntityRenderer;
@@ -49,18 +50,21 @@ public class AequitasClient implements ClientModInitializer {
             ItemStack item = buf.readItemStack();
 
             if(!item.isEmpty()){
-                double x = 0.5 + from.getX()+ (Math.random() * 2.0 - 1.0) * 0.1;
+                double x = 0.5 + from.getX()+ (Math.random() * 2.0 - 1.0) * 0.15;
                 double y = 1.2 + from.getY();
-                double z = 0.5 + from.getZ()+ (Math.random() * 2.0 - 1.0) * 0.1;
+                double z = 0.5 + from.getZ()+ (Math.random() * 2.0 - 1.0) * 0.15;
 
 
-                double velX = to.getX() - from.getX() < 0? -1:1;
-                if(to.getX() - from.getX() == 0) velX = 0;
+                double velX = (to.getX()+0.5) - x;
+                double velZ = to.getZ()+0.5 - z;
+                double len = Math.sqrt(velX * velX + velZ * velZ);
+
+                velX = velX/len;
+                velZ = velZ/len;
+
                 velX *= 0.1;
-
-                double velZ = to.getZ() - from.getZ() < 0? -1:1;
-                if(to.getZ() - from.getZ() == 0) velZ = 0;
                 velZ *= 0.1;
+
 
 
                 float r = 1F;
@@ -79,6 +83,8 @@ public class AequitasClient implements ClientModInitializer {
                             r += color >> 0 & 255;
                             g += color >> 8 & 255;
                             b += color >> 16 & 255;
+
+//                            div++;
                         }
                     }
 
@@ -92,7 +98,7 @@ public class AequitasClient implements ClientModInitializer {
 
                 CraftingParticle particle = (CraftingParticle) client.particleManager.addParticle(Aequitas.CRAFTING_PARTICLE, x, y, z, velX,0 ,velZ);
                 if (particle != null){
-                    particle.max_distance = Vec2d.distanceSq(x,z,to.getX(), to.getZ());
+                    particle.max_distance = Vec2d.distanceSq(x,z,to.getX()+0.5, to.getZ()+0.5);
                     particle.setColor(r/255,g/255,b/255);
                 }
             }
