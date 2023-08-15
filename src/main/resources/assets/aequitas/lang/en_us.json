@@ -1,3 +1,12 @@
 {
-  "block.aequitas.crafting_pedestal" : "Crafting Pedestal"
+  "config.waila.plugin_aequitas" : "Aequtias",
+  "config.waila.plugin_aequitas.sampling_pedestal": "Sampling Pedestal",
+  "config.waila.plugin_aequitas.sampling_pedestal_desc": "Display the current item and count of Sampling Pedestals",
+  "config.waila.plugin_aequitas.crafting_pedestal": "Crafting Pedestal",
+  "config.waila.plugin_aequitas.crafting_pedestal_desc": "Display the stored and required essence of the Crafting Pedestal",
+
+
+
+  "block.aequitas.crafting_pedestal" : "Crafting Pedestal",
+  "block.aequitas.sampling_pedestal" : "Sampling Pedestal"
 }

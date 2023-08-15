@@ -48,7 +48,7 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
 
     @Override
     public Text getDisplayName() {
-        return new TranslatableText("block.craftingPedestal");
+        return new TranslatableText("block.aequitas.crafting_pedestal");
     }
 
     @Nullable
