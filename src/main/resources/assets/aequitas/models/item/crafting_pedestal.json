@@ -1,3 +1,10 @@
 {
-  "parent": "aequitas:block/crafting_pedestal"
+  "parent": "aequitas:block/crafting_pedestal",
+
+  "display" : {
+    "gui" : {
+      "rotation" : [20, 45, 0],
+      "scale" : [0.55, 0.55, 0.55]
+    }
+  }
 }

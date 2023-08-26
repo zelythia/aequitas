@@ -1,5 +1,5 @@
 {
-  "parent": "aequitas:block/sampling_pedestal",
+  "parent": "aequitas:block/pedestal",
 
   "display" : {
     "gui" : {

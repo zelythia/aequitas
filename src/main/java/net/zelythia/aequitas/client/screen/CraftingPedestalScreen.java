@@ -2,18 +2,17 @@ package net.zelythia.aequitas.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.screen.CraftingPedestalScreenHandler;
 
 public class CraftingPedestalScreen extends HandledScreen<CraftingPedestalScreenHandler> {
 
     //A path to the gui texture. In this example we use the texture from the dispenser
-    private static final Identifier TEXTURE = new Identifier("aequitas", "textures/gui/crafting_pedestal.png");
+    private static final Identifier TEXTURE = new Identifier(Aequitas.MOD_ID, "textures/gui/crafting_pedestal.png");
 
     public CraftingPedestalScreen(CraftingPedestalScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
