@@ -23,8 +23,10 @@ public class NetworkingHandler {
     public static void updateEssence(){
         PacketByteBuf buf = PacketByteBufs.create();
         EssencePacket.encode(buf);
-        for(ServerPlayerEntity player: PlayerLookup.all(Aequitas.server)){
-            ServerPlayNetworking.send(player, NetworkingHandler.ESSENCE_UPDATE, buf);
+        if(Aequitas.server != null){
+            for(ServerPlayerEntity player: PlayerLookup.all(Aequitas.server)){
+                ServerPlayNetworking.send(player, NetworkingHandler.ESSENCE_UPDATE, buf);
+            }
         }
     }
 
