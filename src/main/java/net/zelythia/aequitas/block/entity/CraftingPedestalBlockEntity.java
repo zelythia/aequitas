@@ -11,6 +11,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Tickable;
@@ -138,8 +140,6 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
                             NetworkingHandler.sendParticle(this, samplingPedestal.getPos(), this.getPos(), samplingPedestal.getStack(0));
                             this.stored_essence += value;
                         }
-
-
                     }
                 }
 
@@ -157,6 +157,7 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
                     this.getStack(1).increment(1);
                 }
 
+                world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1f, 1f);
                 this.stored_essence -= required_value;
                 craft_delay = 10;
             }

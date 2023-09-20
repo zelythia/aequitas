@@ -1,0 +1,669 @@
+{
+  "pools": [
+
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aequitas:gameplay/nether"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:location_check",
+          "predicate" : {
+            "dimension" : "minecraft:the_nether"
+          }
+        }
+      ]
+    },
+
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aequitas:gameplay/end"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:location_check",
+          "predicate" : {
+            "dimension" : "minecraft:the_end"
+          }
+        }
+      ]
+    },
+
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aequitas:gameplay/ores"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:location_check",
+          "predicate" : {
+            "dimension" : "minecraft:overworld"
+          }
+        }
+      ]
+    },
+
+
+
+
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aequitas:gameplay/ocean"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:alternative",
+          "terms": [
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:ocean"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:frozen_ocean"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:deep_ocean"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:warm_ocean"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:lukewarm_ocean"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:cold_ocean"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:deep_warm_ocean"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:deep_lukewarm_ocean"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:deep_cold_ocean"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:deep_frozen_ocean"}
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aequitas:gameplay/desert"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:alternative",
+          "terms": [
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:desert"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:desert_hills"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:desert_lakes"}
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aequitas:gameplay/swamp"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:alternative",
+          "terms": [
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:swamp"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:swamp_hills"}
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aequitas:gameplay/mushroom"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:alternative",
+          "terms": [
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:mushroom_fields"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:mushroom_field_shore"}
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aequitas:gameplay/jungle"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:alternative",
+          "terms": [
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:jungle"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:jungle_hills"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:jungle_edge"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:modified_jungle"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:modified_jungle_hills"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:bamboo_jungle"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:bamboo_jungle_hills"}
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aequitas:gameplay/forest"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:alternative",
+          "terms": [
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:plains"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:forest"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:mountains"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:wooded_hills"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:mountain_edge"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:birch_forest"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:birch_forest_hills"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:wooded_mountains"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:sunflower_plains"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:flower_forest"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:tall_birch_forest"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:tall_birch_hills"}
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aequitas:gameplay/mountains"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:alternative",
+          "terms": [
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:mountains"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:mountain_edge"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft_wooded_mountains"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:gravelly_mountains"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:modified_gravelly_mountains"}
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:gravel",
+          "weight": 150
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:alternative",
+          "terms": [
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:gravelly_mountains"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:modified_gravelly_mountains"}
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aequitas:gameplay/stones"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:alternative",
+          "terms": [
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:stone_shore"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:mountains"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:mountain_edge"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:stony_beach"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:gravelly_mountains"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:modified_gravelly_mountains"}
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aequitas:gameplay/taiga"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:alternative",
+          "terms": [
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:taiga"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:taiga_hills"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:snowy_taiga"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:snowy_taiga_hills"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:giant_tree_taiga"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:snowy_taiga_mountains"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:giant_tree_taiga_hills"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:taiga_mountains"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:giant_spruce_taiga"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:giant_spruce_taiga_hills"}
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aequitas:gameplay/river"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:alternative",
+          "terms": [
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:river"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:frozen_river"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:beach"}
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aequitas:gameplay/frozen"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:alternative",
+          "terms": [
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:frozen_ocean"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:cold_ocean"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:deep_cold_ocean"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:deep_frozen_ocean"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:frozen_river"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:snowy_tundra"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:snowy_mountains"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:snowy_beach"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:snowy_taiga"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:snowy_taiga_hills"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:ice_spikes"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:snowy_taiga_mountains"}
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aequitas:gameplay/dark_forest"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:alternative",
+          "terms": [
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:dark_forest"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:dark_forest_hills"}
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aequitas:gameplay/savanna"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:alternative",
+          "terms": [
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:savanna"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:savanna_plateau"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:wooded_badlands_plateau"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:shattered_savanna"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:shattered_savanna_plateau"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:modified_wooded_badlands_plateau"}
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aequitas:gameplay/badlands"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:alternative",
+          "terms": [
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:badlands"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:wooded_badlands_plateau"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:badlands_plateau"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:eroded_badlands"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:modified_wooded_badlands_plateau"}
+            },
+            {
+              "condition": "location_check",
+              "predicate":  {"biome": "minecraft:modified_badlands_plateau"}
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

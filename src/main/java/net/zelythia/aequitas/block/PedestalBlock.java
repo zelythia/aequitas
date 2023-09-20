@@ -7,8 +7,8 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 
 public class PedestalBlock extends Block {
-    public PedestalBlock() {
-        super(AbstractBlock.Settings.of(Material.STONE));
+    public PedestalBlock(Settings settings) {
+        super(settings);
     }
 
     @Override

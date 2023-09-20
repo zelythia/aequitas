@@ -1,0 +1,20 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "pattern" : [
+    " I ",
+    "IDI",
+    " I "
+  ],
+  "key" : {
+    "I" : {
+      "item" : "minecraft:iron_ingot"
+    },
+    "D" : {
+      "item" : "minecraft:item_frame"
+    }
+  },
+  "result" : {
+    "item" : "aequitas:sampling_pedestal_core",
+    "count" : 1
+  }
+}

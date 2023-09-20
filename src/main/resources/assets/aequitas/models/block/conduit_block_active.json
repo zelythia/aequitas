@@ -1,0 +1,7 @@
+{
+	"parent": "minecraft:block/cube_column",
+	"textures": {
+		"end": "aequitas:block/conduit_block_top_active",
+		"side": "aequitas:block/conduit_block_side_active"
+	}
+}

@@ -1,5 +1,5 @@
 {
-  "credit": "Made with Blockbench",
+  "parent": "minecraft:block/cube",
   "texture_size": [64, 64],
   "textures": {
     "0": "aequitas:block/crafting_pedestal"

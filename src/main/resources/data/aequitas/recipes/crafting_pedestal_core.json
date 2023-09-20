@@ -1,0 +1,20 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "pattern" : [
+    " I ",
+    "IDI",
+    " I "
+  ],
+  "key" : {
+    "I" : {
+      "item" : "minecraft:iron_ingot"
+    },
+    "D" : {
+      "item" : "minecraft:diamond"
+    }
+  },
+  "result" : {
+    "item" : "aequitas:crafting_pedestal_core",
+    "count" : 1
+  }
+}

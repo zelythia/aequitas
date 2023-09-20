@@ -76,9 +76,8 @@ public class SamplingPedestalBlock extends BlockWithEntity {
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof CraftingPedestalBlockEntity) {
-                ItemScatterer.spawn(world, pos, (CraftingPedestalBlockEntity)blockEntity);
-                // update comparators
+            if (blockEntity instanceof SamplingPedestalBlockEntity) {
+                ItemScatterer.spawn(world, pos, (SamplingPedestalBlockEntity)blockEntity);
                 world.updateComparators(pos,this);
             }
             super.onStateReplaced(state, world, pos, newState, moved);

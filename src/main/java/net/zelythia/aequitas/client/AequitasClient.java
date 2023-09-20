@@ -26,15 +26,18 @@ import net.zelythia.aequitas.EssenceHandler;
 import net.zelythia.aequitas.client.block.entity.SamplingPedestalBlockEntityRenderer;
 import net.zelythia.aequitas.client.config.AequitasConfig;
 import net.zelythia.aequitas.client.mixins.SpriteMixin;
+import net.zelythia.aequitas.client.screen.CollectionBowlScreen;
 import net.zelythia.aequitas.client.screen.CraftingPedestalScreen;
 import net.zelythia.aequitas.networking.EssencePacket;
 import net.zelythia.aequitas.networking.NetworkingHandler;
+import net.zelythia.aequitas.screen.CollectionBowlScreenHandler;
 
 @Environment(EnvType.CLIENT)
 public class AequitasClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ScreenRegistry.register(Aequitas.CRAFTING_PEDESTAL_SCREEN_HANDLER, CraftingPedestalScreen::new);
+        ScreenRegistry.register(Aequitas.COLLECTION_BOWL_SCREEN_HANDLER, CollectionBowlScreen::new);
 
         BlockEntityRendererRegistry.INSTANCE.register(Aequitas.SAMPLING_PEDESTAL_BLOCK_ENTITY, SamplingPedestalBlockEntityRenderer::new);
 

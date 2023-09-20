@@ -9,6 +9,89 @@
     "smithing" : 0
   },
 
+  "recipes" : {
+    "minecraft:iron_horse_armor" : {
+      "minecraft:iron_ingot" : 7
+    },
+    "minecraft:golden_horse_armor" :  {
+      "minecraft:gold_ingot" : 7
+    },
+    "minecraft:diamond_horse_armor" :  {
+      "minecraft:diamond" : 7
+    },
+    "minecraft:bell" :  {
+      "minecraft:gold_ingot" : 8
+    },
+    "minecraft:carved_pumpkin" :  {
+      "minecraft:pumpkin" : 1
+    },
+    "minecraft:enchanted_golden_apple" :  {
+      "minecraft:gold_block" : 8,
+      "minecraft:apple" : 1
+    },
+    "minecraft:wet_sponge" :  {
+      "minecraft:sponge" : 1
+    },
+    "minecraft:honeycomb" :  {
+      "minecraft:honey_bottle" : 3
+    },
+    "minecraft:chipped_anvil" :  {
+      "minecraft:anvil" : 0.64
+    },
+    "minecraft:damaged_anvil" :  {
+      "minecraft:anvil" : 0.28
+    },
+
+    "minecraft:white_concrete" : {
+      "minecraft:white_concrete_powder" : 1
+    },
+    "minecraft:orange_concrete" : {
+      "minecraft:orange_concrete_powder" : 1
+    },
+    "minecraft:magenta_concrete" : {
+      "minecraft:magenta_concrete_powder" : 1
+    },
+    "minecraft:light_blue_concrete" : {
+      "minecraft:light_blue_concrete_powder" : 1
+    },
+    "minecraft:yellow_concrete" : {
+      "minecraft:yellow_concrete_powder" : 1
+    },
+    "minecraft:lime_concrete" : {
+      "minecraft:lime_concrete_powder" : 1
+    },
+    "minecraft:pink_concrete" : {
+      "minecraft:pink_concrete_powder" : 1
+    },
+    "minecraft:gray_concrete" : {
+      "minecraft:gray_concrete_powder" : 1
+    },
+    "minecraft:light_gray_concrete" : {
+      "minecraft:light_gray_concrete_powder" : 1
+    },
+    "minecraft:cyan_concrete" : {
+      "minecraft:cyan_concrete_powder" : 1
+    },
+    "minecraft:purple_concrete" : {
+      "minecraft:purple_concrete_powder" : 1
+    },
+    "minecraft:blue_concrete" : {
+      "minecraft:blue_concrete_powder" : 1
+    },
+    "minecraft:brown_concrete" : {
+      "minecraft:brown_concrete_powder" : 1
+    },
+    "minecraft:green_concrete" : {
+      "minecraft:green_concrete_powder" : 1
+    },
+    "minecraft:red_concrete" : {
+      "minecraft:red_concrete_powder" : 1
+    },
+    "minecraft:black_concrete" : {
+      "minecraft:black_concrete_powder" : 1
+    }
+  },
+
   "priority" : 0,
   "values" : {
     "minecraft:stone" : 8,
@@ -86,6 +169,10 @@
     "minecraft:snowball" : 1,
     "minecraft:flint" : 8,
     "minecraft:creeper_head" : 256,
+    "minecraft:chainmail_helmet" : 1,
+    "minecraft:chainmail_chestplate" : 1,
+    "minecraft:chainmail_leggings" : 1,
+    "minecraft:chainmail_boots" : 1,
 
     "minecraft:coal" : 128,
     "minecraft:iron_ingot" : 256,

@@ -1,0 +1,120 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:oak_log",
+          "weight": 30,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 4
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:birch_log",
+          "weight": 30,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 4
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:oak_leaves",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 8
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:birch_leaves",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 8
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:oak_sapling",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:birch_sapling",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:bee_nest",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:grass_block",
+          "weight": 50
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:dirt",
+          "weight": 50
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:stone",
+          "weight": 50
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:rose_bush",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:lilac",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:peony",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:lily_of_the_valley",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:sunflower",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

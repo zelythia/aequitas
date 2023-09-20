@@ -19,11 +19,16 @@ repositories {
 			includeGroup "mcp.mobius.waila"
 		}
 	}
-	// Add repositories to retrieve artifacts from in here.
-	// You should only use this when depending on other mods because
-	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
-	// for more information about repositories.
+	maven {
+		// location of the maven that hosts JEI files
+		name = "Progwml6 maven"
+		url = "https://dvs1.progwml6.com/files/maven/"
+	}
+	maven {
+		// location of a maven mirror for JEI files, as a fallback
+		name = "ModMaven"
+		url = "https://modmaven.dev"
+	}
 }
 
 dependencies {
@@ -40,13 +45,10 @@ dependencies {
 	}
 
 	modCompileOnly "mcp.mobius.waila:wthit-api:fabric-${wthitVersion}"
-
-
 	modRuntime "mcp.mobius.waila:wthit:fabric-${wthitVersion}"
-//	modRuntimeOnly "lol.bai:badpackets:fabric-${badpacketsVersion}"
 
-	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
-	// You may need to force-disable transitiveness on them.
+	compileOnly "mezz.jei:jei-${project.minecraft_version}:${project.jei_version}:api"
+	runtimeOnly "mezz.jei:jei-${project.minecraft_version}:${project.jei_version}"
 }
 
 processResources {

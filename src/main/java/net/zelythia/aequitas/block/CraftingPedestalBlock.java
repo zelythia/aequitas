@@ -50,7 +50,6 @@ public class CraftingPedestalBlock extends BlockWithEntity {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof CraftingPedestalBlockEntity) {
                 ItemScatterer.spawn(world, pos, (CraftingPedestalBlockEntity)blockEntity);
-                // update comparators
                 world.updateComparators(pos,this);
             }
             super.onStateReplaced(state, world, pos, newState, moved);

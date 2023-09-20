@@ -29,6 +29,11 @@ public class EssenceHandler {
         RecipeMapper.craftingCost.putAll(map);
     }
 
+    public static void setCustomRecipes(Map<Item, List<ItemStack>> map){
+        RecipeMapper.customRecipes.clear();
+        RecipeMapper.customRecipes.putAll(map);
+    }
+
     public static void reloadEssenceValues(Map<Item, Long> newValues){
         if(newValues.size() > 0) map.clear();
 
@@ -45,8 +50,8 @@ public class EssenceHandler {
     private static class RecipeMapper{
         private static final Map<String, Long> craftingCost = new HashMap<>();
 
-
-        private static final Map<Item, List<Recipe<?>>> item_recipes = new HashMap<>();
+        private static final Map<Item, List<ItemStack>> customRecipes = new HashMap<>();
+        private static final Map<Item, List<Recipe<?>>> itemRecipes = new HashMap<>();
 
 
         private static void mapRecipes(RecipeManager recipeManager){
@@ -68,8 +73,8 @@ public class EssenceHandler {
 //                        }
 //
 //                        Item item1 = stack.getItem();
-//                        if(item_recipes.containsKey(item1)){
-//                            for(Recipe<?> recipe1: item_recipes.get(item1)){
+//                        if(itemRecipes.containsKey(item1)){
+//                            for(Recipe<?> recipe1: itemRecipes.get(item1)){
 //                                for(Ingredient ingredient1: recipe1.getPreviewInputs()){
 //                                    for(ItemStack stack1: ingredient1.getMatchingStacksClient()){
 //                                        if(stack1.getItem() == output_item){
@@ -82,13 +87,15 @@ public class EssenceHandler {
 //                    }
 //                }
 
-                if(!item_recipes.containsKey(recipe.getOutput().getItem())){
-                    item_recipes.put(recipe.getOutput().getItem(), new ArrayList<>());
+                if(!itemRecipes.containsKey(recipe.getOutput().getItem())){
+                    itemRecipes.put(recipe.getOutput().getItem(), new ArrayList<>());
                 }
-                item_recipes.get(recipe.getOutput().getItem()).add(recipe);
+                itemRecipes.get(recipe.getOutput().getItem()).add(recipe);
             }
 
-            item_recipes.forEach(RecipeMapper::calculateValue);
+            itemRecipes.forEach(RecipeMapper::calculateValue);
+
+            customRecipes.forEach(RecipeMapper::calculateCustomRecipeValue);
 
             Aequitas.LOGGER.error("These items have no value and cannot be crafted: "+ no_value );
         }
@@ -129,7 +136,7 @@ public class EssenceHandler {
 
                     long lowest_stack_cost = 0;
                     for(ItemStack stack: stacks){
-                        long l = calculateValue(stack.getItem(), item_recipes.get(stack.getItem()));
+                        long l = calculateValue(stack.getItem(), itemRecipes.get(stack.getItem()));
                         if(lowest_stack_cost == 0 || l < lowest_stack_cost) lowest_stack_cost = l;
                     }
                     recipe_cost += lowest_stack_cost;
@@ -149,6 +156,34 @@ public class EssenceHandler {
             map.put(item, lowest_recipe_cost);
             current_run.remove(item);
             return lowest_recipe_cost;
+        }
+
+        private static long calculateCustomRecipeValue(Item item, List<ItemStack> inputs){
+
+            if(getEssenceValue(item) > 0){
+                return getEssenceValue(item);
+            }
+
+            if(inputs == null){
+                return 0L;
+            }
+
+            long recipe_cost = 0;
+            for(ItemStack stack: inputs){
+                long l = calculateCustomRecipeValue(stack.getItem(), customRecipes.get(stack.getItem()));
+                if(l <= 0){
+                    recipe_cost = 0;
+                    break;
+                }
+
+                recipe_cost += l * stack.getCount();
+            }
+
+            if(recipe_cost > 0){
+                map.put(item, recipe_cost);
+                no_value.remove(item);
+            }
+            return recipe_cost;
         }
     }
 

@@ -42,12 +42,7 @@ public class CraftingPedestalScreenHandler extends ScreenHandler {
         });
 
         //Output slot
-        this.addSlot(new Slot(inventory, 1, 80, 36){
-            @Override
-            public boolean canInsert(ItemStack stack) {
-                return false;
-            }
-        });
+        this.addSlot(new OutputSlot(inventory, 1, 80, 36));
 
         //The player inventory
         for (m = 0; m < 3; ++m) {
@@ -59,6 +54,8 @@ public class CraftingPedestalScreenHandler extends ScreenHandler {
         for (m = 0; m < 9; ++m) {
             this.addSlot(new Slot(playerInventory, m, 8 + m * 18, 142));
         }
+
+        System.out.println("");
     }
 
     @Override
