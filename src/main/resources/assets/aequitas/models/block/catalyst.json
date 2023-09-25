@@ -1,20 +1,19 @@
 {
 	"parent": "minecraft:block/cube",
 	"textures": {
-		"0": "aequitas:block/catalyst",
-		"particle": "catalyst"
+		"particle": "#all"
 	},
 	"elements": [
 		{
 			"from": [4, 0, 4],
 			"to": [12, 12, 12],
 			"faces": {
-				"north": {"uv": [0, 0, 8, 12], "texture": "#0"},
-				"east": {"uv": [0, 0, 8, 12], "texture": "#0"},
-				"south": {"uv": [0, 0, 8, 12], "texture": "#0"},
-				"west": {"uv": [0, 0, 8, 12], "texture": "#0"},
-				"up": {"uv": [16, 8, 8, 0], "texture": "#0"},
-				"down": {"uv": [16, 0, 8, 8], "texture": "#0"}
+				"north": {"uv": [0, 0, 8, 12], "texture": "#all"},
+				"east": {"uv": [0, 0, 8, 12], "texture": "#all"},
+				"south": {"uv": [0, 0, 8, 12], "texture": "#all"},
+				"west": {"uv": [0, 0, 8, 12], "texture": "#all"},
+				"up": {"uv": [16, 8, 8, 0], "texture": "#all"},
+				"down": {"uv": [16, 0, 8, 8], "texture": "#all"}
 			}
 		}
 	]

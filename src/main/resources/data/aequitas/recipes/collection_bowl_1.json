@@ -1,0 +1,23 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "pattern" : [
+    "E E",
+    "EBE",
+    "SSS"
+  ],
+  "key" : {
+    "B" : {
+      "item" : "minecraft:"
+    },
+    "S" : {
+      "item" : "minecraft:diamond"
+    },
+    "E" : {
+      "item": "aequitas:primal_essence"
+    }
+  },
+  "result" : {
+    "item" : "aequitas:collection_bowl_1",
+    "count" : 1
+  }
+}
