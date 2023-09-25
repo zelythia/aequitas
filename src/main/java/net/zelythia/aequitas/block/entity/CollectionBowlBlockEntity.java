@@ -1,7 +1,6 @@
 package net.zelythia.aequitas.block.entity;
 
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,6 +13,7 @@ import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.loot.context.LootContextType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -27,7 +27,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.ImplementedInventory;
-import net.zelythia.aequitas.block.ConduitBlock;
+import net.zelythia.aequitas.networking.NetworkingHandler;
 import net.zelythia.aequitas.screen.CollectionBowlScreenHandler;
 import org.jetbrains.annotations.Nullable;
 
@@ -38,17 +38,25 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
 
     private final DefaultedList<ItemStack> inventory;
 
+    private final int tier;
     private final List<BlockPos> conduitBlocks = new ArrayList<>();
-    private final List<BlockPos> catalystBlocks = new ArrayList<>();
+    private final List<BlockPos> catalystBlocks1 = new ArrayList<>();
+    private final List<BlockPos> catalystBlocks2 = new ArrayList<>();
+    private final List<BlockPos> catalystBlocks3 = new ArrayList<>();
 
     private int collectionTime;
     private int collectionTimeTotal;
 
+    public float collectionProgress;
+
     public CollectionBowlBlockEntity(int inventorySize) {
         super(inventorySize==15?Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_III:inventorySize==9?Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_II:Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_I);
+        this.tier = inventorySize==15?3:inventorySize==9?2:1;
         this.inventory  = DefaultedList.ofSize(inventorySize, ItemStack.EMPTY);
-        updateStructurePositions();
-        setCollectionTimeTotal();
+        if(world != null && !world.isClient){
+            updateStructurePositions();
+            setCollectionTimeTotal();
+        }
     }
 
     @Override
@@ -71,6 +79,8 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
     public CompoundTag toTag(CompoundTag tag) {
         super.toTag(tag);
         Inventories.toTag(tag, this.inventory);
+        tag.putInt("collection_time", collectionTime);
+        tag.putInt("collection_time_total", collectionTimeTotal);
         return tag;
     }
 
@@ -78,7 +88,22 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
     public void fromTag(BlockState state, CompoundTag tag) {
         super.fromTag(state, tag);
         Inventories.fromTag(tag, this.inventory);
+        this.collectionTime = tag.getInt("collection_time");
+        this.collectionTimeTotal = tag.getInt("collection_time_total");
         updateStructurePositions();
+    }
+
+    public float getCollectionProgress(){
+        return (float) this.collectionTime/this.collectionTimeTotal;
+    }
+
+    @Nullable
+    public BlockEntityUpdateS2CPacket toUpdatePacket() {
+        return new BlockEntityUpdateS2CPacket(this.pos, 3, this.toInitialChunkDataTag());
+    }
+
+    public CompoundTag toInitialChunkDataTag() {
+        return this.toTag(new CompoundTag());
     }
 
     @Override
@@ -88,10 +113,10 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
 
 
     private void setCollectionTimeTotal(){
-        if(this.inventory.size()==1){
+        if(this.tier==1){
             this.collectionTimeTotal = (int) ((Math.random() * 200) + 1100);
         }
-        else if(this.inventory.size() == 9){
+        else if(this.tier == 2){
             this.collectionTimeTotal = (int) ((Math.random() * 200) + 500);
         }
         else{
@@ -109,7 +134,7 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
         if(getEmptySlot() != -1 && checkStructure()){
 
             if(collectionTime == 0){
-                setBlockProperties(true);
+                setStructureBlockProperties(true);
             }
             ++this.collectionTime;
 
@@ -147,30 +172,38 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
         }
         else{
             collectionTime = 0;
-            setBlockProperties(false);
+            setStructureBlockProperties(false);
         }
+
+        NetworkingHandler.updateCollectionBowl(this);
+
     }
 
 
     public void updateStructurePositions(){
         conduitBlocks.clear();
-        catalystBlocks.clear();
+
 
         int r = 3;
 
-        if(inventory.size() == 1){
+        if(tier == 1){
+            catalystBlocks1.clear();
             conduitBlocks.add(pos.add(3,0,0));
             conduitBlocks.add(pos.add(-3,0,0));
             conduitBlocks.add(pos.add(0,0,3));
             conduitBlocks.add(pos.add(0,0,-3));
 
-            catalystBlocks.add(pos.add(3,1,0));
-            catalystBlocks.add(pos.add(-3,1,0));
-            catalystBlocks.add(pos.add(0,1,3));
-            catalystBlocks.add(pos.add(0,1,-3));
+            catalystBlocks1.add(pos.add(3,1,0));
+            catalystBlocks1.add(pos.add(-3,1,0));
+            catalystBlocks1.add(pos.add(0,1,3));
+            catalystBlocks1.add(pos.add(0,1,-3));
+
+            catalystBlocks1.add(pos.up(3));
         }
-        else if(inventory.size() == 9){
+        else if(tier == 2){
             r = 4;
+            catalystBlocks1.clear();
+            catalystBlocks2.clear();
 
             //Pillar 1
             conduitBlocks.add(pos.add(4,0,0));
@@ -192,18 +225,23 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
             conduitBlocks.add(pos.add(-3,1,-3));
 
             //Catalysts
-            catalystBlocks.add(pos.add(4,1,0));
-            catalystBlocks.add(pos.add(-4,1,0));
-            catalystBlocks.add(pos.add(0,1,4));
-            catalystBlocks.add(pos.add(0,1,-4));
+            catalystBlocks1.add(pos.add(4,1,0));
+            catalystBlocks1.add(pos.add(-4,1,0));
+            catalystBlocks1.add(pos.add(0,1,4));
+            catalystBlocks1.add(pos.add(0,1,-4));
 
-            catalystBlocks.add(pos.add(3,2,3));
-            catalystBlocks.add(pos.add(3,2,-3));
-            catalystBlocks.add(pos.add(-3,2,3));
-            catalystBlocks.add(pos.add(-3,2,-3));
+            catalystBlocks2.add(pos.add(3,2,3));
+            catalystBlocks2.add(pos.add(3,2,-3));
+            catalystBlocks2.add(pos.add(-3,2,3));
+            catalystBlocks2.add(pos.add(-3,2,-3));
+
+            catalystBlocks2.add(pos.up(3));
         }
-        else if(inventory.size() == 15){
+        else if(tier == 3){
             r = 6;
+            catalystBlocks1.clear();
+            catalystBlocks2.clear();
+            catalystBlocks3.clear();
 
             //Pillar 1
             conduitBlocks.add(pos.add(6,0,0));
@@ -238,23 +276,23 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
             conduitBlocks.add(pos.add(-4,1,-4));
 
             //Catalysts
-            catalystBlocks.add(pos.add(6,1,0));
-            catalystBlocks.add(pos.add(-6,1,0));
-            catalystBlocks.add(pos.add(0,1,6));
-            catalystBlocks.add(pos.add(0,1,-6));
+            catalystBlocks1.add(pos.add(6,1,0));
+            catalystBlocks1.add(pos.add(-6,1,0));
+            catalystBlocks1.add(pos.add(0,1,6));
+            catalystBlocks1.add(pos.add(0,1,-6));
 
-            catalystBlocks.add(pos.add(5,2,2));
-            catalystBlocks.add(pos.add(5,2,-2));
-            catalystBlocks.add(pos.add(-5,2,2));
-            catalystBlocks.add(pos.add(-5,2,-2));
+            catalystBlocks2.add(pos.add(5,2,2));
+            catalystBlocks2.add(pos.add(5,2,-2));
+            catalystBlocks2.add(pos.add(-5,2,2));
+            catalystBlocks2.add(pos.add(-5,2,-2));
 
-            catalystBlocks.add(pos.add(4,3,4));
-            catalystBlocks.add(pos.add(4,3,-4));
-            catalystBlocks.add(pos.add(-4,3,4));
-            catalystBlocks.add(pos.add(-4,3,-4));
+            catalystBlocks3.add(pos.add(4,3,4));
+            catalystBlocks3.add(pos.add(4,3,-4));
+            catalystBlocks3.add(pos.add(-4,3,4));
+            catalystBlocks3.add(pos.add(-4,3,-4));
+
+            catalystBlocks3.add(pos.up(3));
         }
-
-        catalystBlocks.add(pos.up(3));
 
         //Adding ground blocks
         conduitBlocks.add(pos.down());
@@ -266,18 +304,45 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
         }
     }
 
-    private void setBlockProperties(boolean value){
+    public boolean checkStructure(){
+
         for(BlockPos pos: conduitBlocks){
-            if(world.getBlockState(pos).getBlock().equals(Aequitas.CONDUIT_BLOCK)){
+            if(!world.getBlockState(pos).getBlock().equals(Aequitas.CONDUIT_BLOCK)) return false;
+        }
+        for(BlockPos pos: catalystBlocks1){
+            if(!world.getBlockState(pos).getBlock().equals(Aequitas.CATALYST_BLOCK_I)) return false;
+        }
+        for(BlockPos pos: catalystBlocks2){
+            if(!world.getBlockState(pos).getBlock().equals(Aequitas.CATALYST_BLOCK_II)) return false;
+        }
+        for(BlockPos pos: catalystBlocks3){
+            if(!world.getBlockState(pos).getBlock().equals(Aequitas.CATALYST_BLOCK_III)) return false;
+        }
+
+        return true;
+    }
+
+    private void setStructureBlockProperties(boolean value){
+        for(BlockPos pos: conduitBlocks){
+            if(world.getBlockState(pos).method_28500(Aequitas.ACTIVE_BLOCK_PROPERTY).isPresent()){
                 world.setBlockState(pos, world.getBlockState(pos).with(Aequitas.ACTIVE_BLOCK_PROPERTY, value));
             }
         }
+
+        List<BlockPos> catalystBlocks = new ArrayList<>();
+        catalystBlocks.addAll(catalystBlocks1);
+        catalystBlocks.addAll(catalystBlocks2);
+        catalystBlocks.addAll(catalystBlocks3);
+
         for(BlockPos pos: catalystBlocks){
-            if(world.getBlockState(pos).getBlock().equals(Aequitas.CATALYST_BLOCK)){
+            if(world.getBlockState(pos).method_28500(Aequitas.ACTIVE_BLOCK_PROPERTY).isPresent()){
                 world.setBlockState(pos, world.getBlockState(pos).with(Aequitas.ACTIVE_BLOCK_PROPERTY, value));
             }
         }
     }
+
+
+
 
     @Override
     public void setPos(BlockPos pos) {
@@ -294,25 +359,11 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
     @Override
     public void markRemoved() {
         super.markRemoved();
-        for(BlockPos pos: conduitBlocks){
-            if(world.getBlockState(pos).getBlock().equals(Aequitas.CONDUIT_BLOCK)){
-                world.setBlockState(pos, world.getBlockState(pos).with(Aequitas.ACTIVE_BLOCK_PROPERTY, false));
-            }
-        }
+        setStructureBlockProperties(false);
     }
 
-    public boolean checkStructure(){
 
-        for(BlockPos pos: conduitBlocks){
-            if(!world.getBlockState(pos).getBlock().equals(Aequitas.CONDUIT_BLOCK)) return false;
-        }
-        for(BlockPos pos: catalystBlocks){
-            if(!world.getBlockState(pos).getBlock().equals(Aequitas.CATALYST_BLOCK)) return false;
-        }
-
-        return true;
-    }
-
+    //-----Inventory helper methods
 
     public void insertStack(ItemStack stack){
         int i;
