@@ -29,7 +29,7 @@ public class EssenceHandler {
         RecipeMapper.craftingCost.putAll(map);
     }
 
-    public static void setCustomRecipes(Map<Item, List<ItemStack>> map){
+    public static void setCustomRecipes(Map<Item, List<SimplifiedIngredient>> map){
         RecipeMapper.customRecipes.clear();
         RecipeMapper.customRecipes.putAll(map);
     }
@@ -49,7 +49,7 @@ public class EssenceHandler {
     private static class RecipeMapper{
         private static final Map<String, Long> craftingCost = new HashMap<>();
 
-        private static final Map<Item, List<ItemStack>> customRecipes = new HashMap<>();
+        private static final Map<Item, List<SimplifiedIngredient>> customRecipes = new HashMap<>();
         private static final Map<Item, List<Recipe<?>>> itemRecipes = new HashMap<>();
 
         static final ArrayList<Item> no_value = new ArrayList<>();
@@ -124,7 +124,12 @@ public class EssenceHandler {
             return lowest_recipe_cost;
         }
 
-        private static long calculateCustomRecipeValue(Item item, List<ItemStack> inputs){
+        private static long calculateCustomRecipeValue(Item item, List<SimplifiedIngredient> inputs){
+
+            //Item == null is only true for custom recipes
+            if(item == null){
+                return 1;
+            }
 
             if(getEssenceValue(item) > 0){
                 return getEssenceValue(item);
@@ -135,14 +140,14 @@ public class EssenceHandler {
             }
 
             long recipe_cost = 0;
-            for(ItemStack stack: inputs){
-                long l = calculateCustomRecipeValue(stack.getItem(), customRecipes.get(stack.getItem()));
+            for(SimplifiedIngredient ingredient: inputs){
+                long l = calculateCustomRecipeValue(ingredient.getItem(), customRecipes.get(ingredient.getItem()));
                 if(l <= 0){
                     recipe_cost = 0;
                     break;
                 }
 
-                recipe_cost += l * stack.getCount();
+                recipe_cost += l * ingredient.getCount();
             }
 
             if(recipe_cost > 0){
