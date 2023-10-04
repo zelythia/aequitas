@@ -1,0 +1,16 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "pattern" : [
+    "##",
+    "##"
+  ],
+  "key" : {
+    "#" : {
+      "item": "aequitas:pristine_essence"
+    }
+  },
+  "result" : {
+    "item" : "aequitas:pristine_essence_block",
+    "count" : 1
+  }
+}

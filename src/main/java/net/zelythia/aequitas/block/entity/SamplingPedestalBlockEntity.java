@@ -5,8 +5,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
@@ -56,11 +56,11 @@ public class SamplingPedestalBlockEntity extends BlockEntity implements Implemen
     }
 
     @Override
-    public CompoundTag toTag(CompoundTag tag) {
-        super.toTag(tag);
+    public NbtCompound writeNbt(NbtCompound tag) {
+        super.writeNbt(tag);
 
-        ListTag listTag = new ListTag();
-        CompoundTag compoundTag = new CompoundTag();
+        NbtList listTag = new NbtList();
+        NbtCompound compoundTag = new NbtCompound();
         Identifier identifier = Registry.ITEM.getId(this.inventory.get(0).getItem());
         compoundTag.putString("id", identifier.toString());
         compoundTag.putInt("Count", this.inventory.get(0).getCount());
@@ -71,11 +71,11 @@ public class SamplingPedestalBlockEntity extends BlockEntity implements Implemen
     }
 
     @Override
-    public void fromTag(BlockState state, CompoundTag tag) {
+    public void fromTag(BlockState state, NbtCompound tag) {
         super.fromTag(state, tag);
 
-        ListTag listTag = tag.getList("Items", 10);
-        CompoundTag compoundTag = listTag.getCompound(0);
+        NbtList listTag = tag.getList("Items", 10);
+        NbtCompound compoundTag = listTag.getCompound(0);
         ItemStack stack = new ItemStack((Item)Registry.ITEM.get(new Identifier(compoundTag.getString("id"))));
         stack.setCount(compoundTag.getInt("Count"));
         this.inventory.set(0, stack);
@@ -83,19 +83,19 @@ public class SamplingPedestalBlockEntity extends BlockEntity implements Implemen
 
 
     @Override
-    public void fromClientTag(CompoundTag tag) {
+    public void fromClientTag(NbtCompound tag) {
         this.inventory.clear();
 
-        ListTag listTag = tag.getList("Items", 10);
-        CompoundTag compoundTag = listTag.getCompound(0);
+        NbtList listTag = tag.getList("Items", 10);
+        NbtCompound compoundTag = listTag.getCompound(0);
         ItemStack stack = new ItemStack((Item)Registry.ITEM.get(new Identifier(compoundTag.getString("id"))));
         stack.setCount(compoundTag.getInt("Count"));
         this.inventory.set(0, stack);
     }
 
     @Override
-    public CompoundTag toClientTag(CompoundTag tag) {
-        return toTag(tag);
+    public NbtCompound toClientTag(NbtCompound tag) {
+        return writeNbt(tag);
     }
 
     public void updateListeners() {

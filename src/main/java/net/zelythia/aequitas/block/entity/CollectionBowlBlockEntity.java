@@ -3,6 +3,7 @@ package net.zelythia.aequitas.block.entity;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
@@ -11,7 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.loot.context.LootContextType;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.screen.ScreenHandler;
@@ -27,6 +28,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.ImplementedInventory;
+import net.zelythia.aequitas.Sounds;
+import net.zelythia.aequitas.client.config.AequitasConfig;
 import net.zelythia.aequitas.networking.NetworkingHandler;
 import net.zelythia.aequitas.screen.CollectionBowlScreenHandler;
 import org.jetbrains.annotations.Nullable;
@@ -38,7 +41,7 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
 
     private final DefaultedList<ItemStack> inventory;
 
-    private final int tier;
+    public final int tier;
     private final List<BlockPos> conduitBlocks = new ArrayList<>();
     private final List<BlockPos> catalystBlocks1 = new ArrayList<>();
     private final List<BlockPos> catalystBlocks2 = new ArrayList<>();
@@ -47,7 +50,8 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
     private int collectionTime;
     private int collectionTimeTotal;
 
-    public float collectionProgress;
+    private float collectionProgress;
+    private Sounds.CollectionBowlSoundInstance s;
 
     public CollectionBowlBlockEntity(int inventorySize) {
         super(inventorySize==15?Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_III:inventorySize==9?Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_II:Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_I);
@@ -59,85 +63,22 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
         }
     }
 
-    @Override
-    public Text getDisplayName() {
-        return new TranslatableText("block.aequitas.collection_bowl");
-    }
-
-    @Nullable
-    @Override
-    public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        return new CollectionBowlScreenHandler(syncId, inv, this);
-    }
-
-    @Override
-    public DefaultedList<ItemStack> getItems() {
-        return inventory;
-    }
-
-    @Override
-    public CompoundTag toTag(CompoundTag tag) {
-        super.toTag(tag);
-        Inventories.toTag(tag, this.inventory);
-        tag.putInt("collection_time", collectionTime);
-        tag.putInt("collection_time_total", collectionTimeTotal);
-        return tag;
-    }
-
-    @Override
-    public void fromTag(BlockState state, CompoundTag tag) {
-        super.fromTag(state, tag);
-        Inventories.fromTag(tag, this.inventory);
-        this.collectionTime = tag.getInt("collection_time");
-        this.collectionTimeTotal = tag.getInt("collection_time_total");
-        updateStructurePositions();
-    }
-
-    public float getCollectionProgress(){
-        return (float) this.collectionTime/this.collectionTimeTotal;
-    }
-
-    @Nullable
-    public BlockEntityUpdateS2CPacket toUpdatePacket() {
-        return new BlockEntityUpdateS2CPacket(this.pos, 3, this.toInitialChunkDataTag());
-    }
-
-    public CompoundTag toInitialChunkDataTag() {
-        return this.toTag(new CompoundTag());
-    }
-
-    @Override
-    public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
-        buf.writeInt(inventory.size());
-    }
-
-
-    private void setCollectionTimeTotal(){
-        if(this.tier==1){
-            this.collectionTimeTotal = (int) ((Math.random() * 200) + 1100);
-        }
-        else if(this.tier == 2){
-            this.collectionTimeTotal = (int) ((Math.random() * 200) + 500);
-        }
-        else{
-            this.collectionTimeTotal = (int) ((Math.random() * 200) + 100);
-        }
-    }
-
+    private boolean structureBlockProperties = false;
 
     @Override
     public void tick() {
         if(world == null) return;
-        if(world.isClient) return;
 
+        if(world.isClient){
+            playSound();
+            return;
+        }
+
+        //Server logic
 
         if(getEmptySlot() != -1 && checkStructure()){
-
-            if(collectionTime == 0){
-                setStructureBlockProperties(true);
-            }
+            setStructureBlockProperties(true);
             ++this.collectionTime;
-
 
             if(this.collectionTime >= this.collectionTimeTotal){
                 this.collectionTime = 0;
@@ -171,12 +112,10 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
             }
         }
         else{
-            collectionTime = 0;
             setStructureBlockProperties(false);
         }
 
         NetworkingHandler.updateCollectionBowl(this);
-
     }
 
 
@@ -262,18 +201,35 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
             conduitBlocks.add(pos.add(-5,0,-2));
             conduitBlocks.add(pos.add(-5,1,-2));
 
+
+            conduitBlocks.add(pos.add(2,0,5));
+            conduitBlocks.add(pos.add(2,1,5));
+
+            conduitBlocks.add(pos.add(-2,0,5));
+            conduitBlocks.add(pos.add(-2,1,5));
+
+            conduitBlocks.add(pos.add(2,0,-5));
+            conduitBlocks.add(pos.add(2,1,-5));
+
+            conduitBlocks.add(pos.add(-2,0,-5));
+            conduitBlocks.add(pos.add(-2,1,-5));
+
             //Pillar 3
             conduitBlocks.add(pos.add(4,0,4));
             conduitBlocks.add(pos.add(4,1,4));
+            conduitBlocks.add(pos.add(4,2,4));
 
             conduitBlocks.add(pos.add(4,0,-4));
             conduitBlocks.add(pos.add(4,1,-4));
+            conduitBlocks.add(pos.add(4,2,-4));
 
             conduitBlocks.add(pos.add(-4,0,4));
             conduitBlocks.add(pos.add(-4,1,4));
+            conduitBlocks.add(pos.add(-4,2,4));
 
             conduitBlocks.add(pos.add(-4,0,-4));
             conduitBlocks.add(pos.add(-4,1,-4));
+            conduitBlocks.add(pos.add(-4,2,-4));
 
             //Catalysts
             catalystBlocks1.add(pos.add(6,1,0));
@@ -323,8 +279,11 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
     }
 
     private void setStructureBlockProperties(boolean value){
+        if(!value && !structureBlockProperties) return;
+        structureBlockProperties = value;
+
         for(BlockPos pos: conduitBlocks){
-            if(world.getBlockState(pos).method_28500(Aequitas.ACTIVE_BLOCK_PROPERTY).isPresent()){
+            if(world.getBlockState(pos).getOrEmpty(Aequitas.ACTIVE_BLOCK_PROPERTY).isPresent()){
                 world.setBlockState(pos, world.getBlockState(pos).with(Aequitas.ACTIVE_BLOCK_PROPERTY, value));
             }
         }
@@ -335,14 +294,98 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
         catalystBlocks.addAll(catalystBlocks3);
 
         for(BlockPos pos: catalystBlocks){
-            if(world.getBlockState(pos).method_28500(Aequitas.ACTIVE_BLOCK_PROPERTY).isPresent()){
+            if(world.getBlockState(pos).getOrEmpty(Aequitas.ACTIVE_BLOCK_PROPERTY).isPresent()){
                 world.setBlockState(pos, world.getBlockState(pos).with(Aequitas.ACTIVE_BLOCK_PROPERTY, value));
             }
         }
     }
 
+    private void setCollectionTimeTotal(){
+        if(this.tier==1){
+            this.collectionTimeTotal = (int) ((Math.random() * 200) + 1100);
+        }
+        else if(this.tier == 2){
+            this.collectionTimeTotal = (int) ((Math.random() * 200) + 500);
+        }
+        else{
+            this.collectionTimeTotal = (int) ((Math.random() * 200) + 100);
+        }
+    }
+
+    private void playSound(){
+        if(AequitasConfig.config.getOrDefault("playAmbientSound", true) && world.getBlockState(pos.down()).getOrEmpty(Aequitas.ACTIVE_BLOCK_PROPERTY).orElse(false)){
+            MinecraftClient client = MinecraftClient.getInstance();
+
+            if(s == null || !client.getSoundManager().isPlaying(s)){
+                s = new Sounds.CollectionBowlSoundInstance(client.player, pos, tier==1?3:tier==2?4:6);
+                client.getSoundManager().play(s);
+            }
+        }
+        else if(s != null){
+            s.setDone();
+            s = null;
+        }
+    }
 
 
+    //Screen functions
+
+    @Override
+    public Text getDisplayName() {
+        return new TranslatableText("block.aequitas.collection_bowl_"+tier);
+    }
+
+    @Nullable
+    @Override
+    public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
+        return new CollectionBowlScreenHandler(syncId, inv, this);
+    }
+
+    @Override
+    public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
+        buf.writeInt(inventory.size());
+    }
+
+
+
+    @Nullable
+    public BlockEntityUpdateS2CPacket toUpdatePacket() {
+        return new BlockEntityUpdateS2CPacket(this.pos, 3, this.toInitialChunkDataTag());
+    }
+
+    public NbtCompound toInitialChunkDataTag() {
+        return this.writeNbt(new NbtCompound());
+    }
+
+    @Override
+    public NbtCompound writeNbt(NbtCompound tag) {
+        super.writeNbt(tag);
+        Inventories.writeNbt(tag, this.inventory);
+        tag.putInt("collection_time", collectionTime);
+        tag.putInt("collection_time_total", collectionTimeTotal);
+        return tag;
+    }
+
+    @Override
+    public void fromTag(BlockState state, NbtCompound tag) {
+        super.fromTag(state, tag);
+        Inventories.readNbt(tag, this.inventory);
+        this.collectionTime = tag.getInt("collection_time");
+        this.collectionTimeTotal = tag.getInt("collection_time_total");
+        updateStructurePositions();
+    }
+
+    public float getServerCollectionProgress(){
+        return (float) this.collectionTime/this.collectionTimeTotal;
+    }
+
+    public float getClientCollectionProgress(){
+        return collectionProgress;
+    }
+
+    public void setClientCollectionProgress(float progress){
+        collectionProgress = progress;
+    }
 
     @Override
     public void setPos(BlockPos pos) {
@@ -360,10 +403,19 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
     public void markRemoved() {
         super.markRemoved();
         setStructureBlockProperties(false);
+        if(s != null){
+            s.setDone();
+            s = null;
+        }
     }
 
 
     //-----Inventory helper methods
+
+    @Override
+    public DefaultedList<ItemStack> getItems() {
+        return inventory;
+    }
 
     public void insertStack(ItemStack stack){
         int i;
@@ -423,10 +475,7 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
             this.setStack(slot, itemStack);
         }
 
-        int j = i;
-        if (i > itemStack.getMaxCount() - itemStack.getCount()) {
-            j = itemStack.getMaxCount() - itemStack.getCount();
-        }
+        int j = Math.min(i, itemStack.getMaxCount() - itemStack.getCount());
 
         if (j > this.getMaxCountPerStack() - itemStack.getCount()) {
             j = this.getMaxCountPerStack() - itemStack.getCount();

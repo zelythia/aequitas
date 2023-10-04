@@ -1,32 +1,32 @@
 package net.zelythia.aequitas.networking;
 
-import com.sun.javafx.geom.Vec2d;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fabricmc.fabric.api.server.PlayerStream;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.server.network.ServerPlayNetworkHandler;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.EssenceHandler;
-import net.zelythia.aequitas.block.CollectionBowlBlock;
 import net.zelythia.aequitas.block.entity.CollectionBowlBlockEntity;
 import net.zelythia.aequitas.block.entity.CraftingPedestalBlockEntity;
-import net.zelythia.aequitas.client.CraftingParticle;
 import net.zelythia.aequitas.client.mixins.SpriteMixin;
-import org.lwjgl.system.CallbackI;
+import net.zelythia.aequitas.client.particle.CraftingParticle;
+import net.zelythia.aequitas.client.particle.Particles;
+import net.zelythia.aequitas.Util;
 
 public class NetworkingHandler {
+
+    private static MinecraftServer server;
 
     public static final Identifier ESSENCE_UPDATE = new Identifier(Aequitas.MOD_ID, "essence_event");
     public static final Identifier CRAFTING_PARTICLE = new Identifier(Aequitas.MOD_ID, "crafting_particle");
@@ -84,16 +84,15 @@ public class NetworkingHandler {
                     }
 
 
-
                     r = (int) (r/div);
                     g = (int) (g/div);
                     b = (int) (b/div);
                 }
 
 
-                CraftingParticle particle = (CraftingParticle) client.particleManager.addParticle(Aequitas.CRAFTING_PARTICLE, x, y, z, velX,0 ,velZ);
+                CraftingParticle particle = (CraftingParticle) Particles.spawnParticle(client,Particles.CRAFTING_PARTICLE,false, true, x, y, z, velX,0 ,velZ);
                 if (particle != null){
-                    particle.max_distance = Vec2d.distanceSq(x,z,to.getX()+0.5, to.getZ()+0.5);
+                    particle.setMaxDistanceSq(Util.distanceSq(x,z,to.getX()+0.5, to.getZ()+0.5));
                     particle.setColor(r/255,g/255,b/255);
                 }
             }
@@ -101,21 +100,24 @@ public class NetworkingHandler {
         });
 
         ClientPlayNetworking.registerGlobalReceiver(NetworkingHandler.COLLECTION_PROGRESS, (client, handler, buf, responseSender) -> {
+            if(client.world == null) return;
+
             BlockPos pos = buf.readBlockPos();
             BlockEntity be = client.world.getBlockEntity(pos);
             if(be instanceof CollectionBowlBlockEntity){
-                ((CollectionBowlBlockEntity) be).collectionProgress = buf.readFloat();
+                ((CollectionBowlBlockEntity) be).setClientCollectionProgress(buf.readFloat());
             }
         });
     }
 
     public static void updateEssence(){
+        if(server == null) return;
+
         PacketByteBuf buf = PacketByteBufs.create();
         EssencePacket.encode(buf);
-        if(Aequitas.server != null){
-            for(ServerPlayerEntity player: PlayerLookup.all(Aequitas.server)){
-                ServerPlayNetworking.send(player, NetworkingHandler.ESSENCE_UPDATE, buf);
-            }
+
+        for(ServerPlayerEntity player: PlayerLookup.all(server)){
+            ServerPlayNetworking.send(player, NetworkingHandler.ESSENCE_UPDATE, buf);
         }
     }
 
@@ -133,10 +135,19 @@ public class NetworkingHandler {
     public static void updateCollectionBowl(CollectionBowlBlockEntity be){
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeBlockPos(be.getPos());
-        buf.writeFloat(be.getCollectionProgress());
+        buf.writeFloat(be.getServerCollectionProgress());
 
         for(ServerPlayerEntity player: PlayerLookup.tracking(be)){
             ServerPlayNetworking.send(player, NetworkingHandler.COLLECTION_PROGRESS, buf);
         }
+    }
+
+
+    public static void setServer(MinecraftServer server){
+        NetworkingHandler.server = server;
+    }
+
+    public static MinecraftServer getServer(){
+        return server;
     }
 }

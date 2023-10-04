@@ -19,7 +19,6 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.zelythia.aequitas.block.entity.CollectionBowlBlockEntity;
-import net.zelythia.aequitas.block.entity.CraftingPedestalBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class CollectionBowlBlock extends BlockWithEntity {

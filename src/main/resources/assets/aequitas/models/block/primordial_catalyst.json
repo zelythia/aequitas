@@ -1,6 +1,6 @@
 {
   "parent": "aequitas:block/catalyst",
   "textures": {
-    "all": "aequitas:block/catalyst_3"
+    "all": "aequitas:block/primordial_catalyst"
   }
 }

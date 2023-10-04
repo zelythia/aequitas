@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "facing=up": { "model": "aequitas:block/primal_catalyst"},
+    "facing=down": { "model": "aequitas:block/primal_catalyst", "x": 180},
+    "facing=north": { "model": "aequitas:block/primal_catalyst", "x": 90},
+    "facing=south": { "model": "aequitas:block/primal_catalyst", "x": 90, "y": 180},
+    "facing=east": { "model": "aequitas:block/primal_catalyst", "x": 90, "y":  90},
+    "facing=west": { "model": "aequitas:block/primal_catalyst", "x": 90, "y":  270}
+  }
+}

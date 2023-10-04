@@ -20,7 +20,7 @@ public class EssenceHandler {
     }
 
 
-    private static void cleanMap(){
+    private static void cleanEssenceMap(){
         map.entrySet().removeIf( entry -> entry.getValue() <= 0);
     }
 
@@ -39,8 +39,7 @@ public class EssenceHandler {
 
         map.putAll(newValues);
         RecipeMapper.mapRecipes(recipeManager);
-
-        cleanMap();
+        cleanEssenceMap();
 
         NetworkingHandler.updateEssence();
     }
@@ -53,40 +52,13 @@ public class EssenceHandler {
         private static final Map<Item, List<ItemStack>> customRecipes = new HashMap<>();
         private static final Map<Item, List<Recipe<?>>> itemRecipes = new HashMap<>();
 
+        static final ArrayList<Item> no_value = new ArrayList<>();
 
         private static void mapRecipes(RecipeManager recipeManager){
+            long startTime = System.currentTimeMillis();
             if(recipeManager == null) return;
 
-            //Remap recipes by their output item
-//            recipes:
             for(Recipe<?> recipe: recipeManager.values()){
-
-                //Checking if an item crafts itself e.g. for clearing nbt-data
-//                Item output_item = recipe.getOutput().getItem();
-//                DefaultedList<Ingredient> inputs = recipe.getPreviewInputs();
-//                for(Ingredient ingredient: inputs){
-//                    ItemStack[] stacks = ingredient.getMatchingStacksClient();
-//
-//                    for(ItemStack stack: stacks){
-//                        if(stack.getItem()==output_item){
-//                            continue recipes;
-//                        }
-//
-//                        Item item1 = stack.getItem();
-//                        if(itemRecipes.containsKey(item1)){
-//                            for(Recipe<?> recipe1: itemRecipes.get(item1)){
-//                                for(Ingredient ingredient1: recipe1.getPreviewInputs()){
-//                                    for(ItemStack stack1: ingredient1.getMatchingStacksClient()){
-//                                        if(stack1.getItem() == output_item){
-//                                            continue recipes;
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-
                 if(!itemRecipes.containsKey(recipe.getOutput().getItem())){
                     itemRecipes.put(recipe.getOutput().getItem(), new ArrayList<>());
                 }
@@ -94,22 +66,18 @@ public class EssenceHandler {
             }
 
             itemRecipes.forEach(RecipeMapper::calculateValue);
-
             customRecipes.forEach(RecipeMapper::calculateCustomRecipeValue);
 
-            Aequitas.LOGGER.error("These items have no value and cannot be crafted: "+ no_value );
+            Aequitas.LOGGER.info("Finished mapping recipes. Time elapsed: {}ms", System.currentTimeMillis() - startTime);
+            Aequitas.LOGGER.error("Could not calculate essence values: "+ no_value );
         }
 
 
-        static ArrayList<Item> no_value = new ArrayList<>();
-
         private static final ArrayList<Item> current_run = new ArrayList<>();
         private static long calculateValue(Item item, List<Recipe<?>> recipes){
-//            Aequitas.LOGGER.info("Started: "+item);
 
             //Item has already been mapped
             if(getEssenceValue(item) > 0){
-//                Aequitas.LOGGER.info("Already mapped");
                 return getEssenceValue(item);
             }
 
@@ -117,7 +85,6 @@ public class EssenceHandler {
 
             if(recipes==null){
                 if(!no_value.contains(item)) no_value.add(item);
-//                Aequitas.LOGGER.error("no recipes for item");
                 return lowest_recipe_cost;
             }
 
@@ -127,7 +94,7 @@ public class EssenceHandler {
 
             current_run.add(item);
             for(Recipe<?> recipe: recipes){
-                DefaultedList<Ingredient> inputs = recipe.getPreviewInputs();
+                DefaultedList<Ingredient> inputs = recipe.getIngredients();
 
                 long recipe_cost = 0;
 
@@ -152,7 +119,6 @@ public class EssenceHandler {
                 if(lowest_recipe_cost == 0 || recipe_cost < lowest_recipe_cost) lowest_recipe_cost = recipe_cost;
             }
 
-//            Aequitas.LOGGER.warn(item+": "+lowest_recipe_cost);
             map.put(item, lowest_recipe_cost);
             current_run.remove(item);
             return lowest_recipe_cost;

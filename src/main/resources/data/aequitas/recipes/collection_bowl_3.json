@@ -1,0 +1,20 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "pattern" : [
+    " E ",
+    "EBE",
+    " E "
+  ],
+  "key" : {
+    "B" : {
+      "item" : "aequitas:collection_bowl_2"
+    },
+    "E" : {
+      "item": "aequitas:pristine_essence_block"
+    }
+  },
+  "result" : {
+    "item" : "aequitas:collection_bowl_3",
+    "count" : 1
+  }
+}

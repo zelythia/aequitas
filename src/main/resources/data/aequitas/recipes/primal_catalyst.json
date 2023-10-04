@@ -1,0 +1,23 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "pattern" : [
+    " D ",
+    "QEQ",
+    " D "
+  ],
+  "key" : {
+    "E" : {
+      "item": "aequitas:primal_essence_block"
+    },
+    "D" : {
+      "item": "minecraft:diamond"
+    },
+    "Q" : {
+      "item": "minecraft:quartz_block"
+    }
+  },
+  "result" : {
+    "item" : "aequitas:primal_catalyst",
+    "count" : 1
+  }
+}

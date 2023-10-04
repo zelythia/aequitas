@@ -1,32 +1,24 @@
-package net.zelythia.aequitas.client;
+package net.zelythia.aequitas.client.particle;
 
-import com.sun.javafx.geom.Vec2d;
-import jdk.nashorn.internal.ir.Block;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.ShapeContext;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.Entity;
 import net.minecraft.particle.DefaultParticleType;
-import net.minecraft.util.collection.ReusableStream;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.zelythia.aequitas.Util;
 
-import java.util.stream.Stream;
+public class CatalystParticle extends SpriteBillboardParticle {
+    protected final double startX;
+    protected final double startY;
+    protected final double startZ;
+    protected double maxDistanceSq; //squared for calculation
 
-public class CraftingParticle extends SpriteBillboardParticle {
-
-
-    private final double startX;
-    private final double startZ;
-    public double max_distance; //squared for calculation
-
-
-    public CraftingParticle(ClientWorld clientWorld, double x, double y, double z, double velX, double velY, double velZ) {
+    public CatalystParticle(ClientWorld clientWorld, double x, double y, double z, double velX, double velY, double velZ) {
         super(clientWorld, x, y, z);
         this.startX = this.x;
+        this.startY = this.y;
         this.startZ = this.z;
 
         this.gravityStrength = 0;
@@ -42,26 +34,24 @@ public class CraftingParticle extends SpriteBillboardParticle {
         this.prevPosX = this.x;
         this.prevPosY = this.y;
         this.prevPosZ = this.z;
-        if(Vec2d.distanceSq(startX, startZ, this.x, this.z) >= max_distance){
+        if(Util.distanceSq(startX, startY,startZ, x, y, z) >= maxDistanceSq){
             this.markDead();
         }
         else{
-            this.velocityY = calculateHeight(Vec2d.distance(startX, startZ, this.x, this.z));
             move(this.velocityX, this.velocityY, this.velocityZ);
         }
     }
 
-    private double calculateHeight(double x){
-        return (2*x-Math.sqrt(this.max_distance-3))*-0.02;
-    }
-
-
 
     @Override
-    protected int getColorMultiplier(float tint) {
+    protected int getBrightness(float tint) {
         BlockPos blockPos = new BlockPos(this.x, this.y, this.z);
-        if(this.world == null) return 0;
+        if(this.world == null) return 0; //This is missing in the original method
         return this.world.isChunkLoaded(blockPos) ? WorldRenderer.getLightmapCoordinates(this.world, blockPos) : 0;
+    }
+
+    public void setMaxDistanceSq(double maxDistanceSq){
+        this.maxDistanceSq = maxDistanceSq;
     }
 
     @Override
@@ -79,9 +69,9 @@ public class CraftingParticle extends SpriteBillboardParticle {
         }
 
         public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
-            CraftingParticle craftingParticle = new CraftingParticle(clientWorld, d, e, f, g, h, i);
-            craftingParticle.setSprite(this.spriteProvider);
-            return craftingParticle;
+            CatalystParticle catalystParticle = new CatalystParticle(clientWorld, d, e, f, g, h, i);
+            catalystParticle.setSprite(this.spriteProvider);
+            return catalystParticle;
         }
     }
 }

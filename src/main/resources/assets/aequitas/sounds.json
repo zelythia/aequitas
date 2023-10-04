@@ -1,0 +1,8 @@
+{
+  "block.collection_bowl.start" : {
+    "sounds": ["aequitas:collection_bowl_start"]
+  },
+  "block.collection_bowl.loop" : {
+    "sounds": ["aequitas:collection_bowl_loop"]
+  }
+}

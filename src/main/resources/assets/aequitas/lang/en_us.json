@@ -8,7 +8,21 @@
 
   "item.aequitas.sampling_pedestal_core" : "Sampling Pedestal Core",
   "item.aequitas.crafting_pedestal_core" : "Crafting Pedestal Core",
+  "item.aequitas.primal_essence" : "Primal Essence",
+  "item.aequitas.primordial_essence" : "Primordial Essence",
+  "item.aequitas.pristine_essence" : "Pristine Essence",
 
+  "block.aequitas.pedestal" : "Pedestal",
   "block.aequitas.crafting_pedestal" : "Crafting Pedestal",
-  "block.aequitas.sampling_pedestal" : "Sampling Pedestal"
+  "block.aequitas.sampling_pedestal" : "Sampling Pedestal",
+  "block.aequitas.conduit_block" : "Conduit Block",
+  "block.aequitas.primal_catalyst" : "Primal Catalyst",
+  "block.aequitas.primordial_catalyst" : "Primordial Catalyst",
+  "block.aequitas.pristine_catalyst" : "Pristine Catalyst",
+  "block.aequitas.collection_bowl_1" : "Collection Bowl I",
+  "block.aequitas.collection_bowl_2" : "Collection Bowl II",
+  "block.aequitas.collection_bowl_3" : "Collection Bowl III",
+  "block.aequitas.primal_essence_block" : "Primal Essence Block",
+  "block.aequitas.primordial_essence_block" : "Primordial Essence Block",
+  "block.aequitas.pristine_essence_block" : "Pristine Essence Block"
 }

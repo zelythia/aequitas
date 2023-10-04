@@ -12,7 +12,6 @@ import net.zelythia.aequitas.Aequitas;
 
 public class CollectionBowlScreenHandler extends ScreenHandler {
     private final Inventory inventory;
-    public int inventorySize;
 
     //Called from client, inventory is synced later
     public CollectionBowlScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
@@ -24,7 +23,6 @@ public class CollectionBowlScreenHandler extends ScreenHandler {
     public CollectionBowlScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory) {
         super(Aequitas.COLLECTION_BOWL_SCREEN_HANDLER, syncId);
         this.inventory = inventory;
-        this.inventorySize = inventory.size();
         inventory.onOpen(playerInventory.player);
 
         int m;
@@ -32,10 +30,10 @@ public class CollectionBowlScreenHandler extends ScreenHandler {
 
         //Adding the slots
 
-        if(inventorySize == 1){
+        if(inventory.size() == 1){
             this.addSlot(new OutputSlot(inventory, 0, 80, 35));
         }
-        else if(inventorySize == 9){
+        else if(inventory.size() == 9){
             for(m = 0; m < 3; ++m) {
                 for(l = 0; l < 3; ++l) {
                     this.addSlot(new OutputSlot(inventory, l + m * 3, 62 + l * 18, 17 + m * 18));
@@ -95,6 +93,6 @@ public class CollectionBowlScreenHandler extends ScreenHandler {
     }
 
     public int getSize(){
-        return inventorySize;
+        return inventory.size();
     }
 }

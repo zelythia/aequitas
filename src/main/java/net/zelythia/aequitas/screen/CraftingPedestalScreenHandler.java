@@ -5,12 +5,9 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
 import net.zelythia.aequitas.Aequitas;
-import org.jetbrains.annotations.Nullable;
 
 public class CraftingPedestalScreenHandler extends ScreenHandler {
     private final Inventory inventory;
@@ -54,8 +51,6 @@ public class CraftingPedestalScreenHandler extends ScreenHandler {
         for (m = 0; m < 9; ++m) {
             this.addSlot(new Slot(playerInventory, m, 8 + m * 18, 142));
         }
-
-        System.out.println("");
     }
 
     @Override

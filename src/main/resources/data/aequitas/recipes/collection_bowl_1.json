@@ -2,18 +2,21 @@
   "type" : "minecraft:crafting_shaped",
   "pattern" : [
     "E E",
-    "EBE",
+    "QBQ",
     "SSS"
   ],
   "key" : {
     "B" : {
-      "item" : "minecraft:"
+      "item" : "aequitas:primal_essence_block"
     },
     "S" : {
-      "item" : "minecraft:diamond"
+      "item" : "aequitas:conduit_block"
     },
     "E" : {
       "item": "aequitas:primal_essence"
+    },
+    "Q" : {
+      "item": "minecraft:quartz_block"
     }
   },
   "result" : {

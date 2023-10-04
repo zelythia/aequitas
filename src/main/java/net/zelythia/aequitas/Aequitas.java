@@ -1,28 +1,38 @@
 package net.zelythia.aequitas;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
+import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
-import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
+import net.minecraft.loot.*;
+import net.minecraft.loot.entry.EmptyEntry;
+import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.loot.entry.LeafEntry;
+import net.minecraft.loot.function.LimitCountLootFunction;
+import net.minecraft.loot.function.SetCountLootFunction;
+import net.minecraft.loot.operator.BoundedIntUnaryOperator;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.screen.ScreenHandlerType;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.ConfiguredFeatures;
+import net.minecraft.world.gen.feature.Feature;
 import net.zelythia.aequitas.block.*;
 import net.zelythia.aequitas.block.ConduitBlock;
 import net.zelythia.aequitas.block.entity.CollectionBowlBlockEntity;
@@ -32,11 +42,12 @@ import net.zelythia.aequitas.networking.EssencePacket;
 import net.zelythia.aequitas.networking.NetworkingHandler;
 import net.zelythia.aequitas.screen.CollectionBowlScreenHandler;
 import net.zelythia.aequitas.screen.CraftingPedestalScreenHandler;
+import net.zelythia.aequitas.world.gen.EssencePillarFeature;
+import net.zelythia.aequitas.world.gen.EssencePillarFeatureConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
-import java.util.function.ToIntFunction;
 
 public class Aequitas implements ModInitializer {
 
@@ -100,38 +111,46 @@ public class Aequitas implements ModInitializer {
     public static final ScreenHandlerType<CollectionBowlScreenHandler> COLLECTION_BOWL_SCREEN_HANDLER;
 
 
-    public static final DefaultParticleType CRAFTING_PARTICLE = FabricParticleTypes.simple();
+    public static final Identifier ESSENCE_PILLAR_FEATURE_ID = new Identifier(MOD_ID, "essence_pillar_feature");
+    public static final Feature<EssencePillarFeatureConfig> ESSENCE_PILLAR_FEATURE;
+    public static final ConfiguredFeature<EssencePillarFeatureConfig, EssencePillarFeature> CONFIGURED_ESSENCE_PILLAR_FEATURE;
 
-    public static MinecraftServer server;
 
     static {
         ITEM_GROUP = FabricItemGroupBuilder.build(new Identifier(MOD_ID, "aequitas_group"), () -> new ItemStack(CRAFTING_PEDESTAL_BLOCK));
 
         //Blocks
-        CONDUIT_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "conduit_block"), new ConduitBlock(AbstractBlock.Settings.of(Material.STONE).luminance((blockState) -> (Boolean)blockState.get(ACTIVE_BLOCK_PROPERTY) ? 13 : 0)));
-        CATALYST_BLOCK_I = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "catalyst_1"), new CatalystBlock(AbstractBlock.Settings.of(Material.METAL).luminance((blockState) -> (Boolean)blockState.get(ACTIVE_BLOCK_PROPERTY) ? 15 : 0)));
-        CATALYST_BLOCK_II = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "catalyst_2"), new CatalystBlock(AbstractBlock.Settings.of(Material.METAL).luminance((blockState) -> (Boolean)blockState.get(ACTIVE_BLOCK_PROPERTY) ? 15 : 0)));
-        CATALYST_BLOCK_III = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "catalyst_3"), new CatalystBlock(AbstractBlock.Settings.of(Material.METAL).luminance((blockState) -> (Boolean)blockState.get(ACTIVE_BLOCK_PROPERTY) ? 15 : 0)));
+        PRIMAL_ESSENCE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "primal_essence_block"), new Block(AbstractBlock.Settings.of(Material.GLASS, MapColor.GREEN).strength(0.3F)));
+        PRIMORDIAL_ESSENCE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "primordial_essence_block"), new Block(AbstractBlock.Settings.of(Material.GLASS, MapColor.BLUE).strength(0.3F)));
+        PRISTINE_ESSENCE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "pristine_essence_block"), new Block(AbstractBlock.Settings.of(Material.GLASS, MapColor.WHITE).strength(0.3F)));
+        CONDUIT_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "conduit_block"), new ConduitBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).requiresTool().strength(1.8F).luminance((blockState) -> (Boolean)blockState.get(ACTIVE_BLOCK_PROPERTY) ? 13 : 0)));
+        CATALYST_BLOCK_I = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "primal_catalyst"), new CatalystBlock(AbstractBlock.Settings.of(Material.GLASS, MapColor.GREEN).strength(0.3F).luminance((blockState) -> (Boolean)blockState.get(ACTIVE_BLOCK_PROPERTY) ? 15 : 0), 1));
+        CATALYST_BLOCK_II = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "primordial_catalyst"), new CatalystBlock(AbstractBlock.Settings.of(Material.GLASS, MapColor.BLUE).strength(0.3F).luminance((blockState) -> (Boolean)blockState.get(ACTIVE_BLOCK_PROPERTY) ? 15 : 0), 2));
+        CATALYST_BLOCK_III = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "pristine_catalyst"), new CatalystBlock(AbstractBlock.Settings.of(Material.GLASS, MapColor.WHITE).strength(0.3F).luminance((blockState) -> (Boolean)blockState.get(ACTIVE_BLOCK_PROPERTY) ? 15 : 0), 3));
+        COLLECTION_BOWL_BLOCK_I = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "collection_bowl_1"), new CollectionBowlBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(1.8F),1));
+        COLLECTION_BOWL_BLOCK_II = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "collection_bowl_2"), new CollectionBowlBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(1.8F),9));
+        COLLECTION_BOWL_BLOCK_III = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "collection_bowl_3"), new CollectionBowlBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(1.8F),15));
 
+        PEDESTAL_BLOCK = Registry.register(Registry.BLOCK, PEDESTAL, new PedestalBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).requiresTool().strength(1.25F, 4.2F)));
+        CRAFTING_PEDESTAL_BLOCK = Registry.register(Registry.BLOCK, CRAFTING_PEDESTAL, new CraftingPedestalBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).requiresTool().strength(1.25F, 4.2F)));
+        SAMPLING_PEDESTAL_BLOCK = Registry.register(Registry.BLOCK, SAMPLING_PEDESTAL, new SamplingPedestalBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).requiresTool().strength(1.25F, 4.2F)));
 
-        PEDESTAL_BLOCK = Registry.register(Registry.BLOCK, PEDESTAL, new PedestalBlock(AbstractBlock.Settings.of(Material.STONE, MaterialColor.BLACK).requiresTool().strength(1.25F, 4.2F)));
-        CRAFTING_PEDESTAL_BLOCK = Registry.register(Registry.BLOCK, CRAFTING_PEDESTAL, new CraftingPedestalBlock(AbstractBlock.Settings.of(Material.STONE, MaterialColor.BLACK).requiresTool().strength(1.25F, 4.2F)));
-        SAMPLING_PEDESTAL_BLOCK = Registry.register(Registry.BLOCK, SAMPLING_PEDESTAL, new SamplingPedestalBlock(AbstractBlock.Settings.of(Material.STONE, MaterialColor.BLACK).requiresTool().strength(1.25F, 4.2F)));
-
-        COLLECTION_BOWL_BLOCK_I = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "collection_bowl_1"), new CollectionBowlBlock(AbstractBlock.Settings.of(Material.GLASS),1));
-        COLLECTION_BOWL_BLOCK_II = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "collection_bowl_2"), new CollectionBowlBlock(AbstractBlock.Settings.of(Material.GLASS),9));
-        COLLECTION_BOWL_BLOCK_III = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "collection_bowl_3"), new CollectionBowlBlock(AbstractBlock.Settings.of(Material.GLASS),15));
-
-        PRIMAL_ESSENCE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "primal_essence_block"), new Block(AbstractBlock.Settings.of(Material.GLASS, MaterialColor.WHITE)));
-        PRIMORDIAL_ESSENCE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "primordial_essence_block"), new Block(AbstractBlock.Settings.of(Material.GLASS, MaterialColor.WHITE)));
-        PRISTINE_ESSENCE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "pristine_essence_block"), new Block(AbstractBlock.Settings.of(Material.GLASS, MaterialColor.WHITE)));
 
         //Items
-        CONDUIT_BLOCK_ITEM = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "conduit_block"), new BlockItem(CONDUIT_BLOCK, new Item.Settings().group(ITEM_GROUP)));
-        CATALYST_BLOCK_ITEM_I = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "catalyst_1"), new BlockItem(CATALYST_BLOCK_I, new Item.Settings().group(ITEM_GROUP)));
-        CATALYST_BLOCK_ITEM_II = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "catalyst_2"), new BlockItem(CATALYST_BLOCK_II, new Item.Settings().group(ITEM_GROUP)));
-        CATALYST_BLOCK_ITEM_III = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "catalyst_3"), new BlockItem(CATALYST_BLOCK_III, new Item.Settings().group(ITEM_GROUP)));
+        PRIMAL_ESSENCE = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primal_essence"), new Item(new Item.Settings().group(ITEM_GROUP)));
+        PRIMORDIAL_ESSENCE = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primordial_essence"), new Item(new Item.Settings().group(ITEM_GROUP)));
+        PRISTINE_ESSENCE = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "pristine_essence"), new Item(new Item.Settings().group(ITEM_GROUP)));
+        PRIMAL_ESSENCE_BLOCK_ITEM = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primal_essence_block"), new BlockItem(PRIMAL_ESSENCE_BLOCK, new Item.Settings().group(ITEM_GROUP)));
+        PRIMORDIAL_ESSENCE_BLOCK_ITEM = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primordial_essence_block"), new BlockItem(PRIMORDIAL_ESSENCE_BLOCK, new Item.Settings().group(ITEM_GROUP)));
+        PRISTINE_ESSENCE_BLOCK_ITEM = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "pristine_essence_block"), new BlockItem(PRISTINE_ESSENCE_BLOCK, new Item.Settings().group(ITEM_GROUP)));
 
+        CONDUIT_BLOCK_ITEM = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "conduit_block"), new BlockItem(CONDUIT_BLOCK, new Item.Settings().group(ITEM_GROUP)));
+        CATALYST_BLOCK_ITEM_I = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primal_catalyst"), new BlockItem(CATALYST_BLOCK_I, new Item.Settings().group(ITEM_GROUP)));
+        CATALYST_BLOCK_ITEM_II = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primordial_catalyst"), new BlockItem(CATALYST_BLOCK_II, new Item.Settings().group(ITEM_GROUP)));
+        CATALYST_BLOCK_ITEM_III = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "pristine_catalyst"), new BlockItem(CATALYST_BLOCK_III, new Item.Settings().group(ITEM_GROUP)));
+        COLLECTION_BOWL_BLOCK_ITEM_I = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "collection_bowl_1"), new BlockItem(COLLECTION_BOWL_BLOCK_I, new Item.Settings().group(ITEM_GROUP)));
+        COLLECTION_BOWL_BLOCK_ITEM_II = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "collection_bowl_2"), new BlockItem(COLLECTION_BOWL_BLOCK_II, new Item.Settings().group(ITEM_GROUP)));
+        COLLECTION_BOWL_BLOCK_ITEM_III = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "collection_bowl_3"), new BlockItem(COLLECTION_BOWL_BLOCK_III, new Item.Settings().group(ITEM_GROUP)));
 
         SAMPLING_PEDESTAL_CORE = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "sampling_pedestal_core"), new Item(new Item.Settings().group(ITEM_GROUP)));
         CRAFTING_PEDESTAL_CORE = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "crafting_pedestal_core"), new Item(new Item.Settings().group(ITEM_GROUP)));
@@ -139,17 +158,6 @@ public class Aequitas implements ModInitializer {
         PEDESTAL_BLOCK_ITEM = Registry.register(Registry.ITEM, PEDESTAL, new BlockItem(PEDESTAL_BLOCK, new Item.Settings().group(ITEM_GROUP)));
         CRAFTING_PEDESTAL_BLOCK_ITEM = Registry.register(Registry.ITEM, CRAFTING_PEDESTAL, new BlockItem(CRAFTING_PEDESTAL_BLOCK, new Item.Settings().group(ITEM_GROUP)));
         SAMPLING_PEDESTAL_BLOCK_ITEM = Registry.register(Registry.ITEM, SAMPLING_PEDESTAL, new BlockItem(SAMPLING_PEDESTAL_BLOCK, new Item.Settings().group(ITEM_GROUP)));
-
-        COLLECTION_BOWL_BLOCK_ITEM_I = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "collection_bowl_1"), new BlockItem(COLLECTION_BOWL_BLOCK_I, new Item.Settings().group(ITEM_GROUP)));
-        COLLECTION_BOWL_BLOCK_ITEM_II = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "collection_bowl_2"), new BlockItem(COLLECTION_BOWL_BLOCK_II, new Item.Settings().group(ITEM_GROUP)));
-        COLLECTION_BOWL_BLOCK_ITEM_III = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "collection_bowl_3"), new BlockItem(COLLECTION_BOWL_BLOCK_III, new Item.Settings().group(ITEM_GROUP)));
-
-        PRIMAL_ESSENCE = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primal_essence"), new Item(new Item.Settings().group(ITEM_GROUP)));
-        PRIMORDIAL_ESSENCE = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primordial_essence"), new Item(new Item.Settings().group(ITEM_GROUP)));
-        PRISTINE_ESSENCE = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "pristine_essence"), new Item(new Item.Settings().group(ITEM_GROUP)));
-        PRIMAL_ESSENCE_BLOCK_ITEM = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primal_essence_block"), new BlockItem(PRIMAL_ESSENCE_BLOCK, new Item.Settings().group(ITEM_GROUP)));
-        PRIMORDIAL_ESSENCE_BLOCK_ITEM = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primordial_essence_block"), new BlockItem(PRIMORDIAL_ESSENCE_BLOCK, new Item.Settings().group(ITEM_GROUP)));
-        PRISTINE_ESSENCE_BLOCK_ITEM = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "pristine_essence_block"), new BlockItem(PRISTINE_ESSENCE_BLOCK, new Item.Settings().group(ITEM_GROUP)));
 
         //Entities
         CRAFTING_PEDESTAL_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, CRAFTING_PEDESTAL, BlockEntityType.Builder.create(CraftingPedestalBlockEntity::new, CRAFTING_PEDESTAL_BLOCK).build(null));
@@ -161,16 +169,23 @@ public class Aequitas implements ModInitializer {
         //Screens
         CRAFTING_PEDESTAL_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(CRAFTING_PEDESTAL, CraftingPedestalScreenHandler::new);
         COLLECTION_BOWL_SCREEN_HANDLER = ScreenHandlerRegistry.registerExtended(new Identifier("collection_bowl"), CollectionBowlScreenHandler::new);
+
+
+        ESSENCE_PILLAR_FEATURE = Registry.register(Registry.FEATURE, ESSENCE_PILLAR_FEATURE_ID, new EssencePillarFeature(EssencePillarFeatureConfig.CODEC));
+        CONFIGURED_ESSENCE_PILLAR_FEATURE = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, ESSENCE_PILLAR_FEATURE_ID, (ConfiguredFeature)ESSENCE_PILLAR_FEATURE
+                .configure(new EssencePillarFeatureConfig(10, Blocks.QUARTZ_BLOCK.getDefaultState()))
+                .decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP)
+                .applyChance(80)
+        );
+
     }
 
     @Override
     public void onInitialize() {
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ResourceLoader());
 
-        Registry.register(Registry.PARTICLE_TYPE, new Identifier(MOD_ID, "crafting_particle"), CRAFTING_PARTICLE);
-
         ServerLifecycleEvents.SERVER_STARTING.register(server -> {
-            Aequitas.server = server;
+            NetworkingHandler.setServer(server);
             EssenceHandler.registerRecipeManager(server.getRecipeManager());
             EssenceHandler.reloadEssenceValues(new HashMap<>());
         });
@@ -181,9 +196,25 @@ public class Aequitas implements ModInitializer {
 
             sender.sendPacket(NetworkingHandler.ESSENCE_UPDATE, buf);
         });
+
+        BiomeModifications.addFeature(
+                BiomeSelectors.foundInOverworld(),
+                GenerationStep.Feature.SURFACE_STRUCTURES,
+                RegistryKey.of(Registry.CONFIGURED_FEATURE_WORLDGEN, ESSENCE_PILLAR_FEATURE_ID)
+        );
+
+
+        LootTableLoadingCallback.EVENT.register((resourceManager, lootManager, id, supplier, setter) -> {
+            if(id.toString().startsWith("minecraft:blocks") || id.toString().startsWith("minecraft:entities")) return;
+            if(id.equals(LootTables.DESERT_PYRAMID_CHEST) || id.equals(LootTables.SHIPWRECK_TREASURE_CHEST)){
+                LootPool.Builder poolBuilder = LootPool.builder()
+                    .with(ItemEntry.builder(Aequitas.PRIMAL_ESSENCE).apply(SetCountLootFunction.builder(UniformLootTableRange.between(1, 4))).weight(4))
+                    .with(ItemEntry.builder(Aequitas.PRIMORDIAL_ESSENCE).apply(SetCountLootFunction.builder(UniformLootTableRange.between(1, 4))).weight(2))
+                    .with(ItemEntry.builder(Aequitas.PRISTINE_ESSENCE).apply(SetCountLootFunction.builder(UniformLootTableRange.between(1, 4))).weight(1))
+                    .with(EmptyEntry.Serializer().weight(7));
+
+                supplier.pool(poolBuilder);
+            }
+        });
     }
-
-
-
-
 }

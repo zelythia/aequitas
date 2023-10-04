@@ -18,6 +18,4 @@ public class ConduitBlock extends PillarBlock {
         super.appendProperties(builder);
         builder.add(Aequitas.ACTIVE_BLOCK_PROPERTY);
     }
-
-
 }

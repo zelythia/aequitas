@@ -8,7 +8,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
-import net.minecraft.resource.ResourceReloadListener;
 import net.minecraft.tag.ServerTagManagerHolder;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
@@ -41,7 +40,9 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
         return new Identifier(Aequitas.MOD_ID, "essence_loader");
     }
 
-    public CompletableFuture<Void> reload(ResourceReloadListener.Synchronizer synchronizer, ResourceManager manager, Profiler prepareProfiler, Profiler applyProfiler, Executor prepareExecutor, Executor applyExecutor) {
+
+    @Override
+    public CompletableFuture<Void> reload(Synchronizer synchronizer, ResourceManager manager, Profiler prepareProfiler, Profiler applyProfiler, Executor prepareExecutor, Executor applyExecutor) {
         CompletableFuture<Map<String, Long>> completableFuture = customEssenceLoader.prepareReload(manager, prepareExecutor);
         CompletableFuture<Map<String, Long>> completableFuture2 = customCraftingCostLoader.prepareReload(manager, prepareExecutor);
         CompletableFuture<Map<Item, List<ItemStack>>> completableFuture3 = customRecipeLoader.prepareReload(manager, prepareExecutor);

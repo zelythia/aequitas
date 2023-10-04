@@ -3,7 +3,7 @@
     "crafting" : 0,
     "smelting" : 16,
     "blasting" : 8,
-    "smoking" : 6,
+    "smoking" : 8,
     "campfire_cooking" : 0,
     "stonecutting" : 0,
     "smithing" : 0
@@ -189,6 +189,11 @@
     "#minecraft:saplings" : 64,
     "#minecraft:small_flowers" : 16,
     "#minecraft:tall_flowers" : 32,
-    "#minecraft:leaves" : 1
+    "#minecraft:leaves" : 1,
+
+
+    "aequitas:primal_essence" : 32768,
+    "aequitas:primordial_essence" : 65536,
+    "aequitas:pristine_essence" : 131072
   }
 }

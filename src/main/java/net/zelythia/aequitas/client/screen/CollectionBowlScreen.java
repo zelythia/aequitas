@@ -8,7 +8,6 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.screen.CollectionBowlScreenHandler;
-import net.zelythia.aequitas.screen.CraftingPedestalScreenHandler;
 
 public class CollectionBowlScreen extends HandledScreen<CollectionBowlScreenHandler> {
 

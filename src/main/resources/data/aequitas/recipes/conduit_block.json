@@ -1,0 +1,23 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "pattern" : [
+    "GGG",
+    "BEG",
+    "BBB"
+  ],
+  "key" : {
+    "G" : {
+      "item" : "minecraft:gray_concrete"
+    },
+    "B" : {
+      "item" : "minecraft:black_concrete"
+    },
+    "E" : {
+      "item": "aequitas:primal_essence"
+    }
+  },
+  "result" : {
+    "item" : "aequitas:conduit_block",
+    "count" : 4
+  }
+}

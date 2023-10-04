@@ -7,7 +7,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.world.ServerWorld;
@@ -65,16 +65,16 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
     }
 
     @Override
-    public CompoundTag toTag(CompoundTag tag) {
-        super.toTag(tag);
-        Inventories.toTag(tag, this.inventory);
+    public NbtCompound writeNbt(NbtCompound tag) {
+        super.writeNbt(tag);
+        Inventories.writeNbt(tag, this.inventory);
         return tag;
     }
 
     @Override
-    public void fromTag(BlockState state, CompoundTag tag) {
+    public void fromTag(BlockState state, NbtCompound tag) {
         super.fromTag(state, tag);
-        Inventories.fromTag(tag, this.inventory);
+        Inventories.readNbt(tag, this.inventory);
     }
 
     public long getStoredEssence(){

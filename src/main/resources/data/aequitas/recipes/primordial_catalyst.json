@@ -1,0 +1,20 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "pattern" : [
+    " E ",
+    "ECE",
+    " E "
+  ],
+  "key" : {
+    "C" : {
+      "item": "aequitas:primal_catalyst"
+    },
+    "E" : {
+      "item": "aequitas:primordial_essence"
+    }
+  },
+  "result" : {
+    "item" : "aequitas:primordial_catalyst",
+    "count" : 1
+  }
+}

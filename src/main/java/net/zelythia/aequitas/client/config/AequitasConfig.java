@@ -12,6 +12,7 @@ public class AequitasConfig {
         return "#Aequitas config\n" +
                 "#Constantly shows the essence value as a tooltip\n" +
                 "showTooltip=false\n" +
+                "playAmbientSound=true" +
                 "";
     }
 }
