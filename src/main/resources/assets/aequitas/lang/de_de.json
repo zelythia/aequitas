@@ -1,0 +1,28 @@
+{
+  "config.waila.plugin_aequitas" : "Aequtias",
+  "config.waila.plugin_aequitas.sampling_pedestal": "Dekonstruktions Podest",
+  "config.waila.plugin_aequitas.sampling_pedestal_desc": "Zeigt den Gegenstand und die Anzahl des Dekonstruktions Podests",
+  "config.waila.plugin_aequitas.crafting_pedestal": "Herstellungs Podest",
+  "config.waila.plugin_aequitas.crafting_pedestal_desc": "Zeigt die gespeicherte und die benötigte Essenz des Herstellungs Podests",
+
+
+  "item.aequitas.sampling_pedestal_core" : "Dekonstruktions Podest Kern",
+  "item.aequitas.crafting_pedestal_core" : "Herstellungs Podest Kern",
+  "item.aequitas.primal_essence" : "Ur-Essenz",
+  "item.aequitas.primordial_essence" : "Urweltliche Essenz",
+  "item.aequitas.pristine_essence" : "Ursprüngliche Essenz",
+
+  "block.aequitas.pedestal" : "Podest",
+  "block.aequitas.crafting_pedestal" : "Herstellungs Podest",
+  "block.aequitas.sampling_pedestal" : "Dekonstruktions Podest",
+  "block.aequitas.conduit_block" : "Führungs-Block",
+  "block.aequitas.primal_catalyst" : "Ur-Katalysator",
+  "block.aequitas.primordial_catalyst" : "Urweltlicher Katalysator",
+  "block.aequitas.pristine_catalyst" : "Ursprünglicher Katalysator",
+  "block.aequitas.collection_bowl_1" : "Sammelschüssel I",
+  "block.aequitas.collection_bowl_2" : "Sammelschüssel II",
+  "block.aequitas.collection_bowl_3" : "Sammelschüssel III",
+  "block.aequitas.primal_essence_block" : "Ur-Essenzblock",
+  "block.aequitas.primordial_essence_block" : "Urweltlicher Essenzblock",
+  "block.aequitas.pristine_essence_block" : "Ursprünglicher Essenzblock"
+}
