@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.7-SNAPSHOT'
+	id 'fabric-loom' version '1.3-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -19,16 +19,9 @@ repositories {
 			includeGroup "mcp.mobius.waila"
 		}
 	}
-	maven {
-		// location of the maven that hosts JEI files
-		name = "Progwml6 maven"
-		url = "https://dvs1.progwml6.com/files/maven/"
-	}
-	maven {
-		// location of a maven mirror for JEI files, as a fallback
-		name = "ModMaven"
-		url = "https://modmaven.dev"
-	}
+	//REI
+	maven { url "https://maven.shedaniel.me/" }
+	maven { url "https://maven.architectury.dev/" }
 }
 
 dependencies {
@@ -40,15 +33,13 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
+
 	modImplementation("com.terraformersmc:modmenu:${rootProject.modmenu_version}") {
 		transitive = false
 	}
 
 	modCompileOnly "mcp.mobius.waila:wthit-api:fabric-${wthitVersion}"
-	modRuntime "mcp.mobius.waila:wthit:fabric-${wthitVersion}"
-
-	compileOnly "mezz.jei:jei-${project.minecraft_version}:${project.jei_version}:api"
-	runtimeOnly "mezz.jei:jei-${project.minecraft_version}:${project.jei_version}"
+	modRuntimeOnly "mcp.mobius.waila:wthit:fabric-${wthitVersion}"
 }
 
 processResources {
