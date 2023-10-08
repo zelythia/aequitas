@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
@@ -13,14 +12,14 @@ import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
-import net.minecraft.loot.*;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTables;
+import net.minecraft.loot.UniformLootTableRange;
 import net.minecraft.loot.entry.EmptyEntry;
 import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.entry.LeafEntry;
-import net.minecraft.loot.function.LimitCountLootFunction;
 import net.minecraft.loot.function.SetCountLootFunction;
-import net.minecraft.loot.operator.BoundedIntUnaryOperator;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.screen.ScreenHandlerType;
@@ -33,11 +32,13 @@ import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.ConfiguredFeatures;
 import net.minecraft.world.gen.feature.Feature;
-import net.zelythia.aequitas.block.*;
 import net.zelythia.aequitas.block.ConduitBlock;
+import net.zelythia.aequitas.block.*;
 import net.zelythia.aequitas.block.entity.CollectionBowlBlockEntity;
 import net.zelythia.aequitas.block.entity.CraftingPedestalBlockEntity;
 import net.zelythia.aequitas.block.entity.SamplingPedestalBlockEntity;
+import net.zelythia.aequitas.item.ArmorMaterials;
+import net.zelythia.aequitas.item.PristineArmorItem;
 import net.zelythia.aequitas.networking.EssencePacket;
 import net.zelythia.aequitas.networking.NetworkingHandler;
 import net.zelythia.aequitas.screen.CollectionBowlScreenHandler;
@@ -116,6 +117,22 @@ public class Aequitas implements ModInitializer {
     public static final ConfiguredFeature<EssencePillarFeatureConfig, EssencePillarFeature> CONFIGURED_ESSENCE_PILLAR_FEATURE;
 
 
+    public static final Item PRIMAL_ESSENCE_HELMET;
+    public static final Item PRIMAL_ESSENCE_CHESTPLATE;
+    public static final Item PRIMAL_ESSENCE_LEGGINGS;
+    public static final Item PRIMAL_ESSENCE_BOOTS;
+
+    public static final Item PRIMORDIAL_ESSENCE_HELMET;
+    public static final Item PRIMORDIAL_ESSENCE_CHESTPLATE;
+    public static final Item PRIMORDIAL_ESSENCE_LEGGINGS;
+    public static final Item PRIMORDIAL_ESSENCE_BOOTS;
+
+    public static final Item PRISTINE_ESSENCE_HELMET;
+    public static final Item PRISTINE_ESSENCE_CHESTPLATE;
+    public static final Item PRISTINE_ESSENCE_LEGGINGS;
+    public static final Item PRISTINE_ESSENCE_BOOTS;
+
+
     static {
         ITEM_GROUP = FabricItemGroupBuilder.build(new Identifier(MOD_ID, "aequitas_group"), () -> new ItemStack(CRAFTING_PEDESTAL_BLOCK));
 
@@ -178,6 +195,20 @@ public class Aequitas implements ModInitializer {
                 .applyChance(80)
         );
 
+        PRIMAL_ESSENCE_HELMET = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primal_essence_helmet"), new ArmorItem(ArmorMaterials.PRIMAL, EquipmentSlot.HEAD, new Item.Settings().group(ITEM_GROUP)));
+        PRIMAL_ESSENCE_CHESTPLATE = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primal_essence_chestplate"), new PristineArmorItem(ArmorMaterials.PRIMAL, EquipmentSlot.CHEST, new Item.Settings().group(ITEM_GROUP)));
+        PRIMAL_ESSENCE_LEGGINGS = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primal_essence_leggings"), new ArmorItem(ArmorMaterials.PRIMAL, EquipmentSlot.LEGS, new Item.Settings().group(ITEM_GROUP)));
+        PRIMAL_ESSENCE_BOOTS = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primal_essence_boots"), new ArmorItem(ArmorMaterials.PRIMAL, EquipmentSlot.FEET, new Item.Settings().group(ITEM_GROUP)));
+
+        PRIMORDIAL_ESSENCE_HELMET = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primordial_essence_helmet"), new ArmorItem(ArmorMaterials.PRIMORDIAL, EquipmentSlot.HEAD, new Item.Settings().group(ITEM_GROUP)));
+        PRIMORDIAL_ESSENCE_CHESTPLATE = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primordial_essence_chestplate"), new PristineArmorItem(ArmorMaterials.PRIMORDIAL, EquipmentSlot.CHEST, new Item.Settings().group(ITEM_GROUP)));
+        PRIMORDIAL_ESSENCE_LEGGINGS = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primordial_essence_leggings"), new ArmorItem(ArmorMaterials.PRIMORDIAL, EquipmentSlot.LEGS, new Item.Settings().group(ITEM_GROUP)));
+        PRIMORDIAL_ESSENCE_BOOTS = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primordial_essence_boots"), new ArmorItem(ArmorMaterials.PRIMORDIAL, EquipmentSlot.FEET, new Item.Settings().group(ITEM_GROUP)));
+
+        PRISTINE_ESSENCE_HELMET = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "pristine_essence_helmet"), new ArmorItem(ArmorMaterials.PRISTINE, EquipmentSlot.HEAD, new Item.Settings().group(ITEM_GROUP)));
+        PRISTINE_ESSENCE_CHESTPLATE = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "pristine_essence_chestplate"), new PristineArmorItem(ArmorMaterials.PRISTINE, EquipmentSlot.CHEST, new Item.Settings().group(ITEM_GROUP)));
+        PRISTINE_ESSENCE_LEGGINGS = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "pristine_essence_leggings"), new ArmorItem(ArmorMaterials.PRISTINE, EquipmentSlot.LEGS, new Item.Settings().group(ITEM_GROUP)));
+        PRISTINE_ESSENCE_BOOTS = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "pristine_essence_boots"), new ArmorItem(ArmorMaterials.PRISTINE, EquipmentSlot.FEET, new Item.Settings().group(ITEM_GROUP)));
     }
 
     @Override
