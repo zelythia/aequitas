@@ -2,8 +2,10 @@ package net.zelythia.aequitas;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraft.recipe.*;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.registry.Registry;
 import net.zelythia.aequitas.networking.NetworkingHandler;
 
 import java.util.*;
@@ -69,7 +71,15 @@ public class EssenceHandler {
             customRecipes.forEach(RecipeMapper::calculateCustomRecipeValue);
 
             Aequitas.LOGGER.info("Finished mapping recipes. Time elapsed: {}ms", System.currentTimeMillis() - startTime);
-            Aequitas.LOGGER.error("Could not calculate essence values: "+ no_value );
+            if(no_value.size() > 0) Aequitas.LOGGER.error("Could not calculate essence values: " + no_value);
+
+            List<Item> noValue = new ArrayList<>();
+            Registry.ITEM.getEntries().forEach(registryKeyItemEntry -> {
+                if(!map.containsKey(registryKeyItemEntry.getValue())){
+                    if(!(registryKeyItemEntry.getValue() instanceof SpawnEggItem)) noValue.add(registryKeyItemEntry.getValue());
+                }
+            });
+            if(noValue.size() > 0) Aequitas.LOGGER.error("Could not calculate essence values: " + noValue);
         }
 
 
