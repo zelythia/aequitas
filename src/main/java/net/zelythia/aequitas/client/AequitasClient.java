@@ -6,7 +6,11 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Style;
@@ -22,6 +26,8 @@ import net.zelythia.aequitas.client.particle.Particles;
 import net.zelythia.aequitas.client.screen.CollectionBowlScreen;
 import net.zelythia.aequitas.client.screen.CraftingPedestalScreen;
 import net.zelythia.aequitas.networking.NetworkingHandler;
+
+import static net.minecraft.client.gui.DrawableHelper.drawStringWithShadow;
 
 @Environment(EnvType.CLIENT)
 public class AequitasClient implements ClientModInitializer {
@@ -49,5 +55,10 @@ public class AequitasClient implements ClientModInitializer {
                 if(value >= 0L) lines.add(new LiteralText(s).setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
             }
         });
+
+
+//        HudRenderCallback.EVENT.register((matrixStack, tickDelta) -> {
+//            DrawableHelper.drawStringWithShadow(matrixStack, MinecraftClient.getInstance().textRenderer, "Hello World!", 10, 10, 0xFFFFFF);
+//        });
     }
 }
