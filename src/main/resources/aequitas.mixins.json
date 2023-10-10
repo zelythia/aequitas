@@ -4,9 +4,12 @@
   "package": "net.zelythia.aequitas.client.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "LivingEntityMixin",
+    "PlayerEntityMixin"
   ],
   "client": [
     "ClientPlayerEntityMixin",
+    "InGameHudMixin",
     "SpriteMixin"
   ],
   "server": [],

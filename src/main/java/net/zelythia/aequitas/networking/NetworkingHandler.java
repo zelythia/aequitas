@@ -3,12 +3,14 @@ package net.zelythia.aequitas.networking;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.texture.NativeImage;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -18,12 +20,13 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.EssenceHandler;
+import net.zelythia.aequitas.Util;
 import net.zelythia.aequitas.block.entity.CollectionBowlBlockEntity;
 import net.zelythia.aequitas.block.entity.CraftingPedestalBlockEntity;
 import net.zelythia.aequitas.client.mixin.SpriteMixin;
 import net.zelythia.aequitas.client.particle.CraftingParticle;
 import net.zelythia.aequitas.client.particle.Particles;
-import net.zelythia.aequitas.Util;
+import net.zelythia.aequitas.item.FallFlying;
 
 import java.util.Map;
 
@@ -34,6 +37,18 @@ public class NetworkingHandler {
     public static final Identifier ESSENCE_UPDATE = new Identifier(Aequitas.MOD_ID, "essence_event");
     public static final Identifier CRAFTING_PARTICLE = new Identifier(Aequitas.MOD_ID, "crafting_particle");
     public static final Identifier COLLECTION_PROGRESS = new Identifier(Aequitas.MOD_ID, "collection_progress");
+
+    public static final Identifier START_FLYING = new Identifier(Aequitas.MOD_ID, "start_flying");
+
+    public static void onInitialize(){
+        ServerSidePacketRegistry.INSTANCE.register(START_FLYING, ((packetContext, packetByteBuf) -> packetContext.getTaskQueue().execute(() -> {
+            PlayerEntity playerEntity = packetContext.getPlayer();
+
+            if (playerEntity != null && !FallFlying.startFallFlying(playerEntity)) {
+                playerEntity.stopFallFlying();
+            }
+        })));
+    }
 
 
     @Environment(EnvType.CLIENT)
