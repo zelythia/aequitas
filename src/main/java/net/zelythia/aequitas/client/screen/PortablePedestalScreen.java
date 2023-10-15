@@ -46,7 +46,6 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
         textureZeroX = ((width - backgroundWidth) / 2);
         textureZeroY = ((height - backgroundHeight) / 2);
 
-//        titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2;
         searchBox = new TextFieldWidget(this.textRenderer, textureZeroX+61, textureZeroY+16, 107, 11, new LiteralText("Search"));
 
         TexturedButtonWidget pageUp = new TexturedButtonWidget(textureZeroX+154, textureZeroY+33, 13, 13, 177, 0, 13, TEXTURE, button -> {
@@ -111,7 +110,8 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
         if(mouseX >= textureZeroX+53 && mouseX <= textureZeroX+143){
             if(mouseY >= textureZeroY+32 && mouseY <= textureZeroY+68){
                 if(amount < 0){
-                    if(!handler.inventory.getStack(10).isEmpty()){
+                    if(!handler.inventory.getStack(10).isEmpty() && page < handler.inventory.maxPage){
+                        Aequitas.LOGGER.info(page+"/"+handler.inventory.maxPage);
                         page++;
                         updateSearchProperties();
                     }

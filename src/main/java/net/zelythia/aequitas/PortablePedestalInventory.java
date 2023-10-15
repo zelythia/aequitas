@@ -28,6 +28,7 @@ public class PortablePedestalInventory implements Inventory {
     private DefaultedList<ItemStack> items = DefaultedList.ofSize(11, ItemStack.EMPTY);
     private String filter = "";
     private int page = 0;
+    public int maxPage;
 
     public PortablePedestalInventory(ItemStack item){
         if(item.getItem() != Aequitas.PORTABLE_PEDESTAL_ITEM) return;
@@ -56,6 +57,7 @@ public class PortablePedestalInventory implements Inventory {
     public void updateFilter(String filter, int page){
         this.filter = filter;
         this.page = page;
+        this.maxPage = unlockedItems.size()/10;
 
         List<Item> list = unlockedItems.stream().filter(item1 -> Registry.ITEM.getId(item1).toString().contains(filter)).collect(Collectors.toList());
 
@@ -70,7 +72,7 @@ public class PortablePedestalInventory implements Inventory {
 
     @Override
     public int size() {
-        return 13;
+        return 11;
     }
 
     @Override
