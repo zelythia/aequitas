@@ -82,9 +82,6 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
         renderBackground(matrices);
         super.render(matrices, mouseX, mouseY, delta);
 
-
-
-
         String essence = NumberFormat.getNumberInstance().format(handler.inventory.storedEssence);
 
         int essenceX = 3;
@@ -111,13 +108,23 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
-
         if(mouseX >= textureZeroX+53 && mouseX <= textureZeroX+143){
             if(mouseY >= textureZeroY+32 && mouseY <= textureZeroY+68){
-                Aequitas.LOGGER.info("scroll");
+                if(amount < 0){
+                    if(!handler.inventory.getStack(10).isEmpty()){
+                        page++;
+                        updateSearchProperties();
+                    }
+                }
+                else{
+                    if(page>0){
+                        page--;
+                        updateSearchProperties();
+                    }
+                }
+                return true;
             }
         }
-
         return super.mouseScrolled(mouseX, mouseY, amount);
     }
 
