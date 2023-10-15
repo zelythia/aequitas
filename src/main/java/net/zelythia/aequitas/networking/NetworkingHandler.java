@@ -8,15 +8,18 @@ import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.packet.s2c.play.ConfirmScreenActionS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.EssenceHandler;
@@ -27,6 +30,7 @@ import net.zelythia.aequitas.client.mixin.SpriteMixin;
 import net.zelythia.aequitas.client.particle.CraftingParticle;
 import net.zelythia.aequitas.client.particle.Particles;
 import net.zelythia.aequitas.item.FallFlying;
+import net.zelythia.aequitas.screen.PortablePedestalScreenHandler;
 
 import java.util.Map;
 
@@ -40,14 +44,32 @@ public class NetworkingHandler {
 
     public static final Identifier START_FLYING = new Identifier(Aequitas.MOD_ID, "start_flying");
 
+
+    public static final Identifier C2S_UPDATE_FILTER = new Identifier(Aequitas.MOD_ID, "update_filter");
+
     public static void onInitialize(){
         ServerSidePacketRegistry.INSTANCE.register(START_FLYING, ((packetContext, packetByteBuf) -> packetContext.getTaskQueue().execute(() -> {
             PlayerEntity playerEntity = packetContext.getPlayer();
-
+            //FIXME don't use dep code
             if (playerEntity != null && !FallFlying.startFallFlying(playerEntity)) {
                 playerEntity.stopFallFlying();
             }
         })));
+
+
+        ServerPlayNetworking.registerGlobalReceiver(NetworkingHandler.C2S_UPDATE_FILTER, (server1, player, handler, buf, responseSender) -> {
+            int syncId = buf.readInt();
+            String filter = buf.readString();
+            int page = buf.readInt();
+
+            server1.execute(() -> {
+                if (player.currentScreenHandler.syncId == syncId && player.currentScreenHandler.isNotRestricted(player)) {
+                    if(player.currentScreenHandler instanceof PortablePedestalScreenHandler){
+                        ((PortablePedestalScreenHandler) player.currentScreenHandler).updateSearchProperties(filter, page);
+                    }
+                }
+            });
+        });
     }
 
 
@@ -165,6 +187,13 @@ public class NetworkingHandler {
         }
     }
 
+    public static void updatePortablePedestalSearchProperties(int syncId, String filter, int page){
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeInt(syncId);
+        buf.writeString(filter);
+        buf.writeInt(page);
+        ClientPlayNetworking.send(C2S_UPDATE_FILTER, buf);
+    }
 
     public static void setServer(MinecraftServer server){
         NetworkingHandler.server = server;

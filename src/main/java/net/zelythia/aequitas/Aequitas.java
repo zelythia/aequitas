@@ -39,10 +39,12 @@ import net.zelythia.aequitas.block.entity.CraftingPedestalBlockEntity;
 import net.zelythia.aequitas.block.entity.SamplingPedestalBlockEntity;
 import net.zelythia.aequitas.item.ArmorMaterials;
 import net.zelythia.aequitas.item.EssenceArmorItem;
+import net.zelythia.aequitas.item.PortablePedestalItem;
 import net.zelythia.aequitas.networking.EssencePacket;
 import net.zelythia.aequitas.networking.NetworkingHandler;
 import net.zelythia.aequitas.screen.CollectionBowlScreenHandler;
 import net.zelythia.aequitas.screen.CraftingPedestalScreenHandler;
+import net.zelythia.aequitas.screen.PortablePedestalScreenHandler;
 import net.zelythia.aequitas.world.gen.EssencePillarFeature;
 import net.zelythia.aequitas.world.gen.EssencePillarFeatureConfig;
 import org.apache.logging.log4j.LogManager;
@@ -133,6 +135,11 @@ public class Aequitas implements ModInitializer {
     public static final Item PRISTINE_ESSENCE_BOOTS;
 
 
+    public static final Identifier PORTABLE_PEDESTAL = new Identifier(MOD_ID, "portable_pedestal");
+    public static final Item PORTABLE_PEDESTAL_ITEM;
+    public static final ScreenHandlerType<PortablePedestalScreenHandler> PORTABLE_PEDESTAL_SCREEN_HANDLER;
+
+
     static {
         ITEM_GROUP = FabricItemGroupBuilder.build(new Identifier(MOD_ID, "aequitas_group"), () -> new ItemStack(CRAFTING_PEDESTAL_BLOCK));
 
@@ -176,6 +183,8 @@ public class Aequitas implements ModInitializer {
         CRAFTING_PEDESTAL_BLOCK_ITEM = Registry.register(Registry.ITEM, CRAFTING_PEDESTAL, new BlockItem(CRAFTING_PEDESTAL_BLOCK, new Item.Settings().group(ITEM_GROUP)));
         SAMPLING_PEDESTAL_BLOCK_ITEM = Registry.register(Registry.ITEM, SAMPLING_PEDESTAL, new BlockItem(SAMPLING_PEDESTAL_BLOCK, new Item.Settings().group(ITEM_GROUP)));
 
+        PORTABLE_PEDESTAL_ITEM = Registry.register(Registry.ITEM, PORTABLE_PEDESTAL, new PortablePedestalItem(new Item.Settings().group(ITEM_GROUP)));
+
         //Entities
         CRAFTING_PEDESTAL_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, CRAFTING_PEDESTAL, BlockEntityType.Builder.create(CraftingPedestalBlockEntity::new, CRAFTING_PEDESTAL_BLOCK).build(null));
         SAMPLING_PEDESTAL_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, SAMPLING_PEDESTAL, BlockEntityType.Builder.create(SamplingPedestalBlockEntity::new, SAMPLING_PEDESTAL_BLOCK).build(null));
@@ -186,6 +195,7 @@ public class Aequitas implements ModInitializer {
         //Screens
         CRAFTING_PEDESTAL_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(CRAFTING_PEDESTAL, CraftingPedestalScreenHandler::new);
         COLLECTION_BOWL_SCREEN_HANDLER = ScreenHandlerRegistry.registerExtended(new Identifier("collection_bowl"), CollectionBowlScreenHandler::new);
+        PORTABLE_PEDESTAL_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(PORTABLE_PEDESTAL, PortablePedestalScreenHandler::new);
 
 
         ESSENCE_PILLAR_FEATURE = Registry.register(Registry.FEATURE, ESSENCE_PILLAR_FEATURE_ID, new EssencePillarFeature(EssencePillarFeatureConfig.CODEC));
