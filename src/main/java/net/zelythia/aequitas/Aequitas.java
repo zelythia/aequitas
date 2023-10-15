@@ -183,7 +183,7 @@ public class Aequitas implements ModInitializer {
         CRAFTING_PEDESTAL_BLOCK_ITEM = Registry.register(Registry.ITEM, CRAFTING_PEDESTAL, new BlockItem(CRAFTING_PEDESTAL_BLOCK, new Item.Settings().group(ITEM_GROUP)));
         SAMPLING_PEDESTAL_BLOCK_ITEM = Registry.register(Registry.ITEM, SAMPLING_PEDESTAL, new BlockItem(SAMPLING_PEDESTAL_BLOCK, new Item.Settings().group(ITEM_GROUP)));
 
-        PORTABLE_PEDESTAL_ITEM = Registry.register(Registry.ITEM, PORTABLE_PEDESTAL, new PortablePedestalItem(new Item.Settings().group(ITEM_GROUP)));
+        PORTABLE_PEDESTAL_ITEM = Registry.register(Registry.ITEM, PORTABLE_PEDESTAL, new PortablePedestalItem(new Item.Settings().group(ITEM_GROUP).maxCount(1)));
 
         //Entities
         CRAFTING_PEDESTAL_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, CRAFTING_PEDESTAL, BlockEntityType.Builder.create(CraftingPedestalBlockEntity::new, CRAFTING_PEDESTAL_BLOCK).build(null));
