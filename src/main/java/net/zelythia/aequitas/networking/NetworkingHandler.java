@@ -48,13 +48,14 @@ public class NetworkingHandler {
     public static final Identifier C2S_UPDATE_FILTER = new Identifier(Aequitas.MOD_ID, "update_filter");
 
     public static void onInitialize(){
-        ServerSidePacketRegistry.INSTANCE.register(START_FLYING, ((packetContext, packetByteBuf) -> packetContext.getTaskQueue().execute(() -> {
-            PlayerEntity playerEntity = packetContext.getPlayer();
-            //FIXME don't use dep code
-            if (playerEntity != null && !FallFlying.startFallFlying(playerEntity)) {
-                playerEntity.stopFallFlying();
-            }
-        })));
+
+        ServerPlayNetworking.registerGlobalReceiver(START_FLYING, (server1, player, handler, buf, responseSender) -> {
+            server1.execute(() -> {
+                if(!FallFlying.startFallFlying(player)){
+                    player.stopFallFlying();
+                }
+            });
+        });
 
 
         ServerPlayNetworking.registerGlobalReceiver(NetworkingHandler.C2S_UPDATE_FILTER, (server1, player, handler, buf, responseSender) -> {
@@ -91,7 +92,6 @@ public class NetworkingHandler {
                     double y = 1.2 + from.getY();
                     double z = 0.5 + from.getZ()+ (Math.random() * 2.0 - 1.0) * 0.15;
 
-
                     double velX = (to.getX()+0.5) - x;
                     double velZ = to.getZ()+0.5 - z;
                     double len = Math.sqrt(velX * velX + velZ * velZ);
@@ -101,7 +101,6 @@ public class NetworkingHandler {
 
                     velX *= 0.1;
                     velZ *= 0.1;
-
 
 
                     float r = 1F;
@@ -125,12 +124,10 @@ public class NetworkingHandler {
                             }
                         }
 
-
                         r = (int) (r/div);
                         g = (int) (g/div);
                         b = (int) (b/div);
                     }
-
 
                     CraftingParticle particle = (CraftingParticle) Particles.spawnParticle(client,Particles.CRAFTING_PARTICLE,false, true, x, y, z, velX,0 ,velZ);
                     if (particle != null){
