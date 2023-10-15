@@ -21,7 +21,6 @@ public class PortablePedestalItem extends Item implements NamedScreenHandlerFact
         super(settings);
     }
 
-
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         if(hand == Hand.MAIN_HAND){
