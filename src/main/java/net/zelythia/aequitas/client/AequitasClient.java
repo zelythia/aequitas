@@ -20,6 +20,7 @@ import net.minecraft.util.Identifier;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.EssenceHandler;
 import net.zelythia.aequitas.client.block.entity.CollectionBowlBlockEntityRenderer;
+import net.zelythia.aequitas.client.block.entity.CraftingPedestalBlockEntityRenderer;
 import net.zelythia.aequitas.client.block.entity.SamplingPedestalBlockEntityRenderer;
 import net.zelythia.aequitas.client.config.AequitasConfig;
 import net.zelythia.aequitas.client.particle.CatalystParticle;
@@ -47,6 +48,7 @@ public class AequitasClient implements ClientModInitializer {
         ScreenRegistry.register(Aequitas.PORTABLE_PEDESTAL_SCREEN_HANDLER, PortablePedestalScreen::new);
 
         BlockEntityRendererRegistry.INSTANCE.register(Aequitas.SAMPLING_PEDESTAL_BLOCK_ENTITY, SamplingPedestalBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(Aequitas.CRAFTING_PEDESTAL_BLOCK_ENTITY, CraftingPedestalBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_I, CollectionBowlBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_II, CollectionBowlBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_III, CollectionBowlBlockEntityRenderer::new);

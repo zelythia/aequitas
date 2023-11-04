@@ -1,5 +1,6 @@
 package net.zelythia.aequitas.block.entity;
 
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -8,6 +9,7 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.world.ServerWorld;
@@ -15,11 +17,14 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.registry.Registry;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.EssenceHandler;
 import net.zelythia.aequitas.ImplementedInventory;
+import net.zelythia.aequitas.PortablePedestalInventory;
 import net.zelythia.aequitas.networking.NetworkingHandler;
 import net.zelythia.aequitas.screen.CraftingPedestalScreenHandler;
 import org.jetbrains.annotations.Nullable;
@@ -27,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScreenHandlerFactory, ImplementedInventory, Tickable {
+public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScreenHandlerFactory, ImplementedInventory, Tickable, BlockEntityClientSerializable {
 
     // 0 = Sampling slot
     // 1 = Output slot
@@ -67,15 +72,30 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
     @Override
     public NbtCompound writeNbt(NbtCompound tag) {
         super.writeNbt(tag);
-        Inventories.writeNbt(tag, this.inventory);
+        Inventories.writeNbt(tag, inventory);
         return tag;
     }
 
     @Override
     public void fromTag(BlockState state, NbtCompound tag) {
         super.fromTag(state, tag);
+
+        this.inventory.clear();
         Inventories.readNbt(tag, this.inventory);
     }
+
+    @Override
+    public void fromClientTag(NbtCompound tag) {
+        this.inventory.clear();
+        Inventories.readNbt(tag, this.inventory);
+    }
+
+    @Override
+    public NbtCompound toClientTag(NbtCompound tag) {
+        return writeNbt(tag);
+    }
+
+
 
     public long getStoredEssence(){
         return stored_essence;
@@ -83,6 +103,12 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
 
     public Item getTargetItem(){
         return this.getStack(0).getItem();
+    }
+
+    @Override
+    public void markDirty() {
+        super.markDirty();
+        if(world!=null) world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
     }
 
     @Override
@@ -124,6 +150,7 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
 
 
         long required_value = EssenceHandler.getEssenceValue(this.getStack(0).getItem());
+        if(this.getStack(0).getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM) required_value = 1;
 
         if(required_value > 0){
 
@@ -137,8 +164,16 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
 
                         long value = samplingPedestal.consumeItem();
                         if(value != -1){
+                            if(this.getStack(0).getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM){
+                                PortablePedestalInventory portablePedestalInventory = new PortablePedestalInventory(this.getStack(0));
+                                portablePedestalInventory.storedEssence += value;
+                                portablePedestalInventory.essenceToTag();
+                            }
+                            else{
+                                this.stored_essence += value;
+                            }
+
                             NetworkingHandler.sendParticle(this, samplingPedestal.getPos(), this.getPos(), samplingPedestal.getStack(0));
-                            this.stored_essence += value;
                         }
                     }
                 }
@@ -150,16 +185,21 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
 
 
             if(this.stored_essence >= required_value){
+
                 if(this.getStack(1).isEmpty()){
                     this.setStack(1, this.getStack(0).copy());
                 }
-                else{
+                else if(this.getStack(1).getItem() == this.getStack(0).getItem()){
                     this.getStack(1).increment(1);
                 }
 
-                world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1f, 1f);
-                this.stored_essence -= required_value;
-                craft_delay = 10;
+                if(this.getStack(1).getItem() == this.getStack(0).getItem()){
+                    world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1f, 1f);
+                    this.stored_essence -= required_value;
+                    craft_delay = 10;
+
+                    this.markDirty();
+                }
             }
 
         }

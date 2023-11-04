@@ -1,9 +1,11 @@
 package net.zelythia.aequitas.screen;
 
+import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
@@ -50,6 +52,11 @@ public class PortablePedestalScreenHandler extends ScreenHandler {
 
             @Override
             public boolean canInsert(ItemStack stack) {
+
+                if (stack.getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM && stack.hasTag() && stack.getTag().getType("unlocked") == NbtType.LIST) {
+                    if (((NbtList) stack.getTag().get("unlocked")).size() > 0) return false;
+                }
+
                 return EssenceHandler.getEssenceValue(stack) > 0 && !ItemStack.areEqual(stack, PortablePedestalScreenHandler.this.inventory.item);
             }
         });

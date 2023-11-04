@@ -23,7 +23,7 @@ public class PortablePedestalInventory implements Inventory {
     public ItemStack item;
 
     public long storedEssence;
-    private List<Item> unlockedItems = new ArrayList<>();
+    public List<Item> unlockedItems = new ArrayList<>();
 
     private DefaultedList<ItemStack> items = DefaultedList.ofSize(11, ItemStack.EMPTY);
     private String filter = "";
@@ -135,7 +135,7 @@ public class PortablePedestalInventory implements Inventory {
     }
 
 
-    private void essenceToTag(){
+    public void essenceToTag(){
         if(item == null) return;
         this.item.getTag().putLong("essence", storedEssence);
     }
@@ -145,7 +145,7 @@ public class PortablePedestalInventory implements Inventory {
     public void markDirty() {
         if(item == null) return;
 
-        this.item.getTag().putLong("essence", storedEssence);
+        essenceToTag();
 
         NbtList nbtList = new NbtList();
 

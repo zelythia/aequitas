@@ -1,5 +1,6 @@
 package net.zelythia.aequitas.block;
 
+import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
@@ -7,6 +8,7 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
@@ -16,6 +18,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.block.entity.SamplingPedestalBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,6 +40,11 @@ public class SamplingPedestalBlock extends BlockWithEntity {
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+
+        if (player.getStackInHand(hand).getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM && player.getStackInHand(hand).hasTag() && player.getStackInHand(hand).getTag().getType("unlocked") == NbtType.LIST) {
+            if (((NbtList) player.getStackInHand(hand).getTag().get("unlocked")).size() > 0) return ActionResult.FAIL;
+        }
+
         if(world.isClient) return ActionResult.SUCCESS;
 
         Inventory blockEntity = (Inventory) world.getBlockEntity(pos);
