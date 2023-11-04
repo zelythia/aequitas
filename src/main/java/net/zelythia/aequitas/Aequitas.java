@@ -73,6 +73,7 @@ public class Aequitas implements ModInitializer {
 
     public static final Item SAMPLING_PEDESTAL_CORE;
     public static final Item CRAFTING_PEDESTAL_CORE;
+    public static final Item PORTABLE_PEDESTAL_CORE;
     public static final Item PRIMAL_ESSENCE;
     public static final Item PRIMORDIAL_ESSENCE;
     public static final Item PRISTINE_ESSENCE;
@@ -178,6 +179,7 @@ public class Aequitas implements ModInitializer {
 
         SAMPLING_PEDESTAL_CORE = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "sampling_pedestal_core"), new Item(new Item.Settings().group(ITEM_GROUP)));
         CRAFTING_PEDESTAL_CORE = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "crafting_pedestal_core"), new Item(new Item.Settings().group(ITEM_GROUP)));
+        PORTABLE_PEDESTAL_CORE = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "portable_pedestal_core"), new Item(new Item.Settings().group(ITEM_GROUP)));
 
         PEDESTAL_BLOCK_ITEM = Registry.register(Registry.ITEM, PEDESTAL, new BlockItem(PEDESTAL_BLOCK, new Item.Settings().group(ITEM_GROUP)));
         CRAFTING_PEDESTAL_BLOCK_ITEM = Registry.register(Registry.ITEM, CRAFTING_PEDESTAL, new BlockItem(CRAFTING_PEDESTAL_BLOCK, new Item.Settings().group(ITEM_GROUP)));

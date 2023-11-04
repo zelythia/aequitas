@@ -1,0 +1,20 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "pattern" : [
+    " C ",
+    "CSC",
+    " C "
+  ],
+  "key" : {
+    "C" : {
+      "item" : "aequitas:crafting_pedestal_core"
+    },
+    "S" : {
+      "item" : "aequitas:sampling_pedestal_core"
+    }
+  },
+  "result" : {
+    "item" : "aequitas:portable_pedestal_core",
+    "count" : 1
+  }
+}

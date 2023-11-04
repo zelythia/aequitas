@@ -1,0 +1,26 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "pattern" : [
+    "213",
+    "1P1",
+    "312"
+  ],
+  "key" : {
+    "P" : {
+      "item" : "aequitas:portable_pedestal_core"
+    },
+    "1" : {
+      "item" : "aequitas:primal_essence_block"
+    },
+    "2" : {
+      "item" : "aequitas:primordial_essence_block"
+    },
+    "3" : {
+      "item" : "aequitas:pristine_essence_block"
+    }
+  },
+  "result" : {
+    "item" : "aequitas:portable_pedestal",
+    "count" : 1
+  }
+}
