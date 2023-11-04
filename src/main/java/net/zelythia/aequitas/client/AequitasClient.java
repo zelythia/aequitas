@@ -14,6 +14,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Style;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.zelythia.aequitas.Aequitas;
@@ -54,6 +55,16 @@ public class AequitasClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(Particles.CATALYST_PARTICLE, CatalystParticle.Factory::new);
 
         ItemTooltipCallback.EVENT.register((stack, context, lines) -> {
+
+            if(stack.getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM){
+                if(stack.hasTag()){
+                    if(stack.getTag().contains("essence")){
+                        long storedEssence = stack.getTag().getLong("essence");
+                        lines.add(new TranslatableText("tooltip.aequitas.portable_pedestal", storedEssence));
+                    }
+                }
+            }
+
             if(AequitasConfig.config.getOrDefault("showTooltip", false) || Screen.hasShiftDown()){
                 long value = EssenceHandler.getEssenceValue(stack.getItem());
                 String s = "";
