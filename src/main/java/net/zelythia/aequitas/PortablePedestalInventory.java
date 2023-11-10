@@ -87,7 +87,7 @@ public class PortablePedestalInventory implements Inventory {
 
     @Override
     public ItemStack removeStack(int slot, int amount) {
-        long e = EssenceHandler.getEssenceValue(items.get(slot).getItem());
+        long e = EssenceHandler.getEssenceValue(items.get(slot));
         if(storedEssence<e) return ItemStack.EMPTY;
 
         if(e*amount <= storedEssence){
@@ -107,7 +107,7 @@ public class PortablePedestalInventory implements Inventory {
     public ItemStack removeStack(int slot) {
         if(slot == 0) return Inventories.removeStack(items, slot);
 
-        long e = EssenceHandler.getEssenceValue(items.get(slot).getItem());
+        long e = EssenceHandler.getEssenceValue(items.get(slot));
         if(e <= storedEssence){
             storedEssence -= e;
             essenceToTag();

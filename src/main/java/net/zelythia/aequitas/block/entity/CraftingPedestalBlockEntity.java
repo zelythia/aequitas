@@ -149,7 +149,7 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
         }
 
 
-        long required_value = EssenceHandler.getEssenceValue(this.getStack(0).getItem());
+        long required_value = EssenceHandler.getEssenceValue(this.getStack(0));
         if(this.getStack(0).getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM) required_value = 1;
 
         if(required_value > 0){

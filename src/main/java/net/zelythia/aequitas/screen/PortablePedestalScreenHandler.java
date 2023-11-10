@@ -120,7 +120,7 @@ public class PortablePedestalScreenHandler extends ScreenHandler {
             //Block to inventory
             if (index < this.inventory.size()) {
 
-                long e = EssenceHandler.getEssenceValue(originalStack.getItem());
+                long e = EssenceHandler.getEssenceValue(originalStack);
                 if(e * newStack.getMaxCount() <= inventory.storedEssence){
                     inventory.storedEssence -= e * newStack.getMaxCount();
                     newStack.setCount(newStack.getMaxCount());
@@ -172,7 +172,7 @@ public class PortablePedestalScreenHandler extends ScreenHandler {
                         int o;
                         if (!itemStack2.isEmpty() && !slot3.canInsert(itemStack2)){
                             if (itemStack2.getMaxCount() > 1 && ScreenHandler.canStacksCombine(itemStack3, itemStack2) && !itemStack3.isEmpty() && (o = itemStack3.getCount()) + itemStack2.getCount() <= itemStack2.getMaxCount()) {
-                                long e = EssenceHandler.getEssenceValue(itemStack3.getItem());
+                                long e = EssenceHandler.getEssenceValue(itemStack3);
                                 if(e <= inventory.storedEssence){
                                     itemStack2.increment(o);
                                     itemStack3 = slot3.takeStack(o);

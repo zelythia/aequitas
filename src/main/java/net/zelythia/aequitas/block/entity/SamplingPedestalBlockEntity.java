@@ -25,7 +25,7 @@ public class SamplingPedestalBlockEntity extends BlockEntity implements Implemen
     }
 
     public long consumeItem(){
-        long v = EssenceHandler.getEssenceValue(this.getStack(0).getItem());
+        long v = EssenceHandler.getEssenceValue(this.getStack(0));
         if(v > 0){
             if(this.transferable_value >= v){
                 this.transferable_value = 0;
