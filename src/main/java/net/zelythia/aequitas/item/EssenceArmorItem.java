@@ -3,10 +3,15 @@ package net.zelythia.aequitas.item;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.tag.FluidTags;
 import net.minecraft.world.World;
 import net.zelythia.aequitas.Aequitas;
 
@@ -24,11 +29,16 @@ public class EssenceArmorItem extends ArmorItem  {
         LivingEntity livingEntity = (LivingEntity) entity;
         PlayerEntity player = (PlayerEntity) livingEntity;
 
-        if(player.abilities.creativeMode || player.isSpectator()) return;
+        if(ArmorMaterials.isEssenceArmor(player.getEquippedStack(EquipmentSlot.HEAD).getItem())){
+            if (!player.isSubmergedIn(FluidTags.WATER)) {
+                player.addStatusEffect(new StatusEffectInstance(StatusEffects.WATER_BREATHING, 200, 0, false, false, true));
+            }
 
-//        boolean primal = player.getEquippedStack(EquipmentSlot.FEET).getItem().equals(Aequitas.PRIMAL_ESSENCE_BOOTS) && player.getEquippedStack(EquipmentSlot.LEGS).getItem().equals(Aequitas.PRIMAL_ESSENCE_LEGGINGS) && player.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(Aequitas.PRIMAL_ESSENCE_CHESTPLATE) && player.getEquippedStack(EquipmentSlot.HEAD).getItem().equals(Aequitas.PRIMAL_ESSENCE_HELMET);
-//        boolean primordial = player.getEquippedStack(EquipmentSlot.FEET).getItem().equals(Aequitas.PRIMORDIAL_ESSENCE_BOOTS) && player.getEquippedStack(EquipmentSlot.LEGS).getItem().equals(Aequitas.PRIMORDIAL_ESSENCE_LEGGINGS) && player.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(Aequitas.PRIMORDIAL_ESSENCE_CHESTPLATE) && player.getEquippedStack(EquipmentSlot.HEAD).getItem().equals(Aequitas.PRIMORDIAL_ESSENCE_HELMET);
-//        boolean pristine = player.getEquippedStack(EquipmentSlot.FEET).getItem().equals(Aequitas.PRISTINE_ESSENCE_BOOTS) && player.getEquippedStack(EquipmentSlot.LEGS).getItem().equals(Aequitas.PRISTINE_ESSENCE_LEGGINGS) && player.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(Aequitas.PRISTINE_ESSENCE_CHESTPLATE) && player.getEquippedStack(EquipmentSlot.HEAD).getItem().equals(Aequitas.PRISTINE_ESSENCE_HELMET);
+            return;
+        }
+
+        //Code for the chestplate
+        if(player.abilities.creativeMode || player.isSpectator()) return;
 
         if(checkSetPristine(player) || (checkSetPrimordial(player) && timeFlown <= MAX_FLY_TIME)){
             player.abilities.allowFlying = true;
@@ -44,6 +54,11 @@ public class EssenceArmorItem extends ArmorItem  {
 
     public float getFlightProgress(){
         return (float) (MAX_FLY_TIME-timeFlown)/MAX_FLY_TIME;
+    }
+
+
+    public boolean checkSetPrimal(PlayerEntity player){
+        return player.getEquippedStack(EquipmentSlot.FEET).getItem().equals(Aequitas.PRIMAL_ESSENCE_BOOTS) && player.getEquippedStack(EquipmentSlot.LEGS).getItem().equals(Aequitas.PRIMAL_ESSENCE_LEGGINGS) && player.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(Aequitas.PRIMAL_ESSENCE_CHESTPLATE) && player.getEquippedStack(EquipmentSlot.HEAD).getItem().equals(Aequitas.PRIMAL_ESSENCE_HELMET);
     }
 
     public boolean checkSetPrimordial(PlayerEntity player){

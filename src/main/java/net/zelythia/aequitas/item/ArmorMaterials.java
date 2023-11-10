@@ -3,7 +3,10 @@ package net.zelythia.aequitas.item;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -27,7 +30,7 @@ public enum ArmorMaterials implements ArmorMaterial {
     private final float knockbackResistance;
     private final Lazy<Ingredient> repairIngredientSupplier;
 
-    private ArmorMaterials(String name, int durabilityMultiplier, int[] protectionAmounts, int enchantability, SoundEvent equipSound, float toughness, float knockbackResistance, Supplier repairIngredientSupplier) {
+    ArmorMaterials(String name, int durabilityMultiplier, int[] protectionAmounts, int enchantability, SoundEvent equipSound, float toughness, float knockbackResistance, Supplier repairIngredientSupplier) {
         this.name = name;
         this.durabilityMultiplier = durabilityMultiplier;
         this.protectionAmounts = protectionAmounts;
@@ -69,5 +72,13 @@ public enum ArmorMaterials implements ArmorMaterial {
 
     public float getKnockbackResistance() {
         return this.knockbackResistance;
+    }
+
+    public static boolean isEssenceArmor(Item item){
+        if(item instanceof ArmorItem){
+            ArmorMaterial material = ((ArmorItem) item).getMaterial();
+            return material == PRIMAL || material == PRIMORDIAL || material == PRISTINE;
+        }
+        return false;
     }
 }

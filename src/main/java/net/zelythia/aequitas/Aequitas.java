@@ -207,17 +207,17 @@ public class Aequitas implements ModInitializer {
                 .applyChance(80)
         );
 
-        PRIMAL_ESSENCE_HELMET = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primal_essence_helmet"), new ArmorItem(ArmorMaterials.PRIMAL, EquipmentSlot.HEAD, new Item.Settings().group(ITEM_GROUP)));
+        PRIMAL_ESSENCE_HELMET = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primal_essence_helmet"), new EssenceArmorItem(ArmorMaterials.PRIMAL, EquipmentSlot.HEAD, new Item.Settings().group(ITEM_GROUP)));
         PRIMAL_ESSENCE_CHESTPLATE = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primal_essence_chestplate"), new EssenceArmorItem(ArmorMaterials.PRIMAL, EquipmentSlot.CHEST, new Item.Settings().group(ITEM_GROUP)));
         PRIMAL_ESSENCE_LEGGINGS = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primal_essence_leggings"), new ArmorItem(ArmorMaterials.PRIMAL, EquipmentSlot.LEGS, new Item.Settings().group(ITEM_GROUP)));
         PRIMAL_ESSENCE_BOOTS = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primal_essence_boots"), new ArmorItem(ArmorMaterials.PRIMAL, EquipmentSlot.FEET, new Item.Settings().group(ITEM_GROUP)));
 
-        PRIMORDIAL_ESSENCE_HELMET = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primordial_essence_helmet"), new ArmorItem(ArmorMaterials.PRIMORDIAL, EquipmentSlot.HEAD, new Item.Settings().group(ITEM_GROUP)));
+        PRIMORDIAL_ESSENCE_HELMET = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primordial_essence_helmet"), new EssenceArmorItem(ArmorMaterials.PRIMORDIAL, EquipmentSlot.HEAD, new Item.Settings().group(ITEM_GROUP)));
         PRIMORDIAL_ESSENCE_CHESTPLATE = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primordial_essence_chestplate"), new EssenceArmorItem(ArmorMaterials.PRIMORDIAL, EquipmentSlot.CHEST, new Item.Settings().group(ITEM_GROUP)));
         PRIMORDIAL_ESSENCE_LEGGINGS = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primordial_essence_leggings"), new ArmorItem(ArmorMaterials.PRIMORDIAL, EquipmentSlot.LEGS, new Item.Settings().group(ITEM_GROUP)));
         PRIMORDIAL_ESSENCE_BOOTS = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primordial_essence_boots"), new ArmorItem(ArmorMaterials.PRIMORDIAL, EquipmentSlot.FEET, new Item.Settings().group(ITEM_GROUP)));
 
-        PRISTINE_ESSENCE_HELMET = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "pristine_essence_helmet"), new ArmorItem(ArmorMaterials.PRISTINE, EquipmentSlot.HEAD, new Item.Settings().group(ITEM_GROUP)));
+        PRISTINE_ESSENCE_HELMET = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "pristine_essence_helmet"), new EssenceArmorItem(ArmorMaterials.PRISTINE, EquipmentSlot.HEAD, new Item.Settings().group(ITEM_GROUP)));
         PRISTINE_ESSENCE_CHESTPLATE = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "pristine_essence_chestplate"), new EssenceArmorItem(ArmorMaterials.PRISTINE, EquipmentSlot.CHEST, new Item.Settings().group(ITEM_GROUP)));
         PRISTINE_ESSENCE_LEGGINGS = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "pristine_essence_leggings"), new ArmorItem(ArmorMaterials.PRISTINE, EquipmentSlot.LEGS, new Item.Settings().group(ITEM_GROUP)));
         PRISTINE_ESSENCE_BOOTS = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "pristine_essence_boots"), new ArmorItem(ArmorMaterials.PRISTINE, EquipmentSlot.FEET, new Item.Settings().group(ITEM_GROUP)));
