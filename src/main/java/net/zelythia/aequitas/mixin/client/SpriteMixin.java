@@ -1,4 +1,4 @@
-package net.zelythia.aequitas.client.mixin;
+package net.zelythia.aequitas.mixin.client;
 
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.texture.Sprite;

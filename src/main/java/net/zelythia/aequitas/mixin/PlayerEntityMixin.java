@@ -1,4 +1,4 @@
-package net.zelythia.aequitas.client.mixin;
+package net.zelythia.aequitas.mixin;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;

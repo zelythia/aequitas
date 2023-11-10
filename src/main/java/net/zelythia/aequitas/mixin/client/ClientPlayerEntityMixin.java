@@ -1,4 +1,4 @@
-package net.zelythia.aequitas.client.mixin;
+package net.zelythia.aequitas.mixin.client;
 
 
 import com.mojang.authlib.GameProfile;

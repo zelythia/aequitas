@@ -1,4 +1,4 @@
-package net.zelythia.aequitas.client.mixin;
+package net.zelythia.aequitas.mixin.client;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;

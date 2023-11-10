@@ -1,15 +1,17 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "net.zelythia.aequitas.client.mixin",
+  "package": "net.zelythia.aequitas.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "LivingEntityMixin",
-    "PlayerEntityMixin"
+    "PlayerEntityMixin",
+    "PiglinBrainMixin"
   ],
   "client": [
-    "ClientPlayerEntityMixin",
-    "SpriteMixin"
+    "client.ClientPlayerEntityMixin",
+    "client.InGameHudMixin",
+    "client.SpriteMixin"
   ],
   "server": [],
   "injectors": {
