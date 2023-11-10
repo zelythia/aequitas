@@ -1,0 +1,23 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "pattern" : [
+    "F#F",
+    "#A#",
+    "F#F"
+  ],
+  "key" : {
+    "#" : {
+      "item": "aequitas:primordial_essence_block"
+    },
+    "A" : {
+      "item": "aequitas:primal_essence_boots"
+    },
+    "F" : {
+      "item": "minecraft:feather"
+    }
+  },
+  "result" : {
+    "item" : "aequitas:primordial_essence_boots",
+    "count" : 1
+  }
+}

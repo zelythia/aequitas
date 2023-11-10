@@ -1,0 +1,20 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "pattern" : [
+    " # ",
+    "#A#",
+    " # "
+  ],
+  "key" : {
+    "A" : {
+      "item": "aequitas:primordial_essence_chestplate"
+    },
+    "#" : {
+      "item": "aequitas:pristine_essence_block"
+    }
+  },
+  "result" : {
+    "item" : "aequitas:pristine_essence_chestplate",
+    "count" : 1
+  }
+}
