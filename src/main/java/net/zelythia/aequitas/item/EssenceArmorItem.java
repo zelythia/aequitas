@@ -29,7 +29,9 @@ public class EssenceArmorItem extends ArmorItem  {
         LivingEntity livingEntity = (LivingEntity) entity;
         PlayerEntity player = (PlayerEntity) livingEntity;
 
-        if(ArmorMaterials.isEssenceArmor(player.getEquippedStack(EquipmentSlot.HEAD).getItem())){
+
+
+        if(slot == EquipmentSlot.HEAD.getEntitySlotId() && ArmorMaterials.isEssenceArmor(stack.getItem())){
             if (!player.isSubmergedIn(FluidTags.WATER)) {
                 player.addStatusEffect(new StatusEffectInstance(StatusEffects.WATER_BREATHING, 200, 0, false, false, true));
             }
@@ -57,15 +59,15 @@ public class EssenceArmorItem extends ArmorItem  {
     }
 
 
-    public boolean checkSetPrimal(PlayerEntity player){
+    public static boolean checkSetPrimal(PlayerEntity player){
         return player.getEquippedStack(EquipmentSlot.FEET).getItem().equals(Aequitas.PRIMAL_ESSENCE_BOOTS) && player.getEquippedStack(EquipmentSlot.LEGS).getItem().equals(Aequitas.PRIMAL_ESSENCE_LEGGINGS) && player.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(Aequitas.PRIMAL_ESSENCE_CHESTPLATE) && player.getEquippedStack(EquipmentSlot.HEAD).getItem().equals(Aequitas.PRIMAL_ESSENCE_HELMET);
     }
 
-    public boolean checkSetPrimordial(PlayerEntity player){
+    public static boolean checkSetPrimordial(PlayerEntity player){
         return player.getEquippedStack(EquipmentSlot.FEET).getItem().equals(Aequitas.PRIMORDIAL_ESSENCE_BOOTS) && player.getEquippedStack(EquipmentSlot.LEGS).getItem().equals(Aequitas.PRIMORDIAL_ESSENCE_LEGGINGS) && player.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(Aequitas.PRIMORDIAL_ESSENCE_CHESTPLATE) && player.getEquippedStack(EquipmentSlot.HEAD).getItem().equals(Aequitas.PRIMORDIAL_ESSENCE_HELMET);
     }
 
-    public boolean checkSetPristine(PlayerEntity player){
+    public static boolean checkSetPristine(PlayerEntity player){
         return player.getEquippedStack(EquipmentSlot.FEET).getItem().equals(Aequitas.PRISTINE_ESSENCE_BOOTS) && player.getEquippedStack(EquipmentSlot.LEGS).getItem().equals(Aequitas.PRISTINE_ESSENCE_LEGGINGS) && player.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(Aequitas.PRISTINE_ESSENCE_CHESTPLATE) && player.getEquippedStack(EquipmentSlot.HEAD).getItem().equals(Aequitas.PRISTINE_ESSENCE_HELMET);
     }
 }
