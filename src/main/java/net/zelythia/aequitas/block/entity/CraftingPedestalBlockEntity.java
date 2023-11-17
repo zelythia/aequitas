@@ -194,7 +194,7 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
                 }
 
                 if(this.getStack(1).getItem() == this.getStack(0).getItem()){
-                    world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1f, 1f);
+                    world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.5f, 1f);
                     this.stored_essence -= required_value;
                     craft_delay = 10;
 
