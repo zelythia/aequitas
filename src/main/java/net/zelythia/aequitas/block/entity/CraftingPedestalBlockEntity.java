@@ -9,7 +9,6 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.world.ServerWorld;
@@ -17,10 +16,8 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.registry.Registry;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.EssenceHandler;
 import net.zelythia.aequitas.ImplementedInventory;
@@ -37,16 +34,13 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
     // 0 = Sampling slot
     // 1 = Output slot
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(2, ItemStack.EMPTY);
+    private long stored_essence;
 
     private final List<SamplingPedestalBlockEntity> samplingPedestals = new ArrayList<>();
-
     private static final int detectionRadius = 3;
     private static final int maxSamplingPedestals = 800;
 
-
-    private int craft_delay;
-
-    private long stored_essence;
+//    private int craftingDelay = 0;
 
 
     public CraftingPedestalBlockEntity() {
@@ -73,6 +67,7 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
     public NbtCompound writeNbt(NbtCompound tag) {
         super.writeNbt(tag);
         Inventories.writeNbt(tag, inventory);
+        tag.putLong("Essence", stored_essence);
         return tag;
     }
 
@@ -82,12 +77,14 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
 
         this.inventory.clear();
         Inventories.readNbt(tag, this.inventory);
+        this.stored_essence = tag.getLong("Essence");
     }
 
     @Override
     public void fromClientTag(NbtCompound tag) {
         this.inventory.clear();
         Inventories.readNbt(tag, this.inventory);
+        this.stored_essence = tag.getLong("Essence");
     }
 
     @Override
@@ -133,13 +130,13 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
                 for(int z = -r; z <=r; z++){
                     BlockEntity be = world.getBlockEntity(pos.add(x, 0, z));
                     if(be instanceof SamplingPedestalBlockEntity){
-                        if(!((SamplingPedestalBlockEntity) be).getStack(0).isEmpty()) this.samplingPedestals.add((SamplingPedestalBlockEntity) be);
+                        this.samplingPedestals.add((SamplingPedestalBlockEntity) be);
                     }
                     if(samplingPedestals.size()==maxSamplingPedestals) break collecting;
 
                     BlockEntity be2 = world.getBlockEntity(pos.add(z, 0, x));
                     if(be2 instanceof SamplingPedestalBlockEntity){
-                        if(!((SamplingPedestalBlockEntity) be2).getStack(0).isEmpty()) this.samplingPedestals.add((SamplingPedestalBlockEntity) be2);
+                        this.samplingPedestals.add((SamplingPedestalBlockEntity) be2);
                     }
                     if(samplingPedestals.size()==maxSamplingPedestals) break collecting;
                 }
@@ -154,33 +151,30 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
 
         if(required_value > 0){
 
-            if(craft_delay == 0){
+            //if(craftingDelay == 0 && this.stored_essence < required_value)
+            if(this.stored_essence < required_value){
 
                 for(SamplingPedestalBlockEntity samplingPedestal: samplingPedestals){
 
-                    if(!samplingPedestal.getStack(0).isEmpty()){
-
-                        samplingPedestal.addTransferableValue(100);
-
-                        long value = samplingPedestal.consumeItem();
-                        if(value != -1){
-                            if(this.getStack(0).getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM){
-                                PortablePedestalInventory portablePedestalInventory = new PortablePedestalInventory(this.getStack(0));
-                                portablePedestalInventory.storedEssence += value;
-                                portablePedestalInventory.essenceToTag();
-                            }
-                            else{
-                                this.stored_essence += value;
-                            }
-
-                            NetworkingHandler.sendParticle(this, samplingPedestal.getPos(), this.getPos(), samplingPedestal.getStack(0));
+                    long value = samplingPedestal.transferEssence();
+                    if(value > 0){
+                        if(this.getStack(0).getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM){
+                            PortablePedestalInventory portablePedestalInventory = new PortablePedestalInventory(this.getStack(0));
+                            portablePedestalInventory.storedEssence += value;
+                            portablePedestalInventory.essenceToTag();
                         }
+                        else{
+                            this.stored_essence += value;
+                        }
+
+                        NetworkingHandler.sendParticle(this, samplingPedestal.getPos(), this.getPos(), new ItemStack(samplingPedestal.getDisplayItem()));
                     }
+
                 }
 
             }
             else{
-                craft_delay--;
+//                craftingDelay--;
             }
 
 
@@ -196,7 +190,7 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
                 if(this.getStack(1).getItem() == this.getStack(0).getItem()){
                     world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.5f, 1f);
                     this.stored_essence -= required_value;
-                    craft_delay = 10;
+//                    craftingDelay = 10;
 
                     this.markDirty();
                 }

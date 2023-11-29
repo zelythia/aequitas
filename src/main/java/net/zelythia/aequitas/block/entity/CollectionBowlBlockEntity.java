@@ -47,9 +47,12 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
     private final List<BlockPos> catalystBlocks2 = new ArrayList<>();
     private final List<BlockPos> catalystBlocks3 = new ArrayList<>();
 
+    //How long the bowl has been collecting essence for
     private int collectionTime;
+    //The time required to generate an item
     private int collectionTimeTotal;
 
+    //Used for rendering on the client
     private float collectionProgress;
     private Sounds.CollectionBowlSoundInstance s;
 
