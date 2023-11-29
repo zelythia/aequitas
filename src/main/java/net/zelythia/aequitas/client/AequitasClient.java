@@ -68,7 +68,7 @@ public class AequitasClient implements ClientModInitializer {
             }
 
             if(AequitasConfig.config.getOrDefault("showTooltip", false) || Screen.hasShiftDown()){
-                long value = EssenceHandler.getEssenceValue(stack);
+                long value = EssenceHandler.getEssenceValue(stack.getItem());
                 String s = "";
                 if(value >= 0L) s += "Essence: " + NumberFormat.getNumberInstance().format(value);
                 if(stack.getCount()>1) s+= " ("+NumberFormat.getNumberInstance().format(value*stack.getCount())+")";
