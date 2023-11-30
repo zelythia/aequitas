@@ -12,7 +12,9 @@ public class AequitasConfig {
         return "#Aequitas config\n" +
                 "#Constantly shows the essence value as a tooltip\n" +
                 "showTooltip=false\n" +
-                "playAmbientSound=true" +
-                "";
+                "#Collection Bowl ambient sound\n"+
+                "playAmbientSound=true\n" +
+                "#Display the remaining flight duration next to the hotbar when the primordial armor set is equipped\n"+
+                "displayFlightDuration=true";
     }
 }

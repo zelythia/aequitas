@@ -116,12 +116,18 @@ public class SimpleConfig {
 
     }
 
-    private void loadConfig() throws IOException {
-        Scanner reader = new Scanner( request.file );
-        for( int line = 1; reader.hasNextLine(); line ++ ) {
-            parseConfigEntry( reader.nextLine(), line );
+    public void loadConfig() {
+        try {
+            Scanner reader = new Scanner(request.file);
+            for (int line = 1; reader.hasNextLine(); line++) {
+                parseConfigEntry(reader.nextLine(), line);
+            }
+            reader.close();
+        } catch (Exception e) {
+            LOGGER.error("AutoTools config failed to load!");
+            LOGGER.trace(e);
+            broken = true;
         }
-        reader.close();
     }
 
     private void parseConfigEntry( String entry, int line ) {
@@ -152,13 +158,7 @@ public class SimpleConfig {
         }
 
         if( !broken ) {
-            try {
-                loadConfig();
-            } catch (Exception e) {
-                LOGGER.error( identifier + " failed to load!" );
-                LOGGER.trace( e );
-                broken = true;
-            }
+            loadConfig();
         }
 
     }

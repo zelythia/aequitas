@@ -26,6 +26,20 @@ public class ConfigScreen extends GameOptionsScreen {
             (gameOptions1, showTooltip) -> AequitasConfig.config.setOrCreate("showTooltip", showTooltip)
     );
 
+    public static final BooleanOption PLAY_AMBIENT_SOUND = new BooleanOption(
+            "ui.aequitas.config.playAmbientSound",
+            new TranslatableText("ui.aequitas.desc.playAmbientSound"),
+            gameOptions1 -> AequitasConfig.config.getOrDefault("playAmbientSound", false),
+            (gameOptions1, playSound) -> AequitasConfig.config.setOrCreate("playAmbientSound", playSound)
+    );
+
+    public static final BooleanOption DISPLAY_FLIGHT_DURATION = new BooleanOption(
+            "ui.aequitas.config.displayFlightDuration",
+            new TranslatableText("ui.aequitas.desc.displayFlightDuration"),
+            gameOptions1 -> AequitasConfig.config.getOrDefault("displayFlightDuration", false),
+            (gameOptions1, displayFlightDuration) -> AequitasConfig.config.setOrCreate("displayFlightDuration", displayFlightDuration)
+    );
+
 
     public ConfigScreen(Screen screen) {
         super(screen, MinecraftClient.getInstance().options, new LiteralText("Aequitas config"));
@@ -34,9 +48,13 @@ public class ConfigScreen extends GameOptionsScreen {
 
     @Override
     protected void init(){
+        AequitasConfig.config.loadConfig();
+
         this.list = new ButtonListWidget(this.client, this.width, this.height, 32, this.height -32, 25);
 
         list.addSingleOptionEntry(SHOW_TOOLTIP);
+        list.addSingleOptionEntry(PLAY_AMBIENT_SOUND);
+        list.addSingleOptionEntry(DISPLAY_FLIGHT_DURATION);
 
         this.children.add(this.list);
         this.addButton(new ButtonWidget(this.width / 2 - 100, this.height - 27, 200, 20, ScreenTexts.DONE, (button) -> this.client.openScreen(this.parent)));

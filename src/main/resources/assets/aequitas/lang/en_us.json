@@ -5,6 +5,12 @@
   "config.waila.plugin_aequitas.crafting_pedestal": "Crafting Pedestal",
   "config.waila.plugin_aequitas.crafting_pedestal_desc": "Display the stored and required essence of the Crafting Pedestal",
 
+  "ui.aequitas.config.showTooltip": "Show Tooltip",
+  "ui.aequitas.desc.showTooltip": "Constantly shows the essence value as a tooltip (not only when pressing shift)",
+  "ui.aequitas.config.playAmbientSound": "Collection Bowl ambient sound",
+  "ui.aequitas.desc.playAmbientSound": "Play ambient sound around Collection Bowl",
+  "ui.aequitas.config.displayFlightDuration": "Display Flight Duration",
+  "ui.aequitas.desc.displayFlightDuration": "Display the remaining flight duration next to the hotbar when the primordial armor set is equipped",
 
   "item.aequitas.sampling_pedestal_core" : "Sampling Pedestal Core",
   "item.aequitas.crafting_pedestal_core" : "Crafting Pedestal Core",
