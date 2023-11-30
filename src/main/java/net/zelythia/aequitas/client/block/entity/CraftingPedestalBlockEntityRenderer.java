@@ -24,7 +24,7 @@ public class CraftingPedestalBlockEntityRenderer extends BlockEntityRenderer<Cra
 
     @Override
     public void render(CraftingPedestalBlockEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        if(blockEntity != null){
+        if (blockEntity != null) {
             matrices.push();
 
             // Calculate the current offset in the y value
@@ -34,10 +34,10 @@ public class CraftingPedestalBlockEntityRenderer extends BlockEntityRenderer<Cra
             matrices.translate(0.5, 1.2 + offset, 0.5);
 
             // Rotate the item
-            matrices.multiply(new Vec3f(0,1,0).getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 4));
+            matrices.multiply(new Vec3f(0, 1, 0).getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 4));
 
             ItemStack stack = blockEntity.getStack(1);
-            if(blockEntity.getStack(0).getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM) stack = blockEntity.getStack(0);
+            if (blockEntity.getStack(0).getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM) stack = blockEntity.getStack(0);
 
             int lightAbove = WorldRenderer.getLightmapCoordinates(blockEntity.getWorld(), blockEntity.getPos().up());
             MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.GROUND, lightAbove, overlay, matrices, vertexConsumers);

@@ -30,13 +30,13 @@ public class WailaIntegration implements IWailaPlugin {
     }
 
 
-    private static class SamplingPedestalBlockComponentProvider implements IBlockComponentProvider{
+    private static class SamplingPedestalBlockComponentProvider implements IBlockComponentProvider {
         @Override
         public void appendBody(List<Text> tooltip, IBlockAccessor accessor, IPluginConfig config) {
-            if(config.get(new Identifier(Aequitas.MOD_ID, "sampling_pedestal"))){
+            if (config.get(new Identifier(Aequitas.MOD_ID, "sampling_pedestal"))) {
                 SamplingPedestalBlockEntity be = (SamplingPedestalBlockEntity) accessor.getBlockEntity();
 
-                if(!be.getStack(0).isEmpty()){
+                if (!be.getStack(0).isEmpty()) {
                     NbtCompound tag = new NbtCompound();
                     tag.putString("id", Registry.ITEM.getId(be.getStack(0).getItem()).toString());
                     tag.putInt("Count", (be.getStack(0).getCount()));
@@ -51,7 +51,7 @@ public class WailaIntegration implements IWailaPlugin {
     }
 
 
-    private static class CraftingPedestalBlockDataProvider implements IServerDataProvider<BlockEntity>{
+    private static class CraftingPedestalBlockDataProvider implements IServerDataProvider<BlockEntity> {
         @Override
         public void appendServerData(NbtCompound data, ServerPlayerEntity player, World world, BlockEntity blockEntity) {
             CraftingPedestalBlockEntity be = (CraftingPedestalBlockEntity) blockEntity;
@@ -61,24 +61,24 @@ public class WailaIntegration implements IWailaPlugin {
     }
 
 
-    private static class CraftingPedestalBlockComponentProvider implements IBlockComponentProvider{
+    private static class CraftingPedestalBlockComponentProvider implements IBlockComponentProvider {
         @Override
         public void appendBody(List<Text> tooltip, IBlockAccessor accessor, IPluginConfig config) {
-            if(config.get(new Identifier(Aequitas.MOD_ID, "crafting_pedestal"))){
+            if (config.get(new Identifier(Aequitas.MOD_ID, "crafting_pedestal"))) {
                 NbtCompound data = accessor.getServerData();
 
-                if(data.contains("storedEssence")){
+                if (data.contains("storedEssence")) {
                     long storedEssence = data.getLong("storedEssence");
 
-                    if(data.contains("targetEssence")){
+                    if (data.contains("targetEssence")) {
                         long targetEssence = data.getLong("targetEssence");
 
-                        if(targetEssence > 0){
-                            tooltip.add(new LiteralText("Essence: "+storedEssence +"/"+ targetEssence));
+                        if (targetEssence > 0) {
+                            tooltip.add(new LiteralText("Essence: " + storedEssence + "/" + targetEssence));
                             return;
                         }
 
-                        tooltip.add(new LiteralText("Essence: "+ storedEssence));
+                        tooltip.add(new LiteralText("Essence: " + storedEssence));
                     }
                 }
             }

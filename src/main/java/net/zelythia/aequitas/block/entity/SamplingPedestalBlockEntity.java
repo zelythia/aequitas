@@ -25,12 +25,12 @@ public class SamplingPedestalBlockEntity extends BlockEntity implements Implemen
         super(Aequitas.SAMPLING_PEDESTAL_BLOCK_ENTITY);
     }
 
-    public long transferEssence(){
+    public long transferEssence() {
 
-        if(storedEssence == 0){
+        if (storedEssence == 0) {
             //Need to consume new item:
             long v = EssenceHandler.getEssenceValue(this.getStack(0).getItem());
-            if(v > 0){
+            if (v > 0) {
                 this.storedEssence += v;
                 displayItem = this.getStack(0).getItem();
                 this.getStack(0).decrement(1);
@@ -38,7 +38,7 @@ public class SamplingPedestalBlockEntity extends BlockEntity implements Implemen
             this.updateListeners();
         }
 
-        if(storedEssence >= 100){
+        if (storedEssence >= 100) {
             storedEssence -= 100;
             return 100;
         }
@@ -49,11 +49,11 @@ public class SamplingPedestalBlockEntity extends BlockEntity implements Implemen
     }
 
     //Serverside
-    public Item getDisplayItem(){
-        if(world.isClient) return displayItem;
+    public Item getDisplayItem() {
+        if (world.isClient) return displayItem;
 
-        if(storedEssence == 0) return inventory.get(0).getItem();
-        return displayItem==null? Items.AIR: displayItem;
+        if (storedEssence == 0) return inventory.get(0).getItem();
+        return displayItem == null ? Items.AIR : displayItem;
     }
 
 
@@ -91,11 +91,12 @@ public class SamplingPedestalBlockEntity extends BlockEntity implements Implemen
         super.fromTag(state, tag);
 
         this.storedEssence = tag.getLong("Essence");
-        if(tag.contains("displayItem")) this.displayItem = Registry.ITEM.get(new Identifier(tag.getString("displayItem")));
+        if (tag.contains("displayItem"))
+            this.displayItem = Registry.ITEM.get(new Identifier(tag.getString("displayItem")));
 
         NbtList listTag = tag.getList("Items", 10);
         NbtCompound compoundTag = listTag.getCompound(0);
-        ItemStack stack = new ItemStack((Item)Registry.ITEM.get(new Identifier(compoundTag.getString("id"))));
+        ItemStack stack = new ItemStack((Item) Registry.ITEM.get(new Identifier(compoundTag.getString("id"))));
         stack.setCount(compoundTag.getInt("Count"));
         this.inventory.set(0, stack);
     }
@@ -106,11 +107,12 @@ public class SamplingPedestalBlockEntity extends BlockEntity implements Implemen
         this.inventory.clear();
 
         this.storedEssence = tag.getLong("Essence");
-        if(tag.contains("displayItem")) this.displayItem = Registry.ITEM.get(new Identifier(tag.getString("displayItem")));
+        if (tag.contains("displayItem"))
+            this.displayItem = Registry.ITEM.get(new Identifier(tag.getString("displayItem")));
 
         NbtList listTag = tag.getList("Items", 10);
         NbtCompound compoundTag = listTag.getCompound(0);
-        ItemStack stack = new ItemStack((Item)Registry.ITEM.get(new Identifier(compoundTag.getString("id"))));
+        ItemStack stack = new ItemStack((Item) Registry.ITEM.get(new Identifier(compoundTag.getString("id"))));
         stack.setCount(compoundTag.getInt("Count"));
         this.inventory.set(0, stack);
     }

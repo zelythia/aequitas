@@ -20,7 +20,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     }
 
     @Inject(method = "handleFallDamage", at = @At("HEAD"), cancellable = true)
-    private void handleFallDamage(float fallDistance, float damageMultiplier, CallbackInfoReturnable<Boolean> cir){
-        if(EssenceArmorItem.checkSetPrimordial((PlayerEntity) (Object) this)) cir.setReturnValue(false);
+    private void handleFallDamage(float fallDistance, float damageMultiplier, CallbackInfoReturnable<Boolean> cir) {
+        if (EssenceArmorItem.checkSetPrimordial((PlayerEntity) (Object) this)) cir.setReturnValue(false);
     }
 }

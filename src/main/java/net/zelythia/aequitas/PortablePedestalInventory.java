@@ -30,41 +30,41 @@ public class PortablePedestalInventory implements Inventory {
     private int page = 0;
     public int maxPage;
 
-    public PortablePedestalInventory(ItemStack item){
-        if(item.getItem() != Aequitas.PORTABLE_PEDESTAL_ITEM) return;
+    public PortablePedestalInventory(ItemStack item) {
+        if (item.getItem() != Aequitas.PORTABLE_PEDESTAL_ITEM) return;
 
         this.item = item;
 
         NbtCompound nbt = item.getOrCreateTag();
 
-        if(!nbt.contains("essence")){
+        if (!nbt.contains("essence")) {
             nbt.putLong("essence", 0);
         }
 
         storedEssence = nbt.getLong("essence");
 
-        if(nbt.getType("unlocked") == NbtType.LIST){
+        if (nbt.getType("unlocked") == NbtType.LIST) {
             NbtList nbtList = (NbtList) nbt.get("unlocked");
             for (int i = 0; i < nbtList.size(); ++i) {
                 Item item1 = Registry.ITEM.get(new Identifier(nbtList.getString(i)));
-                if(item1 != Items.AIR) unlockedItems.add(item1);
+                if (item1 != Items.AIR) unlockedItems.add(item1);
             }
         }
 
         updateFilter("", 0);
     }
 
-    public void updateFilter(String filter, int page){
+    public void updateFilter(String filter, int page) {
         this.filter = filter;
         this.page = page;
-        this.maxPage = unlockedItems.size()/10;
+        this.maxPage = unlockedItems.size() / 10;
 
         List<Item> list = unlockedItems.stream().filter(item1 -> Registry.ITEM.getId(item1).toString().contains(filter)).collect(Collectors.toList());
 
         items.clear();
 
-        for(int i = 0; i+10*page < list.size() && i < 10; i++){
-            items.set(i+1, new ItemStack(list.get(i+10*page)));
+        for (int i = 0; i + 10 * page < list.size() && i < 10; i++) {
+            items.set(i + 1, new ItemStack(list.get(i + 10 * page)));
         }
 
         markDirty();
@@ -88,16 +88,16 @@ public class PortablePedestalInventory implements Inventory {
     @Override
     public ItemStack removeStack(int slot, int amount) {
         long e = EssenceHandler.getEssenceValue(items.get(slot));
-        if(storedEssence<e) return ItemStack.EMPTY;
+        if (storedEssence < e) return ItemStack.EMPTY;
 
-        if(e*amount <= storedEssence){
-            storedEssence -= e*amount;
+        if (e * amount <= storedEssence) {
+            storedEssence -= e * amount;
             essenceToTag();
             return new ItemStack(items.get(slot).getItem(), amount);
         }
 
-        int newAmount = (int) (storedEssence/e);
-        storedEssence -= e*newAmount;
+        int newAmount = (int) (storedEssence / e);
+        storedEssence -= e * newAmount;
         essenceToTag();
         return new ItemStack(items.get(slot).getItem(), newAmount);
     }
@@ -105,10 +105,10 @@ public class PortablePedestalInventory implements Inventory {
 
     @Override
     public ItemStack removeStack(int slot) {
-        if(slot == 0) return Inventories.removeStack(items, slot);
+        if (slot == 0) return Inventories.removeStack(items, slot);
 
         long e = EssenceHandler.getEssenceValue(items.get(slot));
-        if(e <= storedEssence){
+        if (e <= storedEssence) {
             storedEssence -= e;
             essenceToTag();
             return items.get(slot);
@@ -118,38 +118,37 @@ public class PortablePedestalInventory implements Inventory {
 
     @Override
     public void setStack(int slot, ItemStack stack) {
-        if(slot == 0){
+        if (slot == 0) {
             long e = EssenceHandler.getEssenceValue(stack);
-            if(e > 0){
+            if (e > 0) {
                 this.storedEssence += e;
-                if(!unlockedItems.contains(stack.getItem())){
+                if (!unlockedItems.contains(stack.getItem())) {
                     this.unlockedItems.add(stack.getItem());
                     updateFilter(this.filter, this.page);
                 }
                 markDirty();
             }
-        }
-        else{
+        } else {
             items.set(slot, stack);
         }
     }
 
 
-    public void essenceToTag(){
-        if(item == null) return;
+    public void essenceToTag() {
+        if (item == null) return;
         this.item.getTag().putLong("essence", storedEssence);
     }
 
 
     @Override
     public void markDirty() {
-        if(item == null) return;
+        if (item == null) return;
 
         essenceToTag();
 
         NbtList nbtList = new NbtList();
 
-        for(Item item1: unlockedItems){
+        for (Item item1 : unlockedItems) {
             Identifier identifier = Registry.ITEM.getId(item1);
             nbtList.add(NbtString.of((identifier == null ? "minecraft:air" : identifier.toString())));
         }

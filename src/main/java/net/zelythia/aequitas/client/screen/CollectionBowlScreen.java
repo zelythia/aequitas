@@ -16,7 +16,7 @@ public class CollectionBowlScreen extends HandledScreen<CollectionBowlScreenHand
 
     public CollectionBowlScreen(CollectionBowlScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
-        TEXTURE = new Identifier(Aequitas.MOD_ID, "textures/gui/collection_bowl_"+handler.getSize()+".png");
+        TEXTURE = new Identifier(Aequitas.MOD_ID, "textures/gui/collection_bowl_" + handler.getSize() + ".png");
     }
 
     @Override

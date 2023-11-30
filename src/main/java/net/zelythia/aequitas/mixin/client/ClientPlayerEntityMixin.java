@@ -13,6 +13,7 @@ import net.zelythia.aequitas.client.DoubleJumpEntity;
 import net.zelythia.aequitas.client.config.AequitasConfig;
 import net.zelythia.aequitas.item.FallFlying;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -34,9 +35,8 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 
         if (player.isOnGround() || player.isClimbing()) {
             canJump = player.getEquippedStack(EquipmentSlot.FEET).getItem().equals(Aequitas.PRIMAL_ESSENCE_BOOTS) && player.getEquippedStack(EquipmentSlot.LEGS).getItem().equals(Aequitas.PRIMAL_ESSENCE_LEGGINGS) && player.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(Aequitas.PRIMAL_ESSENCE_CHESTPLATE) && player.getEquippedStack(EquipmentSlot.HEAD).getItem().equals(Aequitas.PRIMAL_ESSENCE_HELMET);
-        }
-        else if(player.input.jumping && !player.abilities.flying && player.getVelocity().y < 0 && !player.hasVehicle() && !player.isTouchingWater() && !player.hasStatusEffect(StatusEffects.LEVITATION)){
-           if(canJump && !jumped){
+        } else if (player.input.jumping && !player.abilities.flying && player.getVelocity().y < 0 && !player.hasVehicle() && !player.isTouchingWater() && !player.hasStatusEffect(StatusEffects.LEVITATION)) {
+            if (canJump && !jumped) {
                 canJump = false;
                 player.jump();
                 player.input.jumping = false;
@@ -47,7 +47,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 
     @Override
     public boolean canDoubleJump() {
-        return !(!canJump && !jumped && (AequitasConfig.config.getOrDefault("enableElytra", false) || this.getVelocity().y < 0 ));
+        return !(!canJump && !jumped && (AequitasConfig.config.getOrDefault("enableElytra", false) || this.getVelocity().y < 0));
     }
 
 
@@ -61,6 +61,6 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
     //Custom check for fall flying
     @Inject(at = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/client/network/ClientPlayerEntity.getEquippedStack (Lnet/minecraft/entity/EquipmentSlot;)Lnet/minecraft/item/ItemStack;"), method = "tickMovement")
     public void onElytraCheck(CallbackInfo cb) {
-         FallFlying.checkFallFlying();
+        FallFlying.checkFallFlying();
     }
 }

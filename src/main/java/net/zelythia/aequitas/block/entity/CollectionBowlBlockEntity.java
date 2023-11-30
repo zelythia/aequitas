@@ -57,10 +57,10 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
     private Sounds.CollectionBowlSoundInstance s;
 
     public CollectionBowlBlockEntity(int inventorySize) {
-        super(inventorySize==15?Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_III:inventorySize==9?Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_II:Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_I);
-        this.tier = inventorySize==15?3:inventorySize==9?2:1;
-        this.inventory  = DefaultedList.ofSize(inventorySize, ItemStack.EMPTY);
-        if(world != null && !world.isClient){
+        super(inventorySize == 15 ? Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_III : inventorySize == 9 ? Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_II : Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_I);
+        this.tier = inventorySize == 15 ? 3 : inventorySize == 9 ? 2 : 1;
+        this.inventory = DefaultedList.ofSize(inventorySize, ItemStack.EMPTY);
+        if (world != null && !world.isClient) {
             updateStructurePositions();
             setCollectionTimeTotal();
         }
@@ -70,20 +70,20 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
 
     @Override
     public void tick() {
-        if(world == null) return;
+        if (world == null) return;
 
-        if(world.isClient){
+        if (world.isClient) {
             playSound();
             return;
         }
 
         //Server logic
 
-        if(getEmptySlot() != -1 && checkStructure()){
+        if (getEmptySlot() != -1 && checkStructure()) {
             setStructureBlockProperties(true);
             ++this.collectionTime;
 
-            if(this.collectionTime >= this.collectionTimeTotal){
+            if (this.collectionTime >= this.collectionTimeTotal) {
                 this.collectionTime = 0;
                 setCollectionTimeTotal();
 
@@ -92,29 +92,25 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
 
                 List<ItemStack> items = this.world.getServer().getLootManager().getTable(new Identifier("aequitas", "gameplay/biomes")).generateLoot(lootContext);
 
-                if(items.size() > 0){
+                if (items.size() > 0) {
                     ItemStack item = items.get(world.random.nextInt(items.size()));
 
-                    if(this.inventory.size() == 9 && Math.random()*100 < 30){
+                    if (this.inventory.size() == 9 && Math.random() * 100 < 30) {
                         item.setCount(Math.min(item.getMaxCount(), item.getCount() * 2));
-                    }
-                    else if(this.inventory.size() == 15 && Math.random()*100 < 50){
-                        if(Math.random()*100 < 50){
+                    } else if (this.inventory.size() == 15 && Math.random() * 100 < 50) {
+                        if (Math.random() * 100 < 50) {
                             item.setCount(Math.min(item.getMaxCount(), item.getCount() * 3));
-                        }
-                        else{
+                        } else {
                             item.setCount(Math.min(item.getMaxCount(), item.getCount() * 2));
                         }
                     }
 
                     this.insertStack(item);
-                }
-                else{
+                } else {
                     Aequitas.LOGGER.error("Broken Loot table for biome {}", this.world.getBiome(pos));
                 }
             }
-        }
-        else{
+        } else {
             setStructureBlockProperties(false);
         }
 
@@ -122,140 +118,138 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
     }
 
 
-    public void updateStructurePositions(){
+    public void updateStructurePositions() {
         conduitBlocks.clear();
 
 
         int r = 3;
 
-        if(tier == 1){
+        if (tier == 1) {
             catalystBlocks1.clear();
-            conduitBlocks.add(pos.add(3,0,0));
-            conduitBlocks.add(pos.add(-3,0,0));
-            conduitBlocks.add(pos.add(0,0,3));
-            conduitBlocks.add(pos.add(0,0,-3));
+            conduitBlocks.add(pos.add(3, 0, 0));
+            conduitBlocks.add(pos.add(-3, 0, 0));
+            conduitBlocks.add(pos.add(0, 0, 3));
+            conduitBlocks.add(pos.add(0, 0, -3));
 
-            catalystBlocks1.add(pos.add(3,1,0));
-            catalystBlocks1.add(pos.add(-3,1,0));
-            catalystBlocks1.add(pos.add(0,1,3));
-            catalystBlocks1.add(pos.add(0,1,-3));
+            catalystBlocks1.add(pos.add(3, 1, 0));
+            catalystBlocks1.add(pos.add(-3, 1, 0));
+            catalystBlocks1.add(pos.add(0, 1, 3));
+            catalystBlocks1.add(pos.add(0, 1, -3));
 
             catalystBlocks1.add(pos.up(3));
-        }
-        else if(tier == 2){
+        } else if (tier == 2) {
             r = 4;
             catalystBlocks1.clear();
             catalystBlocks2.clear();
 
             //Pillar 1
-            conduitBlocks.add(pos.add(4,0,0));
-            conduitBlocks.add(pos.add(-4,0,0));
-            conduitBlocks.add(pos.add(0,0,4));
-            conduitBlocks.add(pos.add(0,0,-4));
+            conduitBlocks.add(pos.add(4, 0, 0));
+            conduitBlocks.add(pos.add(-4, 0, 0));
+            conduitBlocks.add(pos.add(0, 0, 4));
+            conduitBlocks.add(pos.add(0, 0, -4));
 
             //Pillar 2
-            conduitBlocks.add(pos.add(3,0,3));
-            conduitBlocks.add(pos.add(3,1,3));
+            conduitBlocks.add(pos.add(3, 0, 3));
+            conduitBlocks.add(pos.add(3, 1, 3));
 
-            conduitBlocks.add(pos.add(3,0,-3));
-            conduitBlocks.add(pos.add(3,1,-3));
+            conduitBlocks.add(pos.add(3, 0, -3));
+            conduitBlocks.add(pos.add(3, 1, -3));
 
-            conduitBlocks.add(pos.add(-3,0,3));
-            conduitBlocks.add(pos.add(-3,1,3));
+            conduitBlocks.add(pos.add(-3, 0, 3));
+            conduitBlocks.add(pos.add(-3, 1, 3));
 
-            conduitBlocks.add(pos.add(-3,0,-3));
-            conduitBlocks.add(pos.add(-3,1,-3));
+            conduitBlocks.add(pos.add(-3, 0, -3));
+            conduitBlocks.add(pos.add(-3, 1, -3));
 
             //Catalysts
-            catalystBlocks1.add(pos.add(4,1,0));
-            catalystBlocks1.add(pos.add(-4,1,0));
-            catalystBlocks1.add(pos.add(0,1,4));
-            catalystBlocks1.add(pos.add(0,1,-4));
+            catalystBlocks1.add(pos.add(4, 1, 0));
+            catalystBlocks1.add(pos.add(-4, 1, 0));
+            catalystBlocks1.add(pos.add(0, 1, 4));
+            catalystBlocks1.add(pos.add(0, 1, -4));
 
-            catalystBlocks2.add(pos.add(3,2,3));
-            catalystBlocks2.add(pos.add(3,2,-3));
-            catalystBlocks2.add(pos.add(-3,2,3));
-            catalystBlocks2.add(pos.add(-3,2,-3));
+            catalystBlocks2.add(pos.add(3, 2, 3));
+            catalystBlocks2.add(pos.add(3, 2, -3));
+            catalystBlocks2.add(pos.add(-3, 2, 3));
+            catalystBlocks2.add(pos.add(-3, 2, -3));
 
             catalystBlocks2.add(pos.up(3));
-        }
-        else if(tier == 3){
+        } else if (tier == 3) {
             r = 6;
             catalystBlocks1.clear();
             catalystBlocks2.clear();
             catalystBlocks3.clear();
 
             //Pillar 1
-            conduitBlocks.add(pos.add(6,0,0));
-            conduitBlocks.add(pos.add(-6,0,0));
-            conduitBlocks.add(pos.add(0,0,6));
-            conduitBlocks.add(pos.add(0,0,-6));
+            conduitBlocks.add(pos.add(6, 0, 0));
+            conduitBlocks.add(pos.add(-6, 0, 0));
+            conduitBlocks.add(pos.add(0, 0, 6));
+            conduitBlocks.add(pos.add(0, 0, -6));
 
             //Pillar 2
-            conduitBlocks.add(pos.add(5,0,2));
-            conduitBlocks.add(pos.add(5,1,2));
+            conduitBlocks.add(pos.add(5, 0, 2));
+            conduitBlocks.add(pos.add(5, 1, 2));
 
-            conduitBlocks.add(pos.add(5,0,-2));
-            conduitBlocks.add(pos.add(5,1,-2));
+            conduitBlocks.add(pos.add(5, 0, -2));
+            conduitBlocks.add(pos.add(5, 1, -2));
 
-            conduitBlocks.add(pos.add(-5,0,2));
-            conduitBlocks.add(pos.add(-5,1,2));
+            conduitBlocks.add(pos.add(-5, 0, 2));
+            conduitBlocks.add(pos.add(-5, 1, 2));
 
-            conduitBlocks.add(pos.add(-5,0,-2));
-            conduitBlocks.add(pos.add(-5,1,-2));
+            conduitBlocks.add(pos.add(-5, 0, -2));
+            conduitBlocks.add(pos.add(-5, 1, -2));
 
 
-            conduitBlocks.add(pos.add(2,0,5));
-            conduitBlocks.add(pos.add(2,1,5));
+            conduitBlocks.add(pos.add(2, 0, 5));
+            conduitBlocks.add(pos.add(2, 1, 5));
 
-            conduitBlocks.add(pos.add(-2,0,5));
-            conduitBlocks.add(pos.add(-2,1,5));
+            conduitBlocks.add(pos.add(-2, 0, 5));
+            conduitBlocks.add(pos.add(-2, 1, 5));
 
-            conduitBlocks.add(pos.add(2,0,-5));
-            conduitBlocks.add(pos.add(2,1,-5));
+            conduitBlocks.add(pos.add(2, 0, -5));
+            conduitBlocks.add(pos.add(2, 1, -5));
 
-            conduitBlocks.add(pos.add(-2,0,-5));
-            conduitBlocks.add(pos.add(-2,1,-5));
+            conduitBlocks.add(pos.add(-2, 0, -5));
+            conduitBlocks.add(pos.add(-2, 1, -5));
 
             //Pillar 3
-            conduitBlocks.add(pos.add(4,0,4));
-            conduitBlocks.add(pos.add(4,1,4));
-            conduitBlocks.add(pos.add(4,2,4));
+            conduitBlocks.add(pos.add(4, 0, 4));
+            conduitBlocks.add(pos.add(4, 1, 4));
+            conduitBlocks.add(pos.add(4, 2, 4));
 
-            conduitBlocks.add(pos.add(4,0,-4));
-            conduitBlocks.add(pos.add(4,1,-4));
-            conduitBlocks.add(pos.add(4,2,-4));
+            conduitBlocks.add(pos.add(4, 0, -4));
+            conduitBlocks.add(pos.add(4, 1, -4));
+            conduitBlocks.add(pos.add(4, 2, -4));
 
-            conduitBlocks.add(pos.add(-4,0,4));
-            conduitBlocks.add(pos.add(-4,1,4));
-            conduitBlocks.add(pos.add(-4,2,4));
+            conduitBlocks.add(pos.add(-4, 0, 4));
+            conduitBlocks.add(pos.add(-4, 1, 4));
+            conduitBlocks.add(pos.add(-4, 2, 4));
 
-            conduitBlocks.add(pos.add(-4,0,-4));
-            conduitBlocks.add(pos.add(-4,1,-4));
-            conduitBlocks.add(pos.add(-4,2,-4));
+            conduitBlocks.add(pos.add(-4, 0, -4));
+            conduitBlocks.add(pos.add(-4, 1, -4));
+            conduitBlocks.add(pos.add(-4, 2, -4));
 
             //Catalysts
-            catalystBlocks1.add(pos.add(6,1,0));
-            catalystBlocks1.add(pos.add(-6,1,0));
-            catalystBlocks1.add(pos.add(0,1,6));
-            catalystBlocks1.add(pos.add(0,1,-6));
+            catalystBlocks1.add(pos.add(6, 1, 0));
+            catalystBlocks1.add(pos.add(-6, 1, 0));
+            catalystBlocks1.add(pos.add(0, 1, 6));
+            catalystBlocks1.add(pos.add(0, 1, -6));
 
-            catalystBlocks2.add(pos.add(5,2,2));
-            catalystBlocks2.add(pos.add(5,2,-2));
-            catalystBlocks2.add(pos.add(-5,2,2));
-            catalystBlocks2.add(pos.add(-5,2,-2));
+            catalystBlocks2.add(pos.add(5, 2, 2));
+            catalystBlocks2.add(pos.add(5, 2, -2));
+            catalystBlocks2.add(pos.add(-5, 2, 2));
+            catalystBlocks2.add(pos.add(-5, 2, -2));
 
-            catalystBlocks3.add(pos.add(4,3,4));
-            catalystBlocks3.add(pos.add(4,3,-4));
-            catalystBlocks3.add(pos.add(-4,3,4));
-            catalystBlocks3.add(pos.add(-4,3,-4));
+            catalystBlocks3.add(pos.add(4, 3, 4));
+            catalystBlocks3.add(pos.add(4, 3, -4));
+            catalystBlocks3.add(pos.add(-4, 3, 4));
+            catalystBlocks3.add(pos.add(-4, 3, -4));
 
             catalystBlocks3.add(pos.up(3));
         }
 
         //Adding ground blocks
         conduitBlocks.add(pos.down());
-        for(int i = 1; i<= r; i++){
+        for (int i = 1; i <= r; i++) {
             conduitBlocks.add(pos.add(i, -1, 0));
             conduitBlocks.add(pos.add(-i, -1, 0));
             conduitBlocks.add(pos.add(0, -1, i));
@@ -263,30 +257,30 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
         }
     }
 
-    public boolean checkStructure(){
+    public boolean checkStructure() {
 
-        for(BlockPos pos: conduitBlocks){
-            if(!world.getBlockState(pos).getBlock().equals(Aequitas.CONDUIT_BLOCK)) return false;
+        for (BlockPos pos : conduitBlocks) {
+            if (!world.getBlockState(pos).getBlock().equals(Aequitas.CONDUIT_BLOCK)) return false;
         }
-        for(BlockPos pos: catalystBlocks1){
-            if(!world.getBlockState(pos).getBlock().equals(Aequitas.CATALYST_BLOCK_I)) return false;
+        for (BlockPos pos : catalystBlocks1) {
+            if (!world.getBlockState(pos).getBlock().equals(Aequitas.CATALYST_BLOCK_I)) return false;
         }
-        for(BlockPos pos: catalystBlocks2){
-            if(!world.getBlockState(pos).getBlock().equals(Aequitas.CATALYST_BLOCK_II)) return false;
+        for (BlockPos pos : catalystBlocks2) {
+            if (!world.getBlockState(pos).getBlock().equals(Aequitas.CATALYST_BLOCK_II)) return false;
         }
-        for(BlockPos pos: catalystBlocks3){
-            if(!world.getBlockState(pos).getBlock().equals(Aequitas.CATALYST_BLOCK_III)) return false;
+        for (BlockPos pos : catalystBlocks3) {
+            if (!world.getBlockState(pos).getBlock().equals(Aequitas.CATALYST_BLOCK_III)) return false;
         }
 
         return true;
     }
 
-    private void setStructureBlockProperties(boolean value){
-        if(!value && !structureBlockProperties) return;
+    private void setStructureBlockProperties(boolean value) {
+        if (!value && !structureBlockProperties) return;
         structureBlockProperties = value;
 
-        for(BlockPos pos: conduitBlocks){
-            if(world.getBlockState(pos).getOrEmpty(Aequitas.ACTIVE_BLOCK_PROPERTY).isPresent()){
+        for (BlockPos pos : conduitBlocks) {
+            if (world.getBlockState(pos).getOrEmpty(Aequitas.ACTIVE_BLOCK_PROPERTY).isPresent()) {
                 world.setBlockState(pos, world.getBlockState(pos).with(Aequitas.ACTIVE_BLOCK_PROPERTY, value));
             }
         }
@@ -296,35 +290,32 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
         catalystBlocks.addAll(catalystBlocks2);
         catalystBlocks.addAll(catalystBlocks3);
 
-        for(BlockPos pos: catalystBlocks){
-            if(world.getBlockState(pos).getOrEmpty(Aequitas.ACTIVE_BLOCK_PROPERTY).isPresent()){
+        for (BlockPos pos : catalystBlocks) {
+            if (world.getBlockState(pos).getOrEmpty(Aequitas.ACTIVE_BLOCK_PROPERTY).isPresent()) {
                 world.setBlockState(pos, world.getBlockState(pos).with(Aequitas.ACTIVE_BLOCK_PROPERTY, value));
             }
         }
     }
 
-    private void setCollectionTimeTotal(){
-        if(this.tier==1){
+    private void setCollectionTimeTotal() {
+        if (this.tier == 1) {
             this.collectionTimeTotal = (int) ((Math.random() * 200) + 1100);
-        }
-        else if(this.tier == 2){
+        } else if (this.tier == 2) {
             this.collectionTimeTotal = (int) ((Math.random() * 200) + 500);
-        }
-        else{
+        } else {
             this.collectionTimeTotal = (int) ((Math.random() * 200) + 100);
         }
     }
 
-    private void playSound(){
-        if(AequitasConfig.config.getOrDefault("playAmbientSound", true) && world.getBlockState(pos.down()).getOrEmpty(Aequitas.ACTIVE_BLOCK_PROPERTY).orElse(false)){
+    private void playSound() {
+        if (AequitasConfig.config.getOrDefault("playAmbientSound", true) && world.getBlockState(pos.down()).getOrEmpty(Aequitas.ACTIVE_BLOCK_PROPERTY).orElse(false)) {
             MinecraftClient client = MinecraftClient.getInstance();
 
-            if(s == null || !client.getSoundManager().isPlaying(s)){
-                s = new Sounds.CollectionBowlSoundInstance(client.player, pos, tier==1?3:tier==2?4:6);
+            if (s == null || !client.getSoundManager().isPlaying(s)) {
+                s = new Sounds.CollectionBowlSoundInstance(client.player, pos, tier == 1 ? 3 : tier == 2 ? 4 : 6);
                 client.getSoundManager().play(s);
             }
-        }
-        else if(s != null){
+        } else if (s != null) {
             s.setDone();
             s = null;
         }
@@ -335,7 +326,7 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
 
     @Override
     public Text getDisplayName() {
-        return new TranslatableText("block.aequitas.collection_bowl_"+tier);
+        return new TranslatableText("block.aequitas.collection_bowl_" + tier);
     }
 
     @Nullable
@@ -348,7 +339,6 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
     public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
         buf.writeInt(inventory.size());
     }
-
 
 
     @Nullable
@@ -378,15 +368,15 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
         updateStructurePositions();
     }
 
-    public float getServerCollectionProgress(){
-        return (float) this.collectionTime/this.collectionTimeTotal;
+    public float getServerCollectionProgress() {
+        return (float) this.collectionTime / this.collectionTimeTotal;
     }
 
-    public float getClientCollectionProgress(){
+    public float getClientCollectionProgress() {
         return collectionProgress;
     }
 
-    public void setClientCollectionProgress(float progress){
+    public void setClientCollectionProgress(float progress) {
         collectionProgress = progress;
     }
 
@@ -406,7 +396,7 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
     public void markRemoved() {
         super.markRemoved();
         setStructureBlockProperties(false);
-        if(s != null){
+        if (s != null) {
             s.setDone();
             s = null;
         }
@@ -420,12 +410,12 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
         return inventory;
     }
 
-    public void insertStack(ItemStack stack){
+    public void insertStack(ItemStack stack) {
         int i;
         do {
             i = stack.getCount();
             stack.setCount(this.addStack(stack));
-        } while(!stack.isEmpty() && stack.getCount() < i);
+        } while (!stack.isEmpty() && stack.getCount() < i);
     }
 
     private int addStack(ItemStack stack) {
@@ -438,7 +428,7 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
     }
 
     public int getOccupiedSlotWithRoomForStack(ItemStack stack) {
-        for(int i = 0; i < this.inventory.size(); ++i) {
+        for (int i = 0; i < this.inventory.size(); ++i) {
             if (this.canStackAddMore(this.inventory.get(i), stack)) {
                 return i;
             }
@@ -456,7 +446,7 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
     }
 
     public int getEmptySlot() {
-        for(int i = 0; i < this.inventory.size(); ++i) {
+        for (int i = 0; i < this.inventory.size(); ++i) {
             if (this.inventory.get(i).isEmpty()) {
                 return i;
             }

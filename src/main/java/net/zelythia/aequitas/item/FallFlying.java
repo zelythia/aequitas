@@ -43,10 +43,10 @@ public class FallFlying {
         ItemStack itemStack = playerEntity.getEquippedStack(EquipmentSlot.CHEST);
 
         if (!playerEntity.isOnGround() && !playerEntity.isFallFlying() && !playerEntity.isTouchingWater() && !playerEntity.hasStatusEffect(StatusEffects.LEVITATION)
-                && ELYTRA.contains(itemStack.getItem()) && ElytraItem.isUsable(itemStack)){
+                && ELYTRA.contains(itemStack.getItem()) && ElytraItem.isUsable(itemStack)) {
 
-            if(playerEntity instanceof DoubleJumpEntity){
-                if(((DoubleJumpEntity) playerEntity).canDoubleJump()) return false;
+            if (playerEntity instanceof DoubleJumpEntity) {
+                if (((DoubleJumpEntity) playerEntity).canDoubleJump()) return false;
             }
 
             playerEntity.startFallFlying();

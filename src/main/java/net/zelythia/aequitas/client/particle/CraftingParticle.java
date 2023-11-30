@@ -33,29 +33,27 @@ public class CraftingParticle extends SpriteBillboardParticle {
         this.prevPosZ = this.z;
 
 
-        if(Util.distanceSq(startX, startZ, this.x, this.z) >= maxDistanceSq){
+        if (Util.distanceSq(startX, startZ, this.x, this.z) >= maxDistanceSq) {
             this.markDead();
-        }
-        else{
+        } else {
             this.velocityY = calculateHeight(Util.distance(startX, startZ, this.x, this.z));
             move(this.velocityX, this.velocityY, this.velocityZ);
         }
     }
 
-    private double calculateHeight(double x){
-        return (2*x- Math.sqrt(this.maxDistanceSq -3))*-0.02;
+    private double calculateHeight(double x) {
+        return (2 * x - Math.sqrt(this.maxDistanceSq - 3)) * -0.02;
     }
-
 
 
     @Override
     protected int getBrightness(float tint) {
         BlockPos blockPos = new BlockPos(this.x, this.y, this.z);
-        if(this.world == null) return 0;
+        if (this.world == null) return 0;
         return this.world.isChunkLoaded(blockPos) ? WorldRenderer.getLightmapCoordinates(this.world, blockPos) : 0;
     }
 
-    public void setMaxDistanceSq(double maxDistanceSq){
+    public void setMaxDistanceSq(double maxDistanceSq) {
         this.maxDistanceSq = maxDistanceSq;
     }
 

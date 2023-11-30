@@ -20,11 +20,11 @@ public class EssencePillarFeatureConfig implements FeatureConfig {
     static {
 
         CODEC = RecordCodecBuilder.create((instance) -> {
-           return instance.group(Codec.intRange(0, 64).fieldOf("maxHeight").forGetter((essencePillarFeatureConfig) -> {
-               return essencePillarFeatureConfig.maxHeight;
-           }), BlockState.CODEC.fieldOf("blockState").forGetter((essencePillarFeatureConfig) -> {
-               return essencePillarFeatureConfig.state;
-           })).apply(instance, EssencePillarFeatureConfig::new);
+            return instance.group(Codec.intRange(0, 64).fieldOf("maxHeight").forGetter((essencePillarFeatureConfig) -> {
+                return essencePillarFeatureConfig.maxHeight;
+            }), BlockState.CODEC.fieldOf("blockState").forGetter((essencePillarFeatureConfig) -> {
+                return essencePillarFeatureConfig.state;
+            })).apply(instance, EssencePillarFeatureConfig::new);
         });
     }
 }

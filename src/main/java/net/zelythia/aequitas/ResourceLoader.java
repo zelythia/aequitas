@@ -27,7 +27,7 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
     private final CustomCraftingCostLoader customCraftingCostLoader;
     private final CustomRecipeLoader customRecipeLoader;
 
-    public ResourceLoader(){
+    public ResourceLoader() {
         GSON = new Gson();
         customEssenceLoader = new CustomEssenceLoader();
         customCraftingCostLoader = new CustomCraftingCostLoader();
@@ -48,9 +48,9 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
         CompletableFuture futures = CompletableFuture.allOf(completableFuture, completableFuture2, completableFuture3);
         synchronizer.getClass();
         return futures.thenCompose(synchronizer::whenPrepared).thenAcceptAsync((void_) -> {
-            customEssenceLoader.applyReload((Map)completableFuture.join());
-            customCraftingCostLoader.applyReload((Map)completableFuture2.join());
-            customRecipeLoader.applyReload((Map)completableFuture3.join());
+            customEssenceLoader.applyReload((Map) completableFuture.join());
+            customCraftingCostLoader.applyReload((Map) completableFuture2.join());
+            customRecipeLoader.applyReload((Map) completableFuture3.join());
         }, applyExecutor);
     }
 
@@ -64,7 +64,7 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
                     List<Resource> resources = manager.getAllResources(new Identifier(Aequitas.MOD_ID, "essence/values.json"));
                     Iterator<Resource> iterator = resources.iterator();
 
-                    while (iterator.hasNext()){
+                    while (iterator.hasNext()) {
                         Resource resource = iterator.next();
                         InputStream inputStream = resource.getInputStream();
 
@@ -73,12 +73,11 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
                         JsonObject jsonObject = JsonHelper.deserialize(GSON, reader, JsonObject.class);
 
                         JsonObject crafting_cost = jsonObject.getAsJsonObject("crafting_cost");
-                        if(crafting_cost != null){
+                        if (crafting_cost != null) {
                             crafting_cost.entrySet().forEach(entry -> {
-                                try{
+                                try {
                                     map.put(entry.getKey(), entry.getValue().getAsLong());
-                                }
-                                catch (ClassCastException | IllegalStateException  e){
+                                } catch (ClassCastException | IllegalStateException e) {
                                     Aequitas.LOGGER.error("Incorrect value for recipe type {}", entry.getKey());
                                 }
                             });
@@ -106,7 +105,7 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
                     List<Resource> resources = manager.getAllResources(new Identifier(Aequitas.MOD_ID, "essence/values.json"));
                     Iterator<Resource> iterator = resources.iterator();
 
-                    while (iterator.hasNext()){
+                    while (iterator.hasNext()) {
                         Resource resource = iterator.next();
                         InputStream inputStream = resource.getInputStream();
 
@@ -127,11 +126,11 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
                 objects.removeIf(jsonObject -> !jsonObject.has("priority") || !jsonObject.has("values"));
                 objects.sort(Comparator.comparingInt(o -> o.get("priority").getAsInt()));
 
-                for (JsonObject o: objects){
+                for (JsonObject o : objects) {
                     o.getAsJsonObject("values").entrySet().forEach(element -> {
-                        try{
+                        try {
                             map.put(element.getKey(), element.getValue().getAsLong());
-                        }catch (ClassCastException | IllegalStateException  e){
+                        } catch (ClassCastException | IllegalStateException e) {
                             Aequitas.LOGGER.error("Incorrect value for {}", element.getKey());
                         }
                     });
@@ -145,23 +144,20 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
             Map<Item, Long> map2 = new HashMap<>();
 
             map.forEach((key, value) -> {
-                if(key.startsWith("#")){
+                if (key.startsWith("#")) {
                     Tag<Item> tag = ServerTagManagerHolder.getTagManager().getItems().getTag(new Identifier(key.replace("#", "")));
-                    if(tag != null){
+                    if (tag != null) {
                         tag.values().forEach(item -> {
                             map2.put(item, value);
                         });
-                    }
-                    else{
+                    } else {
                         Aequitas.LOGGER.error("Unknown tag {}", key);
                     }
-                }
-                else{
+                } else {
                     Item item = Registry.ITEM.get(new Identifier(key));
-                    if(item != Items.AIR){
+                    if (item != Items.AIR) {
                         map2.put(item, value);
-                    }
-                    else{
+                    } else {
                         Aequitas.LOGGER.error("Unknown item {}", key);
                     }
                 }
@@ -180,7 +176,7 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
                     List<Resource> resources = manager.getAllResources(new Identifier(Aequitas.MOD_ID, "essence/values.json"));
                     Iterator<Resource> iterator = resources.iterator();
 
-                    while (iterator.hasNext()){
+                    while (iterator.hasNext()) {
                         Resource resource = iterator.next();
                         InputStream inputStream = resource.getInputStream();
 
@@ -190,39 +186,35 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
                             JsonObject jsonObject = JsonHelper.deserialize(GSON, reader, JsonObject.class);
 
                             JsonObject recipes = jsonObject.getAsJsonObject("recipes");
-                            if(recipes != null){
+                            if (recipes != null) {
                                 recipes.entrySet().forEach(entry -> {
                                     Item output = Registry.ITEM.get(new Identifier(entry.getKey()));
-                                    if(output != Items.AIR){
+                                    if (output != Items.AIR) {
                                         List<SimplifiedIngredient> ingredients = new ArrayList<>();
 
                                         entry.getValue().getAsJsonObject().entrySet().forEach(entry2 -> {
                                             float count = entry2.getValue().getAsFloat();
 
-                                            if(entry2.getKey().equals("_")){
+                                            if (entry2.getKey().equals("_")) {
                                                 ingredients.add(new SimplifiedIngredient(null, count));
-                                            }
-                                            else{
+                                            } else {
                                                 Item item = Registry.ITEM.get(new Identifier(entry2.getKey()));
-                                                if(item != Items.AIR){
-                                                    if(count > 0){
+                                                if (item != Items.AIR) {
+                                                    if (count > 0) {
                                                         ingredients.add(new SimplifiedIngredient(item, count));
-                                                    }
-                                                    else{
+                                                    } else {
                                                         Aequitas.LOGGER.error("Item count must be greater than 0 for {} in {} recipe", entry2.getKey(), entry.getKey());
                                                     }
-                                                }
-                                                else{
+                                                } else {
                                                     Aequitas.LOGGER.error("Unknown ingredient {} in {}", entry2.getKey(), entry.getKey());
                                                 }
                                             }
                                         });
 
-                                        if(ingredients.size() > 0){
+                                        if (ingredients.size() > 0) {
                                             map.put(output, ingredients);
                                         }
-                                    }
-                                    else{
+                                    } else {
                                         Aequitas.LOGGER.error("Unknown output {}", entry.getKey());
                                     }
                                 });

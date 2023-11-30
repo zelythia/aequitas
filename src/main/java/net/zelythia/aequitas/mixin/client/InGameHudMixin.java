@@ -19,25 +19,29 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(InGameHud.class)
 public abstract class InGameHudMixin extends DrawableHelper {
 
-    @Shadow @Final private MinecraftClient client;
+    @Shadow
+    @Final
+    private MinecraftClient client;
 
-    @Shadow private int scaledHeight;
-    @Shadow private int scaledWidth;
+    @Shadow
+    private int scaledHeight;
+    @Shadow
+    private int scaledWidth;
     private static final Identifier FLIGHT_PROGRESS = new Identifier(Aequitas.MOD_ID, "textures/gui/flight_progress.png");
 
     @Inject(method = "render", at = @At("HEAD"))
-    private void render(MatrixStack matrices, float tickDelta, CallbackInfo ci){
-        if (!this.client.options.hudHidden && AequitasConfig.config.getOrDefault("displayFlightDuration", true)){
-            if(this.client.player.getEquippedStack(EquipmentSlot.CHEST).getItem() == Aequitas.PRIMORDIAL_ESSENCE_CHESTPLATE){
+    private void render(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
+        if (!this.client.options.hudHidden && AequitasConfig.config.getOrDefault("displayFlightDuration", true)) {
+            if (this.client.player.getEquippedStack(EquipmentSlot.CHEST).getItem() == Aequitas.PRIMORDIAL_ESSENCE_CHESTPLATE) {
                 EssenceArmorItem item = (EssenceArmorItem) this.client.player.getEquippedStack(EquipmentSlot.CHEST).getItem();
-                if(item.checkSetPrimordial(this.client.player)){
+                if (item.checkSetPrimordial(this.client.player)) {
                     this.client.getTextureManager().bindTexture(FLIGHT_PROGRESS);
 
                     int x = this.scaledWidth / 2 - 97;
                     int y = this.scaledHeight - 21;
                     int h = (int) (item.getFlightProgress() * 20);
 
-                    drawTexture(matrices, x, y +20 -h, 0, 20 -h, 4, h, 32, 32);
+                    drawTexture(matrices, x, y + 20 - h, 0, 20 - h, 4, h, 32, 32);
                 }
             }
         }

@@ -22,7 +22,7 @@ import net.zelythia.aequitas.block.entity.CollectionBowlBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class CollectionBowlBlock extends BlockWithEntity {
-    private  final int size;
+    private final int size;
 
     public CollectionBowlBlock(Settings settings, int size) {
         super(settings);
@@ -44,8 +44,8 @@ public class CollectionBowlBlock extends BlockWithEntity {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof CollectionBowlBlockEntity) {
-                ItemScatterer.spawn(world, pos, (CollectionBowlBlockEntity)blockEntity);
-                world.updateComparators(pos,this);
+                ItemScatterer.spawn(world, pos, (CollectionBowlBlockEntity) blockEntity);
+                world.updateComparators(pos, this);
             }
             super.onStateReplaced(state, world, pos, newState, moved);
         }
@@ -75,7 +75,7 @@ public class CollectionBowlBlock extends BlockWithEntity {
     protected void openScreen(World world, BlockPos pos, PlayerEntity player) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof CollectionBowlBlockEntity) {
-            player.openHandledScreen((NamedScreenHandlerFactory)blockEntity);
+            player.openHandledScreen((NamedScreenHandlerFactory) blockEntity);
             player.incrementStat(Stats.INTERACT_WITH_FURNACE);
         }
     }

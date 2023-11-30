@@ -148,13 +148,13 @@ public class Aequitas implements ModInitializer {
         PRIMAL_ESSENCE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "primal_essence_block"), new Block(AbstractBlock.Settings.of(Material.GLASS, MapColor.GREEN).strength(0.3F)));
         PRIMORDIAL_ESSENCE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "primordial_essence_block"), new Block(AbstractBlock.Settings.of(Material.GLASS, MapColor.BLUE).strength(0.3F)));
         PRISTINE_ESSENCE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "pristine_essence_block"), new Block(AbstractBlock.Settings.of(Material.GLASS, MapColor.WHITE).strength(0.3F)));
-        CONDUIT_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "conduit_block"), new ConduitBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).requiresTool().strength(1.8F).luminance((blockState) -> (Boolean)blockState.get(ACTIVE_BLOCK_PROPERTY) ? 13 : 0)));
-        CATALYST_BLOCK_I = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "primal_catalyst"), new CatalystBlock(AbstractBlock.Settings.of(Material.GLASS, MapColor.GREEN).strength(0.3F).luminance((blockState) -> (Boolean)blockState.get(ACTIVE_BLOCK_PROPERTY) ? 15 : 0), 1));
-        CATALYST_BLOCK_II = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "primordial_catalyst"), new CatalystBlock(AbstractBlock.Settings.of(Material.GLASS, MapColor.BLUE).strength(0.3F).luminance((blockState) -> (Boolean)blockState.get(ACTIVE_BLOCK_PROPERTY) ? 15 : 0), 2));
-        CATALYST_BLOCK_III = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "pristine_catalyst"), new CatalystBlock(AbstractBlock.Settings.of(Material.GLASS, MapColor.WHITE).strength(0.3F).luminance((blockState) -> (Boolean)blockState.get(ACTIVE_BLOCK_PROPERTY) ? 15 : 0), 3));
-        COLLECTION_BOWL_BLOCK_I = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "collection_bowl_1"), new CollectionBowlBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(1.8F),1));
-        COLLECTION_BOWL_BLOCK_II = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "collection_bowl_2"), new CollectionBowlBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(1.8F),9));
-        COLLECTION_BOWL_BLOCK_III = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "collection_bowl_3"), new CollectionBowlBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(1.8F),15));
+        CONDUIT_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "conduit_block"), new ConduitBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).requiresTool().strength(1.8F).luminance((blockState) -> (Boolean) blockState.get(ACTIVE_BLOCK_PROPERTY) ? 13 : 0)));
+        CATALYST_BLOCK_I = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "primal_catalyst"), new CatalystBlock(AbstractBlock.Settings.of(Material.GLASS, MapColor.GREEN).strength(0.3F).luminance((blockState) -> (Boolean) blockState.get(ACTIVE_BLOCK_PROPERTY) ? 15 : 0), 1));
+        CATALYST_BLOCK_II = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "primordial_catalyst"), new CatalystBlock(AbstractBlock.Settings.of(Material.GLASS, MapColor.BLUE).strength(0.3F).luminance((blockState) -> (Boolean) blockState.get(ACTIVE_BLOCK_PROPERTY) ? 15 : 0), 2));
+        CATALYST_BLOCK_III = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "pristine_catalyst"), new CatalystBlock(AbstractBlock.Settings.of(Material.GLASS, MapColor.WHITE).strength(0.3F).luminance((blockState) -> (Boolean) blockState.get(ACTIVE_BLOCK_PROPERTY) ? 15 : 0), 3));
+        COLLECTION_BOWL_BLOCK_I = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "collection_bowl_1"), new CollectionBowlBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(1.8F), 1));
+        COLLECTION_BOWL_BLOCK_II = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "collection_bowl_2"), new CollectionBowlBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(1.8F), 9));
+        COLLECTION_BOWL_BLOCK_III = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "collection_bowl_3"), new CollectionBowlBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(1.8F), 15));
 
         PEDESTAL_BLOCK = Registry.register(Registry.BLOCK, PEDESTAL, new PedestalBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).requiresTool().strength(1.25F, 4.2F)));
         CRAFTING_PEDESTAL_BLOCK = Registry.register(Registry.BLOCK, CRAFTING_PEDESTAL, new CraftingPedestalBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).requiresTool().strength(1.25F, 4.2F)));
@@ -201,7 +201,7 @@ public class Aequitas implements ModInitializer {
 
 
         ESSENCE_PILLAR_FEATURE = Registry.register(Registry.FEATURE, ESSENCE_PILLAR_FEATURE_ID, new EssencePillarFeature(EssencePillarFeatureConfig.CODEC));
-        CONFIGURED_ESSENCE_PILLAR_FEATURE = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, ESSENCE_PILLAR_FEATURE_ID, (ConfiguredFeature)ESSENCE_PILLAR_FEATURE
+        CONFIGURED_ESSENCE_PILLAR_FEATURE = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, ESSENCE_PILLAR_FEATURE_ID, (ConfiguredFeature) ESSENCE_PILLAR_FEATURE
                 .configure(new EssencePillarFeatureConfig(10, Blocks.QUARTZ_BLOCK.getDefaultState()))
                 .decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP)
                 .applyChance(80)
@@ -249,13 +249,13 @@ public class Aequitas implements ModInitializer {
 
 
         LootTableLoadingCallback.EVENT.register((resourceManager, lootManager, id, supplier, setter) -> {
-            if(id.toString().startsWith("minecraft:blocks") || id.toString().startsWith("minecraft:entities")) return;
-            if(id.equals(LootTables.DESERT_PYRAMID_CHEST) || id.equals(LootTables.SHIPWRECK_TREASURE_CHEST)){
+            if (id.toString().startsWith("minecraft:blocks") || id.toString().startsWith("minecraft:entities")) return;
+            if (id.equals(LootTables.DESERT_PYRAMID_CHEST) || id.equals(LootTables.SHIPWRECK_TREASURE_CHEST)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
-                    .with(ItemEntry.builder(Aequitas.PRIMAL_ESSENCE).apply(SetCountLootFunction.builder(UniformLootTableRange.between(1, 4))).weight(4))
-                    .with(ItemEntry.builder(Aequitas.PRIMORDIAL_ESSENCE).apply(SetCountLootFunction.builder(UniformLootTableRange.between(1, 4))).weight(2))
-                    .with(ItemEntry.builder(Aequitas.PRISTINE_ESSENCE).apply(SetCountLootFunction.builder(UniformLootTableRange.between(1, 4))).weight(1))
-                    .with(EmptyEntry.Serializer().weight(7));
+                        .with(ItemEntry.builder(Aequitas.PRIMAL_ESSENCE).apply(SetCountLootFunction.builder(UniformLootTableRange.between(1, 4))).weight(4))
+                        .with(ItemEntry.builder(Aequitas.PRIMORDIAL_ESSENCE).apply(SetCountLootFunction.builder(UniformLootTableRange.between(1, 4))).weight(2))
+                        .with(ItemEntry.builder(Aequitas.PRISTINE_ESSENCE).apply(SetCountLootFunction.builder(UniformLootTableRange.between(1, 4))).weight(1))
+                        .with(EmptyEntry.Serializer().weight(7));
 
                 supplier.pool(poolBuilder);
             }

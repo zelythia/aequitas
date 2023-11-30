@@ -34,10 +34,9 @@ public class CatalystParticle extends SpriteBillboardParticle {
         this.prevPosX = this.x;
         this.prevPosY = this.y;
         this.prevPosZ = this.z;
-        if(Util.distanceSq(startX, startY,startZ, x, y, z) >= maxDistanceSq){
+        if (Util.distanceSq(startX, startY, startZ, x, y, z) >= maxDistanceSq) {
             this.markDead();
-        }
-        else{
+        } else {
             move(this.velocityX, this.velocityY, this.velocityZ);
         }
     }
@@ -46,11 +45,11 @@ public class CatalystParticle extends SpriteBillboardParticle {
     @Override
     protected int getBrightness(float tint) {
         BlockPos blockPos = new BlockPos(this.x, this.y, this.z);
-        if(this.world == null) return 0; //This is missing in the original method
+        if (this.world == null) return 0; //This is missing in the original method
         return this.world.isChunkLoaded(blockPos) ? WorldRenderer.getLightmapCoordinates(this.world, blockPos) : 0;
     }
 
-    public void setMaxDistanceSq(double maxDistanceSq){
+    public void setMaxDistanceSq(double maxDistanceSq) {
         this.maxDistanceSq = maxDistanceSq;
     }
 

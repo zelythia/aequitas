@@ -16,7 +16,7 @@ import net.zelythia.aequitas.client.particle.Particles;
 @Environment(EnvType.CLIENT)
 public class CollectionBowlBlockEntityRenderer extends BlockEntityRenderer<CollectionBowlBlockEntity> {
 
-    public static final Identifier TEXTURE = new Identifier(Aequitas.MOD_ID,"textures/entity/collection_bowl_essence.png");
+    public static final Identifier TEXTURE = new Identifier(Aequitas.MOD_ID, "textures/entity/collection_bowl_essence.png");
 
     public CollectionBowlBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) {
         super(dispatcher);
@@ -24,10 +24,10 @@ public class CollectionBowlBlockEntityRenderer extends BlockEntityRenderer<Colle
 
     @Override
     public void render(CollectionBowlBlockEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        if(blockEntity != null){
+        if (blockEntity != null) {
             matrices.push();
 
-            double y = 0.751 + blockEntity.getClientCollectionProgress()*0.1865;
+            double y = 0.751 + blockEntity.getClientCollectionProgress() * 0.1865;
 
             matrices.translate(0.5, y, 0.5);
 

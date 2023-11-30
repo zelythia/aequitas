@@ -21,7 +21,7 @@ public class PortablePedestalScreenHandler extends ScreenHandler {
 
 
     public PortablePedestalScreenHandler(int syncId, PlayerInventory playerInventory) {
-        this(syncId, playerInventory, new PortablePedestalInventory(MinecraftClient.getInstance().player == null? ItemStack.EMPTY:MinecraftClient.getInstance().player.getMainHandStack()));
+        this(syncId, playerInventory, new PortablePedestalInventory(MinecraftClient.getInstance().player == null ? ItemStack.EMPTY : MinecraftClient.getInstance().player.getMainHandStack()));
     }
 
     //This constructor gets directly called from the BlockEntity on the server without calling the other constructor first, the server knows the inventory of the container
@@ -39,13 +39,13 @@ public class PortablePedestalScreenHandler extends ScreenHandler {
 
 
         //Input slot
-        this.addSlot(new Slot(inventory, 0, 22, 28 ){
+        this.addSlot(new Slot(inventory, 0, 22, 28) {
             @Override
             public void setStack(ItemStack stack) {
                 long e = EssenceHandler.getEssenceValue(stack);
-                if(e>0 && stack != PortablePedestalScreenHandler.this.inventory.item){
+                if (e > 0 && stack != PortablePedestalScreenHandler.this.inventory.item) {
                     super.setStack(stack);
-                }else{
+                } else {
                     PortablePedestalScreenHandler.this.playerInventory.insertStack(stack);
                 }
             }
@@ -63,10 +63,10 @@ public class PortablePedestalScreenHandler extends ScreenHandler {
 
         for (m = 0; m < 2; ++m) {
             for (l = 0; l < 5; l++) {
-                this.addSlot(new OutputSlot(inventory, l + m * 5 + 1, 62 + l * 18, 32 + m * 18){
+                this.addSlot(new OutputSlot(inventory, l + m * 5 + 1, 62 + l * 18, 32 + m * 18) {
                     @Override
                     public ItemStack onTakeItem(PlayerEntity player, ItemStack stack) {
-                        if(this.getStack().isEmpty()){
+                        if (this.getStack().isEmpty()) {
                             ItemStack newStack = stack.copy();
                             newStack.setCount(1);
                             this.setStack(newStack);
@@ -91,7 +91,7 @@ public class PortablePedestalScreenHandler extends ScreenHandler {
     }
 
 
-    public void updateSearchProperties(String filter, int page){
+    public void updateSearchProperties(String filter, int page) {
         inventory.updateFilter(filter, page);
         this.sendContentUpdates();
     }
@@ -100,7 +100,7 @@ public class PortablePedestalScreenHandler extends ScreenHandler {
     @Override
     public void close(PlayerEntity player) {
         super.close(player);
-        if(player.world.isClient) return;
+        if (player.world.isClient) return;
         inventory.markDirty();
     }
 
@@ -121,7 +121,7 @@ public class PortablePedestalScreenHandler extends ScreenHandler {
             if (index < this.inventory.size()) {
 
                 long e = EssenceHandler.getEssenceValue(originalStack);
-                if(e * newStack.getMaxCount() <= inventory.storedEssence){
+                if (e * newStack.getMaxCount() <= inventory.storedEssence) {
                     inventory.storedEssence -= e * newStack.getMaxCount();
                     newStack.setCount(newStack.getMaxCount());
                     player.inventory.insertStack(newStack);
@@ -134,7 +134,7 @@ public class PortablePedestalScreenHandler extends ScreenHandler {
                 player.inventory.insertStack(newStack);
                 return ItemStack.EMPTY;
 
-            //Inventory to Block
+                //Inventory to Block
             } else if (!this.insertItem(originalStack, 0, 1, false)) {
                 return ItemStack.EMPTY;
             }
@@ -156,7 +156,7 @@ public class PortablePedestalScreenHandler extends ScreenHandler {
         ItemStack itemStack = ItemStack.EMPTY;
 
         if (slotActionType != SlotActionType.QUICK_CRAFT && slotActionType != SlotActionType.QUICK_MOVE) {
-            if (!(slotActionType != SlotActionType.PICKUP || j != 0 && j != 1) && i != -999){
+            if (!(slotActionType != SlotActionType.PICKUP || j != 0 && j != 1) && i != -999) {
                 if (i < 0) {
                     return ItemStack.EMPTY;
                 }
@@ -168,12 +168,12 @@ public class PortablePedestalScreenHandler extends ScreenHandler {
                         itemStack = itemStack3.copy();
                     }
 
-                    if(!itemStack3.isEmpty() && slot3.canTakeItems(playerEntity)){
+                    if (!itemStack3.isEmpty() && slot3.canTakeItems(playerEntity)) {
                         int o;
-                        if (!itemStack2.isEmpty() && !slot3.canInsert(itemStack2)){
+                        if (!itemStack2.isEmpty() && !slot3.canInsert(itemStack2)) {
                             if (itemStack2.getMaxCount() > 1 && ScreenHandler.canStacksCombine(itemStack3, itemStack2) && !itemStack3.isEmpty() && (o = itemStack3.getCount()) + itemStack2.getCount() <= itemStack2.getMaxCount()) {
                                 long e = EssenceHandler.getEssenceValue(itemStack3);
-                                if(e <= inventory.storedEssence){
+                                if (e <= inventory.storedEssence) {
                                     itemStack2.increment(o);
                                     itemStack3 = slot3.takeStack(o);
                                     if (itemStack3.isEmpty()) {

@@ -31,7 +31,7 @@ public class CraftingPedestalScreenHandler extends ScreenHandler {
         //Adding the slots
 
         //Sampling slot
-        this.addSlot(new Slot(inventory, 0, 124, 36){
+        this.addSlot(new Slot(inventory, 0, 124, 36) {
             @Override
             public int getMaxItemCount() {
                 return 1;
@@ -71,9 +71,9 @@ public class CraftingPedestalScreenHandler extends ScreenHandler {
                 if (!this.insertItem(itemStack2, this.inventory.size(), this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            //Inventory to Block
+                //Inventory to Block
             } else {
-                if(!this.slots.get(0).hasStack()){
+                if (!this.slots.get(0).hasStack()) {
                     ItemStack s = itemStack2.copy();
                     s.setCount(1);
                     this.slots.get(0).setStack(s);

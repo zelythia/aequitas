@@ -38,9 +38,9 @@ public class CraftingPedestalBlock extends BlockWithEntity {
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if(!world.isClient) {
+        if (!world.isClient) {
             NamedScreenHandlerFactory screenHandlerFactory = state.createScreenHandlerFactory(world, pos);
-            if(screenHandlerFactory!=null) player.openHandledScreen(screenHandlerFactory);
+            if (screenHandlerFactory != null) player.openHandledScreen(screenHandlerFactory);
         }
 
         return ActionResult.SUCCESS;
@@ -51,8 +51,8 @@ public class CraftingPedestalBlock extends BlockWithEntity {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof CraftingPedestalBlockEntity) {
-                ItemScatterer.spawn(world, pos, (CraftingPedestalBlockEntity)blockEntity);
-                world.updateComparators(pos,this);
+                ItemScatterer.spawn(world, pos, (CraftingPedestalBlockEntity) blockEntity);
+                world.updateComparators(pos, this);
             }
             super.onStateReplaced(state, world, pos, newState, moved);
         }

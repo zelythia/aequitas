@@ -14,14 +14,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(PiglinBrain.class)
 public class PiglinBrainMixin {
 
-    @Inject(method = "wearsGoldArmor", at = @At(value="HEAD"), cancellable = true)
+    @Inject(method = "wearsGoldArmor", at = @At(value = "HEAD"), cancellable = true)
     private static void essenceArmorCheck(LivingEntity entity, CallbackInfoReturnable<Boolean> cir) {
 
         Iterable<ItemStack> iterable = entity.getArmorItems();
         for (ItemStack itemStack : iterable) {
             Item item = itemStack.getItem();
-            if(item instanceof ArmorItem){
-                if(ArmorMaterials.isEssenceArmor(item)){
+            if (item instanceof ArmorItem) {
+                if (ArmorMaterials.isEssenceArmor(item)) {
                     cir.setReturnValue(true);
                     break;
                 }

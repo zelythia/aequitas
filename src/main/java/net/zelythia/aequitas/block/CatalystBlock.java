@@ -34,11 +34,11 @@ public class CatalystBlock extends FacingBlock {
     }
 
     public BlockState rotate(BlockState state, BlockRotation rotation) {
-        return (BlockState)state.with(FACING, rotation.rotate((Direction)state.get(FACING)));
+        return (BlockState) state.with(FACING, rotation.rotate((Direction) state.get(FACING)));
     }
 
     public BlockState mirror(BlockState state, BlockMirror mirror) {
-        return (BlockState)state.with(FACING, mirror.apply((Direction)state.get(FACING)));
+        return (BlockState) state.with(FACING, mirror.apply((Direction) state.get(FACING)));
     }
 
     @Override
@@ -50,7 +50,7 @@ public class CatalystBlock extends FacingBlock {
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        switch (state.get(FACING)){
+        switch (state.get(FACING)) {
             case UP:
             default:
                 return Block.createCuboidShape(4, 0, 4, 12, 12, 12);
@@ -70,33 +70,33 @@ public class CatalystBlock extends FacingBlock {
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         Direction direction = ctx.getSide();
         BlockState blockState = ctx.getWorld().getBlockState(ctx.getBlockPos().offset(direction.getOpposite()));
-        return blockState.isOf(this) && blockState.get(FACING) == direction ? (BlockState)this.getDefaultState().with(FACING, direction.getOpposite()) : (BlockState)this.getDefaultState().with(FACING, direction);
+        return blockState.isOf(this) && blockState.get(FACING) == direction ? (BlockState) this.getDefaultState().with(FACING, direction.getOpposite()) : (BlockState) this.getDefaultState().with(FACING, direction);
     }
 
     @Environment(EnvType.CLIENT)
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-        for(int i = 0; i < 3; i++){
-            if(state.get(Aequitas.ACTIVE_BLOCK_PROPERTY)){
+        for (int i = 0; i < 3; i++) {
+            if (state.get(Aequitas.ACTIVE_BLOCK_PROPERTY)) {
                 Direction direction = state.get(FACING);
 
                 double end_x = 0.5 + pos.getX();
-                double end_y = (direction == Direction.UP? 0.375: 0.625) + pos.getY();
+                double end_y = (direction == Direction.UP ? 0.375 : 0.625) + pos.getY();
                 double end_z = 0.5 + pos.getZ();
 
-                double x = end_x + random.nextDouble() * (tier+1)*2 - (tier+1);
+                double x = end_x + random.nextDouble() * (tier + 1) * 2 - (tier + 1);
                 double y = end_y + random.nextDouble() * 6 - 3;
-                double z = end_z + random.nextDouble() * (tier+1)*2 - (tier+1);
+                double z = end_z + random.nextDouble() * (tier + 1) * 2 - (tier + 1);
 
                 double velX = end_x - x;
                 double velY = end_y - y;
                 double velZ = end_z - z;
 
-                double len = Math.sqrt(velX*velX + velZ*velZ + velY*velY);
-                velX = velX/len;
-                velY = velY/len;
-                velZ = velZ/len;
+                double len = Math.sqrt(velX * velX + velZ * velZ + velY * velY);
+                velX = velX / len;
+                velY = velY / len;
+                velZ = velZ / len;
 
-                double r = 0.1 * (random.nextDouble()*0.3+0.7);
+                double r = 0.1 * (random.nextDouble() * 0.3 + 0.7);
                 velX *= r;
                 velY *= r;
                 velZ *= r;
@@ -104,7 +104,7 @@ public class CatalystBlock extends FacingBlock {
 
                 CatalystParticle particle = (CatalystParticle) Particles.spawnParticle(MinecraftClient.getInstance(), Particles.CATALYST_PARTICLE, false, true, x, y, z, velX, velY, velZ);
 
-                if (particle != null){
+                if (particle != null) {
                     particle.setMaxDistanceSq(Util.distanceSq(x, y, z, end_x, end_y, end_z));
                     particle.setColor(Particles.TIER_COLORS[tier][0], Particles.TIER_COLORS[tier][1], Particles.TIER_COLORS[tier][2]);
                 }

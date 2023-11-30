@@ -29,9 +29,9 @@ public class Sounds {
 
             this.volume = 1f;
             this.pitch = 1f;
-            this.x = pos.getX()+0.5;
-            this.y = pos.getY()+0.5;
-            this.z = pos.getZ()+0.5;
+            this.x = pos.getX() + 0.5;
+            this.y = pos.getY() + 0.5;
+            this.z = pos.getZ() + 0.5;
             this.repeat = true;
             this.repeatDelay = 0;
             this.attenuationType = AttenuationType.LINEAR;
@@ -49,9 +49,9 @@ public class Sounds {
 
         @Override
         public void tick() {
-            double distance = player.getPos().distanceTo(new Vec3d(x,y,z));
-            if(distance > maxDistance){
-                this.volume = (float) (1 - Math.min((distance-maxDistance) / 8, 1))*0.2f;
+            double distance = player.getPos().distanceTo(new Vec3d(x, y, z));
+            if (distance > maxDistance) {
+                this.volume = (float) (1 - Math.min((distance - maxDistance) / 8, 1)) * 0.2f;
                 return;
             }
             this.volume = 0.2f;

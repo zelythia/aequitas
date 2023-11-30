@@ -58,21 +58,22 @@ public class AequitasClient implements ClientModInitializer {
 
         ItemTooltipCallback.EVENT.register((stack, context, lines) -> {
 
-            if(stack.getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM){
-                if(stack.hasTag()){
-                    if(stack.getTag().contains("essence")){
+            if (stack.getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM) {
+                if (stack.hasTag()) {
+                    if (stack.getTag().contains("essence")) {
                         long storedEssence = stack.getTag().getLong("essence");
                         lines.add(new TranslatableText("tooltip.aequitas.portable_pedestal", storedEssence));
                     }
                 }
             }
 
-            if(AequitasConfig.config.getOrDefault("showTooltip", false) || Screen.hasShiftDown()){
+            if (AequitasConfig.config.getOrDefault("showTooltip", false) || Screen.hasShiftDown()) {
                 long value = EssenceHandler.getEssenceValue(stack.getItem());
                 String s = "";
-                if(value >= 0L) s += "Essence: " + NumberFormat.getNumberInstance().format(value);
-                if(stack.getCount()>1) s+= " ("+NumberFormat.getNumberInstance().format(value*stack.getCount())+")";
-                if(value >= 0L) lines.add(new LiteralText(s).setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
+                if (value >= 0L) s += "Essence: " + NumberFormat.getNumberInstance().format(value);
+                if (stack.getCount() > 1)
+                    s += " (" + NumberFormat.getNumberInstance().format(value * stack.getCount()) + ")";
+                if (value >= 0L) lines.add(new LiteralText(s).setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
             }
         });
 
@@ -80,10 +81,10 @@ public class AequitasClient implements ClientModInitializer {
         HudRenderCallback.EVENT.register((matrices, tickDelta) -> {
             MinecraftClient client = MinecraftClient.getInstance();
 
-            if (client != null && !client.options.hudHidden && AequitasConfig.config.getOrDefault("displayFlightDuration", true)){
-                if(client.player.getEquippedStack(EquipmentSlot.CHEST).getItem() == Aequitas.PRIMORDIAL_ESSENCE_CHESTPLATE){
+            if (client != null && !client.options.hudHidden && AequitasConfig.config.getOrDefault("displayFlightDuration", true)) {
+                if (client.player.getEquippedStack(EquipmentSlot.CHEST).getItem() == Aequitas.PRIMORDIAL_ESSENCE_CHESTPLATE) {
                     EssenceArmorItem item = (EssenceArmorItem) client.player.getEquippedStack(EquipmentSlot.CHEST).getItem();
-                    if(item.checkSetPrimordial(client.player)){
+                    if (item.checkSetPrimordial(client.player)) {
                         client.getTextureManager().bindTexture(FLIGHT_PROGRESS);
 
                         int x = client.getWindow().getScaledWidth() / 2 - 97;
@@ -91,7 +92,7 @@ public class AequitasClient implements ClientModInitializer {
                         int h = (int) (item.getFlightProgress() * 20);
 
 
-                        DrawableHelper.drawTexture(matrices, x, y +20 -h, 0, 20 -h, 4, h, 32, 32);
+                        DrawableHelper.drawTexture(matrices, x, y + 20 - h, 0, 20 - h, 4, h, 32, 32);
                     }
                 }
             }

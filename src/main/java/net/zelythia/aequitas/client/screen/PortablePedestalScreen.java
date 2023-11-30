@@ -46,17 +46,17 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
         textureZeroX = ((width - backgroundWidth) / 2);
         textureZeroY = ((height - backgroundHeight) / 2);
 
-        searchBox = new TextFieldWidget(this.textRenderer, textureZeroX+61, textureZeroY+16, 107, 11, new LiteralText("Search"));
+        searchBox = new TextFieldWidget(this.textRenderer, textureZeroX + 61, textureZeroY + 16, 107, 11, new LiteralText("Search"));
 
-        TexturedButtonWidget pageUp = new TexturedButtonWidget(textureZeroX+154, textureZeroY+33, 13, 13, 177, 0, 13, TEXTURE, button -> {
-            if(page>0){
+        TexturedButtonWidget pageUp = new TexturedButtonWidget(textureZeroX + 154, textureZeroY + 33, 13, 13, 177, 0, 13, TEXTURE, button -> {
+            if (page > 0) {
                 page--;
                 updateSearchProperties();
             }
         });
 
-        TexturedButtonWidget pageDown = new TexturedButtonWidget(textureZeroX+154, textureZeroY+52, 13, 13, 190, 0, 13, TEXTURE, button -> {
-            if(!handler.inventory.getStack(10).isEmpty()){
+        TexturedButtonWidget pageDown = new TexturedButtonWidget(textureZeroX + 154, textureZeroY + 52, 13, 13, 190, 0, 13, TEXTURE, button -> {
+            if (!handler.inventory.getStack(10).isEmpty()) {
                 page++;
                 updateSearchProperties();
             }
@@ -85,17 +85,17 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
 
         int essenceX = 3;
         int textWidth = textRenderer.getWidth(essence);
-        if(textWidth <= 57){
+        if (textWidth <= 57) {
             essenceX = (60 - textWidth) / 2;
         }
 
-        textRenderer.drawTrimmed(StringVisitable.plain(essence), textureZeroX+essenceX,textureZeroY+52, 60, 0x404040);
+        textRenderer.drawTrimmed(StringVisitable.plain(essence), textureZeroX + essenceX, textureZeroY + 52, 60, 0x404040);
         drawMouseoverTooltip(matrices, mouseX, mouseY);
     }
 
     @Override
     public boolean charTyped(char chr, int modifiers) {
-        if(searchBox.isFocused()){
+        if (searchBox.isFocused()) {
             boolean b = searchBox.charTyped(chr, modifiers);
             this.page = 0;
             updateSearchProperties();
@@ -107,17 +107,16 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
-        if(mouseX >= textureZeroX+53 && mouseX <= textureZeroX+143){
-            if(mouseY >= textureZeroY+32 && mouseY <= textureZeroY+68){
-                if(amount < 0){
-                    if(!handler.inventory.getStack(10).isEmpty() && page < handler.inventory.maxPage){
-                        Aequitas.LOGGER.info(page+"/"+handler.inventory.maxPage);
+        if (mouseX >= textureZeroX + 53 && mouseX <= textureZeroX + 143) {
+            if (mouseY >= textureZeroY + 32 && mouseY <= textureZeroY + 68) {
+                if (amount < 0) {
+                    if (!handler.inventory.getStack(10).isEmpty() && page < handler.inventory.maxPage) {
+                        Aequitas.LOGGER.info(page + "/" + handler.inventory.maxPage);
                         page++;
                         updateSearchProperties();
                     }
-                }
-                else{
-                    if(page>0){
+                } else {
+                    if (page > 0) {
                         page--;
                         updateSearchProperties();
                     }
@@ -143,7 +142,7 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
             return false;
         }
 
-        if(searchBox.isFocused()){
+        if (searchBox.isFocused()) {
             boolean b = searchBox.keyPressed(keyCode, scanCode, modifiers);
             this.page = 0;
             updateSearchProperties();
@@ -152,7 +151,7 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
-    private void updateSearchProperties(){
+    private void updateSearchProperties() {
         NetworkingHandler.updatePortablePedestalSearchProperties(handler.syncId, searchBox.getText(), page);
     }
 }

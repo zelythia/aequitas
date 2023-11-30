@@ -30,19 +30,17 @@ public class CollectionBowlScreenHandler extends ScreenHandler {
 
         //Adding the slots
 
-        if(inventory.size() == 1){
+        if (inventory.size() == 1) {
             this.addSlot(new OutputSlot(inventory, 0, 80, 35));
-        }
-        else if(inventory.size() == 9){
-            for(m = 0; m < 3; ++m) {
-                for(l = 0; l < 3; ++l) {
+        } else if (inventory.size() == 9) {
+            for (m = 0; m < 3; ++m) {
+                for (l = 0; l < 3; ++l) {
                     this.addSlot(new OutputSlot(inventory, l + m * 3, 62 + l * 18, 17 + m * 18));
                 }
             }
-        }
-        else{
-            for(m = 0; m < 3; ++m) {
-                for(l = 0; l < 5; ++l) {
+        } else {
+            for (m = 0; m < 3; ++m) {
+                for (l = 0; l < 5; ++l) {
                     this.addSlot(new OutputSlot(inventory, l + m * 5, 44 + l * 18, 17 + m * 18));
                 }
             }
@@ -92,7 +90,7 @@ public class CollectionBowlScreenHandler extends ScreenHandler {
         return newStack;
     }
 
-    public int getSize(){
+    public int getSize() {
         return inventory.size();
     }
 }

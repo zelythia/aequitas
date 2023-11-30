@@ -45,28 +45,26 @@ public class SamplingPedestalBlock extends BlockWithEntity {
             if (((NbtList) player.getStackInHand(hand).getTag().get("unlocked")).size() > 0) return ActionResult.FAIL;
         }
 
-        if(world.isClient) return ActionResult.SUCCESS;
+        if (world.isClient) return ActionResult.SUCCESS;
 
         Inventory blockEntity = (Inventory) world.getBlockEntity(pos);
-        if(!player.getStackInHand(hand).isEmpty()){
-           if(blockEntity.getStack(0).isEmpty()){
-               blockEntity.setStack(0, player.getStackInHand(hand).copy());
-               player.getStackInHand(hand).setCount(0);
-           }
-           else if(blockEntity.getStack(0).getItem().equals(player.getStackInHand(hand).getItem())){
-               int i = blockEntity.getStack(0).getCount() + player.getStackInHand(hand).getCount();
+        if (!player.getStackInHand(hand).isEmpty()) {
+            if (blockEntity.getStack(0).isEmpty()) {
+                blockEntity.setStack(0, player.getStackInHand(hand).copy());
+                player.getStackInHand(hand).setCount(0);
+            } else if (blockEntity.getStack(0).getItem().equals(player.getStackInHand(hand).getItem())) {
+                int i = blockEntity.getStack(0).getCount() + player.getStackInHand(hand).getCount();
 
-               if(i <= blockEntity.getMaxCountPerStack()){
-                   blockEntity.getStack(0).setCount(i);
-                   player.getStackInHand(hand).setCount(0);
-               }
-               else{
-                   blockEntity.getStack(0).setCount(blockEntity.getMaxCountPerStack());
-                   player.getStackInHand(hand).setCount(i - blockEntity.getMaxCountPerStack());
-               }
-           }
+                if (i <= blockEntity.getMaxCountPerStack()) {
+                    blockEntity.getStack(0).setCount(i);
+                    player.getStackInHand(hand).setCount(0);
+                } else {
+                    blockEntity.getStack(0).setCount(blockEntity.getMaxCountPerStack());
+                    player.getStackInHand(hand).setCount(i - blockEntity.getMaxCountPerStack());
+                }
+            }
         }
-        if(player.isSneaking()){
+        if (player.isSneaking()) {
             //Take items out of the inventory
             player.inventory.offerOrDrop(world, blockEntity.getStack(0));
             blockEntity.removeStack(0);
@@ -84,8 +82,8 @@ public class SamplingPedestalBlock extends BlockWithEntity {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof SamplingPedestalBlockEntity) {
-                ItemScatterer.spawn(world, pos, (SamplingPedestalBlockEntity)blockEntity);
-                world.updateComparators(pos,this);
+                ItemScatterer.spawn(world, pos, (SamplingPedestalBlockEntity) blockEntity);
+                world.updateComparators(pos, this);
             }
             super.onStateReplaced(state, world, pos, newState, moved);
         }

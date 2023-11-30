@@ -40,7 +40,7 @@ public class Particles {
     @Nullable
     public static Particle spawnParticle(MinecraftClient client, ParticleEffect parameters, boolean alwaysSpawn, boolean canSpawnOnMinimal, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
         Camera camera = client.gameRenderer.getCamera();
-        if (camera.isReady() && client.particleManager != null && client.world!=null) {
+        if (camera.isReady() && client.particleManager != null && client.world != null) {
 
             ParticlesMode particlesMode = client.options.particles;
             if (canSpawnOnMinimal && particlesMode == ParticlesMode.MINIMAL && client.world.random.nextInt(10) == 0) {

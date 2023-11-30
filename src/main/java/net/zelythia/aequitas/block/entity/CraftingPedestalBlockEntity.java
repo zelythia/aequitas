@@ -34,7 +34,7 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
     // 0 = Sampling slot
     // 1 = Output slot
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(2, ItemStack.EMPTY);
-    private long stored_essence;
+    private long storedEssence;
 
     private final List<SamplingPedestalBlockEntity> samplingPedestals = new ArrayList<>();
     private static final int detectionRadius = 3;
@@ -67,7 +67,7 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
     public NbtCompound writeNbt(NbtCompound tag) {
         super.writeNbt(tag);
         Inventories.writeNbt(tag, inventory);
-        tag.putLong("Essence", stored_essence);
+        tag.putLong("Essence", storedEssence);
         return tag;
     }
 
@@ -77,14 +77,14 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
 
         this.inventory.clear();
         Inventories.readNbt(tag, this.inventory);
-        this.stored_essence = tag.getLong("Essence");
+        this.storedEssence = tag.getLong("Essence");
     }
 
     @Override
     public void fromClientTag(NbtCompound tag) {
         this.inventory.clear();
         Inventories.readNbt(tag, this.inventory);
-        this.stored_essence = tag.getLong("Essence");
+        this.storedEssence = tag.getLong("Essence");
     }
 
     @Override
@@ -93,78 +93,76 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
     }
 
 
-
-    public long getStoredEssence(){
-        return stored_essence;
+    public long getStoredEssence() {
+        return storedEssence;
     }
 
-    public Item getTargetItem(){
+    public Item getTargetItem() {
         return this.getStack(0).getItem();
     }
 
     @Override
     public void markDirty() {
         super.markDirty();
-        if(world!=null) world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
+        if (world != null) world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
     }
 
     @Override
     public void tick() {
 
-        if(!(world instanceof ServerWorld)) return;
+        if (!(world instanceof ServerWorld)) return;
 
 
-        if(this.getStack(0).isEmpty()) return;
+        if (this.getStack(0).isEmpty()) return;
 
-        if(!this.getStack(1).isEmpty()){
-            if(!this.getStack(1).isStackable()) return;
-            if(this.getStack(1).getCount() >= this.getStack(1).getMaxCount()) return;
+        if (!this.getStack(1).isEmpty()) {
+            if (!this.getStack(1).isStackable()) return;
+            if (this.getStack(1).getCount() >= this.getStack(1).getMaxCount()) return;
         }
 
 
         samplingPedestals.clear();
         collecting:
-        for(int r = 2; r<= detectionRadius; r++){
+        for (int r = 2; r <= detectionRadius; r++) {
             int x = -r;
-            while(x<=2*r){
-                for(int z = -r; z <=r; z++){
+            while (x <= 2 * r) {
+                for (int z = -r; z <= r; z++) {
                     BlockEntity be = world.getBlockEntity(pos.add(x, 0, z));
-                    if(be instanceof SamplingPedestalBlockEntity){
+                    if (be instanceof SamplingPedestalBlockEntity) {
                         this.samplingPedestals.add((SamplingPedestalBlockEntity) be);
                     }
-                    if(samplingPedestals.size()==maxSamplingPedestals) break collecting;
+                    if (samplingPedestals.size() == maxSamplingPedestals) break collecting;
 
                     BlockEntity be2 = world.getBlockEntity(pos.add(z, 0, x));
-                    if(be2 instanceof SamplingPedestalBlockEntity){
+                    if (be2 instanceof SamplingPedestalBlockEntity) {
                         this.samplingPedestals.add((SamplingPedestalBlockEntity) be2);
                     }
-                    if(samplingPedestals.size()==maxSamplingPedestals) break collecting;
+                    if (samplingPedestals.size() == maxSamplingPedestals) break collecting;
                 }
 
-                x+=2*r;
+                x += 2 * r;
             }
         }
 
 
         long required_value = EssenceHandler.getEssenceValue(this.getStack(0));
-        if(this.getStack(0).getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM) required_value = 1;
+        if (this.getStack(0).getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM) required_value = 1;
 
-        if(required_value > 0){
+        if (required_value > 0) {
 
-            //if(craftingDelay == 0 && this.stored_essence < required_value)
-            if(this.stored_essence < required_value){
+            //if(craftingDelay == 0 && this.storedEssence < required_value)
+            if (this.storedEssence < required_value) {
 
-                for(SamplingPedestalBlockEntity samplingPedestal: samplingPedestals){
+                for (SamplingPedestalBlockEntity samplingPedestal : samplingPedestals) {
 
                     long value = samplingPedestal.transferEssence();
-                    if(value > 0){
-                        if(this.getStack(0).getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM){
+                    if (value > 0) {
+                        if (this.getStack(0).getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM) {
                             PortablePedestalInventory portablePedestalInventory = new PortablePedestalInventory(this.getStack(0));
                             portablePedestalInventory.storedEssence += value;
                             portablePedestalInventory.essenceToTag();
-                        }
-                        else{
-                            this.stored_essence += value;
+                        } else {
+                            this.storedEssence += value;
                         }
 
                         NetworkingHandler.sendParticle(this, samplingPedestal.getPos(), this.getPos(), new ItemStack(samplingPedestal.getDisplayItem()));
@@ -172,24 +170,22 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
 
                 }
 
-            }
-            else{
+            } else {
 //                craftingDelay--;
             }
 
 
-            if(this.stored_essence >= required_value){
+            if (this.storedEssence >= required_value) {
 
-                if(this.getStack(1).isEmpty()){
+                if (this.getStack(1).isEmpty()) {
                     this.setStack(1, this.getStack(0).copy());
-                }
-                else if(this.getStack(1).getItem() == this.getStack(0).getItem()){
+                } else if (this.getStack(1).getItem() == this.getStack(0).getItem()) {
                     this.getStack(1).increment(1);
                 }
 
-                if(this.getStack(1).getItem() == this.getStack(0).getItem()){
+                if (this.getStack(1).getItem() == this.getStack(0).getItem()) {
                     world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.5f, 1f);
-                    this.stored_essence -= required_value;
+                    this.storedEssence -= required_value;
 //                    craftingDelay = 10;
 
                     this.markDirty();

@@ -30,7 +30,7 @@ public class SamplingPedestalBlockEntityRenderer extends BlockEntityRenderer<Sam
 
     @Override
     public void render(SamplingPedestalBlockEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        if(blockEntity != null){
+        if (blockEntity != null) {
             matrices.push();
 
             // Calculate the current offset in the y value
@@ -40,7 +40,7 @@ public class SamplingPedestalBlockEntityRenderer extends BlockEntityRenderer<Sam
             matrices.translate(0.5, 1.2 + offset, 0.5);
 
             // Rotate the item
-            matrices.multiply(new Vec3f(0,1,0).getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 4));
+            matrices.multiply(new Vec3f(0, 1, 0).getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 4));
 
             ItemStack stack = new ItemStack(blockEntity.getDisplayItem());
 

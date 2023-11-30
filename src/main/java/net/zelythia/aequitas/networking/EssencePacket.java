@@ -9,8 +9,7 @@ import java.util.Map;
 
 public class EssencePacket {
 
-
-    public static void encode(PacketByteBuf buf){
+    public static void encode(PacketByteBuf buf) {
         buf.writeVarInt(EssenceHandler.map.size());
 
         EssenceHandler.map.forEach((item, value) -> {
@@ -19,15 +18,15 @@ public class EssencePacket {
         });
     }
 
-    public static Map<Item, Long> decode(PacketByteBuf buf){
-         Map<Item, Long> map = new HashMap<>();
+    public static Map<Item, Long> decode(PacketByteBuf buf) {
+        Map<Item, Long> map = new HashMap<>();
 
-         int size = buf.readVarInt();
-         for(int i = 0; i < size; i++){
+        int size = buf.readVarInt();
+        for (int i = 0; i < size; i++) {
             Item item = Item.byRawId(buf.readVarInt());
             map.put(item, buf.readVarLong());
-         }
+        }
 
-         return map;
+        return map;
     }
 }
