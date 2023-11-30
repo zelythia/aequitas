@@ -2,21 +2,30 @@ package net.zelythia.aequitas.client.particle;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.Entity;
 import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.util.collection.ReusableStream;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.shape.VoxelShape;
 import net.zelythia.aequitas.Util;
+
+import java.util.stream.Stream;
 
 public class CraftingParticle extends SpriteBillboardParticle {
     protected final double startX;
+    protected final double startY;
     protected final double startZ;
     protected double maxDistanceSq;
 
     public CraftingParticle(ClientWorld clientWorld, double x, double y, double z, double velX, double velY, double velZ) {
         super(clientWorld, x, y, z);
         this.startX = this.x;
+        this.startY = this.y;
         this.startZ = this.z;
 
         this.gravityStrength = 0;
@@ -32,17 +41,19 @@ public class CraftingParticle extends SpriteBillboardParticle {
         this.prevPosY = this.y;
         this.prevPosZ = this.z;
 
-
         if (Util.distanceSq(startX, startZ, this.x, this.z) >= maxDistanceSq) {
             this.markDead();
         } else {
-            this.velocityY = calculateHeight(Util.distance(startX, startZ, this.x, this.z));
+            double newY = startY + calculateHeight(Util.distance(startX, startZ, this.x, this.z));
+            this.velocityY = newY -y;
             move(this.velocityX, this.velocityY, this.velocityZ);
         }
     }
 
+
     private double calculateHeight(double x) {
-        return (2 * x - Math.sqrt(this.maxDistanceSq - 3)) * -0.02;
+        // y = \frac{-x(x-a)}{a^2/4} * maxHeight
+        return ( (-x*(x-Math.sqrt(this.maxDistanceSq)))/(this.maxDistanceSq/4d) ) * 0.4d;
     }
 
 
