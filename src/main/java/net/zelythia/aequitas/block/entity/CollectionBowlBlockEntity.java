@@ -18,6 +18,8 @@ import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
@@ -106,6 +108,7 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
                     }
 
                     this.insertStack(item);
+                    world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.5f, 1f);
                 } else {
                     Aequitas.LOGGER.error("Broken Loot table for biome {}", this.world.getBiome(pos));
                 }
