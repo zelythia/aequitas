@@ -47,8 +47,10 @@ public class SamplingPedestalBlock extends BlockWithEntity {
 
         if (world.isClient) return ActionResult.SUCCESS;
 
+
+
         Inventory blockEntity = (Inventory) world.getBlockEntity(pos);
-        if (!player.getStackInHand(hand).isEmpty()) {
+        if (!player.getStackInHand(hand).isEmpty() && world.getBlockState(pos.add(0,1,0)).isAir()) {
             if (blockEntity.getStack(0).isEmpty()) {
                 blockEntity.setStack(0, player.getStackInHand(hand).copy());
                 player.getStackInHand(hand).setCount(0);

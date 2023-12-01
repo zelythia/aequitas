@@ -6,6 +6,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
+import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -18,6 +19,7 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.Direction;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.EssenceHandler;
 import net.zelythia.aequitas.ImplementedInventory;
@@ -29,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScreenHandlerFactory, ImplementedInventory, Tickable, BlockEntityClientSerializable {
+public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScreenHandlerFactory, ImplementedInventory, SidedInventory, Tickable, BlockEntityClientSerializable {
 
     // 0 = Sampling slot
     // 1 = Output slot
@@ -109,12 +111,13 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
 
     @Override
     public void tick() {
-
         if (!(world instanceof ServerWorld)) return;
 
 
-        if (this.getStack(0).isEmpty()) return;
+        //Don't do anything if there's no item or the pedestal is blocked
+        if (this.getStack(0).isEmpty() || !world.getBlockState(pos.add(0,1,0)).isAir()) return;
 
+        //Don't do anything when the output slot os already full
         if (!this.getStack(1).isEmpty()) {
             if (!this.getStack(1).isStackable()) return;
             if (this.getStack(1).getCount() >= this.getStack(1).getMaxCount()) return;
@@ -194,5 +197,20 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
 
         }
 
+    }
+
+    @Override
+    public int[] getAvailableSlots(Direction side) {
+        return new int[]{0, 1};
+    }
+
+    @Override
+    public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
+        return slot == 0 && inventory.get(0).getCount() == 0;
+    }
+
+    @Override
+    public boolean canExtract(int slot, ItemStack stack, Direction dir) {
+        return slot == 1;
     }
 }

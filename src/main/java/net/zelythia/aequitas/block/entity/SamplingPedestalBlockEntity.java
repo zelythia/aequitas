@@ -27,6 +27,8 @@ public class SamplingPedestalBlockEntity extends BlockEntity implements Implemen
 
     public long transferEssence() {
 
+        if(!world.getBlockState(pos.add(0,1,0)).isAir()) return 0;
+
         if (storedEssence == 0) {
             //Need to consume new item:
             long v = EssenceHandler.getEssenceValue(this.getStack(0).getItem());
@@ -35,7 +37,7 @@ public class SamplingPedestalBlockEntity extends BlockEntity implements Implemen
                 displayItem = this.getStack(0).getItem();
                 this.getStack(0).decrement(1);
             }
-            this.updateListeners();
+            this.markDirty();
         }
 
         if (storedEssence >= 100) {
@@ -122,9 +124,10 @@ public class SamplingPedestalBlockEntity extends BlockEntity implements Implemen
         return writeNbt(tag);
     }
 
-    public void updateListeners() {
-        this.markDirty();
-        this.getWorld().updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), 3);
+    @Override
+    public void markDirty() {
+        super.markDirty();
+        if (world != null) world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
     }
 
 }
