@@ -17,7 +17,7 @@ import java.util.function.Supplier;
 
 public enum ArmorMaterials implements ArmorMaterial {
     PRIMAL("primal_essence", 37, new int[]{4, 7, 9, 4}, 25, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 4.0F, 0.2F, () -> Ingredient.ofItems(Aequitas.PRIMAL_ESSENCE)),
-    PRIMORDIAL("primal_essence", 37, new int[]{5, 8, 10, 5}, 30, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 5.0F, 0.3F, () -> Ingredient.ofItems(Aequitas.PRIMAL_ESSENCE)),
+    PRIMORDIAL("primordial_essence", 37, new int[]{5, 8, 10, 5}, 30, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 5.0F, 0.3F, () -> Ingredient.ofItems(Aequitas.PRIMAL_ESSENCE)),
     PRISTINE("pristine_essence", 37, new int[]{6, 9, 11, 6}, 35, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 6.0F, 0.4F, () -> Ingredient.ofItems(Aequitas.PRIMAL_ESSENCE));
 
     private static final int[] BASE_DURABILITY = new int[]{13, 15, 16, 11};
