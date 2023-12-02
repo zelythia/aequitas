@@ -204,7 +204,7 @@ public class Aequitas implements ModInitializer {
         CONFIGURED_ESSENCE_PILLAR_FEATURE = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, ESSENCE_PILLAR_FEATURE_ID, (ConfiguredFeature) ESSENCE_PILLAR_FEATURE
                 .configure(new EssencePillarFeatureConfig(10, Blocks.QUARTZ_BLOCK.getDefaultState()))
                 .decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP)
-                .applyChance(80)
+                .applyChance(100)
         );
 
         PRIMAL_ESSENCE_HELMET = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "primal_essence_helmet"), new EssenceArmorItem(ArmorMaterials.PRIMAL, EquipmentSlot.HEAD, new Item.Settings().group(ITEM_GROUP)));

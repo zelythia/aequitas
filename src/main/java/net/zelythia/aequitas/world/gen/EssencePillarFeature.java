@@ -38,8 +38,8 @@ public class EssencePillarFeature extends Feature<EssencePillarFeatureConfig> {
         //generating core
         int r = random.nextInt(100);
         BlockState coreBlock = Aequitas.PRIMAL_ESSENCE_BLOCK.getDefaultState();
-        if (r < 50) coreBlock = Aequitas.PRIMORDIAL_ESSENCE_BLOCK.getDefaultState();
-        if (r < 25) coreBlock = Aequitas.PRISTINE_ESSENCE_BLOCK.getDefaultState();
+        if (r < 33) coreBlock = Aequitas.PRIMORDIAL_ESSENCE_BLOCK.getDefaultState();
+        if (r < 17) coreBlock = Aequitas.PRISTINE_ESSENCE_BLOCK.getDefaultState();
 
         world.setBlockState(blockPos, coreBlock, 4);
         world.setBlockState(blockPos.up(), getCoreSurrounding(fillerBlock, random), 4);
