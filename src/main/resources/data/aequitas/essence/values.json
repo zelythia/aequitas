@@ -328,7 +328,6 @@
     "minecraft:beetroot_seeds": 16,
     "minecraft:name_tag": 192,
 
-
     "minecraft:coal" : 128,
     "minecraft:iron_ingot" : 256,
     "minecraft:gold_ingot" : 256,
@@ -337,7 +336,7 @@
     "minecraft:redstone" : 128,
     "minecraft:lapis_lazuli" : 864,
     "minecraft:quartz" : 256,
-    "minecraft:emerald" : 16384,
+    "minecraft:emerald" : 8192,
     "minecraft:dragon_egg": 262144,
 
     "minecraft:grass" : 1,
@@ -394,8 +393,8 @@
     "minecraft:dead_fire_coral": 1,
     "minecraft:dead_horn_coral": 1,
 
-    "aequitas:primal_essence" : 32768,
-    "aequitas:primordial_essence" : 65536,
-    "aequitas:pristine_essence" : 131072
+    "aequitas:primal_essence" : 12288,
+    "aequitas:primordial_essence" : 24576,
+    "aequitas:pristine_essence" : 49152
   }
 }
