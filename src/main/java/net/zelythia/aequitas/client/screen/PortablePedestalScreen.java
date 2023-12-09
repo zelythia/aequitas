@@ -1,27 +1,24 @@
 package net.zelythia.aequitas.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.screen.ButtonTextures;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.render.GameRenderer;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.screen.slot.Slot;
-import net.minecraft.screen.slot.SlotActionType;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.OrderedText;
 import net.minecraft.text.StringVisitable;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.zelythia.aequitas.Aequitas;
-import net.zelythia.aequitas.networking.NetworkingHandler;
-import net.zelythia.aequitas.screen.CollectionBowlScreenHandler;
+import net.zelythia.aequitas.client.NetworkingHandler;
 import net.zelythia.aequitas.screen.PortablePedestalScreenHandler;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Iterator;
 
 public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreenHandler> {
 
@@ -46,39 +43,40 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
         textureZeroX = ((width - backgroundWidth) / 2);
         textureZeroY = ((height - backgroundHeight) / 2);
 
-        searchBox = new TextFieldWidget(this.textRenderer, textureZeroX + 61, textureZeroY + 16, 107, 11, new LiteralText("Search"));
+        searchBox = new TextFieldWidget(this.textRenderer, textureZeroX + 61, textureZeroY + 16, 107, 11, Text.translatable("ui.aequitas.portable.search"));
 
-        TexturedButtonWidget pageUp = new TexturedButtonWidget(textureZeroX + 154, textureZeroY + 33, 13, 13, 177, 0, 13, TEXTURE, button -> {
+        TexturedButtonWidget pageUp = new TexturedButtonWidget(textureZeroX + 154, textureZeroY + 33, 13, 13, new ButtonTextures(TEXTURE, TEXTURE), button -> {
             if (page > 0) {
                 page--;
                 updateSearchProperties();
             }
         });
 
-        TexturedButtonWidget pageDown = new TexturedButtonWidget(textureZeroX + 154, textureZeroY + 52, 13, 13, 190, 0, 13, TEXTURE, button -> {
+        TexturedButtonWidget pageDown = new TexturedButtonWidget(textureZeroX + 154, textureZeroY + 52, 13, 13, new ButtonTextures(TEXTURE, TEXTURE), button -> {
             if (!handler.inventory.getStack(10).isEmpty()) {
                 page++;
                 updateSearchProperties();
             }
         });
 
-        this.addButton(pageUp);
-        this.addButton(pageDown);
-        this.addButton(searchBox);
+        this.addDrawableChild(pageUp);
+        this.addDrawableChild(pageDown);
+        this.addDrawableChild(searchBox);
     }
 
     @Override
-    protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.client.getTextureManager().bindTexture(TEXTURE);
+    protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
+        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderTexture(0, TEXTURE);
         int x = (width - backgroundWidth) / 2;
         int y = (height - backgroundHeight) / 2;
-        drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight);
+        context.drawTexture(TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight);
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        renderBackground(matrices);
+    public void render(DrawContext matrices, int mouseX, int mouseY, float delta) {
+        renderBackground(matrices, mouseX, mouseY, delta);
         super.render(matrices, mouseX, mouseY, delta);
 
         String essence = NumberFormat.getNumberInstance().format(handler.inventory.storedEssence);
@@ -89,7 +87,13 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
             essenceX = (60 - textWidth) / 2;
         }
 
-        textRenderer.drawTrimmed(StringVisitable.plain(essence), textureZeroX + essenceX, textureZeroY + 52, 60, 0x404040);
+
+        for(Iterator var7 = textRenderer.wrapLines(StringVisitable.plain(essence), 60).iterator(); var7.hasNext(); y += 9) {
+            OrderedText orderedText = (OrderedText)var7.next();
+            //FIXME maybe
+            textRenderer.draw(orderedText, textureZeroX + essenceX, textureZeroY + 52, 0x404040, false, matrices.getMatrices().peek().getPositionMatrix(), matrices.getVertexConsumers(), TextRenderer.TextLayerType.NORMAL, 0, 0);
+        }
+
         drawMouseoverTooltip(matrices, mouseX, mouseY);
     }
 
@@ -106,10 +110,10 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
 
 
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
+    public boolean  mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
         if (mouseX >= textureZeroX + 53 && mouseX <= textureZeroX + 143) {
             if (mouseY >= textureZeroY + 32 && mouseY <= textureZeroY + 68) {
-                if (amount < 0) {
+                if (verticalAmount < 0) {
                     if (!handler.inventory.getStack(10).isEmpty() && page < handler.inventory.maxPage) {
                         Aequitas.LOGGER.info(page + "/" + handler.inventory.maxPage);
                         page++;
@@ -124,23 +128,26 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
                 return true;
             }
         }
-        return super.mouseScrolled(mouseX, mouseY, amount);
+        return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
     }
+
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         //Original minecraft code for esc and tab
-        if (keyCode == 256 && this.shouldCloseOnEsc()) {
-            this.onClose();
-            return true;
-        }
-        if (keyCode == 258) {
-            boolean bl = !Screen.hasShiftDown();
-            if (!this.changeFocus(bl)) {
-                this.changeFocus(bl);
-            }
-            return false;
-        }
+
+        //FIXME maybe not needed?
+//        if (keyCode == 256 && this.shouldCloseOnEsc()) {
+//            this.close();
+//            return true;
+//        }
+//        if (keyCode == 258) {
+//            boolean bl = !Screen.hasShiftDown();
+//            if (!this.changeFocus(bl)) {
+//                this.changeFocus(bl);
+//            }
+//            return false;
+//        }
 
         if (searchBox.isFocused()) {
             boolean b = searchBox.keyPressed(keyCode, scanCode, modifiers);

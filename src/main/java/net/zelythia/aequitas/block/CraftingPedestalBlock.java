@@ -1,5 +1,6 @@
 package net.zelythia.aequitas.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
@@ -17,18 +18,26 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.zelythia.aequitas.block.entity.CollectionBowlBlockEntity;
 import net.zelythia.aequitas.block.entity.CraftingPedestalBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class CraftingPedestalBlock extends BlockWithEntity {
+
+    public static final MapCodec<CraftingPedestalBlock> CODEC = createCodec(CraftingPedestalBlock::new);
+
+    public MapCodec<CraftingPedestalBlock> getCodec() {
+        return CODEC;
+    }
+
     public CraftingPedestalBlock(Settings settings) {
         super(settings);
     }
 
     @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockView world) {
-        return new CraftingPedestalBlockEntity();
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new CraftingPedestalBlockEntity(pos, state);
     }
 
     @Override

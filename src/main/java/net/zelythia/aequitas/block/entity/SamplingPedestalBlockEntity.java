@@ -1,6 +1,5 @@
 package net.zelythia.aequitas.block.entity;
 
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.Item;
@@ -8,21 +7,26 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.util.math.BlockPos;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.EssenceHandler;
 import net.zelythia.aequitas.ImplementedInventory;
+import org.jetbrains.annotations.Nullable;
 
-public class SamplingPedestalBlockEntity extends BlockEntity implements ImplementedInventory, BlockEntityClientSerializable {
+public class SamplingPedestalBlockEntity extends BlockEntity implements ImplementedInventory {
 
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
     private long storedEssence = 0;
     private Item displayItem;
 
-    public SamplingPedestalBlockEntity() {
-        super(Aequitas.SAMPLING_PEDESTAL_BLOCK_ENTITY);
+    public SamplingPedestalBlockEntity(BlockPos pos, BlockState state) {
+        super(Aequitas.SAMPLING_PEDESTAL_BLOCK_ENTITY, pos, state);
     }
 
     public long transferEssence() {
@@ -70,58 +74,46 @@ public class SamplingPedestalBlockEntity extends BlockEntity implements Implemen
     }
 
     @Override
-    public NbtCompound writeNbt(NbtCompound tag) {
+    public void writeNbt(NbtCompound tag) {
         super.writeNbt(tag);
 
         tag.putLong("Essence", storedEssence);
-        tag.putString("displayItem", Registry.ITEM.getId(getDisplayItem()).toString());
+        tag.putString("displayItem", Registries.ITEM.getId(getDisplayItem()).toString());
 
         NbtList listTag = new NbtList();
         NbtCompound compoundTag = new NbtCompound();
-        Identifier identifier = Registry.ITEM.getId(this.inventory.get(0).getItem());
+        Identifier identifier = Registries.ITEM.getId(this.inventory.get(0).getItem());
         compoundTag.putString("id", identifier.toString());
         compoundTag.putInt("Count", this.inventory.get(0).getCount());
         listTag.add(compoundTag);
         tag.put("Items", listTag);
-
-
-        return tag;
     }
 
     @Override
-    public void fromTag(BlockState state, NbtCompound tag) {
-        super.fromTag(state, tag);
+    public void readNbt(NbtCompound tag) {
+        super.readNbt(tag);
 
         this.storedEssence = tag.getLong("Essence");
         if (tag.contains("displayItem"))
-            this.displayItem = Registry.ITEM.get(new Identifier(tag.getString("displayItem")));
+            this.displayItem = Registries.ITEM.get(new Identifier(tag.getString("displayItem")));
 
         NbtList listTag = tag.getList("Items", 10);
         NbtCompound compoundTag = listTag.getCompound(0);
-        ItemStack stack = new ItemStack((Item) Registry.ITEM.get(new Identifier(compoundTag.getString("id"))));
+        ItemStack stack = new ItemStack((Item) Registries.ITEM.get(new Identifier(compoundTag.getString("id"))));
         stack.setCount(compoundTag.getInt("Count"));
         this.inventory.set(0, stack);
     }
 
 
+    @Nullable
     @Override
-    public void fromClientTag(NbtCompound tag) {
-        this.inventory.clear();
-
-        this.storedEssence = tag.getLong("Essence");
-        if (tag.contains("displayItem"))
-            this.displayItem = Registry.ITEM.get(new Identifier(tag.getString("displayItem")));
-
-        NbtList listTag = tag.getList("Items", 10);
-        NbtCompound compoundTag = listTag.getCompound(0);
-        ItemStack stack = new ItemStack((Item) Registry.ITEM.get(new Identifier(compoundTag.getString("id"))));
-        stack.setCount(compoundTag.getInt("Count"));
-        this.inventory.set(0, stack);
+    public Packet<ClientPlayPacketListener> toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.create(this);
     }
 
     @Override
-    public NbtCompound toClientTag(NbtCompound tag) {
-        return writeNbt(tag);
+    public NbtCompound toInitialChunkDataNbt() {
+        return createNbt();
     }
 
     @Override

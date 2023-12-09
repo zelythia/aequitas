@@ -11,7 +11,7 @@
   "client": [
     "client.ClientPlayerEntityMixin",
     "client.InGameHudMixin",
-    "client.SpriteMixin"
+    "client.SpriteContentsMixin"
   ],
   "server": [],
   "injectors": {

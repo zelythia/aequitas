@@ -5,15 +5,17 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.sound.AbstractSoundInstance;
 import net.minecraft.client.sound.TickableSoundInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.util.math.random.Random;
 
 public class Sounds {
-    public static final SoundEvent COLLECTION_BOWL_LOOP = Registry.register(Registry.SOUND_EVENT, "block.collection_bowl.loop", new SoundEvent(new Identifier(Aequitas.MOD_ID, "block.collection_bowl.loop")));
+    public static final SoundEvent COLLECTION_BOWL_LOOP = Registry.register(Registries.SOUND_EVENT, "block.collection_bowl.loop", SoundEvent.of(new Identifier(Aequitas.MOD_ID, "block.collection_bowl.loop")));
 
 
     @Environment(EnvType.CLIENT)
@@ -22,8 +24,9 @@ public class Sounds {
         private final PlayerEntity player;
         private final double maxDistance;
 
-        public CollectionBowlSoundInstance(PlayerEntity player, BlockPos pos, double maxDistance) {
-            super(COLLECTION_BOWL_LOOP.getId(), SoundCategory.BLOCKS);
+
+        public CollectionBowlSoundInstance(PlayerEntity player, BlockPos pos, double maxDistance, Random random) {
+            super(COLLECTION_BOWL_LOOP.getId(), SoundCategory.BLOCKS, random);
             this.player = player;
             this.maxDistance = maxDistance;
 
@@ -35,7 +38,6 @@ public class Sounds {
             this.repeat = true;
             this.repeatDelay = 0;
             this.attenuationType = AttenuationType.LINEAR;
-            this.looping = true;
         }
 
         public boolean isDone() {

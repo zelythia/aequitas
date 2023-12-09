@@ -1,13 +1,13 @@
 package net.zelythia.aequitas.compat.wthit;
 
 import mcp.mobius.waila.api.*;
+import mcp.mobius.waila.api.component.ItemComponent;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.EssenceHandler;
@@ -31,41 +31,42 @@ public class WailaIntegration implements IWailaPlugin {
 
 
     private static class SamplingPedestalBlockComponentProvider implements IBlockComponentProvider {
+
         @Override
-        public void appendBody(List<Text> tooltip, IBlockAccessor accessor, IPluginConfig config) {
-            if (config.get(new Identifier(Aequitas.MOD_ID, "sampling_pedestal"))) {
-                SamplingPedestalBlockEntity be = (SamplingPedestalBlockEntity) accessor.getBlockEntity();
+        public void appendBody(ITooltip tooltip, IBlockAccessor accessor, IPluginConfig config) {
+            if (config.getBoolean(new Identifier(Aequitas.MOD_ID, "sampling_pedestal"))) {
+                SamplingPedestalBlockEntity be = accessor.getBlockEntity();
 
                 if (!be.getStack(0).isEmpty()) {
-                    NbtCompound tag = new NbtCompound();
-                    tag.putString("id", Registry.ITEM.getId(be.getStack(0).getItem()).toString());
-                    tag.putInt("Count", (be.getStack(0).getCount()));
+//                    NbtCompound tag = new NbtCompound();
+//                    tag.putString("id", Registries.ITEM.getId(be.getStack(0).getItem()).toString());
+//                    tag.putInt("Count", (be.getStack(0).getCount()));
+//
+//                    NbtCompound tag2 = new NbtCompound();
+//                    tag2.putString("text", be.getStack(0).getItem().toString());
 
-                    NbtCompound tag2 = new NbtCompound();
-                    tag2.putString("text", be.getStack(0).getItem().toString());
-
-                    tooltip.add(IDrawableText.create().with(new Identifier("item"), tag));
+                    tooltip.addLine(new ItemComponent(be.getStack(0)));
                 }
             }
         }
     }
 
 
-    private static class CraftingPedestalBlockDataProvider implements IServerDataProvider<BlockEntity> {
+    private static class CraftingPedestalBlockDataProvider implements IDataProvider<CraftingPedestalBlockEntity> {
         @Override
-        public void appendServerData(NbtCompound data, ServerPlayerEntity player, World world, BlockEntity blockEntity) {
-            CraftingPedestalBlockEntity be = (CraftingPedestalBlockEntity) blockEntity;
-            data.putLong("storedEssence", be.getStoredEssence());
-            data.putLong("targetEssence", EssenceHandler.getEssenceValue(be.getTargetItem()));
+        public void appendData(IDataWriter data, IServerAccessor<CraftingPedestalBlockEntity> accessor, IPluginConfig config) {
+            CraftingPedestalBlockEntity be = accessor.getTarget();
+            data.raw().putLong("storedEssence", be.getStoredEssence());
+            data.raw().putLong("targetEssence", EssenceHandler.getEssenceValue(be.getTargetItem()));
         }
     }
 
 
     private static class CraftingPedestalBlockComponentProvider implements IBlockComponentProvider {
         @Override
-        public void appendBody(List<Text> tooltip, IBlockAccessor accessor, IPluginConfig config) {
-            if (config.get(new Identifier(Aequitas.MOD_ID, "crafting_pedestal"))) {
-                NbtCompound data = accessor.getServerData();
+        public void appendBody(ITooltip tooltip, IBlockAccessor accessor, IPluginConfig config) {
+            if (config.getBoolean(new Identifier(Aequitas.MOD_ID, "crafting_pedestal"))) {
+                NbtCompound data = accessor.getData().raw();
 
                 if (data.contains("storedEssence")) {
                     long storedEssence = data.getLong("storedEssence");
@@ -74,11 +75,11 @@ public class WailaIntegration implements IWailaPlugin {
                         long targetEssence = data.getLong("targetEssence");
 
                         if (targetEssence > 0) {
-                            tooltip.add(new LiteralText("Essence: " + storedEssence + "/" + targetEssence));
+                            tooltip.addLine(Text.literal("Essence: " + storedEssence + "/" + targetEssence));
                             return;
                         }
 
-                        tooltip.add(new LiteralText("Essence: " + storedEssence));
+                        tooltip.addLine(Text.literal("Essence: " + storedEssence));
                     }
                 }
             }

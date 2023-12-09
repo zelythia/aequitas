@@ -1,8 +1,7 @@
 package net.zelythia.aequitas.item;
 
 import io.netty.buffer.Unpooled;
-import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
-import net.fabricmc.fabric.api.tag.TagRegistry;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.EquipmentSlot;
@@ -13,14 +12,15 @@ import net.minecraft.item.ElytraItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.tag.Tag;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.zelythia.aequitas.client.DoubleJumpEntity;
 import net.zelythia.aequitas.networking.NetworkingHandler;
 
 public class FallFlying {
 
-    public static final Tag<Item> ELYTRA = TagRegistry.item(new Identifier("c", "elytra"));
+    public static final TagKey<Item> ELYTRA = TagKey.of(RegistryKeys.ITEM, new Identifier("c", "elytra"));
 
     public static boolean canFly(LivingEntity livingEntity, boolean flag) {
         return flag && !livingEntity.isOnGround() && !livingEntity.hasVehicle() && !livingEntity.hasStatusEffect(StatusEffects.LEVITATION) && canFly(livingEntity);
@@ -28,14 +28,14 @@ public class FallFlying {
 
     private static boolean canFly(LivingEntity livingEntity) {
         ItemStack stack = livingEntity.getEquippedStack(EquipmentSlot.CHEST);
-        return ELYTRA.contains(stack.getItem()) && ElytraItem.isUsable(stack);
+        return stack.isIn(ELYTRA) && ElytraItem.isUsable(stack);
     }
 
     public static void checkFallFlying() {
         ClientPlayerEntity playerEntity = MinecraftClient.getInstance().player;
 
         if (playerEntity != null && startFallFlying(playerEntity)) {
-            ClientSidePacketRegistry.INSTANCE.sendToServer(NetworkingHandler.START_FLYING, new PacketByteBuf(Unpooled.buffer()));
+            ClientPlayNetworking.send(NetworkingHandler.START_FLYING, new PacketByteBuf(Unpooled.buffer()));
         }
     }
 
@@ -43,7 +43,7 @@ public class FallFlying {
         ItemStack itemStack = playerEntity.getEquippedStack(EquipmentSlot.CHEST);
 
         if (!playerEntity.isOnGround() && !playerEntity.isFallFlying() && !playerEntity.isTouchingWater() && !playerEntity.hasStatusEffect(StatusEffects.LEVITATION)
-                && ELYTRA.contains(itemStack.getItem()) && ElytraItem.isUsable(itemStack)) {
+                && itemStack.isIn(ELYTRA) && ElytraItem.isUsable(itemStack)) {
 
             if (playerEntity instanceof DoubleJumpEntity) {
                 if (((DoubleJumpEntity) playerEntity).canDoubleJump()) return false;

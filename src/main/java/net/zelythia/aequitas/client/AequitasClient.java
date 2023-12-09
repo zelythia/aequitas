@@ -5,16 +5,14 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.ingame.HandledScreens;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Style;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.zelythia.aequitas.Aequitas;
@@ -30,7 +28,6 @@ import net.zelythia.aequitas.client.screen.CollectionBowlScreen;
 import net.zelythia.aequitas.client.screen.CraftingPedestalScreen;
 import net.zelythia.aequitas.client.screen.PortablePedestalScreen;
 import net.zelythia.aequitas.item.EssenceArmorItem;
-import net.zelythia.aequitas.networking.NetworkingHandler;
 
 import java.text.NumberFormat;
 
@@ -43,15 +40,15 @@ public class AequitasClient implements ClientModInitializer {
     public void onInitializeClient() {
         NetworkingHandler.onInitializeClient();
 
-        ScreenRegistry.register(Aequitas.CRAFTING_PEDESTAL_SCREEN_HANDLER, CraftingPedestalScreen::new);
-        ScreenRegistry.register(Aequitas.COLLECTION_BOWL_SCREEN_HANDLER, CollectionBowlScreen::new);
-        ScreenRegistry.register(Aequitas.PORTABLE_PEDESTAL_SCREEN_HANDLER, PortablePedestalScreen::new);
+        HandledScreens.register(Aequitas.CRAFTING_PEDESTAL_SCREEN_HANDLER, CraftingPedestalScreen::new);
+        HandledScreens.register(Aequitas.COLLECTION_BOWL_SCREEN_HANDLER, CollectionBowlScreen::new);
+        HandledScreens.register(Aequitas.PORTABLE_PEDESTAL_SCREEN_HANDLER, PortablePedestalScreen::new);
 
-        BlockEntityRendererRegistry.INSTANCE.register(Aequitas.SAMPLING_PEDESTAL_BLOCK_ENTITY, SamplingPedestalBlockEntityRenderer::new);
-        BlockEntityRendererRegistry.INSTANCE.register(Aequitas.CRAFTING_PEDESTAL_BLOCK_ENTITY, CraftingPedestalBlockEntityRenderer::new);
-        BlockEntityRendererRegistry.INSTANCE.register(Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_I, CollectionBowlBlockEntityRenderer::new);
-        BlockEntityRendererRegistry.INSTANCE.register(Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_II, CollectionBowlBlockEntityRenderer::new);
-        BlockEntityRendererRegistry.INSTANCE.register(Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_III, CollectionBowlBlockEntityRenderer::new);
+        BlockEntityRendererFactories.register(Aequitas.SAMPLING_PEDESTAL_BLOCK_ENTITY, SamplingPedestalBlockEntityRenderer::new);
+        BlockEntityRendererFactories.register(Aequitas.CRAFTING_PEDESTAL_BLOCK_ENTITY, CraftingPedestalBlockEntityRenderer::new);
+        BlockEntityRendererFactories.register(Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_I, CollectionBowlBlockEntityRenderer::new);
+        BlockEntityRendererFactories.register(Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_II, CollectionBowlBlockEntityRenderer::new);
+        BlockEntityRendererFactories.register(Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_III, CollectionBowlBlockEntityRenderer::new);
 
         ParticleFactoryRegistry.getInstance().register(Particles.CRAFTING_PARTICLE, CraftingParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(Particles.CATALYST_PARTICLE, CatalystParticle.Factory::new);
@@ -59,10 +56,10 @@ public class AequitasClient implements ClientModInitializer {
         ItemTooltipCallback.EVENT.register((stack, context, lines) -> {
 
             if (stack.getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM) {
-                if (stack.hasTag()) {
-                    if (stack.getTag().contains("essence")) {
-                        long storedEssence = stack.getTag().getLong("essence");
-                        lines.add(new TranslatableText("tooltip.aequitas.portable_pedestal", storedEssence));
+                if (stack.hasNbt()) {
+                    if (stack.getNbt().contains("essence")) {
+                        long storedEssence = stack.getNbt().getLong("essence");
+                        lines.add(Text.translatable("tooltip.aequitas.portable_pedestal", storedEssence));
                     }
                 }
             }
@@ -73,7 +70,7 @@ public class AequitasClient implements ClientModInitializer {
                 if (value >= 0L) s += "Essence: " + NumberFormat.getNumberInstance().format(value);
                 if (stack.getCount() > 1)
                     s += " (" + NumberFormat.getNumberInstance().format(value * stack.getCount()) + ")";
-                if (value >= 0L) lines.add(new LiteralText(s).setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
+                if (value >= 0L) lines.addAll(Text.of(s).getWithStyle(Style.EMPTY.withColor(Formatting.GRAY)));
             }
         });
 
@@ -91,8 +88,7 @@ public class AequitasClient implements ClientModInitializer {
                         int y = client.getWindow().getScaledHeight() - 21;
                         int h = (int) (item.getFlightProgress() * 20);
 
-
-                        DrawableHelper.drawTexture(matrices, x, y + 20 - h, 0, 20 - h, 4, h, 32, 32);
+                        matrices.drawTexture(FLIGHT_PROGRESS, x, y + 20 - h, 0, 20 - h, 4, h, 32, 32);
                     }
                 }
             }

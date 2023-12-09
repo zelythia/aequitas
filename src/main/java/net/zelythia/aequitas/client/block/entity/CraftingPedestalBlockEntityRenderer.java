@@ -6,20 +6,19 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.WorldRenderer;
-import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.block.entity.CraftingPedestalBlockEntity;
-import net.zelythia.aequitas.block.entity.SamplingPedestalBlockEntity;
 
 @Environment(EnvType.CLIENT)
-public class CraftingPedestalBlockEntityRenderer extends BlockEntityRenderer<CraftingPedestalBlockEntity> {
-    public CraftingPedestalBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) {
-        super(dispatcher);
+public class CraftingPedestalBlockEntityRenderer implements BlockEntityRenderer<CraftingPedestalBlockEntity> {
+    public CraftingPedestalBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
+
     }
 
     @Override
@@ -34,13 +33,15 @@ public class CraftingPedestalBlockEntityRenderer extends BlockEntityRenderer<Cra
             matrices.translate(0.5, 1.2 + offset, 0.5);
 
             // Rotate the item
-            matrices.multiply(new Vec3f(0, 1, 0).getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 4));
+            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees((blockEntity.getWorld().getTime() + tickDelta) * 4));
+
 
             ItemStack stack = blockEntity.getStack(1);
             if (blockEntity.getStack(0).getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM) stack = blockEntity.getStack(0);
 
             int lightAbove = WorldRenderer.getLightmapCoordinates(blockEntity.getWorld(), blockEntity.getPos().up());
-            MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.GROUND, lightAbove, overlay, matrices, vertexConsumers);
+            MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformationMode.GROUND, lightAbove, overlay, matrices, vertexConsumers, null, 0);
+//            MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformationMode.GROUND, lightAbove, overlay, matrices, vertexConsumers, blockEntity.getWorld(), 0);
 
             matrices.pop();
         }

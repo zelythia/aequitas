@@ -44,7 +44,7 @@ public class CatalystParticle extends SpriteBillboardParticle {
 
     @Override
     protected int getBrightness(float tint) {
-        BlockPos blockPos = new BlockPos(this.x, this.y, this.z);
+        BlockPos blockPos = new BlockPos((int) x, (int) y, (int) z);
         if (this.world == null) return 0; //This is missing in the original method
         return this.world.isChunkLoaded(blockPos) ? WorldRenderer.getLightmapCoordinates(this.world, blockPos) : 0;
     }

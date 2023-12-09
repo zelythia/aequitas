@@ -1,10 +1,13 @@
 package net.zelythia.aequitas.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
@@ -18,11 +21,26 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.block.entity.CollectionBowlBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class CollectionBowlBlock extends BlockWithEntity {
     private final int size;
+
+    public static final MapCodec<CollectionBowlBlock> CODEC = createCodec(CollectionBowlBlock::new);
+
+    public MapCodec<CollectionBowlBlock> getCodec() {
+        return CODEC;
+    }
+
+    /**
+     * Only used for the codec
+     */
+    public CollectionBowlBlock(Settings settings) {
+        this(settings, 1);
+    }
+
 
     public CollectionBowlBlock(Settings settings, int size) {
         super(settings);
@@ -68,8 +86,8 @@ public class CollectionBowlBlock extends BlockWithEntity {
 
     @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockView world) {
-        return new CollectionBowlBlockEntity(size);
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new CollectionBowlBlockEntity(pos, state, size);
     }
 
     protected void openScreen(World world, BlockPos pos, PlayerEntity player) {
@@ -88,5 +106,10 @@ public class CollectionBowlBlock extends BlockWithEntity {
         shape = VoxelShapes.union(shape, VoxelShapes.cuboid(0.125, 0, 0.875, 0.875, 1, 1));
 
         return shape;
+    }
+
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return validateTicker(type, size == 15 ? Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_III : size == 9 ? Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_II : Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_I, CollectionBowlBlockEntity::tick);
     }
 }

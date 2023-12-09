@@ -10,6 +10,7 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.loot.context.LootContextType;
 import net.minecraft.nbt.NbtCompound;
@@ -21,9 +22,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -39,7 +38,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CollectionBowlBlockEntity extends BlockEntity implements ImplementedInventory, Tickable, ExtendedScreenHandlerFactory {
+public class CollectionBowlBlockEntity extends BlockEntity implements ImplementedInventory, ExtendedScreenHandlerFactory {
 
     private final DefaultedList<ItemStack> inventory;
 
@@ -58,8 +57,8 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
     private float collectionProgress;
     private Sounds.CollectionBowlSoundInstance s;
 
-    public CollectionBowlBlockEntity(int inventorySize) {
-        super(inventorySize == 15 ? Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_III : inventorySize == 9 ? Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_II : Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_I);
+    public CollectionBowlBlockEntity(BlockPos pos, BlockState state, int inventorySize) {
+        super(inventorySize == 15 ? Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_III : inventorySize == 9 ? Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_II : Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_I, pos, state);
         this.tier = inventorySize == 15 ? 3 : inventorySize == 9 ? 2 : 1;
         this.inventory = DefaultedList.ofSize(inventorySize, ItemStack.EMPTY);
         if (world != null && !world.isClient) {
@@ -70,36 +69,37 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
 
     private boolean structureBlockProperties = false;
 
-    @Override
-    public void tick() {
+    public static void tick(World world, BlockPos pos, BlockState state, CollectionBowlBlockEntity be){
         if (world == null) return;
 
         if (world.isClient) {
-            playSound();
+            be.playSound();
             return;
         }
 
         //Server logic
 
-        if (getEmptySlot() != -1 && checkStructure()) {
-            setStructureBlockProperties(true);
-            ++this.collectionTime;
+        if (be.getEmptySlot() != -1 && be.checkStructure()) {
+            be.setStructureBlockProperties(true);
+            ++be.collectionTime;
 
-            if (this.collectionTime >= this.collectionTimeTotal) {
-                this.collectionTime = 0;
-                setCollectionTimeTotal();
+            if (be.collectionTime >= be.collectionTimeTotal) {
+                be.collectionTime = 0;
+                be.setCollectionTimeTotal();
 
                 LootContextType lootContextType = new LootContextType.Builder().require(LootContextParameters.ORIGIN).build();
-                LootContext lootContext = new LootContext.Builder((ServerWorld) this.world).parameter(LootContextParameters.ORIGIN, new Vec3d(pos.getX(), pos.getY(), pos.getZ())).build(lootContextType);
+                LootContextParameterSet lootContext = new LootContextParameterSet.Builder((ServerWorld) world).add(LootContextParameters.ORIGIN, new Vec3d(pos.getX(), pos.getY(), pos.getZ())).build(lootContextType);
 
-                List<ItemStack> items = this.world.getServer().getLootManager().getTable(new Identifier("aequitas", "gameplay/biomes")).generateLoot(lootContext);
 
-                if (items.size() > 0) {
+                List<ItemStack> items = be.world.getServer().getLootManager().getLootTable(new Identifier("aequitas", "gameplay/biomes")).generateLoot(lootContext);
+
+
+                if (!items.isEmpty()) {
                     ItemStack item = items.get(world.random.nextInt(items.size()));
 
-                    if (this.inventory.size() == 9 && Math.random() * 100 < 30) {
+                    if (be.inventory.size() == 9 && Math.random() * 100 < 30) {
                         item.setCount(Math.min(item.getMaxCount(), item.getCount() * 2));
-                    } else if (this.inventory.size() == 15 && Math.random() * 100 < 50) {
+                    } else if (be.inventory.size() == 15 && Math.random() * 100 < 50) {
                         if (Math.random() * 100 < 50) {
                             item.setCount(Math.min(item.getMaxCount(), item.getCount() * 3));
                         } else {
@@ -107,17 +107,17 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
                         }
                     }
 
-                    this.insertStack(item);
+                    be.insertStack(item);
                     world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.5f, 1f);
                 } else {
-                    Aequitas.LOGGER.error("Broken Loot table for biome {}", this.world.getBiome(pos));
+                    Aequitas.LOGGER.error("Broken Loot table for biome {}", world.getBiome(pos));
                 }
             }
         } else {
-            setStructureBlockProperties(false);
+            be.setStructureBlockProperties(false);
         }
 
-        NetworkingHandler.updateCollectionBowl(this);
+        NetworkingHandler.updateCollectionBowl(be);
     }
 
 
@@ -315,7 +315,7 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
             MinecraftClient client = MinecraftClient.getInstance();
 
             if (s == null || !client.getSoundManager().isPlaying(s)) {
-                s = new Sounds.CollectionBowlSoundInstance(client.player, pos, tier == 1 ? 3 : tier == 2 ? 4 : 6);
+                s = new Sounds.CollectionBowlSoundInstance(client.player, pos, tier == 1 ? 3 : tier == 2 ? 4 : 6, world.random);
                 client.getSoundManager().play(s);
             }
         } else if (s != null) {
@@ -329,7 +329,7 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
 
     @Override
     public Text getDisplayName() {
-        return new TranslatableText("block.aequitas.collection_bowl_" + tier);
+        return Text.translatable("block.aequitas.collection_bowl_" + tier);
     }
 
     @Nullable
@@ -345,26 +345,23 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
 
 
     @Nullable
+    @Override
     public BlockEntityUpdateS2CPacket toUpdatePacket() {
-        return new BlockEntityUpdateS2CPacket(this.pos, 3, this.toInitialChunkDataTag());
+        return BlockEntityUpdateS2CPacket.create(this);
     }
 
-    public NbtCompound toInitialChunkDataTag() {
-        return this.writeNbt(new NbtCompound());
-    }
 
     @Override
-    public NbtCompound writeNbt(NbtCompound tag) {
+    public void writeNbt(NbtCompound tag) {
         super.writeNbt(tag);
         Inventories.writeNbt(tag, this.inventory);
         tag.putInt("collection_time", collectionTime);
         tag.putInt("collection_time_total", collectionTimeTotal);
-        return tag;
     }
 
     @Override
-    public void fromTag(BlockState state, NbtCompound tag) {
-        super.fromTag(state, tag);
+    public void readNbt(NbtCompound tag) {
+        super.readNbt(tag);
         Inventories.readNbt(tag, this.inventory);
         this.collectionTime = tag.getInt("collection_time");
         this.collectionTimeTotal = tag.getInt("collection_time_total");
@@ -383,16 +380,11 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
         collectionProgress = progress;
     }
 
-    @Override
-    public void setPos(BlockPos pos) {
-        super.setPos(pos);
-        this.updateStructurePositions();
-    }
 
     @Override
-    public void setLocation(World world, BlockPos pos) {
-        super.setLocation(world, pos);
-        this.updateStructurePositions();
+    public void markDirty() {
+        super.markDirty();
+        updateStructurePositions();
     }
 
     @Override
@@ -445,7 +437,7 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
     }
 
     private boolean areItemsEqual(ItemStack stack1, ItemStack stack2) {
-        return stack1.getItem() == stack2.getItem() && ItemStack.areTagsEqual(stack1, stack2);
+        return stack1.getItem() == stack2.getItem() && ItemStack.areEqual(stack1, stack2);
     }
 
     public int getEmptySlot() {
@@ -464,8 +456,8 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
         ItemStack itemStack = this.getStack(slot);
         if (itemStack.isEmpty()) {
             itemStack = new ItemStack(item, 0);
-            if (stack.hasTag()) {
-                itemStack.setTag(stack.getTag().copy());
+            if (stack.hasNbt()) {
+                itemStack.setNbt(stack.getNbt().copy());
             }
 
             this.setStack(slot, itemStack);
@@ -480,7 +472,6 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
         if (j != 0) {
             i -= j;
             itemStack.increment(j);
-            itemStack.setCooldown(5);
         }
         return i;
     }

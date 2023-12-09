@@ -7,7 +7,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
@@ -32,7 +31,7 @@ public class PortablePedestalItem extends Item implements NamedScreenHandlerFact
 
     @Override
     public Text getDisplayName() {
-        return new TranslatableText("item.aequitas.portable_pedestal");
+        return Text.translatable("item.aequitas.portable_pedestal");
     }
 
     @Nullable

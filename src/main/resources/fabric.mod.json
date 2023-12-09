@@ -26,6 +26,10 @@
     ],
     "modmenu": [
       "net.zelythia.aequitas.compat.modmenu.ModMenuIntegration"
+    ],
+
+    "fabric-datagen": [
+      "net.zelythia.aequitas.AequitasDataGenerator"
     ]
   },
   "mixins": [
@@ -42,7 +46,7 @@
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",
-    "minecraft": "1.16.x"
+    "minecraft": "1.20.4"
   },
   "suggests": {
     "autotools": "*"

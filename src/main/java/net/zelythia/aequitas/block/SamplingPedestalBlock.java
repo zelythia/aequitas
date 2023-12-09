@@ -1,6 +1,6 @@
 package net.zelythia.aequitas.block;
 
-import net.fabricmc.fabric.api.util.NbtType;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
@@ -8,6 +8,7 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -23,14 +24,21 @@ import net.zelythia.aequitas.block.entity.SamplingPedestalBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class SamplingPedestalBlock extends BlockWithEntity {
+
+    public static final MapCodec<SamplingPedestalBlock> CODEC = createCodec(SamplingPedestalBlock::new);
+
+    public MapCodec<SamplingPedestalBlock> getCodec() {
+        return CODEC;
+    }
+
     public SamplingPedestalBlock(Settings settings) {
         super(settings);
     }
 
     @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockView world) {
-        return new SamplingPedestalBlockEntity();
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new SamplingPedestalBlockEntity(pos, state);
     }
 
     @Override
@@ -41,8 +49,8 @@ public class SamplingPedestalBlock extends BlockWithEntity {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 
-        if (player.getStackInHand(hand).getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM && player.getStackInHand(hand).hasTag() && player.getStackInHand(hand).getTag().getType("unlocked") == NbtType.LIST) {
-            if (((NbtList) player.getStackInHand(hand).getTag().get("unlocked")).size() > 0) return ActionResult.FAIL;
+        if (player.getStackInHand(hand).getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM && player.getStackInHand(hand).hasNbt() && player.getStackInHand(hand).getNbt().getType("unlocked") == NbtElement.LIST_TYPE) {
+            if (((NbtList) player.getStackInHand(hand).getNbt().get("unlocked")).size() > 0) return ActionResult.FAIL;
         }
 
         if (world.isClient) return ActionResult.SUCCESS;
@@ -68,7 +76,7 @@ public class SamplingPedestalBlock extends BlockWithEntity {
         }
         if (player.isSneaking()) {
             //Take items out of the inventory
-            player.inventory.offerOrDrop(world, blockEntity.getStack(0));
+            player.getInventory().offerOrDrop(blockEntity.getStack(0));
             blockEntity.removeStack(0);
 
         }

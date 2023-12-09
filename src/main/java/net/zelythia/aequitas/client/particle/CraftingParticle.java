@@ -2,19 +2,12 @@ package net.zelythia.aequitas.client.particle;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.ShapeContext;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.Entity;
 import net.minecraft.particle.DefaultParticleType;
-import net.minecraft.util.collection.ReusableStream;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.shape.VoxelShape;
 import net.zelythia.aequitas.Util;
-
-import java.util.stream.Stream;
 
 public class CraftingParticle extends SpriteBillboardParticle {
     protected final double startX;
@@ -59,7 +52,7 @@ public class CraftingParticle extends SpriteBillboardParticle {
 
     @Override
     protected int getBrightness(float tint) {
-        BlockPos blockPos = new BlockPos(this.x, this.y, this.z);
+        BlockPos blockPos = new BlockPos((int) x, (int) y, (int) z);
         if (this.world == null) return 0;
         return this.world.isChunkLoaded(blockPos) ? WorldRenderer.getLightmapCoordinates(this.world, blockPos) : 0;
     }

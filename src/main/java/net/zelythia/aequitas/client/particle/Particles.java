@@ -7,8 +7,9 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.render.Camera;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.particle.ParticleEffect;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import net.zelythia.aequitas.Aequitas;
 import org.jetbrains.annotations.Nullable;
 
@@ -20,8 +21,8 @@ public class Particles {
     public static final Float[][] TIER_COLORS = new Float[4][3];
 
     static {
-        CRAFTING_PARTICLE = Registry.register(Registry.PARTICLE_TYPE, new Identifier(Aequitas.MOD_ID, "crafting_particle"), FabricParticleTypes.simple());
-        CATALYST_PARTICLE = Registry.register(Registry.PARTICLE_TYPE, new Identifier(Aequitas.MOD_ID, "catalyst_particle"), FabricParticleTypes.simple());
+        CRAFTING_PARTICLE = Registry.register(Registries.PARTICLE_TYPE, new Identifier(Aequitas.MOD_ID, "crafting_particle"), FabricParticleTypes.simple());
+        CATALYST_PARTICLE = Registry.register(Registries.PARTICLE_TYPE, new Identifier(Aequitas.MOD_ID, "catalyst_particle"), FabricParticleTypes.simple());
 
         TIER_COLORS[1][0] = 0.8313725490f;
         TIER_COLORS[1][1] = 0.9254901961f;
@@ -42,7 +43,7 @@ public class Particles {
         Camera camera = client.gameRenderer.getCamera();
         if (camera.isReady() && client.particleManager != null && client.world != null) {
 
-            ParticlesMode particlesMode = client.options.particles;
+            ParticlesMode particlesMode = client.options.getParticles().getValue();
             if (canSpawnOnMinimal && particlesMode == ParticlesMode.MINIMAL && client.world.random.nextInt(10) == 0) {
                 particlesMode = ParticlesMode.DECREASED;
             }

@@ -395,6 +395,10 @@
 
     "aequitas:primal_essence" : 12288,
     "aequitas:primordial_essence" : 24576,
-    "aequitas:pristine_essence" : 49152
+    "aequitas:pristine_essence" : 49152,
+
+
+    "#c:aluminum_ingots" : 512,
+    "#c:tin_ingots" : 256
   }
 }

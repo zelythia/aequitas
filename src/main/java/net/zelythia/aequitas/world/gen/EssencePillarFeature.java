@@ -4,14 +4,14 @@ import com.mojang.serialization.Codec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.util.FeatureContext;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.Util;
 
 import java.util.Iterator;
-import java.util.Random;
 
 public class EssencePillarFeature extends Feature<EssencePillarFeatureConfig> {
     public EssencePillarFeature(Codec<EssencePillarFeatureConfig> configCodec) {
@@ -19,14 +19,20 @@ public class EssencePillarFeature extends Feature<EssencePillarFeatureConfig> {
     }
 
     @Override
-    public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos, EssencePillarFeatureConfig config) {
+    public boolean generate(FeatureContext<EssencePillarFeatureConfig> context) {
+
+        EssencePillarFeatureConfig config = context.getConfig();
+        BlockPos blockPos = context.getOrigin();
+        StructureWorldAccess world = context.getWorld();
+        Random random = context.getRandom();
+
         int maxHeight = config.maxHeight;
         BlockState fillerBlock = config.state;
 
         for (; blockPos.getY() > 3; blockPos = blockPos.down()) {
             if (!world.isAir(blockPos.down())) {
-                Block block = world.getBlockState(blockPos.down()).getBlock();
-                if (isSoil(block) || isStone(block)) {
+                BlockState blockState = world.getBlockState(blockPos.down());
+                if (isSoil(blockState) || isStone(blockState)) {
                     break;
                 }
             }

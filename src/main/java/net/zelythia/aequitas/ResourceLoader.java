@@ -3,16 +3,22 @@ package net.zelythia.aequitas;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
+import net.fabricmc.fabric.impl.resource.conditions.ResourceConditionsImpl;
+import net.fabricmc.fabric.mixin.resource.conditions.TagManagerLoaderMixin;
+import net.minecraft.data.server.tag.ItemTagProvider;
+import net.minecraft.data.server.tag.TagProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.TagKey;
+import net.minecraft.registry.tag.TagManagerLoader;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
-import net.minecraft.tag.ServerTagManagerHolder;
-import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.profiler.Profiler;
-import net.minecraft.util.registry.Registry;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -145,16 +151,23 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
 
             map.forEach((key, value) -> {
                 if (key.startsWith("#")) {
-                    Tag<Item> tag = ServerTagManagerHolder.getTagManager().getItems().getTag(new Identifier(key.replace("#", "")));
-                    if (tag != null) {
-                        tag.values().forEach(item -> {
-                            map2.put(item, value);
-                        });
-                    } else {
+                    Collection<RegistryEntry<?>> registryEntries = ResourceConditionsImpl.LOADED_TAGS.get().get(RegistryKeys.ITEM).get(new Identifier(key.replace("#", "")));
+
+                    if(registryEntries != null){
+                        for (RegistryEntry<?> registryEntry : registryEntries) {
+                            registryEntry.getKey().ifPresent(registryKey -> {
+                                registryKey.tryCast(RegistryKeys.ITEM).ifPresent(itemRegistryKey -> {
+                                    map2.put(Registries.ITEM.get(itemRegistryKey), value);
+                                });
+                            });
+                        }
+                    }
+                    else{
                         Aequitas.LOGGER.error("Unknown tag {}", key);
                     }
+
                 } else {
-                    Item item = Registry.ITEM.get(new Identifier(key));
+                    Item item = Registries.ITEM.get(new Identifier(key));
                     if (item != Items.AIR) {
                         map2.put(item, value);
                     } else {
@@ -188,7 +201,7 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
                             JsonObject recipes = jsonObject.getAsJsonObject("recipes");
                             if (recipes != null) {
                                 recipes.entrySet().forEach(entry -> {
-                                    Item output = Registry.ITEM.get(new Identifier(entry.getKey()));
+                                    Item output = Registries.ITEM.get(new Identifier(entry.getKey()));
                                     if (output != Items.AIR) {
                                         List<SimplifiedIngredient> ingredients = new ArrayList<>();
 
@@ -198,7 +211,7 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
                                             if (entry2.getKey().equals("_")) {
                                                 ingredients.add(new SimplifiedIngredient(null, count));
                                             } else {
-                                                Item item = Registry.ITEM.get(new Identifier(entry2.getKey()));
+                                                Item item = Registries.ITEM.get(new Identifier(entry2.getKey()));
                                                 if (item != Items.AIR) {
                                                     if (count > 0) {
                                                         ingredients.add(new SimplifiedIngredient(item, count));

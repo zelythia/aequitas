@@ -1,0 +1,9 @@
+{
+  "type": "aequitas:essence_pillar_feature",
+  "config": {
+    "blockState": {
+      "Name": "minecraft:quartz_block"
+    },
+    "maxHeight": 10
+  }
+}

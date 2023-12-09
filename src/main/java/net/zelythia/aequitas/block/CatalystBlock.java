@@ -1,11 +1,9 @@
 package net.zelythia.aequitas.block;
 
+import com.mojang.serialization.MapCodec;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FacingBlock;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
@@ -26,6 +24,16 @@ import java.util.Random;
 public class CatalystBlock extends FacingBlock {
 
     private final int tier;
+
+    public static final MapCodec<CatalystBlock> CODEC = createCodec(CatalystBlock::new);
+
+    public MapCodec<CatalystBlock> getCodec() {
+        return CODEC;
+    }
+
+    public CatalystBlock(Settings settings) {
+        this(settings, 1);
+    }
 
     public CatalystBlock(Settings settings, int tier) {
         super(settings);

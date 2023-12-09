@@ -10,9 +10,9 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class PortablePedestalInventory implements Inventory {
 
         this.item = item;
 
-        NbtCompound nbt = item.getOrCreateTag();
+        NbtCompound nbt = item.getOrCreateNbt();
 
         if (!nbt.contains("essence")) {
             nbt.putLong("essence", 0);
@@ -46,7 +46,7 @@ public class PortablePedestalInventory implements Inventory {
         if (nbt.getType("unlocked") == NbtType.LIST) {
             NbtList nbtList = (NbtList) nbt.get("unlocked");
             for (int i = 0; i < nbtList.size(); ++i) {
-                Item item1 = Registry.ITEM.get(new Identifier(nbtList.getString(i)));
+                Item item1 = Registries.ITEM.get(new Identifier(nbtList.getString(i)));
                 if (item1 != Items.AIR) unlockedItems.add(item1);
             }
         }
@@ -59,7 +59,7 @@ public class PortablePedestalInventory implements Inventory {
         this.page = page;
         this.maxPage = unlockedItems.size() / 10;
 
-        List<Item> list = unlockedItems.stream().filter(item1 -> Registry.ITEM.getId(item1).toString().contains(filter)).collect(Collectors.toList());
+        List<Item> list = unlockedItems.stream().filter(item1 -> Registries.ITEM.getId(item1).toString().contains(filter)).collect(Collectors.toList());
 
         items.clear();
 
@@ -136,7 +136,7 @@ public class PortablePedestalInventory implements Inventory {
 
     public void essenceToTag() {
         if (item == null) return;
-        this.item.getTag().putLong("essence", storedEssence);
+        this.item.getNbt().putLong("essence", storedEssence);
     }
 
 
@@ -149,11 +149,11 @@ public class PortablePedestalInventory implements Inventory {
         NbtList nbtList = new NbtList();
 
         for (Item item1 : unlockedItems) {
-            Identifier identifier = Registry.ITEM.getId(item1);
-            nbtList.add(NbtString.of((identifier == null ? "minecraft:air" : identifier.toString())));
+            Identifier identifier = Registries.ITEM.getId(item1);
+            nbtList.add(NbtString.of(identifier.toString()));
         }
 
-        this.item.getTag().put("unlocked", nbtList);
+        this.item.getNbt().put("unlocked", nbtList);
     }
 
     @Override

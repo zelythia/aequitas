@@ -1,12 +1,12 @@
 package net.zelythia.aequitas.mixin.client;
 
 import net.minecraft.client.texture.NativeImage;
-import net.minecraft.client.texture.Sprite;
+import net.minecraft.client.texture.SpriteContents;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-@Mixin(Sprite.class)
-public interface SpriteMixin {
+@Mixin(SpriteContents.class)
+public interface SpriteContentsMixin {
     @Accessor
-    NativeImage[] getImages();
+    NativeImage getImage();
 }

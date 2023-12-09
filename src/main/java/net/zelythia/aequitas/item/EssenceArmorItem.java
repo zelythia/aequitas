@@ -6,18 +6,16 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.tag.FluidTags;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.world.World;
 import net.zelythia.aequitas.Aequitas;
 
 public class EssenceArmorItem extends ArmorItem {
-    public EssenceArmorItem(ArmorMaterial material, EquipmentSlot slot, Settings settings) {
-        super(material, slot, settings);
+    public EssenceArmorItem(ArmorMaterial material, ArmorItem.Type type, Settings settings) {
+        super(material, type, settings);
     }
 
     private static final int MAX_FLY_TIME = 600;
@@ -39,17 +37,19 @@ public class EssenceArmorItem extends ArmorItem {
         }
 
         //Code for the chestplate
-        if (player.abilities.creativeMode || player.isSpectator()) return;
+        if (player.getAbilities().creativeMode || player.isSpectator()) return;
 
         if (checkSetPristine(player) || (checkSetPrimordial(player) && timeFlown <= MAX_FLY_TIME)) {
-            player.abilities.allowFlying = true;
+            player.getAbilities().allowFlying = true;
         } else {
-            player.abilities.allowFlying = false;
-            player.abilities.flying = false;
+            player.getAbilities().allowFlying = false;
+            player.getAbilities().flying = false;
         }
 
-        if (player.abilities.flying) ++timeFlown;
+        if (player.getAbilities().flying) ++timeFlown;
         if (player.isOnGround() || player.isTouchingWater()) timeFlown = 0;
+
+        player.sendAbilitiesUpdate(); //FIXME maybe needed in 1.16
     }
 
     public float getFlightProgress() {

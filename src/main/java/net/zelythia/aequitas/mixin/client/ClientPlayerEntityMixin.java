@@ -2,6 +2,8 @@ package net.zelythia.aequitas.mixin.client;
 
 
 import com.mojang.authlib.GameProfile;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
@@ -13,12 +15,12 @@ import net.zelythia.aequitas.client.DoubleJumpEntity;
 import net.zelythia.aequitas.client.config.AequitasConfig;
 import net.zelythia.aequitas.item.FallFlying;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+@Environment(EnvType.CLIENT)
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity implements DoubleJumpEntity {
 
@@ -35,7 +37,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 
         if (player.isOnGround() || player.isClimbing()) {
             canJump = player.getEquippedStack(EquipmentSlot.FEET).getItem().equals(Aequitas.PRIMAL_ESSENCE_BOOTS) && player.getEquippedStack(EquipmentSlot.LEGS).getItem().equals(Aequitas.PRIMAL_ESSENCE_LEGGINGS) && player.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(Aequitas.PRIMAL_ESSENCE_CHESTPLATE) && player.getEquippedStack(EquipmentSlot.HEAD).getItem().equals(Aequitas.PRIMAL_ESSENCE_HELMET);
-        } else if (player.input.jumping && !player.abilities.flying && player.getVelocity().y < 0 && !player.hasVehicle() && !player.isTouchingWater() && !player.hasStatusEffect(StatusEffects.LEVITATION)) {
+        } else if (player.input.jumping && !player.getAbilities().flying && player.getVelocity().y < 0 && !player.hasVehicle() && !player.isTouchingWater() && !player.hasStatusEffect(StatusEffects.LEVITATION)) {
             if (canJump && !jumped) {
                 canJump = false;
                 player.jump();

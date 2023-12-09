@@ -2,10 +2,13 @@ package net.zelythia.aequitas;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.recipe.*;
+import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.Registries;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.registry.Registry;
 import net.zelythia.aequitas.networking.NetworkingHandler;
 
 import java.util.*;
@@ -16,9 +19,14 @@ public class EssenceHandler {
 
 
     private static RecipeManager recipeManager;
+    private static DynamicRegistryManager registryManager;
 
     public static void registerRecipeManager(RecipeManager r) {
         recipeManager = r;
+    }
+
+    public static void registerRegistryManager(DynamicRegistryManager r) {
+        registryManager = r;
     }
 
 
@@ -51,19 +59,24 @@ public class EssenceHandler {
         private static final Map<String, Long> craftingCost = new HashMap<>();
 
         private static final Map<Item, List<SimplifiedIngredient>> customRecipes = new HashMap<>();
-        private static final Map<Item, List<Recipe<?>>> itemRecipes = new HashMap<>();
+        private static final Map<Item, List<RecipeEntry<?>>> itemRecipes = new HashMap<>();
 
         static final ArrayList<Item> no_value = new ArrayList<>();
 
         private static void mapRecipes(RecipeManager recipeManager) {
             long startTime = System.currentTimeMillis();
-            if (recipeManager == null) return;
+            if (recipeManager == null || registryManager == null) return;
 
-            for (Recipe<?> recipe : recipeManager.values()) {
-                if (!itemRecipes.containsKey(recipe.getOutput().getItem())) {
-                    itemRecipes.put(recipe.getOutput().getItem(), new ArrayList<>());
+            for (RecipeEntry<?> recipe : recipeManager.values()) {
+                Item output = recipe.value().getResult(registryManager).getItem();
+
+//                Item output = Registries.ITEM.get(recipe.id());
+//                if(output.equals(Items.AIR)) continue;
+
+                if (!itemRecipes.containsKey(output)) {
+                    itemRecipes.put(output, new ArrayList<>());
                 }
-                itemRecipes.get(recipe.getOutput().getItem()).add(recipe);
+                itemRecipes.get(output).add(recipe);
             }
 
             itemRecipes.forEach(RecipeMapper::calculateValue);
@@ -73,7 +86,7 @@ public class EssenceHandler {
             if (no_value.size() > 0) Aequitas.LOGGER.error("Could not calculate essence values: " + no_value);
 
             List<Item> noValue = new ArrayList<>();
-            Registry.ITEM.getEntries().forEach(registryKeyItemEntry -> {
+            Registries.ITEM.getEntrySet().forEach(registryKeyItemEntry -> {
                 if (!map.containsKey(registryKeyItemEntry.getValue())) {
                     if (!(registryKeyItemEntry.getValue() instanceof SpawnEggItem))
                         noValue.add(registryKeyItemEntry.getValue());
@@ -85,7 +98,7 @@ public class EssenceHandler {
 
         private static final ArrayList<Item> current_run = new ArrayList<>();
 
-        private static long calculateValue(Item item, List<Recipe<?>> recipes) {
+        private static long calculateValue(Item item, List<RecipeEntry<?>> recipes) {
 
             //Item has already been mapped
             if (getEssenceValue(item) > 0) {
@@ -104,13 +117,13 @@ public class EssenceHandler {
             }
 
             current_run.add(item);
-            for (Recipe<?> recipe : recipes) {
-                DefaultedList<Ingredient> inputs = recipe.getIngredients();
+            for (RecipeEntry<?> recipe : recipes) {
+                DefaultedList<Ingredient> inputs = recipe.value().getIngredients();
 
                 long recipe_cost = 0;
 
                 for (Ingredient ingredient : inputs) {
-                    ItemStack[] stacks = ingredient.getMatchingStacksClient();
+                    ItemStack[] stacks = ingredient.getMatchingStacks();
 
                     long lowest_stack_cost = 0;
                     for (ItemStack stack : stacks) {
@@ -121,10 +134,11 @@ public class EssenceHandler {
                 }
 
 
+                ItemStack output = recipe.value().getResult(registryManager);
                 //Adding crafting costs for specific crafting type like e.g. smelting
-                recipe_cost += craftingCost.getOrDefault(recipe.getType().toString(), 0L);
-                if (recipe.getOutput().getCount() != 0) {
-                    recipe_cost = recipe_cost / recipe.getOutput().getCount();
+                recipe_cost += craftingCost.getOrDefault(recipe.value().getType().toString(), 0L);
+                if (output.getCount() != 0) {
+                    recipe_cost = recipe_cost / output.getCount();
                 }
 
                 if (lowest_recipe_cost == 0 || recipe_cost < lowest_recipe_cost) lowest_recipe_cost = recipe_cost;
@@ -152,13 +166,13 @@ public class EssenceHandler {
 
             long recipe_cost = 0;
             for (SimplifiedIngredient ingredient : inputs) {
-                long l = calculateCustomRecipeValue(ingredient.getItem(), customRecipes.get(ingredient.getItem()));
+                long l = calculateCustomRecipeValue(ingredient.item(), customRecipes.get(ingredient.item()));
                 if (l <= 0) {
                     recipe_cost = 0;
                     break;
                 }
 
-                recipe_cost += l * ingredient.getCount();
+                recipe_cost += l * ingredient.count();
             }
 
             if (recipe_cost > 0) {
