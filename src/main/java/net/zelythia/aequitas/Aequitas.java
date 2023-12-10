@@ -13,10 +13,8 @@ import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTables;
@@ -26,8 +24,8 @@ import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.registry.*;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.sound.BlockSoundGroup;
@@ -35,12 +33,7 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.ConfiguredFeatures;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.PlacedFeature;
-import net.minecraft.world.gen.placementmodifier.CountPlacementModifier;
-import net.minecraft.world.gen.placementmodifier.SquarePlacementModifier;
 import net.zelythia.aequitas.block.*;
 import net.zelythia.aequitas.block.entity.CollectionBowlBlockEntity;
 import net.zelythia.aequitas.block.entity.CraftingPedestalBlockEntity;
@@ -60,7 +53,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class Aequitas implements ModInitializer {
 
@@ -95,6 +87,18 @@ public class Aequitas implements ModInitializer {
     public static final BlockItem PRIMORDIAL_ESSENCE_BLOCK_ITEM;
     public static final BlockItem PRISTINE_ESSENCE_BLOCK_ITEM;
 
+    public static final Item PRIMAL_ESSENCE_HELMET;
+    public static final Item PRIMAL_ESSENCE_CHESTPLATE;
+    public static final Item PRIMAL_ESSENCE_LEGGINGS;
+    public static final Item PRIMAL_ESSENCE_BOOTS;
+    public static final Item PRIMORDIAL_ESSENCE_HELMET;
+    public static final Item PRIMORDIAL_ESSENCE_CHESTPLATE;
+    public static final Item PRIMORDIAL_ESSENCE_LEGGINGS;
+    public static final Item PRIMORDIAL_ESSENCE_BOOTS;
+    public static final Item PRISTINE_ESSENCE_HELMET;
+    public static final Item PRISTINE_ESSENCE_CHESTPLATE;
+    public static final Item PRISTINE_ESSENCE_LEGGINGS;
+    public static final Item PRISTINE_ESSENCE_BOOTS;
 
     public static final Identifier PEDESTAL = new Identifier(MOD_ID, "pedestal");
     public static final Block PEDESTAL_BLOCK;
@@ -110,6 +114,10 @@ public class Aequitas implements ModInitializer {
     public static final Block SAMPLING_PEDESTAL_BLOCK;
     public static final BlockItem SAMPLING_PEDESTAL_BLOCK_ITEM;
     public static final BlockEntityType<SamplingPedestalBlockEntity> SAMPLING_PEDESTAL_BLOCK_ENTITY;
+
+    public static final Identifier PORTABLE_PEDESTAL = new Identifier(MOD_ID, "portable_pedestal");
+    public static final Item PORTABLE_PEDESTAL_ITEM;
+    public static final ScreenHandlerType<PortablePedestalScreenHandler> PORTABLE_PEDESTAL_SCREEN_HANDLER;
 
     public static final Block COLLECTION_BOWL_BLOCK_I;
     public static final Block COLLECTION_BOWL_BLOCK_II;
@@ -127,28 +135,6 @@ public class Aequitas implements ModInitializer {
 
     public static final Identifier ESSENCE_PILLAR_FEATURE_ID = new Identifier(MOD_ID, "essence_pillar_feature");
     public static final Feature<EssencePillarFeatureConfig> ESSENCE_PILLAR_FEATURE;
-//    public static final ConfiguredFeature<EssencePillarFeatureConfig, EssencePillarFeature> ESSENCE_PILLAR_FEATURE_CONFIGURED;
-
-
-    public static final Item PRIMAL_ESSENCE_HELMET;
-    public static final Item PRIMAL_ESSENCE_CHESTPLATE;
-    public static final Item PRIMAL_ESSENCE_LEGGINGS;
-    public static final Item PRIMAL_ESSENCE_BOOTS;
-
-    public static final Item PRIMORDIAL_ESSENCE_HELMET;
-    public static final Item PRIMORDIAL_ESSENCE_CHESTPLATE;
-    public static final Item PRIMORDIAL_ESSENCE_LEGGINGS;
-    public static final Item PRIMORDIAL_ESSENCE_BOOTS;
-
-    public static final Item PRISTINE_ESSENCE_HELMET;
-    public static final Item PRISTINE_ESSENCE_CHESTPLATE;
-    public static final Item PRISTINE_ESSENCE_LEGGINGS;
-    public static final Item PRISTINE_ESSENCE_BOOTS;
-
-
-    public static final Identifier PORTABLE_PEDESTAL = new Identifier(MOD_ID, "portable_pedestal");
-    public static final Item PORTABLE_PEDESTAL_ITEM;
-    public static final ScreenHandlerType<PortablePedestalScreenHandler> PORTABLE_PEDESTAL_SCREEN_HANDLER;
 
 
     static {
@@ -193,25 +179,7 @@ public class Aequitas implements ModInitializer {
         PEDESTAL_BLOCK_ITEM = Registry.register(Registries.ITEM, PEDESTAL, new BlockItem(PEDESTAL_BLOCK, new Item.Settings()));
         CRAFTING_PEDESTAL_BLOCK_ITEM = Registry.register(Registries.ITEM, CRAFTING_PEDESTAL, new BlockItem(CRAFTING_PEDESTAL_BLOCK, new Item.Settings()));
         SAMPLING_PEDESTAL_BLOCK_ITEM = Registry.register(Registries.ITEM, SAMPLING_PEDESTAL, new BlockItem(SAMPLING_PEDESTAL_BLOCK, new Item.Settings()));
-
         PORTABLE_PEDESTAL_ITEM = Registry.register(Registries.ITEM, PORTABLE_PEDESTAL, new PortablePedestalItem(new Item.Settings().maxCount(1)));
-
-
-
-        //Entities
-        CRAFTING_PEDESTAL_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, CRAFTING_PEDESTAL, FabricBlockEntityTypeBuilder.create(CraftingPedestalBlockEntity::new, CRAFTING_PEDESTAL_BLOCK).build());
-        SAMPLING_PEDESTAL_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, SAMPLING_PEDESTAL, FabricBlockEntityTypeBuilder.create(SamplingPedestalBlockEntity::new, SAMPLING_PEDESTAL_BLOCK).build());
-        COLLECTION_BOWL_BLOCK_ENTITY_I = Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier("collection_bowl_1"), FabricBlockEntityTypeBuilder.create((pos, state) -> new CollectionBowlBlockEntity(pos, state, 1), COLLECTION_BOWL_BLOCK_I).build());
-        COLLECTION_BOWL_BLOCK_ENTITY_II = Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier("collection_bowl_2"), FabricBlockEntityTypeBuilder.create((pos, state) -> new CollectionBowlBlockEntity(pos, state, 9), COLLECTION_BOWL_BLOCK_II).build());
-        COLLECTION_BOWL_BLOCK_ENTITY_III = Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier("collection_bowl_3"), FabricBlockEntityTypeBuilder.create((pos, state) -> new CollectionBowlBlockEntity(pos, state, 15), COLLECTION_BOWL_BLOCK_III).build());
-
-        //Screens
-
-        CRAFTING_PEDESTAL_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(CRAFTING_PEDESTAL, CraftingPedestalScreenHandler::new);
-        COLLECTION_BOWL_SCREEN_HANDLER = ScreenHandlerRegistry.registerExtended(new Identifier("collection_bowl"), CollectionBowlScreenHandler::new);
-        PORTABLE_PEDESTAL_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(PORTABLE_PEDESTAL, PortablePedestalScreenHandler::new);
-
-        ESSENCE_PILLAR_FEATURE = Registry.register(Registries.FEATURE, ESSENCE_PILLAR_FEATURE_ID, new EssencePillarFeature(EssencePillarFeatureConfig.CODEC));
 
         PRIMAL_ESSENCE_HELMET = Registry.register(Registries.ITEM, new Identifier(MOD_ID, "primal_essence_helmet"), new EssenceArmorItem(ArmorMaterials.PRIMAL, ArmorItem.Type.HELMET, new Item.Settings()));
         PRIMAL_ESSENCE_CHESTPLATE = Registry.register(Registries.ITEM, new Identifier(MOD_ID, "primal_essence_chestplate"), new EssenceArmorItem(ArmorMaterials.PRIMAL, ArmorItem.Type.CHESTPLATE, new Item.Settings()));
@@ -228,19 +196,68 @@ public class Aequitas implements ModInitializer {
         PRISTINE_ESSENCE_LEGGINGS = Registry.register(Registries.ITEM, new Identifier(MOD_ID, "pristine_essence_leggings"), new ArmorItem(ArmorMaterials.PRISTINE, ArmorItem.Type.LEGGINGS, new Item.Settings()));
         PRISTINE_ESSENCE_BOOTS = Registry.register(Registries.ITEM, new Identifier(MOD_ID, "pristine_essence_boots"), new ArmorItem(ArmorMaterials.PRISTINE, ArmorItem.Type.BOOTS, new Item.Settings()));
 
+
+        //Entities
+        CRAFTING_PEDESTAL_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, CRAFTING_PEDESTAL, FabricBlockEntityTypeBuilder.create(CraftingPedestalBlockEntity::new, CRAFTING_PEDESTAL_BLOCK).build());
+        SAMPLING_PEDESTAL_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, SAMPLING_PEDESTAL, FabricBlockEntityTypeBuilder.create(SamplingPedestalBlockEntity::new, SAMPLING_PEDESTAL_BLOCK).build());
+        COLLECTION_BOWL_BLOCK_ENTITY_I = Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier("collection_bowl_1"), FabricBlockEntityTypeBuilder.create((pos, state) -> new CollectionBowlBlockEntity(pos, state, 1), COLLECTION_BOWL_BLOCK_I).build());
+        COLLECTION_BOWL_BLOCK_ENTITY_II = Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier("collection_bowl_2"), FabricBlockEntityTypeBuilder.create((pos, state) -> new CollectionBowlBlockEntity(pos, state, 9), COLLECTION_BOWL_BLOCK_II).build());
+        COLLECTION_BOWL_BLOCK_ENTITY_III = Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier("collection_bowl_3"), FabricBlockEntityTypeBuilder.create((pos, state) -> new CollectionBowlBlockEntity(pos, state, 15), COLLECTION_BOWL_BLOCK_III).build());
+
+        //Screens
+        CRAFTING_PEDESTAL_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(CRAFTING_PEDESTAL, CraftingPedestalScreenHandler::new);
+        COLLECTION_BOWL_SCREEN_HANDLER = ScreenHandlerRegistry.registerExtended(new Identifier("collection_bowl"), CollectionBowlScreenHandler::new);
+        PORTABLE_PEDESTAL_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(PORTABLE_PEDESTAL, PortablePedestalScreenHandler::new);
+
+
+        ESSENCE_PILLAR_FEATURE = Registry.register(Registries.FEATURE, ESSENCE_PILLAR_FEATURE_ID, new EssencePillarFeature(EssencePillarFeatureConfig.CODEC));
+
+
         ITEM_GROUP = FabricItemGroup.builder()
                 .icon(() -> new ItemStack(CRAFTING_PEDESTAL_BLOCK))
                 .displayName(Text.translatable("itemGroup.aequitas.item_group"))
                 .entries((context, entries) -> {
+                    entries.add(PRIMAL_ESSENCE);
+                    entries.add(PRIMORDIAL_ESSENCE);
+                    entries.add(PRISTINE_ESSENCE);
+                    entries.add(PRIMAL_ESSENCE_BLOCK_ITEM);
+                    entries.add(PRIMORDIAL_ESSENCE_BLOCK_ITEM);
+                    entries.add(PRISTINE_ESSENCE_BLOCK_ITEM);
+
+                    entries.add(CONDUIT_BLOCK_ITEM);
+                    entries.add(CATALYST_BLOCK_ITEM_I);
+                    entries.add(CATALYST_BLOCK_ITEM_II);
+                    entries.add(CATALYST_BLOCK_ITEM_III);
+                    entries.add(COLLECTION_BOWL_BLOCK_ITEM_I);
+                    entries.add(COLLECTION_BOWL_BLOCK_ITEM_II);
+                    entries.add(COLLECTION_BOWL_BLOCK_ITEM_III);
+
+                    entries.add(SAMPLING_PEDESTAL_CORE);
+                    entries.add(CRAFTING_PEDESTAL_CORE);
+                    entries.add(PORTABLE_PEDESTAL_CORE);
+
+                    entries.add(PEDESTAL_BLOCK_ITEM);
                     entries.add(CRAFTING_PEDESTAL_BLOCK_ITEM);
                     entries.add(SAMPLING_PEDESTAL_BLOCK_ITEM);
-                })
-                .build();
+                    entries.add(PORTABLE_PEDESTAL_ITEM);
+
+                    entries.add(PRIMAL_ESSENCE_HELMET);
+                    entries.add(PRIMAL_ESSENCE_CHESTPLATE);
+                    entries.add(PRIMAL_ESSENCE_LEGGINGS);
+                    entries.add(PRIMAL_ESSENCE_BOOTS);
+                    entries.add(PRIMORDIAL_ESSENCE_HELMET);
+                    entries.add(PRIMORDIAL_ESSENCE_CHESTPLATE);
+                    entries.add(PRIMORDIAL_ESSENCE_LEGGINGS);
+                    entries.add(PRIMORDIAL_ESSENCE_BOOTS);
+                    entries.add(PRISTINE_ESSENCE_HELMET);
+                    entries.add(PRISTINE_ESSENCE_CHESTPLATE);
+                    entries.add(PRISTINE_ESSENCE_LEGGINGS);
+                    entries.add(PRISTINE_ESSENCE_BOOTS);
+                }).build();
     }
 
     @Override
     public void onInitialize() {
-        //FIXME Disable when running Datagen
         NetworkingHandler.onInitialize();
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ResourceLoader());
 
@@ -257,6 +274,8 @@ public class Aequitas implements ModInitializer {
 
             sender.sendPacket(NetworkingHandler.ESSENCE_UPDATE, buf);
         });
+
+        Registry.register(Registries.ITEM_GROUP, new Identifier(MOD_ID, "aequitas_item_group"), ITEM_GROUP);
 
         BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.SURFACE_STRUCTURES, PlacedFeatures.ESSENCE_PILLAR);
 
