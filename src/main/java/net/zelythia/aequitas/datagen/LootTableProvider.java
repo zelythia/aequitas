@@ -19,6 +19,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.dimension.DimensionOptions;
+import net.zelythia.aequitas.Aequitas;
 
 import java.util.function.BiConsumer;
 
@@ -29,19 +30,24 @@ public class LootTableProvider extends FabricBlockLootTableProvider {
 
     @Override
     public void generate() {
-
+        addDrop(Aequitas.PRIMAL_ESSENCE_BLOCK);
+        addDrop(Aequitas.PRIMORDIAL_ESSENCE_BLOCK);
+        addDrop(Aequitas.PRISTINE_ESSENCE_BLOCK);
+        addDrop(Aequitas.CONDUIT_BLOCK);
+        addDrop(Aequitas.CATALYST_BLOCK_I);
+        addDrop(Aequitas.CATALYST_BLOCK_II);
+        addDrop(Aequitas.CATALYST_BLOCK_III);
+        addDrop(Aequitas.COLLECTION_BOWL_BLOCK_I);
+        addDrop(Aequitas.COLLECTION_BOWL_BLOCK_II);
+        addDrop(Aequitas.COLLECTION_BOWL_BLOCK_III);
+        addDrop(Aequitas.PEDESTAL_BLOCK);
+        addDrop(Aequitas.CRAFTING_PEDESTAL_BLOCK);
+        addDrop(Aequitas.SAMPLING_PEDESTAL_BLOCK);
     }
 
 
     @Override
     public void accept(BiConsumer<Identifier, LootTable.Builder> biConsumer) {
-
-        biConsumer.accept(new Identifier("aequitas", "gameplay/nether"), LootTable.builder()
-                .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
-
-
-                )
-        );
 
         //Dimension loot tables
         biConsumer.accept(new Identifier("aequitas", "gameplay/nether"), LootTable.builder()
