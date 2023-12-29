@@ -93,41 +93,40 @@ public class LootTableProvider extends FabricBlockLootTableProvider {
                 )
         );
 
-        //Will always generate an item //FIXME
+        //Will always generate an item
         biConsumer.accept(new Identifier("aequitas", "gameplay/overworld"), LootTable.builder()
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
-                        //FIXME
-                        .with(EmptyEntry.builder().weight(50))
-                        .with(ItemEntry.builder(Items.DIRT).weight(1)) //Only the dirt that is found underground
-                        .with(ItemEntry.builder(Items.STONE).weight(30))
-                        .with(ItemEntry.builder(Items.ANDESITE).weight(1))
-                        .with(ItemEntry.builder(Items.DIORITE).weight(1))
-                        .with(ItemEntry.builder(Items.GRANITE).weight(1))
-                        .with(ItemEntry.builder(Items.GRAVEL).weight(1))
-                        .with(ItemEntry.builder(Items.FLINT).weight(1))
+                        .with(ItemEntry.builder(Items.STONE).weight(171))
+                        .with(ItemEntry.builder(Items.DIRT).weight(40)) //Only the dirt that is found underground
+                        .with(ItemEntry.builder(Items.GRAVEL).weight(40))
+                        .with(ItemEntry.builder(Items.FLINT).weight(10))
+                        .with(ItemEntry.builder(Items.ANDESITE).weight(70))
+                        .with(ItemEntry.builder(Items.DIORITE).weight(70))
+                        .with(ItemEntry.builder(Items.GRANITE).weight(70))
 
 
-                        .with(ItemEntry.builder(Items.COAL).weight(8).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
+                        .with(ItemEntry.builder(Items.COAL_ORE).weight(120).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
+                        .with(ItemEntry.builder(Items.DEEPSLATE_COAL_ORE).weight(1).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
 
-                        .with(ItemEntry.builder(Items.COPPER_ORE).weight(4))
-                        .with(ItemEntry.builder(Items.DEEPSLATE_COPPER_ORE).weight(4))
+                        .with(ItemEntry.builder(Items.COPPER_ORE).weight(120))
+                        .with(ItemEntry.builder(Items.DEEPSLATE_COPPER_ORE).weight(9))
 
-                        .with(ItemEntry.builder(Items.IRON_ORE).weight(4))
-                        .with(ItemEntry.builder(Items.DEEPSLATE_IRON_ORE).weight(4))
+                        .with(ItemEntry.builder(Items.IRON_ORE).weight(86))
+                        .with(ItemEntry.builder(Items.DEEPSLATE_IRON_ORE).weight(37))
 
-                        .with(ItemEntry.builder(Items.GOLD_ORE).weight(4))
-                        .with(ItemEntry.builder(Items.DEEPSLATE_GOLD_ORE).weight(4))
+                        .with(ItemEntry.builder(Items.GOLD_ORE).weight(7))
+                        .with(ItemEntry.builder(Items.DEEPSLATE_GOLD_ORE).weight(30))
 
                         .with(ItemEntry.builder(Items.DIAMOND_ORE).weight(1))
-                        .with(ItemEntry.builder(Items.DEEPSLATE_DIAMOND_ORE).weight(1))
+                        .with(ItemEntry.builder(Items.DEEPSLATE_DIAMOND_ORE).weight(19))
 
-                        .with(ItemEntry.builder(Items.REDSTONE_ORE).weight(2).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,5))))
-                        .with(ItemEntry.builder(Items.DEEPSLATE_REDSTONE_ORE).weight(2).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,5))))
+                        .with(ItemEntry.builder(Items.REDSTONE_ORE).weight(6).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,5))))
+                        .with(ItemEntry.builder(Items.DEEPSLATE_REDSTONE_ORE).weight(54).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,5))))
 
-                        .with(ItemEntry.builder(Items.LAPIS_ORE).weight(2).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,5))))
-                        .with(ItemEntry.builder(Items.DEEPSLATE_LAPIS_ORE).weight(2).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,5))))
+                        .with(ItemEntry.builder(Items.LAPIS_ORE).weight(20).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,5))))
+                        .with(ItemEntry.builder(Items.DEEPSLATE_LAPIS_ORE).weight(19).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,5))))
 
-                        .with(ItemEntry.builder(Items.AMETHYST_CLUSTER).weight(1))
+                        .with(ItemEntry.builder(Items.AMETHYST_CLUSTER).weight(11).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(4,12))))
 
 
 //                        .conditionally(InvertedLootCondition.builder(LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.DEEP_DARK))))
