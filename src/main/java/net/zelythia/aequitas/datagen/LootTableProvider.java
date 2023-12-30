@@ -173,68 +173,82 @@ public class LootTableProvider extends FabricBlockLootTableProvider {
                         .with(ItemEntry.builder(Items.RABBIT_HIDE).weight(5))
                         .with(ItemEntry.builder(Items.RABBIT_FOOT).weight(5))
                         .with(ItemEntry.builder(Items.RABBIT).weight(5))
-
-//                        .with(ItemEntry.builder(Items.STONE).weight(50))
                 )
         );
 
         biConsumer.accept(new Identifier("aequitas", "gameplay/swamp"), LootTable.builder()
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
+                        .with(ItemEntry.builder(Items.GRASS_BLOCK).weight(10))
+                        .with(ItemEntry.builder(Items.DIRT).weight(25))
+
+                        .with(ItemEntry.builder(Items.OAK_LOG).weight(18).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
+                        .with(ItemEntry.builder(Items.OAK_LEAVES).weight(6).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,8))))
+                        .with(ItemEntry.builder(Items.OAK_SAPLING).weight(6))
+
+                        .with(ItemEntry.builder(Items.CLAY).weight(10))
+
+                        .with(ItemEntry.builder(Items.SLIME_BALL).weight(10))
+
+                        .with(ItemEntry.builder(Items.BLUE_ORCHID).weight(3))
+                        .with(ItemEntry.builder(Items.RED_MUSHROOM).weight(3))
+                        .with(ItemEntry.builder(Items.BROWN_MUSHROOM).weight(3))
                         .with(ItemEntry.builder(Items.VINE).weight(3))
                         .with(ItemEntry.builder(Items.LILY_PAD).weight(3))
-                        .with(ItemEntry.builder(Items.BLUE_ORCHID).weight(1))
-                        .with(ItemEntry.builder(Items.SLIME_BALL).weight(10))
-                        .with(ItemEntry.builder(Items.CLAY).weight(10))
-                        .with(ItemEntry.builder(Items.RED_MUSHROOM).weight(1))
-                        .with(ItemEntry.builder(Items.BROWN_MUSHROOM).weight(1))
-                        //TODO oak_sapling, grass_block
                 )
         );
 
         biConsumer.accept(new Identifier("aequitas", "gameplay/mangrove"), LootTable.builder()
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
-                        .with(ItemEntry.builder(Items.MANGROVE_LOG).weight(20))
-                        .with(ItemEntry.builder(Items.MANGROVE_LEAVES).weight(10).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,8))))
-                        .with(ItemEntry.builder(Items.MANGROVE_PROPAGULE).weight(5))
-                        .with(ItemEntry.builder(Items.MOSS_CARPET).weight(3))
-                        .with(ItemEntry.builder(Items.MUDDY_MANGROVE_ROOTS).weight(5))
-                        .with(ItemEntry.builder(Items.VINE).weight(3))
-                        .with(ItemEntry.builder(Items.BEE_NEST).weight(1))
-                        .with(ItemEntry.builder(Items.MUD).weight(10))
-                        .with(ItemEntry.builder(Items.SEAGRASS).weight(3))
+                        .with(ItemEntry.builder(Items.MUD).weight(25))
+                        .with(ItemEntry.builder(Items.GRASS_BLOCK).weight(5))
+                        .with(ItemEntry.builder(Items.DIRT).weight(5))
 
-                        .with(ItemEntry.builder(Items.GRASS_BLOCK).weight(10))
+                        .with(ItemEntry.builder(Items.MANGROVE_LOG).weight(25))
+                        .with(ItemEntry.builder(Items.MANGROVE_LEAVES).weight(10).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,8))))
+                        .with(ItemEntry.builder(Items.MANGROVE_PROPAGULE).weight(10).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
+                        .with(ItemEntry.builder(Items.MUDDY_MANGROVE_ROOTS).weight(5))
+                        .with(ItemEntry.builder(Items.MANGROVE_ROOTS).weight(5))
+
+                        .with(ItemEntry.builder(Items.MOSS_CARPET).weight(3))
+                        .with(ItemEntry.builder(Items.VINE).weight(2).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,8))))
+                        .with(ItemEntry.builder(Items.SEAGRASS).weight(2).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
+                        .with(ItemEntry.builder(Items.LILY_PAD).weight(2))
+
+                        .with(ItemEntry.builder(Items.BEE_NEST).weight(1))
                 )
         );
 
         biConsumer.accept(new Identifier("aequitas", "gameplay/mushroom"), LootTable.builder()
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
-                        .with(ItemEntry.builder(Items.BROWN_MUSHROOM).weight(50))
-                        .with(ItemEntry.builder(Items.RED_MUSHROOM).weight(50))
-                        .with(ItemEntry.builder(Items.MYCELIUM).weight(30))
-                        .with(ItemEntry.builder(Items.MUSHROOM_STEW).weight(10))
-                        .with(ItemEntry.builder(Items.MOOSHROOM_SPAWN_EGG).weight(1))
-                        .with(ItemEntry.builder(Items.RED_MUSHROOM_BLOCK).weight(10))
-                        .with(ItemEntry.builder(Items.BROWN_MUSHROOM_BLOCK).weight(10))
+                        .with(ItemEntry.builder(Items.MYCELIUM).weight(20))
+                        .with(ItemEntry.builder(Items.DIRT).weight(15))
+
+                        .with(ItemEntry.builder(Items.BROWN_MUSHROOM).weight(14).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
+                        .with(ItemEntry.builder(Items.RED_MUSHROOM).weight(14).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
+
                         .with(ItemEntry.builder(Items.MUSHROOM_STEM).weight(10))
+                        .with(ItemEntry.builder(Items.RED_MUSHROOM_BLOCK).weight(10).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
+                        .with(ItemEntry.builder(Items.BROWN_MUSHROOM_BLOCK).weight(10).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
+
+                        .with(ItemEntry.builder(Items.MUSHROOM_STEW).weight(6))
+                        .with(ItemEntry.builder(Items.MOOSHROOM_SPAWN_EGG).weight(1))
                 )
         );
 
         biConsumer.accept(new Identifier("aequitas", "gameplay/jungle"), LootTable.builder()
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
-                        .with(ItemEntry.builder(Items.BAMBOO).weight(20))
-                        .with(ItemEntry.builder(Items.JUNGLE_SAPLING).weight(10))
-                        .with(ItemEntry.builder(Items.JUNGLE_LOG).weight(40).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
-                        .with(ItemEntry.builder(Items.JUNGLE_LEAVES).weight(10).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,8))))
-                        .with(ItemEntry.builder(Items.MELON).weight(10))
-                        .with(ItemEntry.builder(Items.MOSSY_COBBLESTONE).weight(10))
-                        .with(ItemEntry.builder(Items.COCOA_BEANS).weight(10))
+                        .with(ItemEntry.builder(Items.JUNGLE_LOG).weight(40).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,8))))
+                        .with(ItemEntry.builder(Items.JUNGLE_LEAVES).weight(20).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,8))))
+                        .with(ItemEntry.builder(Items.JUNGLE_SAPLING).weight(20).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
+                        .with(ItemEntry.builder(Items.GRASS_BLOCK).weight(40))
+                        .with(ItemEntry.builder(Items.DIRT).weight(30))
+                        .with(ItemEntry.builder(Items.BAMBOO).weight(30).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,8))))
+
+                        .with(ItemEntry.builder(Items.MELON).weight(6))
+                        .with(ItemEntry.builder(Items.MOSSY_COBBLESTONE).weight(6))
+                        .with(ItemEntry.builder(Items.COCOA_BEANS).weight(6))
                         .with(ItemEntry.builder(Items.PANDA_SPAWN_EGG).weight(1))
                         .with(ItemEntry.builder(Items.PARROT_SPAWN_EGG).weight(1))
-
-                        .with(ItemEntry.builder(Items.GRASS_BLOCK).weight(30))
-                        .with(ItemEntry.builder(Items.DIRT).weight(30))
-                        //TODO 30dirt, 20stone
                 )
         );
 
@@ -244,83 +258,88 @@ public class LootTableProvider extends FabricBlockLootTableProvider {
                         .with(ItemEntry.builder(Items.BIRCH_LOG).weight(30).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
                         .with(ItemEntry.builder(Items.OAK_LEAVES).weight(10).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,8))))
                         .with(ItemEntry.builder(Items.BIRCH_LEAVES).weight(10).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,8))))
-                        .with(ItemEntry.builder(Items.OAK_SAPLING).weight(5))
-                        .with(ItemEntry.builder(Items.BIRCH_SAPLING).weight(5))
-                        .with(ItemEntry.builder(Items.BEE_NEST).weight(1))
-                        .with(ItemEntry.builder(Items.ROSE_BUSH).weight(1))
-                        .with(ItemEntry.builder(Items.LILAC).weight(1))
-                        .with(ItemEntry.builder(Items.PEONY).weight(1))
-                        .with(ItemEntry.builder(Items.LILY_OF_THE_VALLEY).weight(1))
+                        .with(ItemEntry.builder(Items.OAK_SAPLING).weight(10))
+                        .with(ItemEntry.builder(Items.BIRCH_SAPLING).weight(10))
 
-                        .with(ItemEntry.builder(Items.GRASS_BLOCK).weight(50))
-                        .with(ItemEntry.builder(Items.DIRT).weight(50))
-                        //TODO 50stone,50dirt
-                )
-        );
+                        .with(ItemEntry.builder(Items.BEE_NEST).weight(3))
+                        .with(ItemEntry.builder(Items.ROSE_BUSH).weight(3))
+                        .with(ItemEntry.builder(Items.LILAC).weight(3))
+                        .with(ItemEntry.builder(Items.PEONY).weight(3))
+                        .with(ItemEntry.builder(Items.LILY_OF_THE_VALLEY).weight(3))
+                        .with(ItemEntry.builder(Items.SUNFLOWER).weight(5).conditionally(LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.SUNFLOWER_PLAINS))).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
 
-        biConsumer.accept(new Identifier("aequitas", "gameplay/sunflower"), LootTable.builder()
-                .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
-                        .with(ItemEntry.builder(Items.SUNFLOWER).weight(1).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,3))))
+                        .with(ItemEntry.builder(Items.GRASS_BLOCK).weight(40))
+                        .with(ItemEntry.builder(Items.DIRT).weight(40))
                 )
         );
 
         biConsumer.accept(new Identifier("aequitas", "gameplay/cherry"), LootTable.builder()
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
-                        .with(ItemEntry.builder(Items.CHERRY_LOG).weight(25))
+                        .with(ItemEntry.builder(Items.CHERRY_LOG).weight(30).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
                         .with(ItemEntry.builder(Items.CHERRY_LEAVES).weight(10).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,8))))
-                        .with(ItemEntry.builder(Items.BEE_NEST).weight(1))
-                        .with(ItemEntry.builder(Items.PINK_PETALS).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,8))))
+                        .with(ItemEntry.builder(Items.CHERRY_SAPLING).weight(10))
                         .with(ItemEntry.builder(Items.GRASS_BLOCK).weight(20))
+                        .with(ItemEntry.builder(Items.DIRT).weight(20))
+
+                        .with(ItemEntry.builder(Items.BEE_NEST).weight(1))
+                        .with(ItemEntry.builder(Items.PINK_PETALS).weight(9).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,8))))
                 )
         );
 
         biConsumer.accept(new Identifier("aequitas", "gameplay/taiga"), LootTable.builder()
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
+                        .with(ItemEntry.builder(Items.SPRUCE_LOG).weight(50).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
+                        .with(ItemEntry.builder(Items.SPRUCE_LEAVES).weight(20).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,8))))
+                        .with(ItemEntry.builder(Items.SPRUCE_SAPLING).weight(20).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
+                        .with(ItemEntry.builder(Items.DIRT).weight(30))
+                        .with(ItemEntry.builder(Items.GRASS_BLOCK).weight(20))
                         .with(ItemEntry.builder(Items.PODZOL).weight(20))
-                        .with(ItemEntry.builder(Items.COARSE_DIRT).weight(10))
-                        .with(ItemEntry.builder(Items.MOSSY_COBBLESTONE).weight(5))
-                        .with(ItemEntry.builder(Items.SPRUCE_LOG).weight(30).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
-                        .with(ItemEntry.builder(Items.SPRUCE_LEAVES).weight(10).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,8))))
-                        .with(ItemEntry.builder(Items.SPRUCE_SAPLING).weight(3))
-                        .with(ItemEntry.builder(Items.FERN).weight(3))
-                        .with(ItemEntry.builder(Items.LARGE_FERN).weight(3))
-                        .with(ItemEntry.builder(Items.DEAD_BUSH).weight(3))
-                        .with(ItemEntry.builder(Items.SWEET_BERRIES).weight(1))
+                        .with(ItemEntry.builder(Items.COARSE_DIRT).weight(20))
 
-                        .with(ItemEntry.builder(Items.DIRT).weight(50))
-                        .with(ItemEntry.builder(Items.GRASS_BLOCK).weight(30))
+                        .with(ItemEntry.builder(Items.MOSSY_COBBLESTONE).weight(6))
+                        .with(ItemEntry.builder(Items.FERN).weight(4))
+                        .with(ItemEntry.builder(Items.LARGE_FERN).weight(4))
+                        .with(ItemEntry.builder(Items.DEAD_BUSH).weight(4))
+                        .with(ItemEntry.builder(Items.SWEET_BERRIES).weight(2))
                 )
         );
 
         biConsumer.accept(new Identifier("aequitas", "gameplay/dark_forest"), LootTable.builder()
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
-                        .with(ItemEntry.builder(Items.DARK_OAK_LOG).weight(25).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
-                        .with(ItemEntry.builder(Items.DARK_OAK_LEAVES).weight(10).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,8))))
-                        .with(ItemEntry.builder(Items.DARK_OAK_SAPLING).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
-                        .with(ItemEntry.builder(Items.RED_MUSHROOM_BLOCK).weight(5))
-                        .with(ItemEntry.builder(Items.BROWN_MUSHROOM_BLOCK).weight(5))
+                        .with(ItemEntry.builder(Items.DARK_OAK_LOG).weight(24).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
+                        .with(ItemEntry.builder(Items.DARK_OAK_LEAVES).weight(9).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,8))))
+                        .with(ItemEntry.builder(Items.DARK_OAK_SAPLING).weight(9).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(3,8))))
+                        .with(ItemEntry.builder(Items.GRASS_BLOCK).weight(20))
+                        .with(ItemEntry.builder(Items.DIRT).weight(15))
+
                         .with(ItemEntry.builder(Items.OAK_LOG).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
                         .with(ItemEntry.builder(Items.OAK_LEAVES).weight(2).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,8))))
-                        .with(ItemEntry.builder(Items.OAK_SAPLING).weight(1))
+                        .with(ItemEntry.builder(Items.OAK_SAPLING).weight(2))
+
+                        .with(ItemEntry.builder(Items.RED_MUSHROOM_BLOCK).weight(5))
+                        .with(ItemEntry.builder(Items.BROWN_MUSHROOM_BLOCK).weight(5))
+
                         .with(ItemEntry.builder(Items.ROSE_BUSH).weight(1))
                         .with(ItemEntry.builder(Items.LILAC).weight(1))
                         .with(ItemEntry.builder(Items.PEONY).weight(1))
                         .with(ItemEntry.builder(Items.LILY_OF_THE_VALLEY).weight(1))
-
-                        .with(ItemEntry.builder(Items.GRASS_BLOCK).weight(50))
                 )
         );
 
         biConsumer.accept(new Identifier("aequitas", "gameplay/savanna"), LootTable.builder()
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
-                        .with(ItemEntry.builder(Items.ACACIA_LOG).weight(20))
+                        .with(ItemEntry.builder(Items.ACACIA_LOG).weight(25))
                         .with(ItemEntry.builder(Items.ACACIA_LEAVES).weight(10).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
-                        .with(ItemEntry.builder(Items.ACACIA_SAPLING).weight(3))
-                        .with(ItemEntry.builder(Items.TALL_GRASS).weight(3))
-                        .with(ItemEntry.builder(Items.COARSE_DIRT).weight(5))
-
+                        .with(ItemEntry.builder(Items.ACACIA_SAPLING).weight(10).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
+                        .with(ItemEntry.builder(Items.GRASS_BLOCK).weight(25))
                         .with(ItemEntry.builder(Items.DIRT).weight(15))
-                        .with(ItemEntry.builder(Items.GRASS_BLOCK).weight(15))
+
+                        .with(ItemEntry.builder(Items.OAK_LOG).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
+                        .with(ItemEntry.builder(Items.OAK_LEAVES).weight(2).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,8))))
+                        .with(ItemEntry.builder(Items.OAK_SAPLING).weight(2))
+
+                        .with(ItemEntry.builder(Items.TALL_GRASS).weight(2))
+                        .with(ItemEntry.builder(Items.COARSE_DIRT).weight(4))
                 )
         );
 
@@ -335,7 +354,6 @@ public class LootTableProvider extends FabricBlockLootTableProvider {
                         .with(ItemEntry.builder(Items.LIGHT_GRAY_TERRACOTTA).weight(10))
                         .with(ItemEntry.builder(Items.BROWN_TERRACOTTA).weight(10))
                         .with(ItemEntry.builder(Items.TERRACOTTA).weight(20))
-                        //TODO 10stone
                 )
         );
 
@@ -353,7 +371,7 @@ public class LootTableProvider extends FabricBlockLootTableProvider {
                         .with(ItemEntry.builder(Items.CLAY).weight(20))
                         .with(ItemEntry.builder(Items.INK_SAC).weight(20))
                         .with(ItemEntry.builder(Items.SUGAR_CANE).weight(20).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,3))))
-                        //TODO fish
+                        .with(ItemEntry.builder(Items.SALMON_BUCKET).weight(5))
                 )
         );
 
@@ -415,6 +433,26 @@ public class LootTableProvider extends FabricBlockLootTableProvider {
         );
 
 
+
+
+        biConsumer.accept(new Identifier("aequitas", "gameplay/stone"), LootTable.builder()
+                .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
+                        .with(ItemEntry.builder(Items.STONE).weight(171))
+                        .with(ItemEntry.builder(Items.DIRT).weight(40)) //Only the dirt that is found underground
+                        .with(ItemEntry.builder(Items.GRAVEL).weight(40))
+                        .with(ItemEntry.builder(Items.FLINT).weight(10))
+                        .with(ItemEntry.builder(Items.ANDESITE).weight(70))
+                        .with(ItemEntry.builder(Items.DIORITE).weight(70))
+                        .with(ItemEntry.builder(Items.GRANITE).weight(70))
+                )
+        );
+
+        biConsumer.accept(new Identifier("aequitas", "gameplay/gravel"), LootTable.builder()
+                .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
+                        .with(ItemEntry.builder(Items.GRAVEL).weight(40))
+                        .with(ItemEntry.builder(Items.FLINT).weight(10))
+                )
+        );
 
 
 
@@ -501,7 +539,7 @@ public class LootTableProvider extends FabricBlockLootTableProvider {
                         ))
                 )
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
-                        .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/stone"))) //TODO
+                        .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/stone")))
                         .conditionally(AnyOfLootCondition.builder(
                                 LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.JAGGED_PEAKS)),
                                 LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.FROZEN_PEAKS)),
@@ -510,7 +548,7 @@ public class LootTableProvider extends FabricBlockLootTableProvider {
                         ))
                 )
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
-                        .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/gravel")))  //TODO
+                        .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/gravel")))
                         .conditionally(AnyOfLootCondition.builder(
                                 LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.WINDSWEPT_GRAVELLY_HILLS)),
                                 LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.STONY_SHORE)) //???
@@ -597,12 +635,6 @@ public class LootTableProvider extends FabricBlockLootTableProvider {
                         .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/mangrove")))
                         .conditionally(AnyOfLootCondition.builder(
                                 LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.MANGROVE_SWAMP))
-                        ))
-                )
-                .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
-                        .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/sunflower")))
-                        .conditionally(AnyOfLootCondition.builder(
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.SUNFLOWER_PLAINS))
                         ))
                 )
 
