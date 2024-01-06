@@ -1,0 +1,9 @@
+{
+  "crafting" : 0,
+  "smelting" : 16,
+  "blasting" : 8,
+  "smoking" : 8,
+  "campfire_cooking" : 0,
+  "stonecutting" : 0,
+  "smithing" : 0
+}

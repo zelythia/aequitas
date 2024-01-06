@@ -39,9 +39,18 @@ public class EssenceHandler {
         RecipeMapper.craftingCost.putAll(map);
     }
 
-    public static void setCustomRecipes(Map<Item, List<SimplifiedIngredient>> map) {
-        RecipeMapper.customRecipes.clear();
-        RecipeMapper.customRecipes.putAll(map);
+    public static void setCustomRecipes(Map<Item, List<Recipe<?>>> customRecipes) {
+//        RecipeMapper.customRecipes.clear();
+//        RecipeMapper.customRecipes.putAll(map);
+
+        customRecipes.forEach((item, recipes) -> {
+            if(!RecipeMapper.itemRecipes.containsKey(item)){
+                RecipeMapper.itemRecipes.put(item ,recipes);
+            }
+            else{
+                RecipeMapper.itemRecipes.get(item).addAll(recipes);
+            }
+        });
     }
 
     public static void reloadEssenceValues(Map<Item, Long> newValues) {
@@ -58,8 +67,7 @@ public class EssenceHandler {
     private static class RecipeMapper {
         private static final Map<String, Long> craftingCost = new HashMap<>();
 
-        private static final Map<Item, List<SimplifiedIngredient>> customRecipes = new HashMap<>();
-        private static final Map<Item, List<RecipeEntry<?>>> itemRecipes = new HashMap<>();
+        private static final Map<Item, List<Recipe<?>>> itemRecipes = new HashMap<>();
 
         static final ArrayList<Item> no_value = new ArrayList<>();
 
@@ -70,17 +78,13 @@ public class EssenceHandler {
             for (RecipeEntry<?> recipe : recipeManager.values()) {
                 Item output = recipe.value().getResult(registryManager).getItem();
 
-//                Item output = Registries.ITEM.get(recipe.id());
-//                if(output.equals(Items.AIR)) continue;
-
                 if (!itemRecipes.containsKey(output)) {
                     itemRecipes.put(output, new ArrayList<>());
                 }
-                itemRecipes.get(output).add(recipe);
+                if(!itemRecipes.get(output).contains(recipe.value())) itemRecipes.get(output).add(recipe.value());
             }
 
             itemRecipes.forEach(RecipeMapper::calculateValue);
-            customRecipes.forEach(RecipeMapper::calculateCustomRecipeValue);
 
             Aequitas.LOGGER.info("Finished mapping recipes. Time elapsed: {}ms", System.currentTimeMillis() - startTime);
             if (no_value.size() > 0) Aequitas.LOGGER.error("Could not calculate essence values: " + no_value);
@@ -92,13 +96,18 @@ public class EssenceHandler {
                         noValue.add(registryKeyItemEntry.getValue());
                 }
             });
-            if (noValue.size() > 0) Aequitas.LOGGER.error("Could not calculate essence values: " + noValue);
+            if (noValue.size() > 0) Aequitas.LOGGER.error("Items with no value: " + noValue);
         }
 
 
         private static final ArrayList<Item> current_run = new ArrayList<>();
 
-        private static long calculateValue(Item item, List<RecipeEntry<?>> recipes) {
+        private static long calculateValue(Item item, List<Recipe<?>> recipes) {
+
+            if(item == Items.COBBLESTONE_SLAB){
+                int iii = 0;
+            }
+
 
             //Item has already been mapped
             if (getEssenceValue(item) > 0) {
@@ -117,8 +126,8 @@ public class EssenceHandler {
             }
 
             current_run.add(item);
-            for (RecipeEntry<?> recipe : recipes) {
-                DefaultedList<Ingredient> inputs = recipe.value().getIngredients();
+            for (Recipe<?> recipe : recipes) {
+                DefaultedList<Ingredient> inputs = recipe.getIngredients();
 
                 long recipe_cost = 0;
 
@@ -134,53 +143,61 @@ public class EssenceHandler {
                 }
 
 
-                ItemStack output = recipe.value().getResult(registryManager);
+                ItemStack output = recipe.getResult(registryManager);
                 //Adding crafting costs for specific crafting type like e.g. smelting
-                recipe_cost += craftingCost.getOrDefault(recipe.value().getType().toString(), 0L);
+                recipe_cost += craftingCost.getOrDefault(recipe.getType().toString(), 0L);
                 if (output.getCount() != 0) {
-                    recipe_cost = recipe_cost / output.getCount();
+                    long l = recipe_cost / output.getCount();
+                    recipe_cost = (l<1 && recipe_cost > 0) ? 1 : l;
                 }
 
-                if (lowest_recipe_cost == 0 || recipe_cost < lowest_recipe_cost) lowest_recipe_cost = recipe_cost;
+                if (lowest_recipe_cost == 0 || (recipe_cost > 0 && recipe_cost < lowest_recipe_cost)) lowest_recipe_cost = recipe_cost;
             }
 
-            map.put(item, lowest_recipe_cost);
+            if(lowest_recipe_cost > 0){
+                map.put(item, lowest_recipe_cost);
+                no_value.remove(item);
+            }
+            else if (!no_value.contains(item)) no_value.add(item);
+
             current_run.remove(item);
             return lowest_recipe_cost;
         }
 
-        private static long calculateCustomRecipeValue(Item item, List<SimplifiedIngredient> inputs) {
 
-            //Item == null is only true for custom recipes
-            if (item == null) {
-                return 1;
-            }
-
-            if (getEssenceValue(item) > 0) {
-                return getEssenceValue(item);
-            }
-
-            if (inputs == null) {
-                return 0L;
-            }
-
-            long recipe_cost = 0;
-            for (SimplifiedIngredient ingredient : inputs) {
-                long l = calculateCustomRecipeValue(ingredient.item(), customRecipes.get(ingredient.item()));
-                if (l <= 0) {
-                    recipe_cost = 0;
-                    break;
-                }
-
-                recipe_cost += l * ingredient.count();
-            }
-
-            if (recipe_cost > 0) {
-                map.put(item, recipe_cost);
-                no_value.remove(item);
-            }
-            return recipe_cost;
-        }
+//        @Deprecated
+//        private static long calculateCustomRecipeValue(Item item, List<SimplifiedIngredient> inputs) {
+//
+//            //Item == null can only be true for custom recipes
+//            if (item == null) {
+//                return 1;
+//            }
+//
+//            if (getEssenceValue(item) > 0) {
+//                return getEssenceValue(item);
+//            }
+//
+//            if (inputs == null) {
+//                return 0L;
+//            }
+//
+//            long recipe_cost = 0;
+//            for (SimplifiedIngredient ingredient : inputs) {
+//                long l = calculateCustomRecipeValue(ingredient.item(), customRecipes.get(ingredient.item()));
+//                if (l <= 0) {
+//                    recipe_cost = 0;
+//                    break;
+//                }
+//
+//                recipe_cost += l * ingredient.count();
+//            }
+//
+//            if (recipe_cost > 0) {
+//                map.put(item, recipe_cost);
+//                no_value.remove(item);
+//            }
+//            return recipe_cost;
+//        }
     }
 
 

@@ -1,0 +1,705 @@
+{
+  "minecraft:filled_map": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:map": 1
+    }
+  },
+  "minecraft:milk_bucket": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:bucket": 1,
+      "_": 1
+    }
+  },
+  "minecraft:iron_horse_armor": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:iron_ingot": 7
+    }
+  },
+  "minecraft:golden_horse_armor": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:gold_ingot": 7
+    }
+  },
+  "minecraft:diamond_horse_armor": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:diamond": 7
+    }
+  },
+  "minecraft:bell": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:gold_ingot": 8
+    }
+  },
+  "minecraft:carved_pumpkin": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:pumpkin": 1
+    }
+  },
+  "minecraft:enchanted_golden_apple": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:gold_block": 8,
+      "minecraft:apple": 1
+    }
+  },
+  "minecraft:wet_sponge": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:sponge": 1
+    }
+  },
+  "minecraft:honeycomb": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:honey_bottle": 3
+    }
+  },
+  "minecraft:chipped_anvil": {
+    "count": 25,
+    "ingredients": {
+      "minecraft:anvil": 16
+    }
+  },
+  "minecraft:damaged_anvil": {
+    "count": 7,
+    "ingredients": {
+      "minecraft:anvil": 16
+    }
+  },
+  "minecraft:white_concrete": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:white_concrete_powder": 1
+    }
+  },
+  "minecraft:orange_concrete": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:orange_concrete_powder": 1
+    }
+  },
+  "minecraft:magenta_concrete": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:magenta_concrete_powder": 1
+    }
+  },
+  "minecraft:light_blue_concrete": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:light_blue_concrete_powder": 1
+    }
+  },
+  "minecraft:yellow_concrete": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:yellow_concrete_powder": 1
+    }
+  },
+  "minecraft:lime_concrete": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:lime_concrete_powder": 1
+    }
+  },
+  "minecraft:pink_concrete": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:pink_concrete_powder": 1
+    }
+  },
+  "minecraft:gray_concrete": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:gray_concrete_powder": 1
+    }
+  },
+  "minecraft:light_gray_concrete": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:light_gray_concrete_powder": 1
+    }
+  },
+  "minecraft:cyan_concrete": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:cyan_concrete_powder": 1
+    }
+  },
+  "minecraft:purple_concrete": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:purple_concrete_powder": 1
+    }
+  },
+  "minecraft:blue_concrete": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:blue_concrete_powder": 1
+    }
+  },
+  "minecraft:brown_concrete": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:brown_concrete_powder": 1
+    }
+  },
+  "minecraft:green_concrete": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:green_concrete_powder": 1
+    }
+  },
+  "minecraft:red_concrete": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:red_concrete_powder": 1
+    }
+  },
+  "minecraft:black_concrete": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:black_concrete_powder": 1
+    }
+  },
+  "minecraft:copper_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:copper_ingot": 1
+    }
+  },
+  "minecraft:deepslate_copper_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:copper_ingot": 1
+    }
+  },
+  "minecraft:raw_copper": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:copper_ingot": 1
+    }
+  },
+  "minecraft:coal_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:coal": 1
+    }
+  },
+  "minecraft:deepslate_coal_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:coal": 1
+    }
+  },
+  "minecraft:iron_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:iron_ingot": 1
+    }
+  },
+  "minecraft:raw_iron": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:iron_ingot": 1
+    }
+  },
+  "minecraft:deepslate_iron_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:iron_ingot": 1
+    }
+  },
+  "minecraft:gold_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:gold_ingot": 1
+    }
+  },
+  "minecraft:deepslate_gold_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:gold_ingot": 1
+    }
+  },
+  "minecraft:raw_gold": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:gold_ingot": 1
+    }
+  },
+  "minecraft:emerald_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:emerald": 1
+    }
+  },
+  "minecraft:deepslate_emerald_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:emerald": 1
+    }
+  },
+  "minecraft:diamond_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:diamond": 1
+    }
+  },
+  "minecraft:deepslate_diamond_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:diamond": 1
+    }
+  },
+  "minecraft:redstone_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:redstone": 1
+    }
+  },
+  "minecraft:deepslate_redstone_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:redstone": 1
+    }
+  },
+  "minecraft:lapis_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:lapis_lazuli": 1
+    }
+  },
+  "minecraft:deepslate_lapis_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:lapis_lazuli": 1
+    }
+  },
+  "minecraft:nether_quartz_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:quartz": 1
+    }
+  },
+  "minecraft:nether_gold_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:gold_nugget": 4
+    }
+  },
+  "minecraft:gilded_blackstone": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:blackstone": 1,
+      "minecraft:gold_nugget": 3
+    }
+  },
+  "minecraft:crimson_nylium": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:netherrack": 2
+    }
+  },
+  "minecraft:warped_nylium": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:netherrack": 2
+    }
+  },
+  "minecraft:warped_wart_block": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:nether_wart_block": 1
+    }
+  },
+  "minecraft:suspicious_stew": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:bowl": 1,
+      "minecraft:brown_mushroom": 1,
+      "minecraft:red_mushroom": 1,
+      "_": 1
+    }
+  },
+  "minecraft:white_shulker_box": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:shulker_box": 1
+    }
+  },
+  "minecraft:orange_shulker_box": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:shulker_box": 1
+    }
+  },
+  "minecraft:magenta_shulker_box": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:shulker_box": 1
+    }
+  },
+  "minecraft:light_blue_shulker_box": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:shulker_box": 1
+    }
+  },
+  "minecraft:yellow_shulker_box": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:shulker_box": 1
+    }
+  },
+  "minecraft:lime_shulker_box": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:shulker_box": 1
+    }
+  },
+  "minecraft:pink_shulker_box": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:shulker_box": 1
+    }
+  },
+  "minecraft:gray_shulker_box": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:shulker_box": 1
+    }
+  },
+  "minecraft:light_gray_shulker_box": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:shulker_box": 1
+    }
+  },
+  "minecraft:cyan_shulker_box": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:shulker_box": 1
+    }
+  },
+  "minecraft:purple_shulker_box": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:shulker_box": 1
+    }
+  },
+  "minecraft:blue_shulker_box": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:shulker_box": 1
+    }
+  },
+  "minecraft:brown_shulker_box": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:shulker_box": 1
+    }
+  },
+  "minecraft:green_shulker_box": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:shulker_box": 1
+    }
+  },
+  "minecraft:red_shulker_box": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:shulker_box": 1
+    }
+  },
+  "minecraft:black_shulker_box": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:shulker_box": 1
+    }
+  },
+  "minecraft:water_bucket": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:bucket": 1,
+      "_": 1
+    }
+  },
+  "minecraft:lava_bucket": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:bucket": 1,
+      "minecraft:cobblestone": 8
+    }
+  },
+  "minecraft:pufferfish_bucket": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:bucket": 1,
+      "minecraft:pufferfish": 1
+    }
+  },
+  "minecraft:salmon_bucket": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:bucket": 1,
+      "minecraft:salmon": 1
+    }
+  },
+  "minecraft:cod_bucket": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:bucket": 1,
+      "minecraft:cod": 1
+    }
+  },
+  "minecraft:tropical_fish_bucket": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:bucket": 1,
+      "minecraft:tropical_fish": 1
+    }
+  },
+  "minecraft:enchanted_book": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:book": 1
+    }
+  },
+  "minecraft:dragon_breath": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:glass_bottle": 1,
+      "_": 4096
+    }
+  },
+  "minecraft:stripped_bamboo_block": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:bamboo_block": 1
+    }
+  },
+  "minecraft:exposed_copper": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:copper_block": 1
+    }
+  },
+  "minecraft:oxidized_copper": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:copper_block": 1
+    }
+  },
+  "minecraft:weathered_copper": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:copper_block": 1
+    }
+  },
+  "minecraft:glow_ink_sac": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:ink_sac": 1,
+      "minecraft:glowstone_dust": 1
+    }
+  },
+  "minecraft:netherite_helmet": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:netherite_upgrade_smithing_template": 1,
+      "minecraft:diamond_helmet": 1,
+      "minecraft:netherite_ingot": 1
+    }
+  },
+  "minecraft:netherite_chestplate": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:netherite_upgrade_smithing_template": 1,
+      "minecraft:diamond_chestplate": 1,
+      "minecraft:netherite_ingot": 1
+    }
+  },
+  "minecraft:netherite_leggings": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:netherite_upgrade_smithing_template": 1,
+      "minecraft:diamond_leggings": 1,
+      "minecraft:netherite_ingot": 1
+    }
+  },
+  "minecraft:netherite_boots": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:netherite_upgrade_smithing_template": 1,
+      "minecraft:diamond_boots": 1,
+      "minecraft:netherite_ingot": 1
+    }
+  },
+  "minecraft:netherite_axe": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:netherite_upgrade_smithing_template": 1,
+      "minecraft:diamond_axe": 1,
+      "minecraft:netherite_ingot": 1
+    }
+  },
+  "minecraft:netherite_sword": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:netherite_upgrade_smithing_template": 1,
+      "minecraft:diamond_sword": 1,
+      "minecraft:netherite_ingot": 1
+    }
+  },
+  "minecraft:netherite_hoe": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:netherite_upgrade_smithing_template": 1,
+      "minecraft:diamond_hoe": 1,
+      "minecraft:netherite_ingot": 1
+    }
+  },
+  "minecraft:netherite_shovel": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:netherite_upgrade_smithing_template": 1,
+      "minecraft:diamond_shovel": 1,
+      "minecraft:netherite_ingot": 1
+    }
+  },
+  "minecraft:netherite_pickaxe": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:netherite_upgrade_smithing_template": 1,
+      "minecraft:diamond_pickaxe": 1,
+      "minecraft:netherite_ingot": 1
+    }
+  },
+  "minecraft:powder_snow_bucket": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:bucket": 1,
+      "minecraft:snow_block": 4
+    }
+  },
+  "minecraft:globe_banner_pattern": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:emerald": 8
+    }
+  },
+  "minecraft:dirt_path": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:dirt": 1
+    }
+  },
+  "minecraft:torchflower_seeds": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:torchflower": 1
+    }
+  },
+  "minecraft:sculk_vein": {
+    "count": 4,
+    "ingredients": {
+      "minecraft:sculk": 1
+    }
+  },
+  "minecraft:pearlescent_froglight": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:magma_cream": 4
+    }
+  },
+  "minecraft:verdant_froglight": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:magma_cream": 4
+    }
+  },
+  "minecraft:ochre_froglight": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:magma_cream": 4
+    }
+  },
+  "minecraft:sculk_shrieker": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:sculk_catalyst": 4
+    }
+  },
+  "minecraft:sculk_sensor": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:sculk": 4,
+      "minecraft:redstone": 8
+    }
+  },
+  "minecraft:disc_fragment_5": {
+    "count": 9,
+    "ingredients": {
+      "minecraft:music_disc_5": 1
+    }
+  },
+  "minecraft:brown_mushroom_block": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:brown_mushroom": 4
+    }
+  },
+  "minecraft:red_mushroom_block": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:red_mushroom": 4
+    }
+  },
+  "minecraft:firework_star": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:gunpowder": 1,
+      "_": 4
+    }
+  },
+  "minecraft:suspicious_sand": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:sand": 1
+    }
+  },
+  "minecraft:suspicious_gravel": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:gravel": 1
+    }
+  },
+  "minecraft:rooted_dirt": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:hanging_roots": 1,
+      "minecraft:dirt": 1
+    }
+  },
+  "minecraft:pitcher_pod": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:pitcher_plant": 1
+    }
+  },
+  "minecraft:bee_nest": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:beehive": 1,
+      "_": 256
+    }
+  }
+}
