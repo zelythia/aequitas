@@ -1,0 +1,46 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:stone",
+          "weight": 171
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:dirt",
+          "weight": 40
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:gravel",
+          "weight": 40
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:flint",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:andesite",
+          "weight": 70
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:diorite",
+          "weight": 70
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:granite",
+          "weight": 70
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

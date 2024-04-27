@@ -34,7 +34,7 @@ public enum ArmorMaterials implements ArmorMaterial {
         map.put(ArmorItem.Type.HELMET, 6);
     }), 35, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 6.0F, 0.4F, () -> Ingredient.ofItems(Aequitas.PRIMAL_ESSENCE));
 
-    public static final StringIdentifiable.EnumCodec<net.minecraft.item.ArmorMaterials> CODEC = StringIdentifiable.createCodec(net.minecraft.item.ArmorMaterials::values);
+    public static final  StringIdentifiable.Codec<net.minecraft.item.ArmorMaterials>  CODEC = StringIdentifiable.createCodec(net.minecraft.item.ArmorMaterials::values);
     private static final EnumMap<ArmorItem.Type, Integer> BASE_DURABILITY = (EnumMap) Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
         map.put(ArmorItem.Type.BOOTS, 13);
         map.put(ArmorItem.Type.LEGGINGS, 15);

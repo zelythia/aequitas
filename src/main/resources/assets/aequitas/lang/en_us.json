@@ -48,5 +48,35 @@
   "block.aequitas.collection_bowl_3" : "Collection Bowl III",
   "block.aequitas.primal_essence_block" : "Primal Essence Block",
   "block.aequitas.primordial_essence_block" : "Primordial Essence Block",
-  "block.aequitas.pristine_essence_block" : "Pristine Essence Block"
+  "block.aequitas.pristine_essence_block" : "Pristine Essence Block",
+
+  "gui.rei.aequitas.category.collection_bowl": "Collection Bowl",
+
+  "emi.category.aequitas.collection_bowl": "Collection Bowl",
+
+  "gui.aequitas.title.aequitas:gameplay/overworld": "Overworld",
+  "gui.aequitas.title.aequitas:gameplay/nether": "Nether",
+  "gui.aequitas.title.aequitas:gameplay/end": "End",
+
+  "gui.aequitas.title.aequitas:gameplay/badlands": "Badlands",
+  "gui.aequitas.title.aequitas:gameplay/cherry": "Cherry Grove",
+  "gui.aequitas.title.aequitas:gameplay/dark_forest": "Dark Forest",
+  "gui.aequitas.title.aequitas:gameplay/deep_dark": "Deep Dark",
+  "gui.aequitas.title.aequitas:gameplay/desert": "Desert",
+  "gui.aequitas.title.aequitas:gameplay/dripstone": "Dripstone Caves",
+  "gui.aequitas.title.aequitas:gameplay/emerald": "Emerald Mountains",
+  "gui.aequitas.title.aequitas:gameplay/forest": "Forest",
+  "gui.aequitas.title.aequitas:gameplay/gravel": "Gravelly",
+  "gui.aequitas.title.aequitas:gameplay/ice": "Icy",
+  "gui.aequitas.title.aequitas:gameplay/jungle": "Jungle",
+  "gui.aequitas.title.aequitas:gameplay/lush_caves": "Lush Caves",
+  "gui.aequitas.title.aequitas:gameplay/mangrove": "Mangrove Swamp",
+  "gui.aequitas.title.aequitas:gameplay/mushroom": "Mushroom Fields",
+  "gui.aequitas.title.aequitas:gameplay/ocean": "Ocean",
+  "gui.aequitas.title.aequitas:gameplay/river": "River",
+  "gui.aequitas.title.aequitas:gameplay/savanna": "Savanna",
+  "gui.aequitas.title.aequitas:gameplay/snow": "Snowy",
+  "gui.aequitas.title.aequitas:gameplay/stone": "Stony",
+  "gui.aequitas.title.aequitas:gameplay/swamp": "Swamp",
+  "gui.aequitas.title.aequitas:gameplay/taiga": "Taiga"
 }

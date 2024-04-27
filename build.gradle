@@ -11,7 +11,7 @@ base {
 }
 
 repositories {
-	maven { url "https://maven.terraformersmc.com/" } //ModMenu
+	maven { url "https://maven.terraformersmc.com/" }
 	maven {
 		url "https://maven2.bai.lol"
 		content {
@@ -19,12 +19,11 @@ repositories {
 			includeGroup "mcp.mobius.waila"
 		}
 	}
-	//REI
+
 	maven { url "https://maven.shedaniel.me/" }
-	maven { url "https://maven.architectury.dev/" }
 
 	maven {
-		url = "https://maven.theillusivec4.top"
+		url "https://cursemaven.com"
 	}
 }
 
@@ -66,12 +65,19 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation("com.terraformersmc:modmenu:${rootProject.modmenu_version}") {
+	modImplementation("com.terraformersmc:modmenu:${modmenu_version}") {
 		transitive = false
 	}
 
 	modCompileOnly "mcp.mobius.waila:wthit-api:fabric-${wthitVersion}"
 	modRuntimeOnly "mcp.mobius.waila:wthit:fabric-${wthitVersion}"
+
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:$rei_version"
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:$rei_version"
+	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
+
+	modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
+//	modLocalRuntime "dev.emi:emi-fabric:${emi_version}"
 }
 
 processResources {

@@ -6,7 +6,6 @@ import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.condition.AnyOfLootCondition;
-import net.minecraft.loot.condition.InvertedLootCondition;
 import net.minecraft.loot.condition.LocationCheckLootCondition;
 import net.minecraft.loot.entry.EmptyEntry;
 import net.minecraft.loot.entry.ItemEntry;
@@ -48,6 +47,47 @@ public class LootTableProvider extends FabricBlockLootTableProvider {
 
     @Override
     public void accept(BiConsumer<Identifier, LootTable.Builder> biConsumer) {
+
+        //Will always generate an item
+        biConsumer.accept(new Identifier("aequitas", "gameplay/overworld"), LootTable.builder()
+                        .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
+                                        .with(ItemEntry.builder(Items.STONE).weight(171))
+                                        .with(ItemEntry.builder(Items.DIRT).weight(40)) //Only the dirt that is found underground
+                                        .with(ItemEntry.builder(Items.GRAVEL).weight(40))
+                                        .with(ItemEntry.builder(Items.FLINT).weight(10))
+                                        .with(ItemEntry.builder(Items.ANDESITE).weight(70))
+                                        .with(ItemEntry.builder(Items.DIORITE).weight(70))
+                                        .with(ItemEntry.builder(Items.GRANITE).weight(70))
+
+
+                                        .with(ItemEntry.builder(Items.COAL_ORE).weight(120).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
+                                        .with(ItemEntry.builder(Items.DEEPSLATE_COAL_ORE).weight(1).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
+
+                                        .with(ItemEntry.builder(Items.COPPER_ORE).weight(120))
+                                        .with(ItemEntry.builder(Items.DEEPSLATE_COPPER_ORE).weight(9))
+
+                                        .with(ItemEntry.builder(Items.IRON_ORE).weight(86))
+                                        .with(ItemEntry.builder(Items.DEEPSLATE_IRON_ORE).weight(37))
+
+                                        .with(ItemEntry.builder(Items.GOLD_ORE).weight(7))
+                                        .with(ItemEntry.builder(Items.DEEPSLATE_GOLD_ORE).weight(30))
+
+                                        .with(ItemEntry.builder(Items.DIAMOND_ORE).weight(1))
+                                        .with(ItemEntry.builder(Items.DEEPSLATE_DIAMOND_ORE).weight(19))
+
+                                        .with(ItemEntry.builder(Items.REDSTONE_ORE).weight(6).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,5))))
+                                        .with(ItemEntry.builder(Items.DEEPSLATE_REDSTONE_ORE).weight(54).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,5))))
+
+                                        .with(ItemEntry.builder(Items.LAPIS_ORE).weight(20).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,5))))
+                                        .with(ItemEntry.builder(Items.DEEPSLATE_LAPIS_ORE).weight(19).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,5))))
+
+                                        .with(ItemEntry.builder(Items.AMETHYST_CLUSTER).weight(11).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(4,12))))
+
+
+//                        .conditionally(InvertedLootCondition.builder(LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.DEEP_DARK))))
+                        )
+        );
+
 
         //Dimension loot tables
         biConsumer.accept(new Identifier("aequitas", "gameplay/nether"), LootTable.builder()
@@ -92,49 +132,6 @@ public class LootTableProvider extends FabricBlockLootTableProvider {
                         .with(ItemEntry.builder(Items.SHULKER_SHELL).weight(3))
                 )
         );
-
-        //Will always generate an item
-        biConsumer.accept(new Identifier("aequitas", "gameplay/overworld"), LootTable.builder()
-                .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
-                        .with(ItemEntry.builder(Items.STONE).weight(171))
-                        .with(ItemEntry.builder(Items.DIRT).weight(40)) //Only the dirt that is found underground
-                        .with(ItemEntry.builder(Items.GRAVEL).weight(40))
-                        .with(ItemEntry.builder(Items.FLINT).weight(10))
-                        .with(ItemEntry.builder(Items.ANDESITE).weight(70))
-                        .with(ItemEntry.builder(Items.DIORITE).weight(70))
-                        .with(ItemEntry.builder(Items.GRANITE).weight(70))
-
-
-                        .with(ItemEntry.builder(Items.COAL_ORE).weight(120).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
-                        .with(ItemEntry.builder(Items.DEEPSLATE_COAL_ORE).weight(1).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
-
-                        .with(ItemEntry.builder(Items.COPPER_ORE).weight(120))
-                        .with(ItemEntry.builder(Items.DEEPSLATE_COPPER_ORE).weight(9))
-
-                        .with(ItemEntry.builder(Items.IRON_ORE).weight(86))
-                        .with(ItemEntry.builder(Items.DEEPSLATE_IRON_ORE).weight(37))
-
-                        .with(ItemEntry.builder(Items.GOLD_ORE).weight(7))
-                        .with(ItemEntry.builder(Items.DEEPSLATE_GOLD_ORE).weight(30))
-
-                        .with(ItemEntry.builder(Items.DIAMOND_ORE).weight(1))
-                        .with(ItemEntry.builder(Items.DEEPSLATE_DIAMOND_ORE).weight(19))
-
-                        .with(ItemEntry.builder(Items.REDSTONE_ORE).weight(6).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,5))))
-                        .with(ItemEntry.builder(Items.DEEPSLATE_REDSTONE_ORE).weight(54).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,5))))
-
-                        .with(ItemEntry.builder(Items.LAPIS_ORE).weight(20).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,5))))
-                        .with(ItemEntry.builder(Items.DEEPSLATE_LAPIS_ORE).weight(19).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,5))))
-
-                        .with(ItemEntry.builder(Items.AMETHYST_CLUSTER).weight(11).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(4,12))))
-
-
-//                        .conditionally(InvertedLootCondition.builder(LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.DEEP_DARK))))
-                )
-        );
-
-
-
 
         //Biome loot tables
         biConsumer.accept(new Identifier("aequitas", "gameplay/ocean"), LootTable.builder()
@@ -266,7 +263,7 @@ public class LootTableProvider extends FabricBlockLootTableProvider {
                         .with(ItemEntry.builder(Items.LILAC).weight(3))
                         .with(ItemEntry.builder(Items.PEONY).weight(3))
                         .with(ItemEntry.builder(Items.LILY_OF_THE_VALLEY).weight(3))
-                        .with(ItemEntry.builder(Items.SUNFLOWER).weight(5).conditionally(LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.SUNFLOWER_PLAINS))).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
+                        .with(ItemEntry.builder(Items.SUNFLOWER).weight(5).conditionally(LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.SUNFLOWER_PLAINS))).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
 
                         .with(ItemEntry.builder(Items.GRASS_BLOCK).weight(40))
                         .with(ItemEntry.builder(Items.DIRT).weight(40))
@@ -410,7 +407,7 @@ public class LootTableProvider extends FabricBlockLootTableProvider {
                         .with(ItemEntry.builder(Items.HANGING_ROOTS).weight(3))
                         .with(ItemEntry.builder(Items.MOSS_BLOCK).weight(10).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
                         .with(ItemEntry.builder(Items.MOSS_CARPET).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,6))))
-                        .with(ItemEntry.builder(Items.SHORT_GRASS).weight(1))
+                        .with(ItemEntry.builder(Items.GRASS).weight(1))
                         .with(ItemEntry.builder(Items.TALL_GRASS).weight(1))
                         .with(ItemEntry.builder(Items.VINE).weight(3))
                         .with(ItemEntry.builder(Items.CLAY).weight(10).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
@@ -462,179 +459,179 @@ public class LootTableProvider extends FabricBlockLootTableProvider {
 
                 //Dimensions
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
+                        .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/overworld")))
+                        .conditionally(LocationCheckLootCondition.builder(LocationPredicate.Builder.create().dimension(RegistryKeys.toWorldKey(DimensionOptions.OVERWORLD))))
+                )
+                .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
                         .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/nether")))
-                        .conditionally(LocationCheckLootCondition.builder(LocationPredicate.Builder.createDimension(RegistryKeys.toWorldKey(DimensionOptions.NETHER))))
+                        .conditionally(LocationCheckLootCondition.builder(LocationPredicate.Builder.create().dimension(RegistryKeys.toWorldKey(DimensionOptions.NETHER))))
                 )
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
                         .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/end")))
-                        .conditionally(LocationCheckLootCondition.builder(LocationPredicate.Builder.createDimension(RegistryKeys.toWorldKey(DimensionOptions.END))))
-                )
-                .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
-                        .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/overworld")))
-                        .conditionally(LocationCheckLootCondition.builder(LocationPredicate.Builder.createDimension(RegistryKeys.toWorldKey(DimensionOptions.OVERWORLD))))
+                        .conditionally(LocationCheckLootCondition.builder(LocationPredicate.Builder.create().dimension(RegistryKeys.toWorldKey(DimensionOptions.END))))
                 )
 
                 //Biome Types
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
                         .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/ocean")))
                         .conditionally(AnyOfLootCondition.builder(
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.OCEAN)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.DEEP_OCEAN)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.COLD_OCEAN)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.DEEP_COLD_OCEAN)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.LUKEWARM_OCEAN)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.DEEP_LUKEWARM_OCEAN)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.WARM_OCEAN)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.FROZEN_OCEAN)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.DEEP_FROZEN_OCEAN))
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.OCEAN)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.DEEP_OCEAN)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.COLD_OCEAN)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.DEEP_COLD_OCEAN)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.LUKEWARM_OCEAN)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.DEEP_LUKEWARM_OCEAN)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.WARM_OCEAN)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.FROZEN_OCEAN)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.DEEP_FROZEN_OCEAN))
                         ))
                 )
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
                         .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/desert")))
                         .conditionally(AnyOfLootCondition.builder(
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.DESERT))
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.DESERT))
                         ))
                 )
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
                         .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/swamp")))
                         .conditionally(AnyOfLootCondition.builder(
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.SWAMP))
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.SWAMP))
                         ))
                 )
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
                         .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/mushroom")))
                         .conditionally(AnyOfLootCondition.builder(
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.MUSHROOM_FIELDS))
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.MUSHROOM_FIELDS))
                         ))
                 )
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
                         .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/jungle")))
                         .conditionally(AnyOfLootCondition.builder(
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.JUNGLE)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.BAMBOO_JUNGLE)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.SPARSE_JUNGLE))
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.JUNGLE)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.BAMBOO_JUNGLE)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.SPARSE_JUNGLE))
                         ))
                 )
 
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
                         .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/forest")))
                         .conditionally(AnyOfLootCondition.builder(
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.FOREST)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.FLOWER_FOREST)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.BIRCH_FOREST)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.OLD_GROWTH_BIRCH_FOREST)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.PLAINS)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.SUNFLOWER_PLAINS)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.WINDSWEPT_FOREST)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.WINDSWEPT_HILLS)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.WINDSWEPT_GRAVELLY_HILLS)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.MEADOW))
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.FOREST)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.FLOWER_FOREST)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.BIRCH_FOREST)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.OLD_GROWTH_BIRCH_FOREST)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.PLAINS)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.SUNFLOWER_PLAINS)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.WINDSWEPT_FOREST)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.WINDSWEPT_HILLS)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.WINDSWEPT_GRAVELLY_HILLS)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.MEADOW))
                         ))
                 )
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
                         .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/emerald")))
                         .conditionally(AnyOfLootCondition.builder(
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.JAGGED_PEAKS)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.WINDSWEPT_HILLS))
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.JAGGED_PEAKS)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.WINDSWEPT_HILLS))
                         ))
                 )
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
                         .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/stone")))
                         .conditionally(AnyOfLootCondition.builder(
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.JAGGED_PEAKS)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.FROZEN_PEAKS)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.STONY_PEAKS)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.STONY_SHORE))
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.JAGGED_PEAKS)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.FROZEN_PEAKS)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.STONY_PEAKS)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.STONY_SHORE))
                         ))
                 )
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
                         .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/gravel")))
                         .conditionally(AnyOfLootCondition.builder(
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.WINDSWEPT_GRAVELLY_HILLS)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.STONY_SHORE)) //???
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.WINDSWEPT_GRAVELLY_HILLS)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.STONY_SHORE)) //???
                         ))
                 )
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
                         .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/taiga")))
                         .conditionally(AnyOfLootCondition.builder(
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.TAIGA)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.OLD_GROWTH_PINE_TAIGA)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.SNOWY_TAIGA)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.GROVE))
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.TAIGA)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.OLD_GROWTH_PINE_TAIGA)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.SNOWY_TAIGA)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.GROVE))
 
                         ))
                 )
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
                         .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/river")))
                         .conditionally(AnyOfLootCondition.builder(
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.RIVER)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.FROZEN_RIVER)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.BEACH)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.SNOWY_BEACH))
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.RIVER)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.FROZEN_RIVER)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.BEACH)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.SNOWY_BEACH))
 
                         ))
                 )
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
-                        .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/frozen")))
+                        .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/ice")))
                         .conditionally(AnyOfLootCondition.builder(
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.FROZEN_PEAKS)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.FROZEN_OCEAN)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.DEEP_FROZEN_OCEAN)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.FROZEN_RIVER)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.ICE_SPIKES))
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.FROZEN_PEAKS)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.FROZEN_OCEAN)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.DEEP_FROZEN_OCEAN)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.FROZEN_RIVER)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.ICE_SPIKES))
                         ))
                 )
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
                         .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/snow")))
                         .conditionally(AnyOfLootCondition.builder(
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.FROZEN_PEAKS)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.JAGGED_PEAKS)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.STONY_PEAKS)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.GROVE)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.SNOWY_SLOPES)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.SNOWY_TAIGA)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.SNOWY_BEACH)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.SNOWY_PLAINS)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.ICE_SPIKES)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.FROZEN_OCEAN)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.DEEP_FROZEN_OCEAN)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.FROZEN_RIVER))
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.FROZEN_PEAKS)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.JAGGED_PEAKS)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.STONY_PEAKS)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.GROVE)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.SNOWY_SLOPES)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.SNOWY_TAIGA)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.SNOWY_BEACH)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.SNOWY_PLAINS)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.ICE_SPIKES)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.FROZEN_OCEAN)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.DEEP_FROZEN_OCEAN)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.FROZEN_RIVER))
                         ))
                 )
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
                         .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/dark_forest")))
                         .conditionally(AnyOfLootCondition.builder(
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.DARK_FOREST))
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.DARK_FOREST))
                         ))
                 )
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
                         .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/savanna")))
                         .conditionally(AnyOfLootCondition.builder(
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.SAVANNA)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.SAVANNA_PLATEAU)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.WINDSWEPT_SAVANNA)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.WOODED_BADLANDS))
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.SAVANNA)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.SAVANNA_PLATEAU)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.WINDSWEPT_SAVANNA)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.WOODED_BADLANDS))
                         ))
                 )
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
                         .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/badlands")))
                         .conditionally(AnyOfLootCondition.builder(
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.BADLANDS)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.ERODED_BADLANDS)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.WOODED_BADLANDS))
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.BADLANDS)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.ERODED_BADLANDS)),
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.WOODED_BADLANDS))
                         ))
                 )
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
                         .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/cherry")))
                         .conditionally(AnyOfLootCondition.builder(
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.CHERRY_GROVE))
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.CHERRY_GROVE))
                         ))
                 )
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
                         .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/mangrove")))
                         .conditionally(AnyOfLootCondition.builder(
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.MANGROVE_SWAMP))
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.MANGROVE_SWAMP))
                         ))
                 )
 
@@ -642,19 +639,19 @@ public class LootTableProvider extends FabricBlockLootTableProvider {
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
                         .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/deep_dark")))
                         .conditionally(AnyOfLootCondition.builder(
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.DEEP_DARK))
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.DEEP_DARK))
                         ))
                 )
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
                         .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/dripstone")))
                         .conditionally(AnyOfLootCondition.builder(
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.DRIPSTONE_CAVES))
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.DRIPSTONE_CAVES))
                         ))
                 )
                 .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1f))
                         .with(LootTableEntry.builder(new Identifier("aequitas", "gameplay/lush_caves")))
                         .conditionally(AnyOfLootCondition.builder(
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.createBiome(BiomeKeys.LUSH_CAVES))
+                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(BiomeKeys.LUSH_CAVES))
                         ))
                 )
         );

@@ -28,11 +28,11 @@ import org.jetbrains.annotations.Nullable;
 public class CollectionBowlBlock extends BlockWithEntity {
     private final int size;
 
-    public static final MapCodec<CollectionBowlBlock> CODEC = createCodec(CollectionBowlBlock::new);
-
-    public MapCodec<CollectionBowlBlock> getCodec() {
-        return CODEC;
-    }
+//    public static final MapCodec<CollectionBowlBlock> CODEC = createCodec(CollectionBowlBlock::new);
+//
+//    public MapCodec<CollectionBowlBlock> getCodec() {
+//        return CODEC;
+//    }
 
     /**
      * Only used for the codec
@@ -110,6 +110,6 @@ public class CollectionBowlBlock extends BlockWithEntity {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return validateTicker(type, size == 15 ? Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_III : size == 9 ? Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_II : Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_I, CollectionBowlBlockEntity::tick);
+        return checkType(type, size == 15 ? Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_III : size == 9 ? Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_II : Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_I, CollectionBowlBlockEntity::tick);
     }
 }

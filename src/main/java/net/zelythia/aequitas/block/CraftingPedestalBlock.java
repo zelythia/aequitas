@@ -24,11 +24,11 @@ import org.jetbrains.annotations.Nullable;
 
 public class CraftingPedestalBlock extends BlockWithEntity {
 
-    public static final MapCodec<CraftingPedestalBlock> CODEC = createCodec(CraftingPedestalBlock::new);
-
-    public MapCodec<CraftingPedestalBlock> getCodec() {
-        return CODEC;
-    }
+//    public static final MapCodec<CraftingPedestalBlock> CODEC = createCodec(CraftingPedestalBlock::new);
+//
+//    public MapCodec<CraftingPedestalBlock> getCodec() {
+//        return CODEC;
+//    }
 
     public CraftingPedestalBlock(Settings settings) {
         super(settings);

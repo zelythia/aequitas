@@ -50,7 +50,7 @@ public class ConfigScreen extends GameOptionsScreen {
         AequitasConfig.config.loadConfig();
 
 
-        this.list = new OptionListWidget(this.client, this.width, this.height, 32, 25);
+        this.list = new OptionListWidget(this.client, this.width, this.height, 32,this.height - 32, 25);
 
         list.addSingleOptionEntry(SHOW_TOOLTIP);
         list.addSingleOptionEntry(PLAY_AMBIENT_SOUND);

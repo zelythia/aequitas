@@ -5,8 +5,9 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "LivingEntityMixin",
+    "PiglinBrainMixin",
     "PlayerEntityMixin",
-    "PiglinBrainMixin"
+    "client.SmithingTransformRecipeAccessor"
   ],
   "client": [
     "client.ClientPlayerEntityMixin",

@@ -1,0 +1,110 @@
+{
+  "minecraft:copper_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:copper_ingot": 1
+    }
+  },
+  "minecraft:deepslate_copper_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:copper_ingot": 1
+    }
+  },
+  "minecraft:coal_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:coal": 1
+    }
+  },
+  "minecraft:deepslate_coal_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:coal": 1
+    }
+  },
+  "minecraft:iron_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:iron_ingot": 1
+    }
+  },
+  "minecraft:deepslate_iron_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:iron_ingot": 1
+    }
+  },
+  "minecraft:gold_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:gold_ingot": 1
+    }
+  },
+  "minecraft:deepslate_gold_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:gold_ingot": 1
+    }
+  },
+  "minecraft:emerald_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:emerald": 1
+    }
+  },
+  "minecraft:deepslate_emerald_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:emerald": 1
+    }
+  },
+  "minecraft:diamond_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:diamond": 1
+    }
+  },
+  "minecraft:deepslate_diamond_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:diamond": 1
+    }
+  },
+  "minecraft:redstone_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:redstone": 1
+    }
+  },
+  "minecraft:deepslate_redstone_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:redstone": 1
+    }
+  },
+  "minecraft:lapis_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:lapis_lazuli": 1
+    }
+  },
+  "minecraft:deepslate_lapis_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:lapis_lazuli": 1
+    }
+  },
+  "minecraft:nether_quartz_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:quartz": 1
+    }
+  },
+  "minecraft:nether_gold_ore": {
+    "count": 1,
+    "ingredients": {
+      "minecraft:gold_nugget": 4
+    }
+  }
+}

@@ -1,5 +1,7 @@
 package net.zelythia.aequitas.client;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -10,21 +12,31 @@ import net.minecraft.client.texture.NativeImage;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.EssenceHandler;
 import net.zelythia.aequitas.Util;
 import net.zelythia.aequitas.block.entity.CollectionBowlBlockEntity;
 import net.zelythia.aequitas.client.particle.CraftingParticle;
 import net.zelythia.aequitas.client.particle.Particles;
+import net.zelythia.aequitas.compat.LootTableParser;
 import net.zelythia.aequitas.mixin.client.SpriteContentsMixin;
 import net.zelythia.aequitas.networking.EssencePacket;
 
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static net.zelythia.aequitas.networking.NetworkingHandler.C2S_UPDATE_FILTER;
 
 @Environment(EnvType.CLIENT)
 public class NetworkingHandler {
+    public static final Map<Identifier, JsonObject> LOOTTABLES = new ConcurrentHashMap<>();
+    public static boolean loottablesUpdated = false;
+
+
+
 
     public static void onInitializeClient() {
         ClientPlayNetworking.registerGlobalReceiver(net.zelythia.aequitas.networking.NetworkingHandler.ESSENCE_UPDATE, (client, handler, buf, responseSender) -> {
@@ -103,6 +115,25 @@ public class NetworkingHandler {
                 }
             });
         });
+
+
+        ClientPlayNetworking.registerGlobalReceiver(net.zelythia.aequitas.networking.NetworkingHandler.SEND_LOOT_INFO, (client, handler, buf, responseSender) -> {
+            LOOTTABLES.clear();
+
+            int size = buf.readInt();
+            for (int i = 0; i < size; i++) {
+                Identifier identifier = buf.readIdentifier();
+                JsonElement json = LootTableParser.readJson(buf);
+                LOOTTABLES.put(identifier, json.getAsJsonObject());
+            }
+
+            client.execute(() -> {
+                Aequitas.LOGGER.error("Updated loottables");
+                loottablesUpdated = true;
+            });
+
+
+        });
     }
 
     public static void updatePortablePedestalSearchProperties(int syncId, String filter, int page) {
@@ -111,5 +142,22 @@ public class NetworkingHandler {
         buf.writeString(filter);
         buf.writeInt(page);
         ClientPlayNetworking.send(C2S_UPDATE_FILTER, buf);
+    }
+
+
+    public static boolean updateLootTables(){
+        loottablesUpdated = false;
+        ClientPlayNetworking.send(net.zelythia.aequitas.networking.NetworkingHandler.ASK_SYNC_INFO, PacketByteBufs.empty());
+        long start = System.currentTimeMillis();
+
+        while(!loottablesUpdated){
+            long current = System.currentTimeMillis();
+            if(current - start > 10000){
+                Aequitas.LOGGER.error("Failed to sync loot tables (took more than 10s to sync). EMI or REI won't work");
+                return false;
+            }
+        }
+
+        return true;
     }
 }

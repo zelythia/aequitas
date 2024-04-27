@@ -3,7 +3,6 @@ package net.zelythia.aequitas.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.ButtonTextures;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
@@ -45,14 +44,14 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
 
         searchBox = new TextFieldWidget(this.textRenderer, textureZeroX + 61, textureZeroY + 16, 107, 11, Text.translatable("ui.aequitas.portable.search"));
 
-        TexturedButtonWidget pageUp = new TexturedButtonWidget(textureZeroX + 154, textureZeroY + 33, 13, 13, new ButtonTextures(TEXTURE, TEXTURE), button -> {
+        TexturedButtonWidget pageUp = new TexturedButtonWidget(textureZeroX + 154, textureZeroY + 33, 13, 13, 177, 0, 13, TEXTURE, button -> {
             if (page > 0) {
                 page--;
                 updateSearchProperties();
             }
         });
 
-        TexturedButtonWidget pageDown = new TexturedButtonWidget(textureZeroX + 154, textureZeroY + 52, 13, 13, new ButtonTextures(TEXTURE, TEXTURE), button -> {
+        TexturedButtonWidget pageDown = new TexturedButtonWidget(textureZeroX + 154, textureZeroY + 52, 13, 13, 190, 0, 13, TEXTURE, button -> {
             if (!handler.inventory.getStack(10).isEmpty()) {
                 page++;
                 updateSearchProperties();
@@ -76,7 +75,7 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
 
     @Override
     public void render(DrawContext matrices, int mouseX, int mouseY, float delta) {
-        renderBackground(matrices, mouseX, mouseY, delta);
+        renderBackground(matrices);
         super.render(matrices, mouseX, mouseY, delta);
 
         String essence = NumberFormat.getNumberInstance().format(handler.inventory.storedEssence);
@@ -110,10 +109,10 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
 
 
     @Override
-    public boolean  mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
+    public boolean  mouseScrolled(double mouseX, double mouseY, double amount) {
         if (mouseX >= textureZeroX + 53 && mouseX <= textureZeroX + 143) {
             if (mouseY >= textureZeroY + 32 && mouseY <= textureZeroY + 68) {
-                if (verticalAmount < 0) {
+                if (amount < 0) {
                     if (!handler.inventory.getStack(10).isEmpty() && page < handler.inventory.maxPage) {
                         Aequitas.LOGGER.info(page + "/" + handler.inventory.maxPage);
                         page++;
@@ -128,7 +127,7 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
                 return true;
             }
         }
-        return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
+        return super.mouseScrolled(mouseX, mouseY, amount);
     }
 
 

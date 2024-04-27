@@ -25,12 +25,6 @@ public class CatalystBlock extends FacingBlock {
 
     private final int tier;
 
-    public static final MapCodec<CatalystBlock> CODEC = createCodec(CatalystBlock::new);
-
-    public MapCodec<CatalystBlock> getCodec() {
-        return CODEC;
-    }
-
     public CatalystBlock(Settings settings) {
         this(settings, 1);
     }

@@ -25,11 +25,11 @@ import org.jetbrains.annotations.Nullable;
 
 public class SamplingPedestalBlock extends BlockWithEntity {
 
-    public static final MapCodec<SamplingPedestalBlock> CODEC = createCodec(SamplingPedestalBlock::new);
-
-    public MapCodec<SamplingPedestalBlock> getCodec() {
-        return CODEC;
-    }
+//    public static final MapCodec<SamplingPedestalBlock> CODEC = createCodec(SamplingPedestalBlock::new);
+//
+//    public MapCodec<SamplingPedestalBlock> getCodec() {
+//        return CODEC;
+//    }
 
     public SamplingPedestalBlock(Settings settings) {
         super(settings);

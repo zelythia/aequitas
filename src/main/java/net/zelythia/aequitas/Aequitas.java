@@ -283,9 +283,9 @@ public class Aequitas implements ModInitializer {
             if (id.toString().startsWith("minecraft:blocks") || id.toString().startsWith("minecraft:entities")) return;
             if (id.equals(LootTables.DESERT_PYRAMID_CHEST) || id.equals(LootTables.SHIPWRECK_TREASURE_CHEST)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
-                        .with(ItemEntry.builder(Aequitas.PRIMAL_ESSENCE).apply(SetCountLootFunction.builder(new UniformLootNumberProvider(new ConstantLootNumberProvider(1),new ConstantLootNumberProvider(4)))).weight(4))
-                        .with(ItemEntry.builder(Aequitas.PRIMORDIAL_ESSENCE).apply(SetCountLootFunction.builder(new UniformLootNumberProvider(new ConstantLootNumberProvider(1),new ConstantLootNumberProvider(4)))).weight(2))
-                        .with(ItemEntry.builder(Aequitas.PRISTINE_ESSENCE).apply(SetCountLootFunction.builder(new UniformLootNumberProvider(new ConstantLootNumberProvider(1),new ConstantLootNumberProvider(4)))).weight(1))
+                        .with(ItemEntry.builder(Aequitas.PRIMAL_ESSENCE).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))).weight(4))
+                        .with(ItemEntry.builder(Aequitas.PRIMORDIAL_ESSENCE).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))).weight(2))
+                        .with(ItemEntry.builder(Aequitas.PRISTINE_ESSENCE).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))).weight(1))
                         .with(EmptyEntry.builder().weight(7));
 
                 tableBuilder.pool(poolBuilder);
