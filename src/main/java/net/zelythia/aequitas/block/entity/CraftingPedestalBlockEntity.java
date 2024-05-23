@@ -14,6 +14,7 @@ import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -26,6 +27,7 @@ import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.EssenceHandler;
 import net.zelythia.aequitas.ImplementedInventory;
 import net.zelythia.aequitas.PortablePedestalInventory;
+import net.zelythia.aequitas.advancement.PlayerStatistics;
 import net.zelythia.aequitas.networking.NetworkingHandler;
 import net.zelythia.aequitas.screen.CraftingPedestalScreenHandler;
 import org.jetbrains.annotations.Nullable;
@@ -44,6 +46,8 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
     private static final int detectionRadius = 3;
     private static final int maxSamplingPedestals = 800;
 
+    private static ServerPlayerEntity player = null;
+
     public CraftingPedestalBlockEntity(BlockPos pos, BlockState state) {
         super(Aequitas.CRAFTING_PEDESTAL_BLOCK_ENTITY, pos, state);
     }
@@ -59,6 +63,8 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
     @Nullable
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
+        if (player instanceof ServerPlayerEntity player1)
+            CraftingPedestalBlockEntity.player = player1; //This should always be a ServerPlayerEntity
         return new CraftingPedestalScreenHandler(syncId, inv, this);
     }
 
@@ -182,8 +188,16 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
 
                 if (be.getStack(1).isEmpty()) {
                     be.setStack(1, be.getStack(0).copy());
+                    if (player == null)
+                        player = (ServerPlayerEntity) world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 10, false);
+                    if (player != null)
+                        PlayerStatistics.ITEM_DUPLICATED_CRITERION.trigger(player, be.getStack(0).copy());
                 } else if (be.getStack(1).getItem() == be.getStack(0).getItem()) {
                     be.getStack(1).increment(1);
+                    if (player == null)
+                        player = (ServerPlayerEntity) world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 10, false);
+                    if (player != null)
+                        PlayerStatistics.ITEM_DUPLICATED_CRITERION.trigger(player, be.getStack(1).copy());
                 }
 
                 if (be.getStack(1).getItem() == be.getStack(0).getItem()) {

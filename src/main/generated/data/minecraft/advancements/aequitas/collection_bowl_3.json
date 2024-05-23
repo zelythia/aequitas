@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:aequitas/collection_bowl_2",
+  "criteria": {
+    "collection_bowl_II": {
+      "conditions": {
+        "tier": 3
+      },
+      "trigger": "minecraft:collection_bowl_constructed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.aequitas.collection_bowl_III.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aequitas:collection_bowl_3"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.aequitas.collection_bowl_III.title"
+    }
+  },
+  "requirements": [
+    [
+      "collection_bowl_II"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

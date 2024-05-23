@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKeys;
+import net.zelythia.aequitas.datagen.AdvancementsProvider;
 import net.zelythia.aequitas.datagen.LootTableProvider;
 import net.zelythia.aequitas.datagen.WorldGen;
 import net.zelythia.aequitas.world.gen.ConfiguredFeatures;
@@ -16,6 +17,7 @@ public class AequitasDataGenerator implements DataGeneratorEntrypoint {
 
         pack.addProvider(LootTableProvider::new);
         pack.addProvider(WorldGen::new);
+        pack.addProvider(AdvancementsProvider::new);
     }
 
     @Override

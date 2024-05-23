@@ -1,0 +1,39 @@
+{
+  "parent": "minecraft:aequitas/duplicate_item",
+  "criteria": {
+    "duplicated_dragon_egg": {
+      "conditions": {
+        "item": {
+          "items": [
+            "minecraft:dragon_egg"
+          ]
+        }
+      },
+      "trigger": "minecraft:duplicated_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.aequitas.duplicated_dragon_egg.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:dragon_egg"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.aequitas.duplicated_dragon_egg.title"
+    }
+  },
+  "requirements": [
+    [
+      "duplicated_dragon_egg"
+    ]
+  ],
+  "rewards": {
+    "experience": 1000
+  },
+  "sends_telemetry_event": true
+}

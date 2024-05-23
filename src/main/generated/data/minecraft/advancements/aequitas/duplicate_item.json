@@ -1,0 +1,30 @@
+{
+  "parent": "minecraft:aequitas/root",
+  "criteria": {
+    "duplicated_item": {
+      "conditions": {},
+      "trigger": "minecraft:duplicated_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.aequitas.duplicated_item.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aequitas:crafting_pedestal"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.aequitas.duplicated_item.title"
+    }
+  },
+  "requirements": [
+    [
+      "duplicated_item"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

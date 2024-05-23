@@ -1,0 +1,30 @@
+{
+  "criteria": {
+    "root": {
+      "conditions": {},
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "minecraft:textures/gui/advancements/backgrounds/adventure.png",
+    "description": {
+      "translate": "advancements.aequitas.welcome.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aequitas:crafting_pedestal"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.aequitas.welcome.title"
+    }
+  },
+  "requirements": [
+    [
+      "root"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

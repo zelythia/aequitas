@@ -9,7 +9,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.loot.context.LootContextType;
@@ -25,11 +24,13 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.ImplementedInventory;
 import net.zelythia.aequitas.Sounds;
+import net.zelythia.aequitas.advancement.PlayerStatistics;
 import net.zelythia.aequitas.client.config.AequitasConfig;
 import net.zelythia.aequitas.networking.NetworkingHandler;
 import net.zelythia.aequitas.screen.CollectionBowlScreenHandler;
@@ -80,6 +81,13 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
         //Server logic
 
         if (be.getEmptySlot() != -1 && be.checkStructure()) {
+            for (PlayerEntity player : world.getPlayers()) {
+                if (Box.from(pos.toCenterPos()).expand(10).contains(player.getX(), player.getY(), player.getZ())) {
+                    PlayerStatistics.COLLECTION_BOWL_CONSTRUCTED_CRITERION.trigger((ServerPlayerEntity) player, be.tier);
+                }
+            }
+
+
             be.setStructureBlockProperties(true);
             ++be.collectionTime;
 
@@ -92,7 +100,6 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
 
 
                 List<ItemStack> items = be.world.getServer().getLootManager().getLootTable(new Identifier("aequitas", "gameplay/biomes")).generateLoot(lootContext);
-
 
                 if (!items.isEmpty()) {
                     ItemStack item = items.get(world.random.nextInt(items.size()));
