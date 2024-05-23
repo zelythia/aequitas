@@ -1,6 +1,5 @@
 package net.zelythia.aequitas.block;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
@@ -21,7 +20,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.zelythia.aequitas.Aequitas;
+import net.zelythia.aequitas.block.entity.BlockEntityTypes;
 import net.zelythia.aequitas.block.entity.CollectionBowlBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -110,6 +109,6 @@ public class CollectionBowlBlock extends BlockWithEntity {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, size == 15 ? Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_III : size == 9 ? Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_II : Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_I, CollectionBowlBlockEntity::tick);
+        return checkType(type, size == 15 ? BlockEntityTypes.COLLECTION_BOWL_BLOCK_ENTITY_III : size == 9 ? BlockEntityTypes.COLLECTION_BOWL_BLOCK_ENTITY_II : BlockEntityTypes.COLLECTION_BOWL_BLOCK_ENTITY_I, CollectionBowlBlockEntity::tick);
     }
 }

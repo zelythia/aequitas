@@ -1,15 +1,14 @@
 package net.zelythia.aequitas.world.gen;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
-import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.Util;
+import net.zelythia.aequitas.block.AequitasBlocks;
 
 import java.util.Iterator;
 
@@ -43,9 +42,9 @@ public class EssencePillarFeature extends Feature<EssencePillarFeatureConfig> {
 
         //generating core
         int r = random.nextInt(100);
-        BlockState coreBlock = Aequitas.PRIMAL_ESSENCE_BLOCK.getDefaultState();
-        if (r < 33) coreBlock = Aequitas.PRIMORDIAL_ESSENCE_BLOCK.getDefaultState();
-        if (r < 17) coreBlock = Aequitas.PRISTINE_ESSENCE_BLOCK.getDefaultState();
+        BlockState coreBlock = AequitasBlocks.PRIMAL_ESSENCE_BLOCK.getDefaultState();
+        if (r < 33) coreBlock = AequitasBlocks.PRIMORDIAL_ESSENCE_BLOCK.getDefaultState();
+        if (r < 17) coreBlock = AequitasBlocks.PRISTINE_ESSENCE_BLOCK.getDefaultState();
 
         world.setBlockState(blockPos, coreBlock, 4);
         world.setBlockState(blockPos.up(), getCoreSurrounding(fillerBlock, random), 4);
@@ -85,7 +84,7 @@ public class EssencePillarFeature extends Feature<EssencePillarFeatureConfig> {
 
     private BlockState getCoreSurrounding(BlockState fillerBlock, Random random) {
         if (random.nextInt(2) == 0) {
-            return Aequitas.PRIMAL_ESSENCE_BLOCK.getDefaultState();
+            return AequitasBlocks.PRIMAL_ESSENCE_BLOCK.getDefaultState();
         }
 
         return fillerBlock;
@@ -109,9 +108,9 @@ public class EssencePillarFeature extends Feature<EssencePillarFeatureConfig> {
     }
 
     private boolean shouldReplace(BlockState blockState) {
-        if (blockState.getBlock().equals(Aequitas.PRIMAL_ESSENCE_BLOCK)) return false;
-        if (blockState.getBlock().equals(Aequitas.PRIMORDIAL_ESSENCE_BLOCK)) return false;
-        if (blockState.getBlock().equals(Aequitas.PRISTINE_ESSENCE_BLOCK)) return false;
+        if (blockState.getBlock().equals(AequitasBlocks.PRIMAL_ESSENCE_BLOCK)) return false;
+        if (blockState.getBlock().equals(AequitasBlocks.PRIMORDIAL_ESSENCE_BLOCK)) return false;
+        if (blockState.getBlock().equals(AequitasBlocks.PRISTINE_ESSENCE_BLOCK)) return false;
         return true;
     }
 }

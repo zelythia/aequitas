@@ -12,8 +12,8 @@ import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.RotationAxis;
-import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.block.entity.CraftingPedestalBlockEntity;
+import net.zelythia.aequitas.item.AequitasItems;
 
 @Environment(EnvType.CLIENT)
 public class CraftingPedestalBlockEntityRenderer implements BlockEntityRenderer<CraftingPedestalBlockEntity> {
@@ -37,7 +37,7 @@ public class CraftingPedestalBlockEntityRenderer implements BlockEntityRenderer<
 
 
             ItemStack stack = blockEntity.getStack(1);
-            if (blockEntity.getStack(0).getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM) stack = blockEntity.getStack(0);
+            if (blockEntity.getStack(0).getItem() == AequitasItems.PORTABLE_PEDESTAL) stack = blockEntity.getStack(0);
 
             int lightAbove = WorldRenderer.getLightmapCoordinates(blockEntity.getWorld(), blockEntity.getPos().up());
             MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformationMode.GROUND, lightAbove, overlay, matrices, vertexConsumers, null, 0);

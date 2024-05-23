@@ -31,6 +31,7 @@ import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.ImplementedInventory;
 import net.zelythia.aequitas.Sounds;
 import net.zelythia.aequitas.advancement.PlayerStatistics;
+import net.zelythia.aequitas.block.AequitasBlocks;
 import net.zelythia.aequitas.client.config.AequitasConfig;
 import net.zelythia.aequitas.networking.NetworkingHandler;
 import net.zelythia.aequitas.screen.CollectionBowlScreenHandler;
@@ -59,7 +60,7 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
     private Sounds.CollectionBowlSoundInstance s;
 
     public CollectionBowlBlockEntity(BlockPos pos, BlockState state, int inventorySize) {
-        super(inventorySize == 15 ? Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_III : inventorySize == 9 ? Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_II : Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_I, pos, state);
+        super(inventorySize == 15 ? BlockEntityTypes.COLLECTION_BOWL_BLOCK_ENTITY_III : inventorySize == 9 ? BlockEntityTypes.COLLECTION_BOWL_BLOCK_ENTITY_II : BlockEntityTypes.COLLECTION_BOWL_BLOCK_ENTITY_I, pos, state);
         this.tier = inventorySize == 15 ? 3 : inventorySize == 9 ? 2 : 1;
         this.inventory = DefaultedList.ofSize(inventorySize, ItemStack.EMPTY);
         if (world != null && !world.isClient) {
@@ -270,16 +271,16 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
     public boolean checkStructure() {
 
         for (BlockPos pos : conduitBlocks) {
-            if (!world.getBlockState(pos).getBlock().equals(Aequitas.CONDUIT_BLOCK)) return false;
+            if (!world.getBlockState(pos).getBlock().equals(AequitasBlocks.CONDUIT)) return false;
         }
         for (BlockPos pos : catalystBlocks1) {
-            if (!world.getBlockState(pos).getBlock().equals(Aequitas.CATALYST_BLOCK_I)) return false;
+            if (!world.getBlockState(pos).getBlock().equals(AequitasBlocks.CATALYST_I)) return false;
         }
         for (BlockPos pos : catalystBlocks2) {
-            if (!world.getBlockState(pos).getBlock().equals(Aequitas.CATALYST_BLOCK_II)) return false;
+            if (!world.getBlockState(pos).getBlock().equals(AequitasBlocks.CATALYST_II)) return false;
         }
         for (BlockPos pos : catalystBlocks3) {
-            if (!world.getBlockState(pos).getBlock().equals(Aequitas.CATALYST_BLOCK_III)) return false;
+            if (!world.getBlockState(pos).getBlock().equals(AequitasBlocks.CATALYST_III)) return false;
         }
 
         return true;
@@ -290,8 +291,8 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
         structureBlockProperties = value;
 
         for (BlockPos pos : conduitBlocks) {
-            if (world.getBlockState(pos).getOrEmpty(Aequitas.ACTIVE_BLOCK_PROPERTY).isPresent()) {
-                world.setBlockState(pos, world.getBlockState(pos).with(Aequitas.ACTIVE_BLOCK_PROPERTY, value));
+            if (world.getBlockState(pos).getOrEmpty(AequitasBlocks.ACTIVE_BLOCK_PROPERTY).isPresent()) {
+                world.setBlockState(pos, world.getBlockState(pos).with(AequitasBlocks.ACTIVE_BLOCK_PROPERTY, value));
             }
         }
 
@@ -301,8 +302,8 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
         catalystBlocks.addAll(catalystBlocks3);
 
         for (BlockPos pos : catalystBlocks) {
-            if (world.getBlockState(pos).getOrEmpty(Aequitas.ACTIVE_BLOCK_PROPERTY).isPresent()) {
-                world.setBlockState(pos, world.getBlockState(pos).with(Aequitas.ACTIVE_BLOCK_PROPERTY, value));
+            if (world.getBlockState(pos).getOrEmpty(AequitasBlocks.ACTIVE_BLOCK_PROPERTY).isPresent()) {
+                world.setBlockState(pos, world.getBlockState(pos).with(AequitasBlocks.ACTIVE_BLOCK_PROPERTY, value));
             }
         }
     }
@@ -318,7 +319,7 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
     }
 
     private void playSound() {
-        if (AequitasConfig.config.getOrDefault("playAmbientSound", true) && world.getBlockState(pos.down()).getOrEmpty(Aequitas.ACTIVE_BLOCK_PROPERTY).orElse(false)) {
+        if (AequitasConfig.config.getOrDefault("playAmbientSound", true) && world.getBlockState(pos.down()).getOrEmpty(AequitasBlocks.ACTIVE_BLOCK_PROPERTY).orElse(false)) {
             MinecraftClient client = MinecraftClient.getInstance();
 
             if (s == null || !client.getSoundManager().isPlaying(s)) {

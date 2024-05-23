@@ -7,6 +7,7 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.util.Identifier;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.client.config.AequitasConfig;
+import net.zelythia.aequitas.item.AequitasItems;
 import net.zelythia.aequitas.item.EssenceArmorItem;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -31,7 +32,7 @@ public abstract class InGameHudMixin {
     @Inject(method = "render", at = @At("HEAD"))
     private void render(DrawContext context, float tickDelta, CallbackInfo ci) {
         if (!this.client.options.hudHidden && AequitasConfig.config.getOrDefault("displayFlightDuration", true)) {
-            if (this.client.player.getEquippedStack(EquipmentSlot.CHEST).getItem() == Aequitas.PRIMORDIAL_ESSENCE_CHESTPLATE) {
+            if (this.client.player.getEquippedStack(EquipmentSlot.CHEST).getItem() == AequitasItems.PRIMORDIAL_ESSENCE_CHESTPLATE) {
                 EssenceArmorItem item = (EssenceArmorItem) this.client.player.getEquippedStack(EquipmentSlot.CHEST).getItem();
                 if (item.checkSetPrimordial(this.client.player)) {
                     this.client.getTextureManager().bindTexture(FLIGHT_PROGRESS);

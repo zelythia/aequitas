@@ -13,6 +13,7 @@ import net.minecraft.nbt.NbtString;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
+import net.zelythia.aequitas.item.AequitasItems;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class PortablePedestalInventory implements Inventory {
     public int maxPage;
 
     public PortablePedestalInventory(ItemStack item) {
-        if (item.getItem() != Aequitas.PORTABLE_PEDESTAL_ITEM) return;
+        if (item.getItem() != AequitasItems.PORTABLE_PEDESTAL) return;
 
         this.item = item;
 

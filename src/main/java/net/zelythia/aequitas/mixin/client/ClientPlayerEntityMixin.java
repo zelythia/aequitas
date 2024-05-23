@@ -10,9 +10,9 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
-import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.client.DoubleJumpEntity;
 import net.zelythia.aequitas.client.config.AequitasConfig;
+import net.zelythia.aequitas.item.AequitasItems;
 import net.zelythia.aequitas.item.FallFlying;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -36,7 +36,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
         ClientPlayerEntity player = (ClientPlayerEntity) (Object) this;
 
         if (player.isOnGround() || player.isClimbing()) {
-            canJump = player.getEquippedStack(EquipmentSlot.FEET).getItem().equals(Aequitas.PRIMAL_ESSENCE_BOOTS) && player.getEquippedStack(EquipmentSlot.LEGS).getItem().equals(Aequitas.PRIMAL_ESSENCE_LEGGINGS) && player.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(Aequitas.PRIMAL_ESSENCE_CHESTPLATE) && player.getEquippedStack(EquipmentSlot.HEAD).getItem().equals(Aequitas.PRIMAL_ESSENCE_HELMET);
+            canJump = player.getEquippedStack(EquipmentSlot.FEET).getItem().equals(AequitasItems.PRIMAL_ESSENCE_BOOTS) && player.getEquippedStack(EquipmentSlot.LEGS).getItem().equals(AequitasItems.PRIMAL_ESSENCE_LEGGINGS) && player.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(AequitasItems.PRIMAL_ESSENCE_CHESTPLATE) && player.getEquippedStack(EquipmentSlot.HEAD).getItem().equals(AequitasItems.PRIMAL_ESSENCE_HELMET);
         } else if (player.input.jumping && !player.getAbilities().flying && player.getVelocity().y < 0 && !player.hasVehicle() && !player.isTouchingWater() && !player.hasStatusEffect(StatusEffects.LEVITATION)) {
             if (canJump && !jumped) {
                 canJump = false;

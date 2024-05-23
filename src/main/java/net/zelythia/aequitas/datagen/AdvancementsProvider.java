@@ -11,9 +11,9 @@ import net.minecraft.item.Items;
 import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.advancement.CollectionBowlConstructedCriterion;
 import net.zelythia.aequitas.advancement.ItemDuplicatedCriterion;
+import net.zelythia.aequitas.item.AequitasItems;
 
 import java.util.function.Consumer;
 
@@ -27,7 +27,7 @@ public class AdvancementsProvider extends FabricAdvancementProvider {
     public void generateAdvancement(Consumer<Advancement> consumer) {
         Advancement root = Advancement.Builder.create()
                 .display(
-                        Aequitas.CRAFTING_PEDESTAL_BLOCK_ITEM,
+                        AequitasItems.CRAFTING_PEDESTAL,
                         Text.translatable("advancements.aequitas.welcome.title"),
                         Text.translatable("advancements.aequitas.welcome.description"),
                         new Identifier("textures/gui/advancements/backgrounds/adventure.png"),
@@ -42,7 +42,7 @@ public class AdvancementsProvider extends FabricAdvancementProvider {
 
         Advancement duplicateItem = Advancement.Builder.create().parent(root)
                 .display(
-                        Aequitas.CRAFTING_PEDESTAL_BLOCK_ITEM,
+                        AequitasItems.CRAFTING_PEDESTAL,
                         Text.translatable("advancements.aequitas.duplicated_item.title"),
                         Text.translatable("advancements.aequitas.duplicated_item.description"),
                         null,
@@ -73,7 +73,7 @@ public class AdvancementsProvider extends FabricAdvancementProvider {
 
         Advancement portablePedestalAdvancement = Advancement.Builder.create().parent(duplicateItem)
                 .display(
-                        Aequitas.PORTABLE_PEDESTAL_ITEM,
+                        AequitasItems.PORTABLE_PEDESTAL,
                         Text.translatable("advancements.aequitas.get_portable_pedestal.title"),
                         Text.translatable("advancements.aequitas.get_portable_pedestal.description"),
                         null,
@@ -83,13 +83,13 @@ public class AdvancementsProvider extends FabricAdvancementProvider {
                         false
                 )
                 .rewards(AdvancementRewards.Builder.experience(1000))
-                .criterion("get_portable_pedestal", InventoryChangedCriterion.Conditions.items(Aequitas.PORTABLE_PEDESTAL_ITEM))
+                .criterion("get_portable_pedestal", InventoryChangedCriterion.Conditions.items(AequitasItems.PORTABLE_PEDESTAL))
                 .build(consumer, "aequitas" + "/portable_pedestal");
 
 
         Advancement collectionBowlI = Advancement.Builder.create().parent(root)
                 .display(
-                        Aequitas.COLLECTION_BOWL_BLOCK_ITEM_I,
+                        AequitasItems.COLLECTION_BOWL_I,
                         Text.translatable("advancements.aequitas.collection_bowl_I.title"),
                         Text.translatable("advancements.aequitas.collection_bowl_I.description"),
                         null,
@@ -104,7 +104,7 @@ public class AdvancementsProvider extends FabricAdvancementProvider {
 
         Advancement collectionBowlII = Advancement.Builder.create().parent(collectionBowlI)
                 .display(
-                        Aequitas.COLLECTION_BOWL_BLOCK_ITEM_II,
+                        AequitasItems.COLLECTION_BOWL_II,
                         Text.translatable("advancements.aequitas.collection_bowl_II.title"),
                         Text.translatable("advancements.aequitas.collection_bowl_II.description"),
                         null,
@@ -119,7 +119,7 @@ public class AdvancementsProvider extends FabricAdvancementProvider {
 
         Advancement collectionBowlIII = Advancement.Builder.create().parent(collectionBowlII)
                 .display(
-                        Aequitas.COLLECTION_BOWL_BLOCK_ITEM_III,
+                        AequitasItems.COLLECTION_BOWL_III,
                         Text.translatable("advancements.aequitas.collection_bowl_III.title"),
                         Text.translatable("advancements.aequitas.collection_bowl_III.description"),
                         null,

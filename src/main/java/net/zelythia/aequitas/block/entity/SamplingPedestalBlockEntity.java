@@ -14,7 +14,6 @@ import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
-import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.EssenceHandler;
 import net.zelythia.aequitas.ImplementedInventory;
 import org.jetbrains.annotations.Nullable;
@@ -26,7 +25,7 @@ public class SamplingPedestalBlockEntity extends BlockEntity implements Implemen
     private Item displayItem = Items.AIR;
 
     public SamplingPedestalBlockEntity(BlockPos pos, BlockState state) {
-        super(Aequitas.SAMPLING_PEDESTAL_BLOCK_ENTITY, pos, state);
+        super(BlockEntityTypes.SAMPLING_PEDESTAL_BLOCK_ENTITY, pos, state);
     }
 
     public long transferEssence() {

@@ -11,7 +11,6 @@ import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.world.World;
-import net.zelythia.aequitas.Aequitas;
 
 public class EssenceArmorItem extends ArmorItem {
     public EssenceArmorItem(ArmorMaterial material, ArmorItem.Type type, Settings settings) {
@@ -58,14 +57,14 @@ public class EssenceArmorItem extends ArmorItem {
 
 
     public static boolean checkSetPrimal(PlayerEntity player) {
-        return player.getEquippedStack(EquipmentSlot.FEET).getItem().equals(Aequitas.PRIMAL_ESSENCE_BOOTS) && player.getEquippedStack(EquipmentSlot.LEGS).getItem().equals(Aequitas.PRIMAL_ESSENCE_LEGGINGS) && player.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(Aequitas.PRIMAL_ESSENCE_CHESTPLATE) && player.getEquippedStack(EquipmentSlot.HEAD).getItem().equals(Aequitas.PRIMAL_ESSENCE_HELMET);
+        return player.getEquippedStack(EquipmentSlot.FEET).getItem().equals(AequitasItems.PRIMAL_ESSENCE_BOOTS) && player.getEquippedStack(EquipmentSlot.LEGS).getItem().equals(AequitasItems.PRIMAL_ESSENCE_LEGGINGS) && player.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(AequitasItems.PRIMAL_ESSENCE_CHESTPLATE) && player.getEquippedStack(EquipmentSlot.HEAD).getItem().equals(AequitasItems.PRIMAL_ESSENCE_HELMET);
     }
 
     public static boolean checkSetPrimordial(PlayerEntity player) {
-        return player.getEquippedStack(EquipmentSlot.FEET).getItem().equals(Aequitas.PRIMORDIAL_ESSENCE_BOOTS) && player.getEquippedStack(EquipmentSlot.LEGS).getItem().equals(Aequitas.PRIMORDIAL_ESSENCE_LEGGINGS) && player.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(Aequitas.PRIMORDIAL_ESSENCE_CHESTPLATE) && player.getEquippedStack(EquipmentSlot.HEAD).getItem().equals(Aequitas.PRIMORDIAL_ESSENCE_HELMET);
+        return player.getEquippedStack(EquipmentSlot.FEET).getItem().equals(AequitasItems.PRIMORDIAL_ESSENCE_BOOTS) && player.getEquippedStack(EquipmentSlot.LEGS).getItem().equals(AequitasItems.PRIMORDIAL_ESSENCE_LEGGINGS) && player.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(AequitasItems.PRIMORDIAL_ESSENCE_CHESTPLATE) && player.getEquippedStack(EquipmentSlot.HEAD).getItem().equals(AequitasItems.PRIMORDIAL_ESSENCE_HELMET);
     }
 
     public static boolean checkSetPristine(PlayerEntity player) {
-        return player.getEquippedStack(EquipmentSlot.FEET).getItem().equals(Aequitas.PRISTINE_ESSENCE_BOOTS) && player.getEquippedStack(EquipmentSlot.LEGS).getItem().equals(Aequitas.PRISTINE_ESSENCE_LEGGINGS) && player.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(Aequitas.PRISTINE_ESSENCE_CHESTPLATE) && player.getEquippedStack(EquipmentSlot.HEAD).getItem().equals(Aequitas.PRISTINE_ESSENCE_HELMET);
+        return player.getEquippedStack(EquipmentSlot.FEET).getItem().equals(AequitasItems.PRISTINE_ESSENCE_BOOTS) && player.getEquippedStack(EquipmentSlot.LEGS).getItem().equals(AequitasItems.PRISTINE_ESSENCE_LEGGINGS) && player.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(AequitasItems.PRISTINE_ESSENCE_CHESTPLATE) && player.getEquippedStack(EquipmentSlot.HEAD).getItem().equals(AequitasItems.PRISTINE_ESSENCE_HELMET);
     }
 }

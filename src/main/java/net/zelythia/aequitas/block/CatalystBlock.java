@@ -1,9 +1,11 @@
 package net.zelythia.aequitas.block;
 
-import com.mojang.serialization.MapCodec;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.FacingBlock;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
@@ -14,7 +16,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.Util;
 import net.zelythia.aequitas.client.particle.CatalystParticle;
 import net.zelythia.aequitas.client.particle.Particles;
@@ -32,7 +33,7 @@ public class CatalystBlock extends FacingBlock {
     public CatalystBlock(Settings settings, int tier) {
         super(settings);
         this.tier = tier;
-        setDefaultState(getDefaultState().with(Aequitas.ACTIVE_BLOCK_PROPERTY, false).with(FACING, Direction.UP));
+        setDefaultState(getDefaultState().with(AequitasBlocks.ACTIVE_BLOCK_PROPERTY, false).with(FACING, Direction.UP));
     }
 
     public BlockState rotate(BlockState state, BlockRotation rotation) {
@@ -46,7 +47,7 @@ public class CatalystBlock extends FacingBlock {
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
-        builder.add(Aequitas.ACTIVE_BLOCK_PROPERTY);
+        builder.add(AequitasBlocks.ACTIVE_BLOCK_PROPERTY);
         builder.add(FACING);
     }
 
@@ -78,7 +79,7 @@ public class CatalystBlock extends FacingBlock {
     @Environment(EnvType.CLIENT)
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
         for (int i = 0; i < 3; i++) {
-            if (state.get(Aequitas.ACTIVE_BLOCK_PROPERTY)) {
+            if (state.get(AequitasBlocks.ACTIVE_BLOCK_PROPERTY)) {
                 Direction direction = state.get(FACING);
 
                 double end_x = 0.5 + pos.getX();

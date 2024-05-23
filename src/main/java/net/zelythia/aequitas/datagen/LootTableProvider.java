@@ -18,7 +18,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.dimension.DimensionOptions;
-import net.zelythia.aequitas.Aequitas;
+import net.zelythia.aequitas.block.AequitasBlocks;
 
 import java.util.function.BiConsumer;
 
@@ -29,19 +29,19 @@ public class LootTableProvider extends FabricBlockLootTableProvider {
 
     @Override
     public void generate() {
-        addDrop(Aequitas.PRIMAL_ESSENCE_BLOCK);
-        addDrop(Aequitas.PRIMORDIAL_ESSENCE_BLOCK);
-        addDrop(Aequitas.PRISTINE_ESSENCE_BLOCK);
-        addDrop(Aequitas.CONDUIT_BLOCK);
-        addDrop(Aequitas.CATALYST_BLOCK_I);
-        addDrop(Aequitas.CATALYST_BLOCK_II);
-        addDrop(Aequitas.CATALYST_BLOCK_III);
-        addDrop(Aequitas.COLLECTION_BOWL_BLOCK_I);
-        addDrop(Aequitas.COLLECTION_BOWL_BLOCK_II);
-        addDrop(Aequitas.COLLECTION_BOWL_BLOCK_III);
-        addDrop(Aequitas.PEDESTAL_BLOCK);
-        addDrop(Aequitas.CRAFTING_PEDESTAL_BLOCK);
-        addDrop(Aequitas.SAMPLING_PEDESTAL_BLOCK);
+        addDrop(AequitasBlocks.PRIMAL_ESSENCE_BLOCK);
+        addDrop(AequitasBlocks.PRIMORDIAL_ESSENCE_BLOCK);
+        addDrop(AequitasBlocks.PRISTINE_ESSENCE_BLOCK);
+        addDrop(AequitasBlocks.CONDUIT);
+        addDrop(AequitasBlocks.CATALYST_I);
+        addDrop(AequitasBlocks.CATALYST_II);
+        addDrop(AequitasBlocks.CATALYST_III);
+        addDrop(AequitasBlocks.COLLECTION_BOWL_I);
+        addDrop(AequitasBlocks.COLLECTION_BOWL_II);
+        addDrop(AequitasBlocks.COLLECTION_BOWL_III);
+        addDrop(AequitasBlocks.PEDESTAL);
+        addDrop(AequitasBlocks.CRAFTING_PEDESTAL);
+        addDrop(AequitasBlocks.SAMPLING_PEDESTAL);
     }
 
 

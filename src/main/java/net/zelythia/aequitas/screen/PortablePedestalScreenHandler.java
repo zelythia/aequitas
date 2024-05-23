@@ -12,6 +12,7 @@ import net.minecraft.screen.slot.SlotActionType;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.EssenceHandler;
 import net.zelythia.aequitas.PortablePedestalInventory;
+import net.zelythia.aequitas.item.AequitasItems;
 
 public class PortablePedestalScreenHandler extends ScreenHandler {
     public final PortablePedestalInventory inventory;
@@ -51,7 +52,7 @@ public class PortablePedestalScreenHandler extends ScreenHandler {
             @Override
             public boolean canInsert(ItemStack stack) {
 
-                if (stack.getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM && stack.hasNbt() && stack.getNbt().getType("unlocked") == NbtType.LIST) {
+                if (stack.getItem() == AequitasItems.PORTABLE_PEDESTAL && stack.hasNbt() && stack.getNbt().getType("unlocked") == NbtType.LIST) {
                     if (((NbtList) stack.getNbt().get("unlocked")).size() > 0) return false;
                 }
 

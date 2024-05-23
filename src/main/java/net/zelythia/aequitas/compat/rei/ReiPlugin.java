@@ -9,6 +9,7 @@ import net.minecraft.util.Identifier;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.compat.LootTableParser;
 import net.zelythia.aequitas.compat.LootTableParser.ItemEntry;
+import net.zelythia.aequitas.item.AequitasItems;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ public class ReiPlugin implements REIClientPlugin {
     public void registerCategories(CategoryRegistry registry) {
         registry.add(new CollectionBowlCategory());
 
-        registry.addWorkstations(CollectionBowlCategory.IDENTIFIER, EntryStacks.of(Aequitas.COLLECTION_BOWL_BLOCK_ITEM_I), EntryStacks.of(Aequitas.COLLECTION_BOWL_BLOCK_ITEM_II), EntryStacks.of(Aequitas.COLLECTION_BOWL_BLOCK_ITEM_III));
+        registry.addWorkstations(CollectionBowlCategory.IDENTIFIER, EntryStacks.of(AequitasItems.COLLECTION_BOWL_I), EntryStacks.of(AequitasItems.COLLECTION_BOWL_II), EntryStacks.of(AequitasItems.COLLECTION_BOWL_III));
     }
 
     @Override

@@ -23,11 +23,11 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.EssenceHandler;
 import net.zelythia.aequitas.ImplementedInventory;
 import net.zelythia.aequitas.PortablePedestalInventory;
 import net.zelythia.aequitas.advancement.PlayerStatistics;
+import net.zelythia.aequitas.item.AequitasItems;
 import net.zelythia.aequitas.networking.NetworkingHandler;
 import net.zelythia.aequitas.screen.CraftingPedestalScreenHandler;
 import org.jetbrains.annotations.Nullable;
@@ -49,7 +49,7 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
     private static ServerPlayerEntity player = null;
 
     public CraftingPedestalBlockEntity(BlockPos pos, BlockState state) {
-        super(Aequitas.CRAFTING_PEDESTAL_BLOCK_ENTITY, pos, state);
+        super(BlockEntityTypes.CRAFTING_PEDESTAL_BLOCK_ENTITY, pos, state);
     }
 
 //    private int craftingDelay = 0;
@@ -155,7 +155,7 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
 
 
         long required_value = EssenceHandler.getEssenceValue(be.getStack(0));
-        if (be.getStack(0).getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM) required_value = 1;
+        if (be.getStack(0).getItem() == AequitasItems.PORTABLE_PEDESTAL) required_value = 1;
 
         if (required_value > 0) {
 
@@ -166,7 +166,7 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
 
                     long value = samplingPedestal.transferEssence();
                     if (value > 0) {
-                        if (be.getStack(0).getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM) {
+                        if (be.getStack(0).getItem() == AequitasItems.PORTABLE_PEDESTAL) {
                             PortablePedestalInventory portablePedestalInventory = new PortablePedestalInventory(be.getStack(0));
                             portablePedestalInventory.storedEssence += value;
                             portablePedestalInventory.essenceToTag();

@@ -18,6 +18,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.zelythia.aequitas.Aequitas;
+import net.zelythia.aequitas.item.AequitasItems;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,7 @@ public class CollectionBowlCategory implements DisplayCategory<CollectionBowlDis
 
     @Override
     public Renderer getIcon() {
-        return EntryStacks.of(Aequitas.COLLECTION_BOWL_BLOCK_ITEM_I);
+        return EntryStacks.of(AequitasItems.COLLECTION_BOWL_I);
     }
 
 

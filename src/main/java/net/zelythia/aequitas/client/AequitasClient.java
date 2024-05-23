@@ -18,6 +18,7 @@ import net.minecraft.util.Identifier;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.EssenceHandler;
 import net.zelythia.aequitas.Sounds;
+import net.zelythia.aequitas.block.entity.BlockEntityTypes;
 import net.zelythia.aequitas.client.block.entity.CollectionBowlBlockEntityRenderer;
 import net.zelythia.aequitas.client.block.entity.CraftingPedestalBlockEntityRenderer;
 import net.zelythia.aequitas.client.block.entity.SamplingPedestalBlockEntityRenderer;
@@ -28,6 +29,7 @@ import net.zelythia.aequitas.client.particle.Particles;
 import net.zelythia.aequitas.client.screen.CollectionBowlScreen;
 import net.zelythia.aequitas.client.screen.CraftingPedestalScreen;
 import net.zelythia.aequitas.client.screen.PortablePedestalScreen;
+import net.zelythia.aequitas.item.AequitasItems;
 import net.zelythia.aequitas.item.EssenceArmorItem;
 
 import java.text.NumberFormat;
@@ -46,18 +48,18 @@ public class AequitasClient implements ClientModInitializer {
         HandledScreens.register(Aequitas.COLLECTION_BOWL_SCREEN_HANDLER, CollectionBowlScreen::new);
         HandledScreens.register(Aequitas.PORTABLE_PEDESTAL_SCREEN_HANDLER, PortablePedestalScreen::new);
 
-        BlockEntityRendererFactories.register(Aequitas.SAMPLING_PEDESTAL_BLOCK_ENTITY, SamplingPedestalBlockEntityRenderer::new);
-        BlockEntityRendererFactories.register(Aequitas.CRAFTING_PEDESTAL_BLOCK_ENTITY, CraftingPedestalBlockEntityRenderer::new);
-        BlockEntityRendererFactories.register(Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_I, CollectionBowlBlockEntityRenderer::new);
-        BlockEntityRendererFactories.register(Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_II, CollectionBowlBlockEntityRenderer::new);
-        BlockEntityRendererFactories.register(Aequitas.COLLECTION_BOWL_BLOCK_ENTITY_III, CollectionBowlBlockEntityRenderer::new);
+        BlockEntityRendererFactories.register(BlockEntityTypes.SAMPLING_PEDESTAL_BLOCK_ENTITY, SamplingPedestalBlockEntityRenderer::new);
+        BlockEntityRendererFactories.register(BlockEntityTypes.CRAFTING_PEDESTAL_BLOCK_ENTITY, CraftingPedestalBlockEntityRenderer::new);
+        BlockEntityRendererFactories.register(BlockEntityTypes.COLLECTION_BOWL_BLOCK_ENTITY_I, CollectionBowlBlockEntityRenderer::new);
+        BlockEntityRendererFactories.register(BlockEntityTypes.COLLECTION_BOWL_BLOCK_ENTITY_II, CollectionBowlBlockEntityRenderer::new);
+        BlockEntityRendererFactories.register(BlockEntityTypes.COLLECTION_BOWL_BLOCK_ENTITY_III, CollectionBowlBlockEntityRenderer::new);
 
         ParticleFactoryRegistry.getInstance().register(Particles.CRAFTING_PARTICLE, CraftingParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(Particles.CATALYST_PARTICLE, CatalystParticle.Factory::new);
 
         ItemTooltipCallback.EVENT.register((stack, context, lines) -> {
 
-            if (stack.getItem() == Aequitas.PORTABLE_PEDESTAL_ITEM) {
+            if (stack.getItem() == AequitasItems.PORTABLE_PEDESTAL) {
                 if (stack.hasNbt()) {
                     if (stack.getNbt().contains("essence")) {
                         long storedEssence = stack.getNbt().getLong("essence");
@@ -81,7 +83,7 @@ public class AequitasClient implements ClientModInitializer {
             MinecraftClient client = MinecraftClient.getInstance();
 
             if (client != null && !client.options.hudHidden && AequitasConfig.config.getOrDefault("displayFlightDuration", true)) {
-                if (client.player.getEquippedStack(EquipmentSlot.CHEST).getItem() == Aequitas.PRIMORDIAL_ESSENCE_CHESTPLATE) {
+                if (client.player.getEquippedStack(EquipmentSlot.CHEST).getItem() == AequitasItems.PRIMORDIAL_ESSENCE_CHESTPLATE) {
                     EssenceArmorItem item = (EssenceArmorItem) client.player.getEquippedStack(EquipmentSlot.CHEST).getItem();
                     if (item.checkSetPrimordial(client.player)) {
                         client.getTextureManager().bindTexture(FLIGHT_PROGRESS);
