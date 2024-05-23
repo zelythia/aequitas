@@ -23,7 +23,7 @@ public class SamplingPedestalBlockEntity extends BlockEntity implements Implemen
 
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
     private long storedEssence = 0;
-    private Item displayItem;
+    private Item displayItem = Items.AIR;
 
     public SamplingPedestalBlockEntity(BlockPos pos, BlockState state) {
         super(Aequitas.SAMPLING_PEDESTAL_BLOCK_ENTITY, pos, state);
