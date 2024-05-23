@@ -21,7 +21,6 @@ import net.minecraft.loot.LootTables;
 import net.minecraft.loot.entry.EmptyEntry;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.SetCountLootFunction;
-import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.registry.Registries;
@@ -34,6 +33,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.Feature;
+import net.zelythia.aequitas.advancement.PlayerStatistics;
 import net.zelythia.aequitas.block.*;
 import net.zelythia.aequitas.block.entity.CollectionBowlBlockEntity;
 import net.zelythia.aequitas.block.entity.CraftingPedestalBlockEntity;
@@ -258,6 +258,7 @@ public class Aequitas implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        PlayerStatistics.register();
         NetworkingHandler.onInitialize();
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ResourceLoader());
 

@@ -17,6 +17,7 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.EssenceHandler;
+import net.zelythia.aequitas.Sounds;
 import net.zelythia.aequitas.client.block.entity.CollectionBowlBlockEntityRenderer;
 import net.zelythia.aequitas.client.block.entity.CraftingPedestalBlockEntityRenderer;
 import net.zelythia.aequitas.client.block.entity.SamplingPedestalBlockEntityRenderer;
@@ -38,6 +39,7 @@ public class AequitasClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        Sounds.register();
         NetworkingHandler.onInitializeClient();
 
         HandledScreens.register(Aequitas.CRAFTING_PEDESTAL_SCREEN_HANDLER, CraftingPedestalScreen::new);

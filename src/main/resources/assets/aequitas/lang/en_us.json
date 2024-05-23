@@ -11,9 +11,11 @@
   "ui.aequitas.desc.playAmbientSound": "Play ambient sound around Collection Bowl",
   "ui.aequitas.config.displayFlightDuration": "Display Flight Duration",
   "ui.aequitas.desc.displayFlightDuration": "Display the remaining flight duration next to the hotbar when the primordial armor set is equipped",
+  "itemGroup.aequitas.item_group": "Aequitas",
 
   "item.aequitas.sampling_pedestal_core" : "Sampling Pedestal Core",
   "item.aequitas.crafting_pedestal_core" : "Crafting Pedestal Core",
+  "item.aequitas.portable_pedestal_core": "Portable Pedestal Core",
   "item.aequitas.primal_essence" : "Primal Essence",
   "item.aequitas.primordial_essence" : "Primordial Essence",
   "item.aequitas.pristine_essence" : "Pristine Essence",
@@ -78,5 +80,19 @@
   "gui.aequitas.title.aequitas:gameplay/snow": "Snowy",
   "gui.aequitas.title.aequitas:gameplay/stone": "Stony",
   "gui.aequitas.title.aequitas:gameplay/swamp": "Swamp",
-  "gui.aequitas.title.aequitas:gameplay/taiga": "Taiga"
+  "gui.aequitas.title.aequitas:gameplay/taiga": "Taiga",
+  "advancements.aequitas.welcome.title": "Welcome to Aequitas!",
+  "advancements.aequitas.welcome.description": "",
+  "advancements.aequitas.duplicated_item.title": "Duplicate your first item",
+  "advancements.aequitas.duplicated_item.description": "Using a Sampling- and Crafting-Pedestal",
+  "advancements.aequitas.duplicated_dragon_egg.title": "Do the undoable!",
+  "advancements.aequitas.duplicated_dragon_egg.description": "Duplicate the Dragon Egg",
+  "advancements.aequitas.get_portable_pedestal.title": "In the palm of your hand",
+  "advancements.aequitas.get_portable_pedestal.description": "Obtain the Portable Pedestal",
+  "advancements.aequitas.collection_bowl_I.title": "Start collecting!",
+  "advancements.aequitas.collection_bowl_I.description": "Construct a tier I Collection Bowl",
+  "advancements.aequitas.collection_bowl_II.title": "Start collecting!",
+  "advancements.aequitas.collection_bowl_II.description": "Construct a tier II Collection Bowl",
+  "advancements.aequitas.collection_bowl_III.title": "Infinite Resources!!!",
+  "advancements.aequitas.collection_bowl_III.description": "Construct a tier III Collection Bowl"
 }

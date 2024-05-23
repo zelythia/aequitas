@@ -1,9 +1,25 @@
 {
-  "crafting" : 0,
-  "smelting" : 16,
-  "blasting" : 8,
-  "smoking" : 8,
-  "campfire_cooking" : 0,
-  "stonecutting" : 0,
-  "smithing" : 0
+  "minecraft": {
+    "crafting": 0,
+    "smelting": 0,
+    "blasting": 0,
+    "smoking": 0,
+    "campfire_cooking": 0,
+    "stonecutting": 0,
+    "smithing": 0
+  },
+  "botania": {
+    "terra_plate": 128,
+    "mana_infusion": 32
+  },
+  "ae2": {
+    "charger": 1600
+  },
+  "create": {
+    "splashing": -1,
+    "filling": -1
+  },
+  "techreborn": {
+    "scrapbox": -1
+  }
 }

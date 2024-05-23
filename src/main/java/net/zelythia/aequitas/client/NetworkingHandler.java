@@ -24,9 +24,8 @@ import net.zelythia.aequitas.compat.LootTableParser;
 import net.zelythia.aequitas.mixin.client.SpriteContentsMixin;
 import net.zelythia.aequitas.networking.EssencePacket;
 
-import java.util.*;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static net.zelythia.aequitas.networking.NetworkingHandler.C2S_UPDATE_FILTER;
 
@@ -131,8 +130,6 @@ public class NetworkingHandler {
                 Aequitas.LOGGER.error("Updated loottables");
                 loottablesUpdated = true;
             });
-
-
         });
     }
 
