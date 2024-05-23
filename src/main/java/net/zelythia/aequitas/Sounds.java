@@ -15,7 +15,11 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 
 public class Sounds {
-    public static final SoundEvent COLLECTION_BOWL_LOOP = Registry.register(Registries.SOUND_EVENT, "block.collection_bowl.loop", SoundEvent.of(new Identifier(Aequitas.MOD_ID, "block.collection_bowl.loop")));
+    public static SoundEvent COLLECTION_BOWL_LOOP;
+
+    public static void register() {
+        COLLECTION_BOWL_LOOP = Registry.register(Registries.SOUND_EVENT, "block.collection_bowl.loop", SoundEvent.of(new Identifier(Aequitas.MOD_ID, "block.collection_bowl.loop")));
+    }
 
 
     @Environment(EnvType.CLIENT)
