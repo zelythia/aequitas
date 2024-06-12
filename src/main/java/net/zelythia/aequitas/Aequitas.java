@@ -25,6 +25,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.Feature;
 import net.zelythia.aequitas.advancement.PlayerStatistics;
+import net.zelythia.aequitas.block.AequitasBlocks;
 import net.zelythia.aequitas.item.AequitasItems;
 import net.zelythia.aequitas.networking.EssencePacket;
 import net.zelythia.aequitas.networking.NetworkingHandler;
@@ -63,6 +64,9 @@ public class Aequitas implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        new AequitasItems();
+        new AequitasBlocks();
+
         PlayerStatistics.register();
         NetworkingHandler.onInitialize();
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ResourceLoader());
