@@ -5,6 +5,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.nbt.NbtElement;
@@ -18,6 +20,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.zelythia.aequitas.block.entity.BlockEntityTypes;
 import net.zelythia.aequitas.block.entity.SamplingPedestalBlockEntity;
 import net.zelythia.aequitas.item.AequitasItems;
 import org.jetbrains.annotations.Nullable;
@@ -43,6 +46,11 @@ public class SamplingPedestalBlock extends BlockWithEntity {
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
+    }
+
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return checkType(type, BlockEntityTypes.SAMPLING_PEDESTAL_BLOCK_ENTITY, SamplingPedestalBlockEntity::tick);
     }
 
     @Override

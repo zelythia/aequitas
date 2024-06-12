@@ -1,20 +1,13 @@
 package net.zelythia.aequitas.compat.wthit;
 
 import mcp.mobius.waila.api.*;
-import mcp.mobius.waila.api.component.ItemComponent;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.Registries;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.EssenceHandler;
 import net.zelythia.aequitas.block.entity.CraftingPedestalBlockEntity;
 import net.zelythia.aequitas.block.entity.SamplingPedestalBlockEntity;
-
-import java.util.List;
 
 public class WailaIntegration implements IWailaPlugin {
     @Override
@@ -34,20 +27,20 @@ public class WailaIntegration implements IWailaPlugin {
 
         @Override
         public void appendBody(ITooltip tooltip, IBlockAccessor accessor, IPluginConfig config) {
-            if (config.getBoolean(new Identifier(Aequitas.MOD_ID, "sampling_pedestal"))) {
-                SamplingPedestalBlockEntity be = accessor.getBlockEntity();
-
-                if (!be.getStack(0).isEmpty()) {
-//                    NbtCompound tag = new NbtCompound();
-//                    tag.putString("id", Registries.ITEM.getId(be.getStack(0).getItem()).toString());
-//                    tag.putInt("Count", (be.getStack(0).getCount()));
+//            if (config.getBoolean(new Identifier(Aequitas.MOD_ID, "sampling_pedestal"))) {
+//                SamplingPedestalBlockEntity be = accessor.getBlockEntity();
 //
-//                    NbtCompound tag2 = new NbtCompound();
-//                    tag2.putString("text", be.getStack(0).getItem().toString());
-
-                    tooltip.addLine(new ItemComponent(be.getStack(0)));
-                }
-            }
+//                if (!be.getStack(0).isEmpty()) {
+////                    NbtCompound tag = new NbtCompound();
+////                    tag.putString("id", Registries.ITEM.getId(be.getStack(0).getItem()).toString());
+////                    tag.putInt("Count", (be.getStack(0).getCount()));
+////
+////                    NbtCompound tag2 = new NbtCompound();
+////                    tag2.putString("text", be.getStack(0).getItem().toString());
+//
+//                    tooltip.addLine(new ItemComponent(be.getStack(0)));
+//                }
+//            }
         }
     }
 

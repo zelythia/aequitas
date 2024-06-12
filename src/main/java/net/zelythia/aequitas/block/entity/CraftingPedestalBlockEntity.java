@@ -21,6 +21,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.zelythia.aequitas.EssenceHandler;
@@ -43,8 +44,8 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
     private long storedEssence;
 
     private final List<SamplingPedestalBlockEntity> samplingPedestals = new ArrayList<>();
-    private static final int detectionRadius = 3;
-    private static final int maxSamplingPedestals = 800;
+    private static final int DETECTION_RADIUS = 3;
+    private static final int MAX_SAMPLING_PEDESTALS = 800;
 
     private static ServerPlayerEntity player = null;
 
@@ -52,7 +53,8 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
         super(BlockEntityTypes.CRAFTING_PEDESTAL_BLOCK_ENTITY, pos, state);
     }
 
-//    private int craftingDelay = 0;
+    public static final int CRAFTING_DELAY = 10;
+    private int craftingDelay = 0;
 
 
     @Override
@@ -130,9 +132,10 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
         }
 
 
+        //Getting all Sampling-Pedestals in range starting at r = 2, prioritizing closer ones
         be.samplingPedestals.clear();
         collecting:
-        for (int r = 2; r <= detectionRadius; r++) {
+        for (int r = 2; r <= DETECTION_RADIUS; r++) {
             int x = -r;
             while (x <= 2 * r) {
                 for (int z = -r; z <= r; z++) {
@@ -140,13 +143,13 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
                     if (be1 instanceof SamplingPedestalBlockEntity) {
                         be.samplingPedestals.add((SamplingPedestalBlockEntity) be1);
                     }
-                    if (be.samplingPedestals.size() == maxSamplingPedestals) break collecting;
+                    if (be.samplingPedestals.size() >= MAX_SAMPLING_PEDESTALS) break collecting;
 
                     BlockEntity be2 = world.getBlockEntity(pos.add(z, 0, x));
                     if (be2 instanceof SamplingPedestalBlockEntity) {
                         be.samplingPedestals.add((SamplingPedestalBlockEntity) be2);
                     }
-                    if (be.samplingPedestals.size() == maxSamplingPedestals) break collecting;
+                    if (be.samplingPedestals.size() >= MAX_SAMPLING_PEDESTALS) break collecting;
                 }
 
                 x += 2 * r;
@@ -159,10 +162,12 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
 
         if (required_value > 0) {
 
-            //if(craftingDelay == 0 && this.storedEssence < required_value)
-            if (be.storedEssence < required_value) {
-
+            if (be.craftingDelay == 0 && be.storedEssence < required_value) {
                 for (SamplingPedestalBlockEntity samplingPedestal : be.samplingPedestals) {
+
+                    if (samplingPedestal.hasEssence()) {
+                        NetworkingHandler.sendParticle(be, samplingPedestal.getPos(), be.getPos(), new ItemStack(samplingPedestal.getCurrentlyConsuming()));
+                    }
 
                     long value = samplingPedestal.transferEssence();
                     if (value > 0) {
@@ -173,14 +178,10 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
                         } else {
                             be.storedEssence += value;
                         }
-
-                        NetworkingHandler.sendParticle(be, samplingPedestal.getPos(), be.getPos(), new ItemStack(samplingPedestal.getDisplayItem()));
                     }
-
                 }
-
             } else {
-//                craftingDelay--;
+                be.craftingDelay--;
             }
 
 
@@ -188,29 +189,26 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
 
                 if (be.getStack(1).isEmpty()) {
                     be.setStack(1, be.getStack(0).copy());
-                    if (player == null)
-                        player = (ServerPlayerEntity) world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 10, false);
-                    if (player != null)
-                        PlayerStatistics.ITEM_DUPLICATED_CRITERION.trigger(player, be.getStack(0).copy());
                 } else if (be.getStack(1).getItem() == be.getStack(0).getItem()) {
                     be.getStack(1).increment(1);
-                    if (player == null)
-                        player = (ServerPlayerEntity) world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 10, false);
-                    if (player != null)
-                        PlayerStatistics.ITEM_DUPLICATED_CRITERION.trigger(player, be.getStack(1).copy());
                 }
 
                 if (be.getStack(1).getItem() == be.getStack(0).getItem()) {
+                    //Trigger advancement for nearby players
+                    for (PlayerEntity player : world.getPlayers()) {
+                        if (Box.from(pos.toCenterPos()).expand(10).contains(player.getX(), player.getY(), player.getZ())) {
+                            PlayerStatistics.ITEM_DUPLICATED_CRITERION.trigger((ServerPlayerEntity) player, be.getStack(0).copy());
+                        }
+                    }
                     world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.5f, 1f);
+
                     be.storedEssence -= required_value;
-//                    craftingDelay = 10;
+                    be.craftingDelay = CRAFTING_DELAY;
 
                     be.markDirty();
                 }
             }
-
         }
-
     }
 
     @Override

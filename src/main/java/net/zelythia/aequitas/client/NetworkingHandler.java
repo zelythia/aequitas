@@ -50,21 +50,6 @@ public class NetworkingHandler {
 
             client.execute(() -> {
                 if (!item.isEmpty()) {
-                    double x = 0.5 + from.getX() + (Math.random() * 2.0 - 1.0) * 0.15;
-                    double y = 1.2 + from.getY();
-                    double z = 0.5 + from.getZ() + (Math.random() * 2.0 - 1.0) * 0.15;
-
-                    double velX = (to.getX() + 0.5) - x;
-                    double velZ = to.getZ() + 0.5 - z;
-                    double len = Math.sqrt(velX * velX + velZ * velZ);
-
-                    velX = velX / len;
-                    velZ = velZ / len;
-
-                    velX *= 0.1;
-                    velZ *= 0.1;
-
-
                     float r = 1F;
                     float g = 1F;
                     float b = 1F;
@@ -72,8 +57,6 @@ public class NetworkingHandler {
 
                     BakedModel itemModel = client.getItemRenderer().getModel(item, client.world, client.player, 0);
                     if (itemModel != null) {
-
-
                         NativeImage image = ((SpriteContentsMixin)itemModel.getParticleSprite().getContents()).getImage();
                         div = image.getHeight() * image.getWidth();
 
@@ -93,10 +76,26 @@ public class NetworkingHandler {
                         b = (int) (b / div);
                     }
 
-                    CraftingParticle particle = (CraftingParticle) Particles.spawnParticle(client, Particles.CRAFTING_PARTICLE, false, true, x, y, z, velX, 0, velZ);
-                    if (particle != null) {
-                        particle.setMaxDistanceSq(Util.distanceSq(x, z, to.getX() + 0.5, to.getZ() + 0.5));
-                        particle.setColor(r / 255, g / 255, b / 255);
+                    for (int i = 10; i > 0; i--) {
+                        double x = 0.5 + from.getX() + (Math.random() * 2.0 - 1.0) * 0.15;
+                        double y = 1.2 + from.getY();
+                        double z = 0.5 + from.getZ() + (Math.random() * 2.0 - 1.0) * 0.15;
+
+                        double velX = (to.getX() + 0.5) - x;
+                        double velZ = to.getZ() + 0.5 - z;
+                        double len = Math.sqrt(velX * velX + velZ * velZ);
+
+                        velX = velX / len;
+                        velZ = velZ / len;
+
+                        velX *= 0.1;
+                        velZ *= 0.1;
+
+                        CraftingParticle particle = (CraftingParticle) Particles.spawnParticle(client, Particles.CRAFTING_PARTICLE, false, true, x, y, z, velX, 0, velZ);
+                        if (particle != null) {
+                            particle.setMaxDistanceSq(Util.distanceSq(x, z, to.getX() + 0.5, to.getZ() + 0.5));
+                            particle.setColor(r / 255, g / 255, b / 255);
+                        }
                     }
                 }
             });
@@ -127,7 +126,7 @@ public class NetworkingHandler {
             }
 
             client.execute(() -> {
-                Aequitas.LOGGER.error("Updated loottables");
+                Aequitas.LOGGER.info("Updated loottables");
                 loottablesUpdated = true;
             });
         });
