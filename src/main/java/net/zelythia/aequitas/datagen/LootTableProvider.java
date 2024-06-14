@@ -32,7 +32,6 @@ public class LootTableProvider extends FabricBlockLootTableProvider {
         addDrop(AequitasBlocks.PRIMAL_ESSENCE_BLOCK);
         addDrop(AequitasBlocks.PRIMORDIAL_ESSENCE_BLOCK);
         addDrop(AequitasBlocks.PRISTINE_ESSENCE_BLOCK);
-        addDrop(AequitasBlocks.CONDUIT);
         addDrop(AequitasBlocks.CATALYST_I);
         addDrop(AequitasBlocks.CATALYST_II);
         addDrop(AequitasBlocks.CATALYST_III);
@@ -42,6 +41,14 @@ public class LootTableProvider extends FabricBlockLootTableProvider {
         addDrop(AequitasBlocks.PEDESTAL);
         addDrop(AequitasBlocks.CRAFTING_PEDESTAL);
         addDrop(AequitasBlocks.SAMPLING_PEDESTAL);
+
+        addDrop(AequitasBlocks.INFUSED_STONE);
+        addDrop(AequitasBlocks.INFUSED_STONE_PILLAR);
+        addDrop(AequitasBlocks.INFUSED_STONE_SLAB);
+        addDrop(AequitasBlocks.INFUSED_STONE_STAIRS);
+        addDrop(AequitasBlocks.CHISELED_INFUSED_STONE);
+        addDrop(AequitasBlocks.ETCHED_INFUSED_STONE);
+        addDrop(AequitasBlocks.SMOOTH_INFUSED_STONE);
     }
 
 
