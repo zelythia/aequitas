@@ -11,6 +11,14 @@ import net.zelythia.aequitas.block.AequitasBlocks;
 
 public class AequitasItems {
 
+    public static final Item INFUSED_STONE;
+    public static final Item INFUSED_STONE_PILLAR;
+    public static final Item INFUSED_STONE_SLAB;
+    public static final Item INFUSED_STONE_STAIRS;
+    public static final Item CHISELED_INFUSED_STONE;
+    public static final Item ETCHED_INFUSED_STONE;
+    public static final Item SMOOTH_INFUSED_STONE;
+
     public static final Item PRIMAL_ESSENCE;
     public static final Item PRIMORDIAL_ESSENCE;
     public static final Item PRISTINE_ESSENCE;
@@ -55,6 +63,14 @@ public class AequitasItems {
     public static final ItemGroup ITEM_GROUP;
 
     static {
+        INFUSED_STONE = register("infused_stone", new BlockItem(AequitasBlocks.INFUSED_STONE, new Item.Settings()));
+        INFUSED_STONE_PILLAR = register("infused_stone_pillar", new BlockItem(AequitasBlocks.INFUSED_STONE_PILLAR, new Item.Settings()));
+        INFUSED_STONE_SLAB = register("infused_stone_slab", new BlockItem(AequitasBlocks.INFUSED_STONE_SLAB, new Item.Settings()));
+        INFUSED_STONE_STAIRS = register("infused_stone_stairs", new BlockItem(AequitasBlocks.INFUSED_STONE_STAIRS, new Item.Settings()));
+        CHISELED_INFUSED_STONE = register("chiseled_infused_stone", new BlockItem(AequitasBlocks.CHISELED_INFUSED_STONE, new Item.Settings()));
+        ETCHED_INFUSED_STONE = register("etched_infused_stone", new BlockItem(AequitasBlocks.ETCHED_INFUSED_STONE, new Item.Settings()));
+        SMOOTH_INFUSED_STONE = register("smooth_infused_stone", new BlockItem(AequitasBlocks.SMOOTH_INFUSED_STONE, new Item.Settings()));
+
         PRIMAL_ESSENCE = register("primal_essence", new Item(new Item.Settings()));
         PRIMORDIAL_ESSENCE = register("primordial_essence", new Item(new Item.Settings()));
         PRISTINE_ESSENCE = register("pristine_essence", new Item(new Item.Settings()));
@@ -97,6 +113,14 @@ public class AequitasItems {
                         .icon(() -> new ItemStack(CRAFTING_PEDESTAL))
                         .displayName(Text.translatable("itemGroup.aequitas.item_group"))
                         .entries((context, entries) -> {
+                            entries.add(INFUSED_STONE);
+                            entries.add(INFUSED_STONE_PILLAR);
+                            entries.add(INFUSED_STONE_SLAB);
+                            entries.add(INFUSED_STONE_STAIRS);
+                            entries.add(CHISELED_INFUSED_STONE);
+                            entries.add(ETCHED_INFUSED_STONE);
+                            entries.add(SMOOTH_INFUSED_STONE);
+
                             entries.add(PRIMAL_ESSENCE);
                             entries.add(PRIMORDIAL_ESSENCE);
                             entries.add(PRISTINE_ESSENCE);

@@ -1,0 +1,102 @@
+{
+  "variants": {
+    "axis=x,active=false,top=false,bottom=false": {
+      "model": "aequitas:block/infused_stone_pillar",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,active=false,top=true,bottom=false": {
+      "model": "aequitas:block/infused_stone_pillar_end",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,active=false,top=false,bottom=true": {
+      "model": "aequitas:block/infused_stone_pillar_end",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,active=false,top=true,bottom=true": {
+      "model": "aequitas:block/infused_stone_pillar_both",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y,active=false,top=false,bottom=false": {
+      "model": "aequitas:block/infused_stone_pillar"
+    },
+    "axis=y,active=false,top=true,bottom=false": {
+      "model": "aequitas:block/infused_stone_pillar_end"
+    },
+    "axis=y,active=false,top=false,bottom=true": {
+      "model": "aequitas:block/infused_stone_pillar_end",
+      "x": 180
+    },
+    "axis=y,active=false,top=true,bottom=true": {
+      "model": "aequitas:block/infused_stone_pillar_both"
+    },
+    "axis=z,active=false,top=false,bottom=false": {
+      "model": "aequitas:block/infused_stone_pillar",
+      "x": 90
+    },
+    "axis=z,active=false,top=true,bottom=false": {
+      "model": "aequitas:block/infused_stone_pillar_end",
+      "x": 90
+    },
+    "axis=z,active=false,top=false,bottom=true": {
+      "model": "aequitas:block/infused_stone_pillar_end",
+      "x": 270
+    },
+    "axis=z,active=false,top=true,bottom=true": {
+      "model": "aequitas:block/infused_stone_pillar_both",
+      "x": 90
+    },
+    "axis=x,active=true,top=false,bottom=false": {
+      "model": "aequitas:block/infused_stone_pillar_active",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,active=true,top=true,bottom=false": {
+      "model": "aequitas:block/infused_stone_pillar_end_active",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,active=true,top=false,bottom=true": {
+      "model": "aequitas:block/infused_stone_pillar_end_active",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,active=true,top=true,bottom=true": {
+      "model": "aequitas:block/infused_stone_pillar_both_active",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y,active=true,top=false,bottom=false": {
+      "model": "aequitas:block/infused_stone_pillar_active"
+    },
+    "axis=y,active=true,top=true,bottom=false": {
+      "model": "aequitas:block/infused_stone_pillar_end_active"
+    },
+    "axis=y,active=true,top=false,bottom=true": {
+      "model": "aequitas:block/infused_stone_pillar_end_active",
+      "x": 180
+    },
+    "axis=y,active=true,top=true,bottom=true": {
+      "model": "aequitas:block/infused_stone_pillar_both_active"
+    },
+    "axis=z,active=true,top=false,bottom=false": {
+      "model": "aequitas:block/infused_stone_pillar_active",
+      "x": 90
+    },
+    "axis=z,active=true,top=true,bottom=false": {
+      "model": "aequitas:block/infused_stone_pillar_end_active",
+      "x": 90
+    },
+    "axis=z,active=true,top=false,bottom=true": {
+      "model": "aequitas:block/infused_stone_pillar_end_active",
+      "x": 270
+    },
+    "axis=z,active=true,top=true,bottom=true": {
+      "model": "aequitas:block/infused_stone_pillar_both_active",
+      "x": 90
+    }
+  }
+}

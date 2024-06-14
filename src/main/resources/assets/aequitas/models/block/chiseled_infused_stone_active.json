@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "aequitas:block/chiseled_infused_stone_active"
+  }
+}

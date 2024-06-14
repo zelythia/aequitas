@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "active=false": {
+      "model": "aequitas:block/smooth_infused_stone"
+    },
+    "active=true": {
+      "model": "aequitas:block/smooth_infused_stone_active"
+    }
+  }
+}
