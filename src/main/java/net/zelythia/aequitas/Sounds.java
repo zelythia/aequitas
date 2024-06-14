@@ -24,6 +24,8 @@ public class Sounds {
 
     @Environment(EnvType.CLIENT)
     public static class CollectionBowlSoundInstance extends AbstractSoundInstance implements TickableSoundInstance {
+        private static final float MAX_VOLUME = 0.4f;
+
         private boolean done;
         private final PlayerEntity player;
         private final double maxDistance;
@@ -57,10 +59,10 @@ public class Sounds {
         public void tick() {
             double distance = player.getPos().distanceTo(new Vec3d(x, y, z));
             if (distance > maxDistance) {
-                this.volume = (float) (1 - Math.min((distance - maxDistance) / 8, 1)) * 0.2f;
+                this.volume = (float) (1 - Math.min((distance - maxDistance) / 8, 1)) * MAX_VOLUME;
                 return;
             }
-            this.volume = 0.2f;
+            this.volume = MAX_VOLUME;
         }
     }
 }
