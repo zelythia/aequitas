@@ -63,10 +63,7 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
         super(inventorySize == 15 ? BlockEntityTypes.COLLECTION_BOWL_BLOCK_ENTITY_III : inventorySize == 9 ? BlockEntityTypes.COLLECTION_BOWL_BLOCK_ENTITY_II : BlockEntityTypes.COLLECTION_BOWL_BLOCK_ENTITY_I, pos, state);
         this.tier = inventorySize == 15 ? 3 : inventorySize == 9 ? 2 : 1;
         this.inventory = DefaultedList.ofSize(inventorySize, ItemStack.EMPTY);
-        if (world != null && !world.isClient) {
-            updateStructurePositions();
-            setCollectionTimeTotal();
-        }
+        setCollectionTimeTotal();
     }
 
     private boolean structureBlockProperties = false;
@@ -269,21 +266,24 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
     }
 
     public boolean checkStructure() {
-
-        for (BlockPos pos : conduitBlocks) {
-            if (!world.getBlockState(pos).getBlock().equals(AequitasBlocks.CONDUIT)) return false;
-        }
-        for (BlockPos pos : catalystBlocks1) {
-            if (!world.getBlockState(pos).getBlock().equals(AequitasBlocks.CATALYST_I)) return false;
-        }
-        for (BlockPos pos : catalystBlocks2) {
-            if (!world.getBlockState(pos).getBlock().equals(AequitasBlocks.CATALYST_II)) return false;
-        }
-        for (BlockPos pos : catalystBlocks3) {
-            if (!world.getBlockState(pos).getBlock().equals(AequitasBlocks.CATALYST_III)) return false;
-        }
-
         return true;
+
+//        updateStructurePositions();
+//
+//        for (BlockPos pos : conduitBlocks) {
+////            if (!world.getBlockState(pos).getBlock().equals(AequitasBlocks.CONDUIT)) return false;
+//        }
+//        for (BlockPos pos : catalystBlocks1) {
+//            if (!world.getBlockState(pos).getBlock().equals(AequitasBlocks.CATALYST_I)) return false;
+//        }
+//        for (BlockPos pos : catalystBlocks2) {
+//            if (!world.getBlockState(pos).getBlock().equals(AequitasBlocks.CATALYST_II)) return false;
+//        }
+//        for (BlockPos pos : catalystBlocks3) {
+//            if (!world.getBlockState(pos).getBlock().equals(AequitasBlocks.CATALYST_III)) return false;
+//        }
+//
+//        return true;
     }
 
     private void setStructureBlockProperties(boolean value) {
