@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "type=bottom,active=false": {
+      "model": "aequitas:block/infused_stone_slab"
+    },
+    "type=double,active=false": {
+      "model": "aequitas:block/infused_stone"
+    },
+    "type=top,active=false": {
+      "model": "aequitas:block/infused_stone_slab_top"
+    },
+    "type=bottom,active=true": {
+      "model": "aequitas:block/infused_stone_slab_active"
+    },
+    "type=double,active=true": {
+      "model": "aequitas:block/infused_stone_active"
+    },
+    "type=top,active=true": {
+      "model": "aequitas:block/infused_stone_slab_top_active"
+    }
+  }
+}

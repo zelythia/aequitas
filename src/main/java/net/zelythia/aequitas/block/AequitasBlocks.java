@@ -16,6 +16,14 @@ public class AequitasBlocks {
     public static final Block PRIMORDIAL_ESSENCE_BLOCK;
     public static final Block PRISTINE_ESSENCE_BLOCK;
 
+    public static final Block INFUSED_STONE;
+    public static final Block INFUSED_STONE_PILLAR;
+    public static final Block INFUSED_STONE_SLAB;
+    public static final Block INFUSED_STONE_STAIRS;
+    public static final Block CHISELED_INFUSED_STONE;
+    public static final Block ETCHED_INFUSED_STONE;
+    public static final Block SMOOTH_INFUSED_STONE;
+
     public static final Block PEDESTAL;
     public static final Block CRAFTING_PEDESTAL;
     public static final Block SAMPLING_PEDESTAL;
@@ -30,9 +38,20 @@ public class AequitasBlocks {
 
 
     public static final BooleanProperty ACTIVE_BLOCK_PROPERTY = BooleanProperty.of("active");
+    public static final BooleanProperty TOP_BLOCK_PROPERTY = BooleanProperty.of("top");
+    public static final BooleanProperty BOTTOM_BLOCK_PROPERTY = BooleanProperty.of("bottom");
 
 
     static {
+        INFUSED_STONE = register("infused_stone", new InfusedStoneBlock(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.CALCITE).strength(1.25F, 4.2F)));
+        INFUSED_STONE_PILLAR = register("infused_stone_pillar", new InfusedStonePillar(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.CALCITE).strength(1.25F, 4.2F)));
+        INFUSED_STONE_SLAB = register("infused_stone_slab", new InfusedStoneSlab(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.CALCITE).strength(1.25F, 4.2F)));
+        INFUSED_STONE_STAIRS = register("infused_stone_stairs", new InfusedStoneStairs(INFUSED_STONE.getDefaultState(), AbstractBlock.Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.CALCITE).strength(1.25F, 4.2F)));
+        CHISELED_INFUSED_STONE = register("chiseled_infused_stone", new InfusedStoneBlock(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.CALCITE).strength(1.25F, 4.2F)));
+        ETCHED_INFUSED_STONE = register("etched_infused_stone", new InfusedStoneBlock(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.CALCITE).strength(1.25F, 4.2F)));
+        SMOOTH_INFUSED_STONE = register("smooth_infused_stone", new InfusedStoneBlock(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.CALCITE).strength(1.25F, 4.2F)));
+
+
         PRIMAL_ESSENCE_BLOCK = register("primal_essence_block", new Block(AbstractBlock.Settings.create().mapColor(MapColor.GREEN).sounds(BlockSoundGroup.GLASS).strength(0.3F)));
         PRIMORDIAL_ESSENCE_BLOCK = register("primordial_essence_block", new Block(AbstractBlock.Settings.create().mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.GLASS).strength(0.3F)));
         PRISTINE_ESSENCE_BLOCK = register("pristine_essence_block", new Block(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).sounds(BlockSoundGroup.GLASS).strength(0.3F)));

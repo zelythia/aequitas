@@ -1,0 +1,38 @@
+{
+  "variants": {
+    "active=false": [
+      {
+        "model": "aequitas:block/infused_stone"
+      },
+      {
+        "model": "aequitas:block/infused_stone",
+        "y": 90
+      },
+      {
+        "model": "aequitas:block/infused_stone",
+        "y": 180
+      },
+      {
+        "model": "aequitas:block/infused_stone",
+        "y": 270
+      }
+    ],
+    "active=true": [
+      {
+        "model": "aequitas:block/infused_stone_active"
+      },
+      {
+        "model": "aequitas:block/infused_stone_active",
+        "y": 90
+      },
+      {
+        "model": "aequitas:block/infused_stone_active",
+        "y": 180
+      },
+      {
+        "model": "aequitas:block/infused_stone_active",
+        "y": 270
+      }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "active=false": {
+      "model": "aequitas:block/etched_infused_stone"
+    },
+    "active=true": {
+      "model": "aequitas:block/etched_infused_stone_active"
+    }
+  }
+}

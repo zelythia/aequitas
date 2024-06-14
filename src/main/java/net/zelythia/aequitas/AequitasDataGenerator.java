@@ -6,6 +6,7 @@ import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKeys;
 import net.zelythia.aequitas.datagen.AdvancementsProvider;
 import net.zelythia.aequitas.datagen.LootTableProvider;
+import net.zelythia.aequitas.datagen.TagGenerator;
 import net.zelythia.aequitas.datagen.WorldGen;
 import net.zelythia.aequitas.world.gen.ConfiguredFeatures;
 import net.zelythia.aequitas.world.gen.PlacedFeatures;
@@ -18,6 +19,7 @@ public class AequitasDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(LootTableProvider::new);
         pack.addProvider(WorldGen::new);
         pack.addProvider(AdvancementsProvider::new);
+        pack.addProvider(TagGenerator::new);
     }
 
     @Override
