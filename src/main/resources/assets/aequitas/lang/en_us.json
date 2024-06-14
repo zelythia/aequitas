@@ -37,11 +37,17 @@
 
   "item.aequitas.portable_pedestal" : "Portable Pedestal",
   "tooltip.aequitas.portable_pedestal" : "Stored: %s",
+  "block.aequitas.infused_stone": "Infused Stone",
+  "block.aequitas.infused_stone_pillar": "Infused Stone",
+  "block.aequitas.infused_stone_slab": "Infused Stone Slab",
+  "block.aequitas.infused_stone_stairs": "Infused Stone Stairs",
+  "block.aequitas.chiseled_infused_stone": "Chiseled Infused Stone",
+  "block.aequitas.etched_infused_stone": "Etched Infused Stone",
+  "block.aequitas.smooth_infused_stone": "Smooth Infused Stone",
 
   "block.aequitas.pedestal" : "Pedestal",
   "block.aequitas.crafting_pedestal" : "Crafting Pedestal",
   "block.aequitas.sampling_pedestal" : "Sampling Pedestal",
-  "block.aequitas.conduit_block" : "Conduit Block",
   "block.aequitas.primal_catalyst" : "Primal Catalyst",
   "block.aequitas.primordial_catalyst" : "Primordial Catalyst",
   "block.aequitas.pristine_catalyst" : "Pristine Catalyst",

@@ -28,7 +28,6 @@ public class AequitasBlocks {
     public static final Block CRAFTING_PEDESTAL;
     public static final Block SAMPLING_PEDESTAL;
 
-    public static final Block CONDUIT;
     public static final Block CATALYST_I;
     public static final Block CATALYST_II;
     public static final Block CATALYST_III;
@@ -60,7 +59,6 @@ public class AequitasBlocks {
         CRAFTING_PEDESTAL = register("crafting_pedestal", new CraftingPedestalBlock(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).requiresTool().strength(1.25F, 4.2F)));
         SAMPLING_PEDESTAL = register("sampling_pedestal", new SamplingPedestalBlock(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).requiresTool().strength(1.25F, 4.2F)));
 
-        CONDUIT = register("conduit_block", new ConduitBlock(AbstractBlock.Settings.create().mapColor(MapColor.BLACK).sounds(BlockSoundGroup.STONE).requiresTool().strength(1.8F).luminance((blockState) -> (Boolean) blockState.get(ACTIVE_BLOCK_PROPERTY) ? 13 : 0)));
         CATALYST_I = register("primal_catalyst", new CatalystBlock(AbstractBlock.Settings.create().mapColor(MapColor.GREEN).sounds(BlockSoundGroup.GLASS).strength(0.3F).luminance((blockState) -> (Boolean) blockState.get(ACTIVE_BLOCK_PROPERTY) ? 15 : 0), 1));
         CATALYST_II = register("primordial_catalyst", new CatalystBlock(AbstractBlock.Settings.create().mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.GLASS).luminance((blockState) -> (Boolean) blockState.get(ACTIVE_BLOCK_PROPERTY) ? 15 : 0), 2));
         CATALYST_III = register("pristine_catalyst", new CatalystBlock(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).sounds(BlockSoundGroup.GLASS).luminance((blockState) -> (Boolean) blockState.get(ACTIVE_BLOCK_PROPERTY) ? 15 : 0), 3));

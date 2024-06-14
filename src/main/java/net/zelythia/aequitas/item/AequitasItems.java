@@ -51,7 +51,6 @@ public class AequitasItems {
     public static final Item PORTABLE_PEDESTAL;
 
 
-    public static final Item CONDUIT;
     public static final Item CATALYST_I;
     public static final Item CATALYST_II;
     public static final Item CATALYST_III;
@@ -99,7 +98,6 @@ public class AequitasItems {
         SAMPLING_PEDESTAL = register("sampling_pedestal", new BlockItem(AequitasBlocks.SAMPLING_PEDESTAL, new Item.Settings()));
         PORTABLE_PEDESTAL = register("portable_pedestal", new PortablePedestalItem(new Item.Settings().maxCount(1)));
 
-        CONDUIT = register("conduit_block", new BlockItem(AequitasBlocks.CONDUIT, new Item.Settings()));
         CATALYST_I = register("primal_catalyst", new BlockItem(AequitasBlocks.CATALYST_I, new Item.Settings()));
         CATALYST_II = register("primordial_catalyst", new BlockItem(AequitasBlocks.CATALYST_II, new Item.Settings()));
         CATALYST_III = register("pristine_catalyst", new BlockItem(AequitasBlocks.CATALYST_III, new Item.Settings()));
@@ -128,7 +126,6 @@ public class AequitasItems {
                             entries.add(PRIMORDIAL_ESSENCE_BLOCK);
                             entries.add(PRISTINE_ESSENCE_BLOCK);
 
-                            entries.add(CONDUIT);
                             entries.add(CATALYST_I);
                             entries.add(CATALYST_II);
                             entries.add(CATALYST_III);
