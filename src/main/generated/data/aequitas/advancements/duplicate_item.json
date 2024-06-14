@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:aequitas/root",
+  "parent": "aequitas:root",
   "criteria": {
     "duplicated_item": {
       "conditions": {},

@@ -37,7 +37,7 @@ public class AdvancementsProvider extends FabricAdvancementProvider {
                         false
                 )
                 .criterion("root", TickCriterion.Conditions.createTick())
-                .build(consumer, "aequitas" + "/root");
+                .build(consumer, "aequitas:" + "root");
 
 
         Advancement duplicateItem = Advancement.Builder.create().parent(root)
@@ -53,7 +53,7 @@ public class AdvancementsProvider extends FabricAdvancementProvider {
                 )
 
                 .criterion("duplicated_item", ItemDuplicatedCriterion.Conditions.create(ItemPredicate.ANY))
-                .build(consumer, "aequitas" + "/duplicate_item");
+                .build(consumer, "aequitas:" + "duplicate_item");
 
 
         Advancement dragonEggDuplication = Advancement.Builder.create().parent(duplicateItem)
@@ -69,7 +69,7 @@ public class AdvancementsProvider extends FabricAdvancementProvider {
                 )
                 .rewards(AdvancementRewards.Builder.experience(1000))
                 .criterion("duplicated_dragon_egg", ItemDuplicatedCriterion.Conditions.create(ItemPredicate.Builder.create().items(Items.DRAGON_EGG).build()))
-                .build(consumer, "aequitas" + "/duplicated_dragon_egg");
+                .build(consumer, "aequitas:" + "duplicated_dragon_egg");
 
         Advancement portablePedestalAdvancement = Advancement.Builder.create().parent(duplicateItem)
                 .display(
@@ -84,7 +84,7 @@ public class AdvancementsProvider extends FabricAdvancementProvider {
                 )
                 .rewards(AdvancementRewards.Builder.experience(1000))
                 .criterion("get_portable_pedestal", InventoryChangedCriterion.Conditions.items(AequitasItems.PORTABLE_PEDESTAL))
-                .build(consumer, "aequitas" + "/portable_pedestal");
+                .build(consumer, "aequitas:" + "portable_pedestal");
 
 
         Advancement collectionBowlI = Advancement.Builder.create().parent(root)
@@ -100,7 +100,7 @@ public class AdvancementsProvider extends FabricAdvancementProvider {
                 )
 
                 .criterion("collection_bowl_I", CollectionBowlConstructedCriterion.Conditions.create(1))
-                .build(consumer, "aequitas" + "/collection_bowl_1");
+                .build(consumer, "aequitas:" + "collection_bowl_1");
 
         Advancement collectionBowlII = Advancement.Builder.create().parent(collectionBowlI)
                 .display(
@@ -115,7 +115,7 @@ public class AdvancementsProvider extends FabricAdvancementProvider {
                 )
 
                 .criterion("collection_bowl_II", CollectionBowlConstructedCriterion.Conditions.create(2))
-                .build(consumer, "aequitas" + "/collection_bowl_2");
+                .build(consumer, "aequitas:" + "collection_bowl_2");
 
         Advancement collectionBowlIII = Advancement.Builder.create().parent(collectionBowlII)
                 .display(
@@ -130,7 +130,7 @@ public class AdvancementsProvider extends FabricAdvancementProvider {
                 )
 
                 .criterion("collection_bowl_II", CollectionBowlConstructedCriterion.Conditions.create(3))
-                .build(consumer, "aequitas" + "/collection_bowl_3");
+                .build(consumer, "aequitas:" + "collection_bowl_3");
 
     }
 }

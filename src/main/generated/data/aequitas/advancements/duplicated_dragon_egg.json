@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:aequitas/duplicate_item",
+  "parent": "aequitas:duplicate_item",
   "criteria": {
     "duplicated_dragon_egg": {
       "conditions": {
