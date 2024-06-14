@@ -180,7 +180,7 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
                             });
                         }
                     } else {
-                        Aequitas.LOGGER.error("Unknown tag {}", key);
+//                        Aequitas.LOGGER.error("Unknown tag {}", key);
                     }
 
                 } else {
