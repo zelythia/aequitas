@@ -5,6 +5,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.Identifier;
@@ -39,6 +41,8 @@ public class AequitasBlocks {
     public static final BooleanProperty ACTIVE_BLOCK_PROPERTY = BooleanProperty.of("active");
     public static final BooleanProperty TOP_BLOCK_PROPERTY = BooleanProperty.of("top");
     public static final BooleanProperty BOTTOM_BLOCK_PROPERTY = BooleanProperty.of("bottom");
+
+    public static final TagKey<Block> INFUSED_BLOCKS = TagKey.of(RegistryKeys.BLOCK, new Identifier("aequitas", "infused_blocks"));
 
 
     static {

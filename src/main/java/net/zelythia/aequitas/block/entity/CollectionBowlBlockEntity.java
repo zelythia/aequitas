@@ -45,7 +45,9 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
     private final DefaultedList<ItemStack> inventory;
 
     public final int tier;
-    private final List<BlockPos> conduitBlocks = new ArrayList<>();
+    private final List<BlockPos> infused = new ArrayList<>();
+    private final List<BlockPos> chiseled = new ArrayList<>();
+    private final List<BlockPos> pillar = new ArrayList<>();
     private final List<BlockPos> catalystBlocks1 = new ArrayList<>();
     private final List<BlockPos> catalystBlocks2 = new ArrayList<>();
     private final List<BlockPos> catalystBlocks3 = new ArrayList<>();
@@ -127,47 +129,81 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
 
 
     public void updateStructurePositions() {
-        conduitBlocks.clear();
-
-
+        infused.clear();
         int r = 3;
 
         if (tier == 1) {
-            catalystBlocks1.clear();
-            conduitBlocks.add(pos.add(3, 0, 0));
-            conduitBlocks.add(pos.add(-3, 0, 0));
-            conduitBlocks.add(pos.add(0, 0, 3));
-            conduitBlocks.add(pos.add(0, 0, -3));
+            //Diagonals
+            infused.add(pos.add(2, -1, 2));
+            infused.add(pos.add(2, -1, -2));
+            infused.add(pos.add(-2, -1, 2));
+            infused.add(pos.add(-2, -1, -2));
+            //T
+            infused.add(pos.add(3, -1, 1));
+            infused.add(pos.add(3, -1, -1));
+            infused.add(pos.add(-3, -1, 1));
+            infused.add(pos.add(-3, -1, -1));
+            infused.add(pos.add(1, -1, 3));
+            infused.add(pos.add(-1, -1, 3));
+            infused.add(pos.add(1, -1, -3));
+            infused.add(pos.add(-1, -1, -3));
 
+            catalystBlocks1.clear();
             catalystBlocks1.add(pos.add(3, 1, 0));
             catalystBlocks1.add(pos.add(-3, 1, 0));
             catalystBlocks1.add(pos.add(0, 1, 3));
             catalystBlocks1.add(pos.add(0, 1, -3));
-
             catalystBlocks1.add(pos.up(3));
         } else if (tier == 2) {
-            r = 4;
             catalystBlocks1.clear();
             catalystBlocks2.clear();
+            r = 4;
 
-            //Pillar 1
-            conduitBlocks.add(pos.add(4, 0, 0));
-            conduitBlocks.add(pos.add(-4, 0, 0));
-            conduitBlocks.add(pos.add(0, 0, 4));
-            conduitBlocks.add(pos.add(0, 0, -4));
+            //T
+            infused.add(pos.add(4, -1, 1));
+            infused.add(pos.add(4, -1, 2));
+            infused.add(pos.add(4, -1, -1));
+            infused.add(pos.add(4, -1, -2));
+            infused.add(pos.add(-4, -1, 1));
+            infused.add(pos.add(-4, -1, 2));
+            infused.add(pos.add(-4, -1, -1));
+            infused.add(pos.add(-4, -1, -2));
+
+            infused.add(pos.add(1, -1, 4));
+            infused.add(pos.add(2, -1, 4));
+            infused.add(pos.add(-1, -1, 4));
+            infused.add(pos.add(-2, -1, 4));
+            infused.add(pos.add(1, -1, -4));
+            infused.add(pos.add(2, -1, -4));
+            infused.add(pos.add(-1, -1, -4));
+            infused.add(pos.add(-2, -1, -4));
+            //Diagonals
+            infused.add(pos.add(3, -1, 3));
+            infused.add(pos.add(3, -1, -3));
+            infused.add(pos.add(-3, -1, 3));
+            infused.add(pos.add(-3, -1, -3));
+
+            infused.add(pos.add(3, -1, 2));
+            infused.add(pos.add(3, -1, -2));
+            infused.add(pos.add(-3, -1, 2));
+            infused.add(pos.add(-3, -1, -2));
+            infused.add(pos.add(2, -1, 3));
+            infused.add(pos.add(-2, -1, 3));
+            infused.add(pos.add(2, -1, -3));
+            infused.add(pos.add(-2, -1, -3));
 
             //Pillar 2
-            conduitBlocks.add(pos.add(3, 0, 3));
-            conduitBlocks.add(pos.add(3, 1, 3));
+            pillar.add(pos.add(3, 0, 3));
+            pillar.add(pos.add(3, 1, 3));
 
-            conduitBlocks.add(pos.add(3, 0, -3));
-            conduitBlocks.add(pos.add(3, 1, -3));
+            pillar.add(pos.add(3, 0, -3));
+            pillar.add(pos.add(3, 1, -3));
 
-            conduitBlocks.add(pos.add(-3, 0, 3));
-            conduitBlocks.add(pos.add(-3, 1, 3));
+            pillar.add(pos.add(-3, 0, 3));
+            pillar.add(pos.add(-3, 1, 3));
 
-            conduitBlocks.add(pos.add(-3, 0, -3));
-            conduitBlocks.add(pos.add(-3, 1, -3));
+            pillar.add(pos.add(-3, 0, -3));
+            pillar.add(pos.add(-3, 1, -3));
 
             //Catalysts
             catalystBlocks1.add(pos.add(4, 1, 0));
@@ -182,59 +218,95 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
 
             catalystBlocks2.add(pos.up(3));
         } else if (tier == 3) {
-            r = 6;
             catalystBlocks1.clear();
             catalystBlocks2.clear();
             catalystBlocks3.clear();
+            r = 6;
 
-            //Pillar 1
-            conduitBlocks.add(pos.add(6, 0, 0));
-            conduitBlocks.add(pos.add(-6, 0, 0));
-            conduitBlocks.add(pos.add(0, 0, 6));
-            conduitBlocks.add(pos.add(0, 0, -6));
+            //T
+            infused.add(pos.add(6, -1, 1));
+            infused.add(pos.add(6, -1, -1));
+            infused.add(pos.add(-6, -1, 1));
+            infused.add(pos.add(-6, -1, -1));
+            infused.add(pos.add(1, -1, 6));
+            infused.add(pos.add(-1, -1, 6));
+            infused.add(pos.add(1, -1, -6));
+            infused.add(pos.add(-1, -1, -6));
+
+            //Diagonals
+            infused.add(pos.add(4, -1, 4));
+            infused.add(pos.add(4, -1, -4));
+            infused.add(pos.add(-4, -1, 4));
+            infused.add(pos.add(-4, -1, -4));
+            //+1
+            infused.add(pos.add(4, -1, 3));
+            infused.add(pos.add(4, -1, -3));
+            infused.add(pos.add(-4, -1, 3));
+            infused.add(pos.add(-4, -1, -3));
+            infused.add(pos.add(3, -1, 4));
+            infused.add(pos.add(3, -1, -4));
+            infused.add(pos.add(-3, -1, 4));
+            infused.add(pos.add(-3, -1, -4));
+            //+2
+            infused.add(pos.add(5, -1, 2));
+            infused.add(pos.add(5, -1, 3));
+            infused.add(pos.add(5, -1, -2));
+            infused.add(pos.add(5, -1, -3));
+            infused.add(pos.add(-5, -1, 2));
+            infused.add(pos.add(-5, -1, 3));
+            infused.add(pos.add(-5, -1, -2));
+            infused.add(pos.add(-5, -1, -3));
+            infused.add(pos.add(2, -1, 5));
+            infused.add(pos.add(3, -1, 5));
+            infused.add(pos.add(-2, -1, 5));
+            infused.add(pos.add(-3, -1, 5));
+            infused.add(pos.add(2, -1, -5));
+            infused.add(pos.add(3, -1, -5));
+            infused.add(pos.add(-2, -1, -5));
+            infused.add(pos.add(-3, -1, -5));
+
 
             //Pillar 2
-            conduitBlocks.add(pos.add(5, 0, 2));
-            conduitBlocks.add(pos.add(5, 1, 2));
+            pillar.add(pos.add(5, 0, 2));
+            pillar.add(pos.add(5, 1, 2));
 
-            conduitBlocks.add(pos.add(5, 0, -2));
-            conduitBlocks.add(pos.add(5, 1, -2));
+            pillar.add(pos.add(5, 0, -2));
+            pillar.add(pos.add(5, 1, -2));
 
-            conduitBlocks.add(pos.add(-5, 0, 2));
-            conduitBlocks.add(pos.add(-5, 1, 2));
+            pillar.add(pos.add(-5, 0, 2));
+            pillar.add(pos.add(-5, 1, 2));
 
-            conduitBlocks.add(pos.add(-5, 0, -2));
-            conduitBlocks.add(pos.add(-5, 1, -2));
+            pillar.add(pos.add(-5, 0, -2));
+            pillar.add(pos.add(-5, 1, -2));
 
+            pillar.add(pos.add(2, 0, 5));
+            pillar.add(pos.add(2, 1, 5));
 
-            conduitBlocks.add(pos.add(2, 0, 5));
-            conduitBlocks.add(pos.add(2, 1, 5));
+            pillar.add(pos.add(-2, 0, 5));
+            pillar.add(pos.add(-2, 1, 5));
 
-            conduitBlocks.add(pos.add(-2, 0, 5));
-            conduitBlocks.add(pos.add(-2, 1, 5));
+            pillar.add(pos.add(2, 0, -5));
+            pillar.add(pos.add(2, 1, -5));
 
-            conduitBlocks.add(pos.add(2, 0, -5));
-            conduitBlocks.add(pos.add(2, 1, -5));
-
-            conduitBlocks.add(pos.add(-2, 0, -5));
-            conduitBlocks.add(pos.add(-2, 1, -5));
+            pillar.add(pos.add(-2, 0, -5));
+            pillar.add(pos.add(-2, 1, -5));
 
             //Pillar 3
-            conduitBlocks.add(pos.add(4, 0, 4));
-            conduitBlocks.add(pos.add(4, 1, 4));
-            conduitBlocks.add(pos.add(4, 2, 4));
+            pillar.add(pos.add(4, 0, 4));
+            pillar.add(pos.add(4, 1, 4));
+            pillar.add(pos.add(4, 2, 4));
 
-            conduitBlocks.add(pos.add(4, 0, -4));
-            conduitBlocks.add(pos.add(4, 1, -4));
-            conduitBlocks.add(pos.add(4, 2, -4));
+            pillar.add(pos.add(4, 0, -4));
+            pillar.add(pos.add(4, 1, -4));
+            pillar.add(pos.add(4, 2, -4));
 
-            conduitBlocks.add(pos.add(-4, 0, 4));
-            conduitBlocks.add(pos.add(-4, 1, 4));
-            conduitBlocks.add(pos.add(-4, 2, 4));
+            pillar.add(pos.add(-4, 0, 4));
+            pillar.add(pos.add(-4, 1, 4));
+            pillar.add(pos.add(-4, 2, 4));
 
-            conduitBlocks.add(pos.add(-4, 0, -4));
-            conduitBlocks.add(pos.add(-4, 1, -4));
-            conduitBlocks.add(pos.add(-4, 2, -4));
+            pillar.add(pos.add(-4, 0, -4));
+            pillar.add(pos.add(-4, 1, -4));
+            pillar.add(pos.add(-4, 2, -4));
 
             //Catalysts
             catalystBlocks1.add(pos.add(6, 1, 0));
@@ -256,52 +328,70 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
         }
 
         //Adding ground blocks
-        conduitBlocks.add(pos.down());
+        //Middle Square
+        infused.add(pos.down());
+        infused.add(pos.add(1, -1, 1));
+        infused.add(pos.add(1, -1, -1));
+        infused.add(pos.add(-1, -1, 1));
+        infused.add(pos.add(-1, -1, -1));
+
+        //Ground lines
         for (int i = 1; i <= r; i++) {
-            conduitBlocks.add(pos.add(i, -1, 0));
-            conduitBlocks.add(pos.add(-i, -1, 0));
-            conduitBlocks.add(pos.add(0, -1, i));
-            conduitBlocks.add(pos.add(0, -1, -i));
+            infused.add(pos.add(i, -1, 0));
+            infused.add(pos.add(-i, -1, 0));
+            infused.add(pos.add(0, -1, i));
+            infused.add(pos.add(0, -1, -i));
+
+            //Adding chiseled pillars
+            if (i == r) {
+                chiseled.add(pos.add(i, 0, 0));
+                chiseled.add(pos.add(-i, 0, 0));
+                chiseled.add(pos.add(0, 0, i));
+                chiseled.add(pos.add(0, 0, -i));
+            }
         }
     }
 
     public boolean checkStructure() {
-        return true;
 
-//        updateStructurePositions();
-//
-//        for (BlockPos pos : conduitBlocks) {
-////            if (!world.getBlockState(pos).getBlock().equals(AequitasBlocks.CONDUIT)) return false;
-//        }
-//        for (BlockPos pos : catalystBlocks1) {
-//            if (!world.getBlockState(pos).getBlock().equals(AequitasBlocks.CATALYST_I)) return false;
-//        }
-//        for (BlockPos pos : catalystBlocks2) {
-//            if (!world.getBlockState(pos).getBlock().equals(AequitasBlocks.CATALYST_II)) return false;
-//        }
-//        for (BlockPos pos : catalystBlocks3) {
-//            if (!world.getBlockState(pos).getBlock().equals(AequitasBlocks.CATALYST_III)) return false;
-//        }
-//
-//        return true;
+        updateStructurePositions();
+
+        for (BlockPos pos : infused) {
+            if (!world.getBlockState(pos).isIn(AequitasBlocks.INFUSED_BLOCKS)) return false;
+        }
+        for (BlockPos pos : chiseled) {
+            if (!world.getBlockState(pos).getBlock().equals(AequitasBlocks.CHISELED_INFUSED_STONE)) return false;
+        }
+        for (BlockPos pos : pillar) {
+            if (!world.getBlockState(pos).getBlock().equals(AequitasBlocks.INFUSED_STONE_PILLAR)) return false;
+        }
+
+        for (BlockPos pos : catalystBlocks1) {
+            if (!world.getBlockState(pos).getBlock().equals(AequitasBlocks.CATALYST_I)) return false;
+        }
+        for (BlockPos pos : catalystBlocks2) {
+            if (!world.getBlockState(pos).getBlock().equals(AequitasBlocks.CATALYST_II)) return false;
+        }
+        for (BlockPos pos : catalystBlocks3) {
+            if (!world.getBlockState(pos).getBlock().equals(AequitasBlocks.CATALYST_III)) return false;
+        }
+
+        return true;
     }
 
     private void setStructureBlockProperties(boolean value) {
         if (!value && !structureBlockProperties) return;
         structureBlockProperties = value;
 
-        for (BlockPos pos : conduitBlocks) {
-            if (world.getBlockState(pos).getOrEmpty(AequitasBlocks.ACTIVE_BLOCK_PROPERTY).isPresent()) {
-                world.setBlockState(pos, world.getBlockState(pos).with(AequitasBlocks.ACTIVE_BLOCK_PROPERTY, value));
-            }
-        }
+        List<BlockPos> activeBlocks = new ArrayList<>();
+        activeBlocks.addAll(infused);
+        activeBlocks.addAll(chiseled);
+        activeBlocks.addAll(pillar);
+        activeBlocks.addAll(catalystBlocks1);
+        activeBlocks.addAll(catalystBlocks2);
+        activeBlocks.addAll(catalystBlocks3);
 
-        List<BlockPos> catalystBlocks = new ArrayList<>();
-        catalystBlocks.addAll(catalystBlocks1);
-        catalystBlocks.addAll(catalystBlocks2);
-        catalystBlocks.addAll(catalystBlocks3);
-
-        for (BlockPos pos : catalystBlocks) {
+        for (BlockPos pos : activeBlocks) {
             if (world.getBlockState(pos).getOrEmpty(AequitasBlocks.ACTIVE_BLOCK_PROPERTY).isPresent()) {
                 world.setBlockState(pos, world.getBlockState(pos).with(AequitasBlocks.ACTIVE_BLOCK_PROPERTY, value));
             }
