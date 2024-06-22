@@ -1,0 +1,54 @@
+{
+  "parent": "aequitas:root",
+  "criteria": {
+    "primal_armor": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aequitas:primal_essence_helmet"
+            ]
+          },
+          {
+            "items": [
+              "aequitas:primal_essence_chestplate"
+            ]
+          },
+          {
+            "items": [
+              "aequitas:primal_essence_leggings"
+            ]
+          },
+          {
+            "items": [
+              "aequitas:primal_essence_boots"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.aequitas.primal_armor.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aequitas:primal_essence_chestplate",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.aequitas.primal_armor.title"
+    }
+  },
+  "requirements": [
+    [
+      "primal_armor"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

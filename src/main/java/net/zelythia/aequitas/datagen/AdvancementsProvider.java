@@ -54,8 +54,6 @@ public class AdvancementsProvider extends FabricAdvancementProvider {
 
                 .criterion("duplicated_item", ItemDuplicatedCriterion.Conditions.create(ItemPredicate.ANY))
                 .build(consumer, "aequitas:" + "duplicate_item");
-
-
         Advancement dragonEggDuplication = Advancement.Builder.create().parent(duplicateItem)
                 .display(
                         Items.DRAGON_EGG,
@@ -70,7 +68,6 @@ public class AdvancementsProvider extends FabricAdvancementProvider {
                 .rewards(AdvancementRewards.Builder.experience(1000))
                 .criterion("duplicated_dragon_egg", ItemDuplicatedCriterion.Conditions.create(ItemPredicate.Builder.create().items(Items.DRAGON_EGG).build()))
                 .build(consumer, "aequitas:" + "duplicated_dragon_egg");
-
         Advancement portablePedestalAdvancement = Advancement.Builder.create().parent(duplicateItem)
                 .display(
                         AequitasItems.PORTABLE_PEDESTAL,
@@ -87,6 +84,7 @@ public class AdvancementsProvider extends FabricAdvancementProvider {
                 .build(consumer, "aequitas:" + "portable_pedestal");
 
 
+
         Advancement collectionBowlI = Advancement.Builder.create().parent(root)
                 .display(
                         AequitasItems.COLLECTION_BOWL_I,
@@ -98,10 +96,8 @@ public class AdvancementsProvider extends FabricAdvancementProvider {
                         true,
                         false
                 )
-
                 .criterion("collection_bowl_I", CollectionBowlConstructedCriterion.Conditions.create(1))
                 .build(consumer, "aequitas:" + "collection_bowl_1");
-
         Advancement collectionBowlII = Advancement.Builder.create().parent(collectionBowlI)
                 .display(
                         AequitasItems.COLLECTION_BOWL_II,
@@ -113,10 +109,8 @@ public class AdvancementsProvider extends FabricAdvancementProvider {
                         true,
                         false
                 )
-
                 .criterion("collection_bowl_II", CollectionBowlConstructedCriterion.Conditions.create(2))
                 .build(consumer, "aequitas:" + "collection_bowl_2");
-
         Advancement collectionBowlIII = Advancement.Builder.create().parent(collectionBowlII)
                 .display(
                         AequitasItems.COLLECTION_BOWL_III,
@@ -128,9 +122,49 @@ public class AdvancementsProvider extends FabricAdvancementProvider {
                         true,
                         false
                 )
-
                 .criterion("collection_bowl_II", CollectionBowlConstructedCriterion.Conditions.create(3))
                 .build(consumer, "aequitas:" + "collection_bowl_3");
+
+
+        Advancement primalArmor = Advancement.Builder.create().parent(root)
+                .display(
+                        AequitasItems.PRIMAL_ESSENCE_CHESTPLATE,
+                        Text.translatable("advancements.aequitas.primal_armor.title"),
+                        Text.translatable("advancements.aequitas.primal_armor.description"),
+                        null,
+                        AdvancementFrame.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .criterion("primal_armor", InventoryChangedCriterion.Conditions.items(ItemPredicate.Builder.create().items(AequitasItems.PRIMAL_ESSENCE_HELMET).build(), ItemPredicate.Builder.create().items(AequitasItems.PRIMAL_ESSENCE_CHESTPLATE).build(), ItemPredicate.Builder.create().items(AequitasItems.PRIMAL_ESSENCE_LEGGINGS).build(), ItemPredicate.Builder.create().items(AequitasItems.PRIMAL_ESSENCE_BOOTS).build()))
+                .build(consumer, "aequitas:primal_armor");
+        Advancement primordialArmor = Advancement.Builder.create().parent(primalArmor)
+                .display(
+                        AequitasItems.PRIMAL_ESSENCE_CHESTPLATE,
+                        Text.translatable("advancements.aequitas.primordial_armor.title"),
+                        Text.translatable("advancements.aequitas.primordial_armor.description"),
+                        null,
+                        AdvancementFrame.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .criterion("primordial_armor", InventoryChangedCriterion.Conditions.items(ItemPredicate.Builder.create().items(AequitasItems.PRIMORDIAL_ESSENCE_HELMET).build(), ItemPredicate.Builder.create().items(AequitasItems.PRIMORDIAL_ESSENCE_CHESTPLATE).build(), ItemPredicate.Builder.create().items(AequitasItems.PRIMORDIAL_ESSENCE_LEGGINGS).build(), ItemPredicate.Builder.create().items(AequitasItems.PRIMORDIAL_ESSENCE_BOOTS).build()))
+                .build(consumer, "aequitas:primordial_armor");
+        Advancement pristineArmor = Advancement.Builder.create().parent(primordialArmor)
+                .display(
+                        AequitasItems.PRIMAL_ESSENCE_CHESTPLATE,
+                        Text.translatable("advancements.aequitas.pristine_armor.title"),
+                        Text.translatable("advancements.aequitas.pristine_armor.description"),
+                        null,
+                        AdvancementFrame.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .criterion("pristine_armor", InventoryChangedCriterion.Conditions.items(ItemPredicate.Builder.create().items(AequitasItems.PRISTINE_ESSENCE_HELMET).build(), ItemPredicate.Builder.create().items(AequitasItems.PRISTINE_ESSENCE_CHESTPLATE).build(), ItemPredicate.Builder.create().items(AequitasItems.PRISTINE_ESSENCE_LEGGINGS).build(), ItemPredicate.Builder.create().items(AequitasItems.PRISTINE_ESSENCE_BOOTS).build()))
+                .build(consumer, "aequitas:pristine_armor");
 
     }
 }

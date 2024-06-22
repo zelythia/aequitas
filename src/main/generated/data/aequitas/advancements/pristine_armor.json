@@ -1,0 +1,54 @@
+{
+  "parent": "aequitas:primordial_armor",
+  "criteria": {
+    "pristine_armor": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aequitas:pristine_essence_helmet"
+            ]
+          },
+          {
+            "items": [
+              "aequitas:pristine_essence_chestplate"
+            ]
+          },
+          {
+            "items": [
+              "aequitas:pristine_essence_leggings"
+            ]
+          },
+          {
+            "items": [
+              "aequitas:pristine_essence_boots"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.aequitas.pristine_armor.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aequitas:primal_essence_chestplate",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.aequitas.pristine_armor.title"
+    }
+  },
+  "requirements": [
+    [
+      "pristine_armor"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
