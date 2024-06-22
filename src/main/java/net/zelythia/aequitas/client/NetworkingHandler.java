@@ -26,16 +26,14 @@ import net.zelythia.aequitas.networking.EssencePacket;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static net.zelythia.aequitas.networking.NetworkingHandler.C2S_UPDATE_FILTER;
 
 @Environment(EnvType.CLIENT)
 public class NetworkingHandler {
     public static final Map<Identifier, JsonObject> LOOTTABLES = new ConcurrentHashMap<>();
-    public static boolean loottablesUpdated = false;
-
-
-
+    public static AtomicBoolean loottablesUpdated = new AtomicBoolean(false);
 
     public static void onInitializeClient() {
         ClientPlayNetworking.registerGlobalReceiver(net.zelythia.aequitas.networking.NetworkingHandler.ESSENCE_UPDATE, (client, handler, buf, responseSender) -> {
@@ -127,7 +125,7 @@ public class NetworkingHandler {
 
             client.execute(() -> {
                 Aequitas.LOGGER.info("Updated loottables");
-                loottablesUpdated = true;
+                loottablesUpdated.set(true);
             });
         });
     }
@@ -142,11 +140,11 @@ public class NetworkingHandler {
 
 
     public static boolean updateLootTables(){
-        loottablesUpdated = false;
+        loottablesUpdated.set(false);
         ClientPlayNetworking.send(net.zelythia.aequitas.networking.NetworkingHandler.ASK_SYNC_INFO, PacketByteBufs.empty());
         long start = System.currentTimeMillis();
 
-        while(!loottablesUpdated){
+        while (!loottablesUpdated.get()) {
             long current = System.currentTimeMillis();
             if(current - start > 10000){
                 Aequitas.LOGGER.error("Failed to sync loot tables (took more than 10s to sync). EMI or REI won't work");
