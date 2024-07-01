@@ -18,6 +18,7 @@ public class AequitasItems {
     public static final Item CHISELED_INFUSED_STONE;
     public static final Item ETCHED_INFUSED_STONE;
     public static final Item SMOOTH_INFUSED_STONE;
+    public static final Item PETRIFIED_ESSENCE;
 
     public static final Item PRIMAL_ESSENCE;
     public static final Item PRIMORDIAL_ESSENCE;
@@ -69,6 +70,7 @@ public class AequitasItems {
         CHISELED_INFUSED_STONE = register("chiseled_infused_stone", new BlockItem(AequitasBlocks.CHISELED_INFUSED_STONE, new Item.Settings()));
         ETCHED_INFUSED_STONE = register("etched_infused_stone", new BlockItem(AequitasBlocks.ETCHED_INFUSED_STONE, new Item.Settings()));
         SMOOTH_INFUSED_STONE = register("smooth_infused_stone", new BlockItem(AequitasBlocks.SMOOTH_INFUSED_STONE, new Item.Settings()));
+        PETRIFIED_ESSENCE = register("petrified_essence", new BlockItem(AequitasBlocks.PETRIFIED_ESSENCE, new Item.Settings()));
 
         PRIMAL_ESSENCE = register("primal_essence", new Item(new Item.Settings()));
         PRIMORDIAL_ESSENCE = register("primordial_essence", new Item(new Item.Settings()));
@@ -118,6 +120,7 @@ public class AequitasItems {
                             entries.add(CHISELED_INFUSED_STONE);
                             entries.add(ETCHED_INFUSED_STONE);
                             entries.add(SMOOTH_INFUSED_STONE);
+                            entries.add(PETRIFIED_ESSENCE);
 
                             entries.add(PRIMAL_ESSENCE);
                             entries.add(PRIMORDIAL_ESSENCE);

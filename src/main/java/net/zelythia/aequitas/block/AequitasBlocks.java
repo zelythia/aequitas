@@ -26,6 +26,8 @@ public class AequitasBlocks {
     public static final Block ETCHED_INFUSED_STONE;
     public static final Block SMOOTH_INFUSED_STONE;
 
+    public static final Block PETRIFIED_ESSENCE;
+
     public static final Block PEDESTAL;
     public static final Block CRAFTING_PEDESTAL;
     public static final Block SAMPLING_PEDESTAL;
@@ -53,7 +55,7 @@ public class AequitasBlocks {
         CHISELED_INFUSED_STONE = register("chiseled_infused_stone", new InfusedStoneBlock(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.CALCITE).strength(1.25F, 4.2F)));
         ETCHED_INFUSED_STONE = register("etched_infused_stone", new InfusedStoneBlock(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.CALCITE).strength(1.25F, 4.2F)));
         SMOOTH_INFUSED_STONE = register("smooth_infused_stone", new InfusedStoneBlock(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.CALCITE).strength(1.25F, 4.2F)));
-
+        PETRIFIED_ESSENCE = register("petrified_essence", new Block(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).sounds(BlockSoundGroup.AMETHYST_BLOCK).strength(0.8f)));
 
         PRIMAL_ESSENCE_BLOCK = register("primal_essence_block", new Block(AbstractBlock.Settings.create().mapColor(MapColor.GREEN).sounds(BlockSoundGroup.GLASS).strength(0.3F)));
         PRIMORDIAL_ESSENCE_BLOCK = register("primordial_essence_block", new Block(AbstractBlock.Settings.create().mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.GLASS).strength(0.3F)));

@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "aequitas:block/petrified_essence"
+      },
+      {
+        "model": "aequitas:block/petrified_essence",
+        "y": 90
+      },
+      {
+        "model": "aequitas:block/petrified_essence",
+        "y": 180
+      },
+      {
+        "model": "aequitas:block/petrified_essence",
+        "y": 270
+      }
+    ]
+  }
+}

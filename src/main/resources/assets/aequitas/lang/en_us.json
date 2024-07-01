@@ -57,6 +57,7 @@
   "block.aequitas.primal_essence_block" : "Primal Essence Block",
   "block.aequitas.primordial_essence_block" : "Primordial Essence Block",
   "block.aequitas.pristine_essence_block" : "Pristine Essence Block",
+  "block.aequitas.petrified_essence": "Petrified Essence Block",
 
   "gui.rei.aequitas.category.collection_bowl": "Collection Bowl",
 
@@ -87,6 +88,7 @@
   "gui.aequitas.title.aequitas:gameplay/stone": "Stony",
   "gui.aequitas.title.aequitas:gameplay/swamp": "Swamp",
   "gui.aequitas.title.aequitas:gameplay/taiga": "Taiga",
+
   "advancements.aequitas.welcome.title": "Welcome to Aequitas!",
   "advancements.aequitas.welcome.description": "",
   "advancements.aequitas.duplicated_item.title": "Duplicate your first item",
@@ -100,5 +102,15 @@
   "advancements.aequitas.collection_bowl_II.title": "Start collecting!",
   "advancements.aequitas.collection_bowl_II.description": "Construct a tier II Collection Bowl",
   "advancements.aequitas.collection_bowl_III.title": "Infinite Resources!!!",
-  "advancements.aequitas.collection_bowl_III.description": "Construct a tier III Collection Bowl"
+  "advancements.aequitas.collection_bowl_III.description": "Construct a tier III Collection Bowl",
+  "advancements.aequitas.primal_armor.title": "Primal Armor",
+  "advancements.aequitas.primal_armor.description": "Acquire a full set of Primal Essence Armor",
+  "advancements.aequitas.primordial_armor.title": "Primordial Armor",
+  "advancements.aequitas.primordial_armor.description": "Acquire a full set of Primordial Essence Armor",
+  "advancements.aequitas.pristine_armor.title": "Pristine Armor",
+  "advancements.aequitas.pristine_armor.description": "Acquire a full set of Pristine Essence Armor",
+  "patchouli_books.aequitas.name": "Essence Guide",
+  "patchouli_books.aequitas.landing_text": "Welcome to Aequitas!",
+  "patchouli_books.aequitas.collection_bowls.collection_bowl_1.name": "Collection Bowl 1",
+  "patchouli_books.aequitas.collection_bowls.collection_bowl_1.text": "Construct a Collection Bowl Structure"
 }
