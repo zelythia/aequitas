@@ -79,18 +79,22 @@ public class AequitasItems {
         PRIMORDIAL_ESSENCE_BLOCK = register("primordial_essence_block", new BlockItem(AequitasBlocks.PRIMORDIAL_ESSENCE_BLOCK, new Item.Settings()));
         PRISTINE_ESSENCE_BLOCK = register("pristine_essence_block", new BlockItem(AequitasBlocks.PRISTINE_ESSENCE_BLOCK, new Item.Settings()));
 
+
         PRIMAL_ESSENCE_HELMET = register("primal_essence_helmet", new EssenceArmorItem(ArmorMaterials.PRIMAL, ArmorItem.Type.HELMET, new Item.Settings()));
         PRIMAL_ESSENCE_CHESTPLATE = register("primal_essence_chestplate", new EssenceArmorItem(ArmorMaterials.PRIMAL, ArmorItem.Type.CHESTPLATE, new Item.Settings()));
-        PRIMAL_ESSENCE_LEGGINGS = register("primal_essence_leggings", new ArmorItem(ArmorMaterials.PRIMAL, ArmorItem.Type.LEGGINGS, new Item.Settings()));
+        PRIMAL_ESSENCE_LEGGINGS = register("primal_essence_leggings", new EssenceArmorItem(ArmorMaterials.PRIMAL, ArmorItem.Type.LEGGINGS, new Item.Settings()));
         PRIMAL_ESSENCE_BOOTS = register("primal_essence_boots", new ArmorItem(ArmorMaterials.PRIMAL, ArmorItem.Type.BOOTS, new Item.Settings()));
+
         PRIMORDIAL_ESSENCE_HELMET = register("primordial_essence_helmet", new EssenceArmorItem(ArmorMaterials.PRIMORDIAL, ArmorItem.Type.HELMET, new Item.Settings()));
         PRIMORDIAL_ESSENCE_CHESTPLATE = register("primordial_essence_chestplate", new EssenceArmorItem(ArmorMaterials.PRIMORDIAL, ArmorItem.Type.CHESTPLATE, new Item.Settings()));
-        PRIMORDIAL_ESSENCE_LEGGINGS = register("primordial_essence_leggings", new ArmorItem(ArmorMaterials.PRIMORDIAL, ArmorItem.Type.LEGGINGS, new Item.Settings()));
+        PRIMORDIAL_ESSENCE_LEGGINGS = register("primordial_essence_leggings", new EssenceArmorItem(ArmorMaterials.PRIMORDIAL, ArmorItem.Type.LEGGINGS, new Item.Settings()));
         PRIMORDIAL_ESSENCE_BOOTS = register("primordial_essence_boots", new ArmorItem(ArmorMaterials.PRIMORDIAL, ArmorItem.Type.BOOTS, new Item.Settings()));
+
         PRISTINE_ESSENCE_HELMET = register("pristine_essence_helmet", new EssenceArmorItem(ArmorMaterials.PRISTINE, ArmorItem.Type.HELMET, new Item.Settings()));
         PRISTINE_ESSENCE_CHESTPLATE = register("pristine_essence_chestplate", new EssenceArmorItem(ArmorMaterials.PRISTINE, ArmorItem.Type.CHESTPLATE, new Item.Settings()));
-        PRISTINE_ESSENCE_LEGGINGS = register("pristine_essence_leggings", new ArmorItem(ArmorMaterials.PRISTINE, ArmorItem.Type.LEGGINGS, new Item.Settings()));
+        PRISTINE_ESSENCE_LEGGINGS = register("pristine_essence_leggings", new EssenceArmorItem(ArmorMaterials.PRISTINE, ArmorItem.Type.LEGGINGS, new Item.Settings()));
         PRISTINE_ESSENCE_BOOTS = register("pristine_essence_boots", new ArmorItem(ArmorMaterials.PRISTINE, ArmorItem.Type.BOOTS, new Item.Settings()));
+
 
         SAMPLING_PEDESTAL_CORE = register("sampling_pedestal_core", new Item(new Item.Settings()));
         CRAFTING_PEDESTAL_CORE = register("crafting_pedestal_core", new Item(new Item.Settings()));

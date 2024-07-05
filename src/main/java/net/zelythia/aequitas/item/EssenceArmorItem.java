@@ -26,16 +26,51 @@ public class EssenceArmorItem extends ArmorItem {
         LivingEntity livingEntity = (LivingEntity) entity;
         PlayerEntity player = (PlayerEntity) livingEntity;
 
+        if (!player.getInventory().armor.contains(stack)) return;
 
-        if (slot == EquipmentSlot.HEAD.getEntitySlotId() && ArmorMaterials.isEssenceArmor(stack.getItem())) {
-            if (!player.isSubmergedIn(FluidTags.WATER)) {
-                player.addStatusEffect(new StatusEffectInstance(StatusEffects.WATER_BREATHING, 200, 0, false, false, true));
+
+        //Give Water breathing when wearing a helmet
+        //slot = 3 can be hotbar and armor
+        if (((ArmorItem) stack.getItem()).getSlotType() == EquipmentSlot.HEAD) {
+            int time = 200;
+            if (player.getInventory().armor.get(3).getItem().equals(AequitasItems.PRIMORDIAL_ESSENCE_HELMET))
+                time = time * 3;
+
+            if (!player.isSubmergedIn(FluidTags.WATER) || player.getInventory().armor.get(3).getItem().equals(AequitasItems.PRISTINE_ESSENCE_HELMET)) {
+                player.addStatusEffect(new StatusEffectInstance(StatusEffects.WATER_BREATHING, time, 0, false, false, false));
             }
 
             return;
         }
 
-        //Code for the chestplate
+        //Give Speed I for Primal Essence Leggings
+        if (stack.getItem().equals(AequitasItems.PRIMAL_ESSENCE_LEGGINGS)) {
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 20, 0, false, false, false));
+            return;
+        }
+        //Give Speed II for Primal Essence Leggings
+        if (stack.getItem().equals(AequitasItems.PRIMORDIAL_ESSENCE_LEGGINGS)) {
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 20, 1, false, false, false));
+            return;
+        }
+        if (stack.getItem().equals(AequitasItems.PRISTINE_ESSENCE_LEGGINGS)) {
+            if (player.isSprinting()) {
+                player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 20, 2, false, false, false));
+            } else {
+                player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 20, 1, false, false, false));
+            }
+        }
+
+
+        //CHESTPLATE:
+        if (stack.getItem().equals(AequitasItems.PRIMORDIAL_ESSENCE_CHESTPLATE)) {
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.SATURATION, 20, 0, false, false, false));
+        } else if (stack.getItem().equals(AequitasItems.PRISTINE_ESSENCE_CHESTPLATE)) {
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.SATURATION, 20, 0, false, false, false));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 20, 0, false, false, false));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 20, 0, false, false, false));
+        }
+
         if (player.getAbilities().creativeMode || player.isSpectator()) return;
 
         if (checkSetPristine(player) || (checkSetPrimordial(player) && timeFlown <= MAX_FLY_TIME)) {

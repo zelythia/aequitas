@@ -1,9 +1,9 @@
 {
   "type" : "minecraft:crafting_shaped",
   "pattern" : [
-    " # ",
+    "H#H",
     "#A#",
-    " # "
+    "H#H"
   ],
   "key" : {
     "#" : {
@@ -11,6 +11,9 @@
     },
     "A" : {
       "item": "minecraft:netherite_leggings"
+    },
+    "H": {
+      "item": "minecraft:honey_bottle"
     }
   },
   "result" : {
