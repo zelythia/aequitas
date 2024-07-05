@@ -1,0 +1,71 @@
+{
+  "name": "Collection Bowl 1",
+  "icon": "aequitas:collection_bowl_1",
+  "category": "aequitas:collection_bowls",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Collection Bowl 1",
+      "text": "Build the supporting Structure for the first Collection Bowl.$(br)(Note: The floor pattern can be of any Infused Stone Block)"
+    },
+    {
+      "type": "patchouli:multiblock",
+      "multiblock": {
+        "mapping": {
+          "B": "#aequitas:infused_blocks",
+          "S": "aequitas:chiseled_infused_stone",
+          "0": "aequitas:collection_bowl_1",
+          "P": "aequitas:primal_catalyst"
+        },
+        "pattern": [
+          [
+            "_______",
+            "_______",
+            "_______",
+            "___P___",
+            "_______",
+            "_______",
+            "_______"
+          ],
+          [
+            "_______",
+            "_______",
+            "_______",
+            "___ ___",
+            "_______",
+            "_______",
+            "_______"
+          ],
+          [
+            "___P___",
+            "___ ___",
+            "___ ___",
+            "P     P",
+            "_______",
+            "_______",
+            "___P___"
+          ],
+          [
+            "___S___",
+            "_______",
+            "_______",
+            "S__0__S",
+            "_______",
+            "_______",
+            "___S___"
+          ],
+          [
+            "__BBB__",
+            "_B_B_B_",
+            "B_BBB_B",
+            "BBBBBBB",
+            "B_BBB_B",
+            "_B_B_B_",
+            "__BBB__"
+          ]
+        ],
+        "symmetrical": true
+      }
+    }
+  ]
+}

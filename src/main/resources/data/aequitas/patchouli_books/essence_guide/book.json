@@ -1,0 +1,7 @@
+{
+  "name": "patchouli_books.aequitas.name",
+  "landing_text": "patchouli_books.aequitas.landing_text",
+  "version": 1,
+  "creative_tab": "minecraft:tools_and_utilities",
+  "use_resource_pack": true
+}

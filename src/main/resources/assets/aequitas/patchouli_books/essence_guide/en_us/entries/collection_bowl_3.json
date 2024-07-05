@@ -1,0 +1,107 @@
+{
+  "name": "Collection Bowl 3",
+  "icon": "aequitas:collection_bowl_3",
+  "category": "aequitas:collection_bowls",
+  "advancement": "aequitas:collection_bowl_2",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Collection Bowl 3",
+      "text": "Build the Structure for the first Collection Bowl 3. It will collect essence twice as fast as the Collection Bowl 2 and has even more Inventory space.$(br)(Note: The floor pattern can be of any Infused Stone Block)"
+    },
+    {
+      "type": "patchouli:multiblock",
+      "multiblock": {
+        "mapping": {
+          "#": "#aequitas:infused_blocks",
+          "S": "aequitas:chiseled_infused_stone",
+          "T": "aequitas:infused_stone_pillar[axis=y,top=true,bottom=false]",
+          "C": "aequitas:infused_stone_pillar[axis=y,top=false,bottom=false]",
+          "B": "aequitas:infused_stone_pillar[axis=y,top=false,bottom=true]",
+          "0": "aequitas:collection_bowl_3",
+          "P": "aequitas:primal_catalyst",
+          "Q": "aequitas:primordial_catalyst",
+          "R": "aequitas:pristine_catalyst"
+        },
+        "pattern": [
+          [
+            "_____________",
+            "_____________",
+            "__R_______R__",
+            "_____________",
+            "_____________",
+            "_____________",
+            "______R______",
+            "_____________",
+            "_____________",
+            "_____________",
+            "__R_______R__",
+            "_____________",
+            "_____________"
+          ],
+          [
+            "_____________",
+            "____Q___Q____",
+            "__T_______T__",
+            "_____________",
+            "_Q_________Q_",
+            "_____________",
+            "_____________",
+            "_____________",
+            "_Q_________Q_",
+            "_____________",
+            "__T_______T__",
+            "____Q___Q____",
+            "_____________"
+          ],
+          [
+            "______P______",
+            "____T_ _T____",
+            "__C___ ___C__",
+            "______ ______",
+            "_T____ ____T_",
+            "______ ______",
+            "P           P",
+            "______ ______",
+            "_T____ ____T_",
+            "______ ______",
+            "__C___ ___C__",
+            "____T_ _T____",
+            "______P______"
+          ],
+          [
+            "______S______",
+            "____B___B____",
+            "__B_______B__",
+            "_____________",
+            "_B_________B_",
+            "_____________",
+            "S_____0_____S",
+            "_____________",
+            "_B_________B_",
+            "_____________",
+            "__B_______B__",
+            "____B___B____",
+            "______S______"
+          ],
+          [
+            "____#####____",
+            "___##_#_##___",
+            "__##__#__##__",
+            "_##___#___##_",
+            "##___###___##",
+            "#   #####   #",
+            "#############",
+            "#   #####   #",
+            "##___###___##",
+            "_##___#___##_",
+            "__##__#__##__",
+            "___##_#_##___",
+            "____#####____"
+          ]
+        ],
+        "symmetrical": true
+      }
+    }
+  ]
+}

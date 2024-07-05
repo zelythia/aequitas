@@ -1,0 +1,40 @@
+{
+  "name": "Pristine Armor",
+  "icon": "aequitas:pristine_essence_chestplate",
+  "category": "aequitas:equipment",
+  "advancement": "aequitas:primordial_armor",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": {
+        "item": "aequitas:pristine_essence_helmet"
+      },
+      "title": "Pristine Essence Helmet",
+      "text": "The wearer can breathe underwater for an unlimited amount of time."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": {
+        "item": "aequitas:pristine_essence_chestplate"
+      },
+      "title": "Pristine Essence Chestplate",
+      "text": "Grants the wearer Regeneration and Fire Protection.$(br)$(br)Equipping the full Pristine Armor set allows the player to fly for an unlimited amount of time."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": {
+        "item": "aequitas:pristine_essence_leggings"
+      },
+      "title": "Pristine Essence Leggings",
+      "text": "Constantly gives the wearer SPEED II and SPEED III while sprinting."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": {
+        "item": "aequitas:pristine_essence_boots"
+      },
+      "title": "Pristine Essence Boots",
+      "text": "Negates all fall damage."
+    }
+  ]
+}

@@ -25,6 +25,8 @@ repositories {
 	maven {
 		url "https://cursemaven.com"
 	}
+
+    maven { url 'https://maven.blamejared.com' }
 }
 
 loom {
@@ -78,6 +80,8 @@ dependencies {
 
 	modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
 //	modLocalRuntime "dev.emi:emi-fabric:${emi_version}"
+
+    modImplementation "vazkii.patchouli:Patchouli:${patchouli_version}"
 }
 
 processResources {
