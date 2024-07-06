@@ -31,11 +31,12 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
 public class ResourceLoader implements IdentifiableResourceReloadListener {
-
     private final Gson GSON;
     private final CustomEssenceLoader customEssenceLoader;
     private final CustomCraftingCostLoader customCraftingCostLoader;
     private final CustomRecipeLoader customRecipeLoader;
+
+    private final List<String> KNOWN_TAGS = List.of("#c:lead_ingots", "#c:zinc_ingots", "#c:silver_ingots", "#c:platinum_ingots", "#c:antimony_ingots", "#c:nickel_ingots", "#c:chromium_ingots", "#c:iridium_ingots", "#c:cadmium_ingots", "#c:uranium_ingots", "#c:titanium_ingots", "#c:plutonium_ingots", "#c:tungsten_ingots", "#c:tin_ingots", "#c:crops");
 
     public ResourceLoader() {
         GSON = new Gson();
@@ -180,7 +181,7 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
                             });
                         }
                     } else {
-//                        Aequitas.LOGGER.error("Unknown tag {}", key);
+                        if (!KNOWN_TAGS.contains(key)) Aequitas.LOGGER.error("Unknown tag {}", key);
                     }
 
                 } else {
