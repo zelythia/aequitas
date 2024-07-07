@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SES",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "tag": "minecraft:stone_crafting_materials"
+    },
+    "E": {
+      "item": "aequitas:primal_essence"
+    }
+  },
+  "result": {
+    "item": "aequitas:infused_stone",
+    "count": 8
+  }
+}
