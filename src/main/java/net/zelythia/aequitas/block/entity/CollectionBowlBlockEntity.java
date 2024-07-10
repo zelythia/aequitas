@@ -404,7 +404,7 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
         } else if (this.tier == 2) {
             this.collectionTimeTotal = (int) ((Math.random() * 200) + 500);
         } else {
-            this.collectionTimeTotal = (int) ((Math.random() * 200) + 100);
+            this.collectionTimeTotal = (int) ((Math.random() * 200) + 200);
         }
     }
 
