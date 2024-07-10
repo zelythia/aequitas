@@ -6,7 +6,7 @@
     {
       "type": "patchouli:text",
       "title": "Primal Armor",
-      "text": "Using the primal Essence you collected from all around the world, you manage to infuse the already powerful Netherite Armor with it to make it even stronger.$(br)Each piece of the set grants you unique effects.$(br)When you have the full set equipped you can additionally double jump by pressing the key a second time while in the air.$(br)It also seems that Piglins aren't aggressive, when you are wearing a piece of Essence Armor."
+      "text": "Using the primal Essence you collected from all around the world, you manage to infuse the already powerful Netherite Armor with it to make it even stronger.$(br)Each piece of the set grants you unique effects.$(br)When you have the full set equipped you can additionally $(l)double jump$() by pressing the key a second time while in the air.$(br)It also seems that $(l)Piglins aren't aggressive$(), when you are wearing a piece of Essence Armor."
     },
     {
       "type": "patchouli:spotlight",
@@ -14,7 +14,7 @@
         "item": "aequitas:primal_essence_helmet"
       },
       "title": "Primal Essence Helmet",
-      "text": "The Primal Essence allows you to fuse the Turtle Shell with your netherite helmet, giving you 10s of Water Breathing."
+      "text": "The Primal Essence allows you to fuse the Turtle Shell with your netherite helmet, giving you $(l)10s of Water Breathing$()."
     },
     {
       "type": "patchouli:spotlight",
@@ -22,7 +22,7 @@
         "item": "aequitas:primal_essence_chestplate"
       },
       "title": "Primal Essence Chestplate",
-      "text": "The Primal Essence allows you to fuse the Elytra with your Netherite Chestplate, allowing you the fly like you're used to without loosing the chestplates protection."
+      "text": "The Primal Essence allows you to fuse the $(l)Elytra$() with your Netherite Chestplate, allowing you the fly like you're used to without loosing the chestplates protection."
     },
     {
       "type": "patchouli:spotlight",
@@ -30,7 +30,7 @@
         "item": "aequitas:primal_essence_leggings"
       },
       "title": "Primal Essence Leggings",
-      "text": "Constantly gives the player SPEED I"
+      "text": "Constantly gives the player $(l)SPEED I$()"
     },
     {
       "type": "patchouli:spotlight",

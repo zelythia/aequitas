@@ -6,7 +6,7 @@
     {
       "type": "patchouli:text",
       "title": "Collection Bowl 1",
-      "text": "Build the supporting Structure for the first Collection Bowl.$(br)(Note: The floor pattern can be of any Infused Stone Block)"
+      "text": "Build the supporting Structure for the first Collection Bowl.$(br)(Note: The floor pattern can be of any Infused Stone Block)$(br)But collecting essence is no easy or quick task and it will take about 60s to generate a full item."
     },
     {
       "type": "patchouli:multiblock",

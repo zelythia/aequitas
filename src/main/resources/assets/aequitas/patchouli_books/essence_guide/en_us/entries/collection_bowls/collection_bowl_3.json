@@ -7,7 +7,7 @@
     {
       "type": "patchouli:text",
       "title": "Collection Bowl 3",
-      "text": "Build the Structure for the first Collection Bowl 3. It will collect essence twice as fast as the Collection Bowl 2 and has even more Inventory space.$(br)(Note: The floor pattern can be of any Infused Stone Block)"
+      "text": "Build the Structure for the Collection Bowl 3. It will collect essence twice as fast as the Collection Bowl 2(15s) and has even more Inventory space.$(br)(Note: The floor pattern can be of any Infused Stone Block)"
     },
     {
       "type": "patchouli:multiblock",

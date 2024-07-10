@@ -10,7 +10,7 @@
         "item": "aequitas:pristine_essence_helmet"
       },
       "title": "Pristine Essence Helmet",
-      "text": "The wearer can breathe underwater for an unlimited amount of time."
+      "text": "The wearer can $(l)breathe underwater$() for an unlimited amount of time."
     },
     {
       "type": "patchouli:spotlight",
@@ -18,7 +18,7 @@
         "item": "aequitas:pristine_essence_chestplate"
       },
       "title": "Pristine Essence Chestplate",
-      "text": "Grants the wearer Regeneration and Fire Protection.$(br)$(br)Equipping the full Pristine Armor set allows the player to fly for an unlimited amount of time."
+      "text": "Grants the wearer $(l)Regeneration$() and $(l)Fire Protection$().$(br)$(br)Equipping the full Pristine Armor set allows the player to $(l)fly$() for an unlimited amount of time."
     },
     {
       "type": "patchouli:spotlight",
@@ -26,7 +26,7 @@
         "item": "aequitas:pristine_essence_leggings"
       },
       "title": "Pristine Essence Leggings",
-      "text": "Constantly gives the wearer SPEED II and SPEED III while sprinting."
+      "text": "Constantly gives the wearer $(l)SPEED II$() and $(l)SPEED III while sprinting$()."
     },
     {
       "type": "patchouli:spotlight",
