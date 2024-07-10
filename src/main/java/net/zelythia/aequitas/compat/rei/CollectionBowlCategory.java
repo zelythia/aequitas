@@ -39,7 +39,7 @@ public class CollectionBowlCategory implements DisplayCategory<CollectionBowlDis
 
     @Override
     public Text getTitle() {
-        return Text.translatable("gui.rei.aequitas.category.collection_bowl");
+        return Text.translatable("rei.category.aequitas.collection_bowl");
     }
 
     @Override
