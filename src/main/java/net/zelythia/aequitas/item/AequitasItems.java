@@ -112,7 +112,7 @@ public class AequitasItems {
         COLLECTION_BOWL_III = register("collection_bowl_3", new BlockItem(AequitasBlocks.COLLECTION_BOWL_III, new Item.Settings()));
 
 
-        ITEM_GROUP = Registry.register(Registries.ITEM_GROUP, new Identifier(Aequitas.MOD_ID, "aequitas_item_group"),
+        ITEM_GROUP = Registry.register(Registries.ITEM_GROUP, new Identifier(Aequitas.MOD_ID, "everything"),
                 FabricItemGroup.builder()
                         .icon(() -> new ItemStack(CRAFTING_PEDESTAL))
                         .displayName(Text.translatable("itemGroup.aequitas.item_group"))
