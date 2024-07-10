@@ -38,7 +38,7 @@
   "item.aequitas.portable_pedestal" : "Portable Pedestal",
   "tooltip.aequitas.portable_pedestal" : "Stored: %s",
   "block.aequitas.infused_stone": "Infused Stone",
-  "block.aequitas.infused_stone_pillar": "Infused Stone",
+  "block.aequitas.infused_stone_pillar": "Infused Stone Pillar",
   "block.aequitas.infused_stone_slab": "Infused Stone Slab",
   "block.aequitas.infused_stone_stairs": "Infused Stone Stairs",
   "block.aequitas.chiseled_infused_stone": "Chiseled Infused Stone",
@@ -58,9 +58,7 @@
   "block.aequitas.primordial_essence_block" : "Primordial Essence Block",
   "block.aequitas.pristine_essence_block" : "Pristine Essence Block",
   "block.aequitas.petrified_essence": "Petrified Essence Block",
-
-  "gui.rei.aequitas.category.collection_bowl": "Collection Bowl",
-
+  "rei.category.aequitas.collection_bowl": "Collection Bowl",
   "emi.category.aequitas.collection_bowl": "Collection Bowl",
 
   "gui.aequitas.title.aequitas:gameplay/overworld": "Overworld",
@@ -99,7 +97,7 @@
   "advancements.aequitas.get_portable_pedestal.description": "Obtain the Portable Pedestal",
   "advancements.aequitas.collection_bowl_I.title": "Start collecting!",
   "advancements.aequitas.collection_bowl_I.description": "Construct a tier I Collection Bowl",
-  "advancements.aequitas.collection_bowl_II.title": "Start collecting!",
+  "advancements.aequitas.collection_bowl_II.title": "Still collecting!",
   "advancements.aequitas.collection_bowl_II.description": "Construct a tier II Collection Bowl",
   "advancements.aequitas.collection_bowl_III.title": "Infinite Resources!!!",
   "advancements.aequitas.collection_bowl_III.description": "Construct a tier III Collection Bowl",
@@ -110,7 +108,5 @@
   "advancements.aequitas.pristine_armor.title": "Pristine Armor",
   "advancements.aequitas.pristine_armor.description": "Acquire a full set of Pristine Essence Armor",
   "patchouli_books.aequitas.name": "Essence Guide",
-  "patchouli_books.aequitas.landing_text": "Welcome to Aequitas!",
-  "patchouli_books.aequitas.collection_bowls.collection_bowl_1.name": "Collection Bowl 1",
-  "patchouli_books.aequitas.collection_bowls.collection_bowl_1.text": "Construct a Collection Bowl Structure"
+  "patchouli_books.aequitas.landing_text": "Welcome to Aequitas!"
 }
