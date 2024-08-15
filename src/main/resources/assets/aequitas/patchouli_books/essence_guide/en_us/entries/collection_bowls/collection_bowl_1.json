@@ -1,11 +1,11 @@
 {
-  "name": "Collection Bowl 1",
+  "name": "Collection Bowl I",
   "icon": "aequitas:collection_bowl_1",
   "category": "aequitas:collection_bowls",
   "pages": [
     {
       "type": "patchouli:text",
-      "title": "Collection Bowl 1",
+      "title": "Collection Bowl I",
       "text": "Build the supporting Structure for the first Collection Bowl.$(br)(Note: The floor pattern can be of any Infused Stone Block)$(br)But collecting essence is no easy or quick task and it will take about 60s to generate a full item."
     },
     {

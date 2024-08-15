@@ -1,12 +1,12 @@
 {
-  "name": "Collection Bowl 3",
+  "name": "Collection Bowl III",
   "icon": "aequitas:collection_bowl_3",
   "category": "aequitas:collection_bowls",
   "advancement": "aequitas:collection_bowl_2",
   "pages": [
     {
       "type": "patchouli:text",
-      "title": "Collection Bowl 3",
+      "title": "Collection Bowl III",
       "text": "Build the Structure for the Collection Bowl 3. It will collect essence twice as fast as the Collection Bowl 2(15s) and has even more Inventory space.$(br)(Note: The floor pattern can be of any Infused Stone Block)"
     },
     {
