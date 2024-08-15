@@ -1,0 +1,85 @@
+{
+  "name": "Sammelschale II",
+  "icon": "aequitas:collection_bowl_2",
+  "category": "aequitas:collection_bowls",
+  "advancement": "aequitas:collection_bowl_1",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Sammelschale II",
+      "text": "Erbaue die benötigte Struktur der für die Sammelschale II. Sie wird die Essenz doppelt so schnell wie die erste einsammeln (30s)$(br)(Tipp: Das Muster des Bodens kann aus allen möglichen Kombinationen von Durchdrungenen Steinen bestehen)"
+    },
+    {
+      "type": "patchouli:multiblock",
+      "multiblock": {
+        "mapping": {
+          "#": "#aequitas:infused_blocks",
+          "S": "aequitas:chiseled_infused_stone",
+          "T": "aequitas:infused_stone_pillar[axis=y,top=true,bottom=false]",
+          "B": "aequitas:infused_stone_pillar[axis=y,top=false,bottom=true]",
+          "0": "aequitas:collection_bowl_2",
+          "P": "aequitas:primal_catalyst",
+          "Q": "aequitas:primordial_catalyst"
+        },
+        "pattern": [
+          [
+            "_________",
+            "_________",
+            "_________",
+            "_________",
+            "____Q____",
+            "_________",
+            "_________",
+            "_________",
+            "_________"
+          ],
+          [
+            "_________",
+            "_Q_____Q_",
+            "_________",
+            "_________",
+            "_________",
+            "_________",
+            "_________",
+            "_Q_____Q_",
+            "_________"
+          ],
+          [
+            "____P____",
+            "_T__ __T_",
+            "____ ____",
+            "____ ____",
+            "P       P",
+            "____ ____",
+            "____ ____",
+            "_T__ __T_",
+            "____P____"
+          ],
+          [
+            "____S____",
+            "_B_____B_",
+            "_________",
+            "_________",
+            "S___0___S",
+            "_________",
+            "_________",
+            "_B_____B_",
+            "____S____"
+          ],
+          [
+            "__#####__",
+            "_##_#_##_",
+            "##__#__##",
+            "#__###__#",
+            "#########",
+            "#__###__#",
+            "##__#__##",
+            "_##_#_##_",
+            "__#####__"
+          ]
+        ],
+        "symmetrical": true
+      }
+    }
+  ]
+}

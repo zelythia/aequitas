@@ -1,0 +1,71 @@
+{
+  "name": "Sammelschale I",
+  "icon": "aequitas:collection_bowl_1",
+  "category": "aequitas:collection_bowls",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Sammelschale I",
+      "text": "Erbaue die benötigte Struktur der ersten Sammelschale.$(br)(Tipp: Das Muster des Bodens kann aus allen möglichen Kombinationen von Durchdrungenen Steinen bestehen)$(br)Aber die Essenz zu Sammeln ist kein leuchte oder Schnelle aufgabe und es werden ungefähr 60s benötigt um einen ganzen Gegenstand herzustellen."
+    },
+    {
+      "type": "patchouli:multiblock",
+      "multiblock": {
+        "mapping": {
+          "B": "#aequitas:infused_blocks",
+          "S": "aequitas:chiseled_infused_stone",
+          "0": "aequitas:collection_bowl_1",
+          "P": "aequitas:primal_catalyst"
+        },
+        "pattern": [
+          [
+            "_______",
+            "_______",
+            "_______",
+            "___P___",
+            "_______",
+            "_______",
+            "_______"
+          ],
+          [
+            "_______",
+            "_______",
+            "_______",
+            "___ ___",
+            "_______",
+            "_______",
+            "_______"
+          ],
+          [
+            "___P___",
+            "___ ___",
+            "___ ___",
+            "P     P",
+            "_______",
+            "_______",
+            "___P___"
+          ],
+          [
+            "___S___",
+            "_______",
+            "_______",
+            "S__0__S",
+            "_______",
+            "_______",
+            "___S___"
+          ],
+          [
+            "__BBB__",
+            "_B_B_B_",
+            "B_BBB_B",
+            "BBBBBBB",
+            "B_BBB_B",
+            "_B_B_B_",
+            "__BBB__"
+          ]
+        ],
+        "symmetrical": true
+      }
+    }
+  ]
+}

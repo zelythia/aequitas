@@ -41,8 +41,8 @@
   "block.aequitas.smooth_infused_stone": "Glatter durchdrungener Stone",
 
   "block.aequitas.pedestal" : "Podest",
-  "block.aequitas.crafting_pedestal" : "Herstellungs Podest",
-  "block.aequitas.sampling_pedestal" : "Dekonstruktions Podest",
+  "block.aequitas.crafting_pedestal": "Herstellungspodest",
+  "block.aequitas.sampling_pedestal": "Dekonstruktionspodest",
   "block.aequitas.primal_catalyst" : "Ur-Katalysator",
   "block.aequitas.primordial_catalyst" : "Urweltlicher Katalysator",
   "block.aequitas.pristine_catalyst" : "Ursprünglicher Katalysator",

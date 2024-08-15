@@ -1,0 +1,40 @@
+{
+  "name": "Primordial Armor",
+  "icon": "aequitas:primordial_essence_chestplate",
+  "category": "aequitas:equipment",
+  "advancement": "aequitas:primordial_armor",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": {
+        "item": "aequitas:primordial_essence_helmet"
+      },
+      "title": "Primordial Essence Helmet",
+      "text": "Gives the wearer $(l) of water breathing$()."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": {
+        "item": "aequitas:primordial_essence_chestplate"
+      },
+      "title": "Primordial Essence Chestplate",
+      "text": "Grants the wearer $(l)Saturation$().$(br)$(br)Equipping the full Primordial Armor set allows the player to $(l)fly$() for a limited amount of time (30s)"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": {
+        "item": "aequitas:primordial_essence_leggings"
+      },
+      "title": "Primordial Essence Leggings",
+      "text": "Constantly gives the wearer $(l)SPEED II$()"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": {
+        "item": "aequitas:primordial_essence_boots"
+      },
+      "title": "Primordial Essence Boots",
+      "text": "Negates all fall damage."
+    }
+  ]
+}

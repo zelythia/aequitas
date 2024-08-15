@@ -1,0 +1,18 @@
+{
+  "name": "Podeste",
+  "icon": "aequitas:crafting_pedestal",
+  "category": "aequitas:pedestals",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Podeste",
+      "text": "Ein Herstellungspodest und ein freie Anzahl an Dekonstruktionspodesten ermöglichen es die die Essenz im Kern aller Gegenstände frei auszutauschen.$(br)Die Dekonstruktionspodeste dürfen nicht dicht direkt neben dem Herstellungspodest und in einem Radius von 3 Blöcken stehen."
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "aequitas:textures/patchouli/pedestals.png"
+      ]
+    }
+  ]
+}
