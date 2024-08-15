@@ -98,6 +98,8 @@ public class Aequitas implements ModInitializer {
 
                 tableBuilder.pool(poolBuilder);
             }
+
+            //TODO: Add mod items to collection bowl loot tables
         });
     }
 }
