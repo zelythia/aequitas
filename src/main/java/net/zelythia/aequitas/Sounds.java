@@ -24,7 +24,7 @@ public class Sounds {
 
     @Environment(EnvType.CLIENT)
     public static class CollectionBowlSoundInstance extends AbstractSoundInstance implements TickableSoundInstance {
-        private static final float MAX_VOLUME = 0.4f;
+        private static final float MAX_VOLUME = 0.3f;
 
         private boolean done;
         private final PlayerEntity player;
