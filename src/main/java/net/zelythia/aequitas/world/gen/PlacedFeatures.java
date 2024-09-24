@@ -5,11 +5,8 @@ import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.Heightmap;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.PlacedFeature;
-import net.minecraft.world.gen.placementmodifier.CountPlacementModifier;
-import net.minecraft.world.gen.placementmodifier.HeightmapPlacementModifier;
 import net.minecraft.world.gen.placementmodifier.RarityFilterPlacementModifier;
 import net.minecraft.world.gen.placementmodifier.SquarePlacementModifier;
 import net.zelythia.aequitas.Aequitas;
@@ -25,7 +22,7 @@ public class PlacedFeatures {
         context.register(ESSENCE_PILLAR, new PlacedFeature(registryLookup.getOrThrow(ConfiguredFeatures.ESSENCE_PILLAR), List.of(
                 SquarePlacementModifier.of(),
                 net.minecraft.world.gen.feature.PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP,
-                RarityFilterPlacementModifier.of(100)
+                RarityFilterPlacementModifier.of(125) // 1/chance
                 ))
         );
     }

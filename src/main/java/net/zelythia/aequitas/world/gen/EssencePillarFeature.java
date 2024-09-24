@@ -28,7 +28,8 @@ public class EssencePillarFeature extends Feature<EssencePillarFeatureConfig> {
         int maxHeight = config.maxHeight;
         BlockState fillerBlock = config.state;
 
-        for (; blockPos.getY() > 3; blockPos = blockPos.down()) {
+        //Finding the floor
+        for (; blockPos.getY() > 7; blockPos = blockPos.down()) {
             if (!world.isAir(blockPos.down())) {
                 BlockState blockState = world.getBlockState(blockPos.down());
                 if (isSoil(blockState) || isStone(blockState)) {
@@ -37,14 +38,16 @@ public class EssencePillarFeature extends Feature<EssencePillarFeatureConfig> {
             }
         }
 
-        if (blockPos.getY() <= 3) return false;
+        if (blockPos.getY() <= 7 ) return false;
+
+        blockPos = blockPos.down().down().down().down();
 
 
         //generating core
         int r = random.nextInt(100);
         BlockState coreBlock = AequitasBlocks.PRIMAL_ESSENCE_BLOCK.getDefaultState();
-        if (r < 33) coreBlock = AequitasBlocks.PRIMORDIAL_ESSENCE_BLOCK.getDefaultState();
-        if (r < 17) coreBlock = AequitasBlocks.PRISTINE_ESSENCE_BLOCK.getDefaultState();
+        if (r < 45) coreBlock = AequitasBlocks.PRIMORDIAL_ESSENCE_BLOCK.getDefaultState();
+        if (r < 15) coreBlock = AequitasBlocks.PRISTINE_ESSENCE_BLOCK.getDefaultState();
 
         world.setBlockState(blockPos, coreBlock, 4);
         world.setBlockState(blockPos.up(), getCoreSurrounding(fillerBlock, random), 4);

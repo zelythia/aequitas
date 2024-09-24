@@ -2,8 +2,8 @@
   "type": "aequitas:essence_pillar_feature",
   "config": {
     "blockState": {
-      "Name": "minecraft:quartz_block"
+      "Name": "aequitas:petrified_essence"
     },
-    "maxHeight": 10
+    "maxHeight": 8
   }
 }
