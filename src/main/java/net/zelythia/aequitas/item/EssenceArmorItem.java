@@ -55,7 +55,7 @@ public class EssenceArmorItem extends ArmorItem {
         }
         if (stack.getItem().equals(AequitasItems.PRISTINE_ESSENCE_LEGGINGS)) {
             if (player.isSprinting()) {
-                player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 20, 2, false, false, false));
+                player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 2, 2, false, false, false));
             } else {
                 player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 20, 1, false, false, false));
             }
