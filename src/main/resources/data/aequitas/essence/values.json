@@ -284,15 +284,17 @@
     "values": {
     }
   },
-  "techreborn": {
-    "priority": 0,
-    "values": {
-    }
-  },
   "modern_industrialization": {
     "priority": 0,
     "values": {
       "modern_industrialization:rubber_sheet": 32
+    }
+  },
+  "dml-refabricated": {
+    "priority": 0,
+    "values": {
+      "#dml-refabricated:pristine_matter": 1024,
+      "dml-refabricated:physically_condensed_matrix_fragment": 12800
     }
   }
 }

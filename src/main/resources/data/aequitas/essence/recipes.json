@@ -1459,5 +1459,27 @@
         "minecraft:sand": 1
       }
     }
+  },
+
+  "dml-refabricated": {
+    "dml-refabricated:soot_redstone": {
+      "count": 1,
+      "ingredients": {
+        "minecraft:redstone": 1
+      }
+    },
+    "dml-refabricated:pristine_energy_cube": {
+      "count": 1,
+      "ingredients": {
+        "dml-refabricated:physically_condensed_matrix_fragment": 1
+      }
+    },
+    "dml-refabricated:overworld_matter": {
+      "count": 1,
+      "ingredients": {
+        "dml-refabricated:polymer_clay": 1,
+        "_": 80
+      }
+    }
   }
 }
