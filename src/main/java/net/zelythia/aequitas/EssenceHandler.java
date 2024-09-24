@@ -9,10 +9,13 @@ import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
-import net.zelythia.aequitas.mixin.client.SmithingTransformRecipeAccessor;
+import net.zelythia.aequitas.mixin.SmithingTransformRecipeAccessor;
 import net.zelythia.aequitas.networking.NetworkingHandler;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class EssenceHandler {
 

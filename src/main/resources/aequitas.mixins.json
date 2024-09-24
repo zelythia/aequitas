@@ -7,7 +7,7 @@
     "LivingEntityMixin",
     "PiglinBrainMixin",
     "PlayerEntityMixin",
-    "client.SmithingTransformRecipeAccessor"
+    "SmithingTransformRecipeAccessor"
   ],
   "client": [
     "client.ClientPlayerEntityMixin",

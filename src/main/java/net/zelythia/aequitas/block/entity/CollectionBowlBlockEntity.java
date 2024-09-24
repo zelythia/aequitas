@@ -1,5 +1,7 @@
 package net.zelythia.aequitas.block.entity;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -408,6 +410,7 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
         }
     }
 
+    @Environment(EnvType.CLIENT)
     private void playSound() {
         if (AequitasConfig.config.getOrDefault("playAmbientSound", true) && world.getBlockState(pos.down()).getOrEmpty(AequitasBlocks.ACTIVE_BLOCK_PROPERTY).orElse(false)) {
             MinecraftClient client = MinecraftClient.getInstance();

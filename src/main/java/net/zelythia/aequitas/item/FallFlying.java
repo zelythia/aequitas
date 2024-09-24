@@ -1,6 +1,8 @@
 package net.zelythia.aequitas.item;
 
 import io.netty.buffer.Unpooled;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -31,6 +33,7 @@ public class FallFlying {
         return stack.isIn(ELYTRA) && ElytraItem.isUsable(stack);
     }
 
+    @Environment(EnvType.CLIENT)
     public static void checkFallFlying() {
         ClientPlayerEntity playerEntity = MinecraftClient.getInstance().player;
 
