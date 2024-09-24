@@ -1,4 +1,4 @@
-package net.zelythia.aequitas.mixin.client;
+package net.zelythia.aequitas.mixin;
 
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.SmithingTransformRecipe;
