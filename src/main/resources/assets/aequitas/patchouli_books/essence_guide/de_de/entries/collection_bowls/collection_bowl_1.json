@@ -2,6 +2,7 @@
   "name": "Sammelschale I",
   "icon": "aequitas:collection_bowl_1",
   "category": "aequitas:collection_bowls",
+  "advancement": "aequitas:essence_pillar",
   "pages": [
     {
       "type": "patchouli:text",

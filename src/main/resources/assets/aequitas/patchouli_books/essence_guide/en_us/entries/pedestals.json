@@ -10,9 +10,8 @@
     },
     {
       "type": "patchouli:image",
-      "images": [
-        "aequitas:textures/patchouli/pedestals.png"
-      ]
+      "images": ["aequitas:textures/patchouli/pedestals.png"],
+      "border": true
     }
   ]
 }

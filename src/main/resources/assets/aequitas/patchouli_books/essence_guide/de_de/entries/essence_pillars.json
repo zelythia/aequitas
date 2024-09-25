@@ -1,0 +1,17 @@
+{
+  "name": "Essence Pillars",
+  "icon": "aequitas:petrified_essence",
+  "category": "aequitas:collection_bowls",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Essenz-Säulen",
+      "text": "Manchmal kann sich Essenz in der Welt festsetzen und Essenz-Säulen bilden.$(br)Leider ist die Versteinerter Essenz noch nicht sehr nützlich und du kannst nur die seltene Ur-, Urweltliche- und Ursprüngliche Essenz weiterverarbeiten."
+    },
+    {
+      "type": "patchouli:image",
+      "images": ["aequitas:textures/patchouli/essence_pillar.png"],
+      "border": true
+    }
+  ]
+}

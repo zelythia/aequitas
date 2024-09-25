@@ -1,0 +1,17 @@
+{
+  "name": "Essence Pillars",
+  "icon": "aequitas:petrified_essence",
+  "category": "aequitas:collection_bowls",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Essence Pillars",
+      "text": "Sometimes essence can manifest in the world in the form of Essence Pillars sticking out of the ground.$(br)Unluckily the Petrified Essence seems to be quite useless yet and you can only use the scarce Primal, Primordial and Pristine Essence."
+    },
+    {
+      "type": "patchouli:image",
+      "images": ["aequitas:textures/patchouli/essence_pillar.png"],
+      "border": true
+    }
+  ]
+}
