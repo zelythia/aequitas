@@ -7,6 +7,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.option.ParticlesMode;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.item.Item;
@@ -74,7 +75,11 @@ public class NetworkingHandler {
                         b = (int) (b / div);
                     }
 
-                    for (int i = 10; i > 0; i--) {
+
+                    int i = 3;
+                    if(client.options.getParticles().getValue() == ParticlesMode.DECREASED) i = 2;
+                    else if(client.options.getParticles().getValue() == ParticlesMode.MINIMAL) i = 1;
+                    for (; i > 0; i--) {
                         double x = 0.5 + from.getX() + (Math.random() * 2.0 - 1.0) * 0.15;
                         double y = 1.2 + from.getY();
                         double z = 0.5 + from.getZ() + (Math.random() * 2.0 - 1.0) * 0.15;
