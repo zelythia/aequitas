@@ -1,0 +1,38 @@
+{
+  "parent": "aequitas:root",
+  "criteria": {
+    "collection_bowl_I": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aequitas:petrified_essence"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.aequitas.essence_pillar.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aequitas:petrified_essence"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.aequitas.essence_pillar.title"
+    }
+  },
+  "requirements": [
+    [
+      "collection_bowl_I"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

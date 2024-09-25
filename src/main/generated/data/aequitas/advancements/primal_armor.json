@@ -1,5 +1,5 @@
 {
-  "parent": "aequitas:root",
+  "parent": "aequitas:essence_pillar",
   "criteria": {
     "primal_armor": {
       "conditions": {

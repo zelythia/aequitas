@@ -58,7 +58,11 @@
   "block.aequitas.primordial_essence_block" : "Primordial Essence Block",
   "block.aequitas.pristine_essence_block" : "Pristine Essence Block",
   "block.aequitas.petrified_essence": "Petrified Essence Block",
+
   "rei.category.aequitas.collection_bowl": "Collection Bowl",
+  "rei.info.aequitas.essence.name": "Essence Pillars",
+  "rei.info.aequitas.essence.description": "Sometimes essence can manifest in the world in the form of Essence Pillars sticking out of the ground.\nUnluckily the Petrified Essence seems to be quite useless yet and you can only use the scarce Primal, Primordial and Pristine Essence.",
+
   "emi.category.aequitas.collection_bowl": "Collection Bowl",
 
   "gui.aequitas.title.aequitas:gameplay/overworld": "Overworld",
@@ -107,6 +111,9 @@
   "advancements.aequitas.primordial_armor.description": "Acquire a full set of Primordial Essence Armor",
   "advancements.aequitas.pristine_armor.title": "Pristine Armor",
   "advancements.aequitas.pristine_armor.description": "Acquire a full set of Pristine Essence Armor",
+  "advancements.aequitas.essence_pillar.title": "You can actually touch it?!",
+  "advancements.aequitas.essence_pillar.description": "Find an Essence Pillar",
+
   "patchouli_books.aequitas.name": "Essence Guide",
   "patchouli_books.aequitas.landing_text": "Welcome to Aequitas!"
 }

@@ -85,7 +85,23 @@ public class AdvancementsProvider extends FabricAdvancementProvider {
 
 
 
-        Advancement collectionBowlI = Advancement.Builder.create().parent(root)
+        Advancement essencePillar = Advancement.Builder.create().parent(root)
+                .display(
+                        AequitasItems.PETRIFIED_ESSENCE,
+                        Text.translatable("advancements.aequitas.essence_pillar.title"),
+                        Text.translatable("advancements.aequitas.essence_pillar.description"),
+                        null,
+                        AdvancementFrame.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .criterion("collection_bowl_I", InventoryChangedCriterion.Conditions.items(AequitasItems.PETRIFIED_ESSENCE))
+                .build(consumer, "aequitas:" + "essence_pillar");
+
+
+
+        Advancement collectionBowlI = Advancement.Builder.create().parent(essencePillar)
                 .display(
                         AequitasItems.COLLECTION_BOWL_I,
                         Text.translatable("advancements.aequitas.collection_bowl_I.title"),
@@ -126,7 +142,7 @@ public class AdvancementsProvider extends FabricAdvancementProvider {
                 .build(consumer, "aequitas:" + "collection_bowl_3");
 
 
-        Advancement primalArmor = Advancement.Builder.create().parent(root)
+        Advancement primalArmor = Advancement.Builder.create().parent(essencePillar)
                 .display(
                         AequitasItems.PRIMAL_ESSENCE_CHESTPLATE,
                         Text.translatable("advancements.aequitas.primal_armor.title"),
