@@ -3,9 +3,11 @@ package net.zelythia.aequitas.compat.emi;
 import com.google.gson.JsonElement;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
+import dev.emi.emi.api.recipe.EmiInfoRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.render.EmiTexture;
 import dev.emi.emi.api.stack.EmiStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.client.NetworkingHandler;
@@ -56,5 +58,12 @@ public class AequitasEmiPlugin implements EmiPlugin {
                 }
             }
         }
+
+
+        registry.addRecipe(new EmiInfoRecipe(
+                List.of(EmiStack.of(AequitasItems.PRIMAL_ESSENCE), EmiStack.of(AequitasItems.PRIMORDIAL_ESSENCE), EmiStack.of(AequitasItems.PRISTINE_ESSENCE)),
+                List.of(Text.translatable("rei.info.aequitas.essence.description")),
+                new Identifier("aequitas", "essence_pillars")
+        ));
     }
 }
