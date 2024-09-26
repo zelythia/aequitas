@@ -5,12 +5,14 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.item.DyeableItem;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -85,7 +87,7 @@ public class AequitasClient implements ClientModInitializer {
             if (client != null && !client.options.hudHidden && AequitasConfig.config.getOrDefault("displayFlightDuration", true)) {
                 if (client.player.getEquippedStack(EquipmentSlot.CHEST).getItem() == AequitasItems.PRIMORDIAL_ESSENCE_CHESTPLATE) {
                     EssenceArmorItem item = (EssenceArmorItem) client.player.getEquippedStack(EquipmentSlot.CHEST).getItem();
-                    if (item.checkSetPrimordial(client.player)) {
+                    if (EssenceArmorItem.checkSetPrimordial(client.player)) {
                         client.getTextureManager().bindTexture(FLIGHT_PROGRESS);
 
                         int x = client.getWindow().getScaledWidth() / 2 - 97;
@@ -97,5 +99,9 @@ public class AequitasClient implements ClientModInitializer {
                 }
             }
         });
+
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {
+            return tintIndex > 0 ? -1 : ((DyeableItem)stack.getItem()).getColor(stack);
+        }, AequitasItems.PRISTINE_ESSENCE_HELMET, AequitasItems.PRISTINE_ESSENCE_CHESTPLATE, AequitasItems.PRISTINE_ESSENCE_LEGGINGS, AequitasItems.PRISTINE_ESSENCE_BOOTS);
     }
 }
