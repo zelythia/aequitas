@@ -22,7 +22,7 @@ public class PlacedFeatures {
         context.register(ESSENCE_PILLAR, new PlacedFeature(registryLookup.getOrThrow(ConfiguredFeatures.ESSENCE_PILLAR), List.of(
                 SquarePlacementModifier.of(),
                 net.minecraft.world.gen.feature.PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP,
-                RarityFilterPlacementModifier.of(125) // 1/chance
+                RarityFilterPlacementModifier.of(150) // 1/chance
                 ))
         );
     }

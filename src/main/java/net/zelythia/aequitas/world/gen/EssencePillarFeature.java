@@ -28,6 +28,11 @@ public class EssencePillarFeature extends Feature<EssencePillarFeatureConfig> {
         int maxHeight = config.maxHeight;
         BlockState fillerBlock = config.state;
 
+        //Don't allow Pillars to be close to each other
+        for (BlockPos blockPos1 : BlockPos.iterate(blockPos.add(-100, -50, -100), blockPos.add(100, 50, 100))) {
+            if (world.getBlockState(blockPos1).isOf(AequitasBlocks.PETRIFIED_ESSENCE)) return false;
+        }
+
         //Finding the floor
         for (; blockPos.getY() > 7; blockPos = blockPos.down()) {
             if (!world.isAir(blockPos.down())) {
