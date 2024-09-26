@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "aequitas:item/primordial_essence_leggings",
+    "layer1": "minecraft:trims/items/leggings_trim_quartz"
+  }
+}

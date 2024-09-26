@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "aequitas:item/primal_essence_helmet",
+    "layer1": "minecraft:trims/items/helmet_trim_iron"
+  }
+}

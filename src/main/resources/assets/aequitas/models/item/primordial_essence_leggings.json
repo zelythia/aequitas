@@ -1,5 +1,67 @@
 {
-  "parent": "item/generated",
+  "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "aequitas:item/primordial_essence_leggings_quartz_trim",
+      "predicate": {
+        "trim_type": 0.1
+      }
+    },
+    {
+      "model": "aequitas:item/primordial_essence_leggings_iron_trim",
+      "predicate": {
+        "trim_type": 0.2
+      }
+    },
+    {
+      "model": "aequitas:item/primordial_essence_leggings_netherite_darker_trim",
+      "predicate": {
+        "trim_type": 0.3
+      }
+    },
+    {
+      "model": "aequitas:item/primordial_essence_leggings_redstone_trim",
+      "predicate": {
+        "trim_type": 0.4
+      }
+    },
+    {
+      "model": "aequitas:item/primordial_essence_leggings_copper_trim",
+      "predicate": {
+        "trim_type": 0.5
+      }
+    },
+    {
+      "model": "aequitas:item/primordial_essence_leggings_gold_trim",
+      "predicate": {
+        "trim_type": 0.6
+      }
+    },
+    {
+      "model": "aequitas:item/primordial_essence_leggings_emerald_trim",
+      "predicate": {
+        "trim_type": 0.7
+      }
+    },
+    {
+      "model": "aequitas:item/primordial_essence_leggings_diamond_trim",
+      "predicate": {
+        "trim_type": 0.8
+      }
+    },
+    {
+      "model": "aequitas:item/primordial_essence_leggings_lapis_trim",
+      "predicate": {
+        "trim_type": 0.9
+      }
+    },
+    {
+      "model": "aequitas:item/primordial_essence_leggings_amethyst_trim",
+      "predicate": {
+        "trim_type": 1.0
+      }
+    }
+  ],
   "textures": {
     "layer0": "aequitas:item/primordial_essence_leggings"
   }

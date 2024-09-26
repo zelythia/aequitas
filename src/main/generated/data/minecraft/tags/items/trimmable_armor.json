@@ -1,6 +1,14 @@
 {
   "replace": false,
   "values": [
+    "aequitas:primal_essence_helmet",
+    "aequitas:primal_essence_chestplate",
+    "aequitas:primal_essence_leggings",
+    "aequitas:primal_essence_boots",
+    "aequitas:primordial_essence_helmet",
+    "aequitas:primordial_essence_chestplate",
+    "aequitas:primordial_essence_leggings",
+    "aequitas:primordial_essence_boots",
     "aequitas:pristine_essence_helmet",
     "aequitas:pristine_essence_chestplate",
     "aequitas:pristine_essence_leggings",
