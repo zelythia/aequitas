@@ -49,7 +49,6 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
     public final int tier;
     private final List<BlockPos> infused = new ArrayList<>();
     private final List<BlockPos> chiseled = new ArrayList<>();
-    private final List<BlockPos> pillar = new ArrayList<>();
     private final List<BlockPos> catalystBlocks1 = new ArrayList<>();
     private final List<BlockPos> catalystBlocks2 = new ArrayList<>();
     private final List<BlockPos> catalystBlocks3 = new ArrayList<>();
@@ -195,17 +194,17 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
             infused.add(pos.add(-2, -1, -3));
 
             //Pillar 2
-            pillar.add(pos.add(3, 0, 3));
-            pillar.add(pos.add(3, 1, 3));
+            infused.add(pos.add(3, 0, 3));
+            infused.add(pos.add(3, 1, 3));
 
-            pillar.add(pos.add(3, 0, -3));
-            pillar.add(pos.add(3, 1, -3));
+            infused.add(pos.add(3, 0, -3));
+            infused.add(pos.add(3, 1, -3));
 
-            pillar.add(pos.add(-3, 0, 3));
-            pillar.add(pos.add(-3, 1, 3));
+            infused.add(pos.add(-3, 0, 3));
+            infused.add(pos.add(-3, 1, 3));
 
-            pillar.add(pos.add(-3, 0, -3));
-            pillar.add(pos.add(-3, 1, -3));
+            infused.add(pos.add(-3, 0, -3));
+            infused.add(pos.add(-3, 1, -3));
 
             //Catalysts
             catalystBlocks1.add(pos.add(4, 1, 0));
@@ -281,46 +280,46 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
 
 
             //Pillar 2
-            pillar.add(pos.add(5, 0, 2));
-            pillar.add(pos.add(5, 1, 2));
+            infused.add(pos.add(5, 0, 2));
+            infused.add(pos.add(5, 1, 2));
 
-            pillar.add(pos.add(5, 0, -2));
-            pillar.add(pos.add(5, 1, -2));
+            infused.add(pos.add(5, 0, -2));
+            infused.add(pos.add(5, 1, -2));
 
-            pillar.add(pos.add(-5, 0, 2));
-            pillar.add(pos.add(-5, 1, 2));
+            infused.add(pos.add(-5, 0, 2));
+            infused.add(pos.add(-5, 1, 2));
 
-            pillar.add(pos.add(-5, 0, -2));
-            pillar.add(pos.add(-5, 1, -2));
+            infused.add(pos.add(-5, 0, -2));
+            infused.add(pos.add(-5, 1, -2));
 
-            pillar.add(pos.add(2, 0, 5));
-            pillar.add(pos.add(2, 1, 5));
+            infused.add(pos.add(2, 0, 5));
+            infused.add(pos.add(2, 1, 5));
 
-            pillar.add(pos.add(-2, 0, 5));
-            pillar.add(pos.add(-2, 1, 5));
+            infused.add(pos.add(-2, 0, 5));
+            infused.add(pos.add(-2, 1, 5));
 
-            pillar.add(pos.add(2, 0, -5));
-            pillar.add(pos.add(2, 1, -5));
+            infused.add(pos.add(2, 0, -5));
+            infused.add(pos.add(2, 1, -5));
 
-            pillar.add(pos.add(-2, 0, -5));
-            pillar.add(pos.add(-2, 1, -5));
+            infused.add(pos.add(-2, 0, -5));
+            infused.add(pos.add(-2, 1, -5));
 
             //Pillar 3
-            pillar.add(pos.add(4, 0, 4));
-            pillar.add(pos.add(4, 1, 4));
-            pillar.add(pos.add(4, 2, 4));
+            infused.add(pos.add(4, 0, 4));
+            infused.add(pos.add(4, 1, 4));
+            infused.add(pos.add(4, 2, 4));
 
-            pillar.add(pos.add(4, 0, -4));
-            pillar.add(pos.add(4, 1, -4));
-            pillar.add(pos.add(4, 2, -4));
+            infused.add(pos.add(4, 0, -4));
+            infused.add(pos.add(4, 1, -4));
+            infused.add(pos.add(4, 2, -4));
 
-            pillar.add(pos.add(-4, 0, 4));
-            pillar.add(pos.add(-4, 1, 4));
-            pillar.add(pos.add(-4, 2, 4));
+            infused.add(pos.add(-4, 0, 4));
+            infused.add(pos.add(-4, 1, 4));
+            infused.add(pos.add(-4, 2, 4));
 
-            pillar.add(pos.add(-4, 0, -4));
-            pillar.add(pos.add(-4, 1, -4));
-            pillar.add(pos.add(-4, 2, -4));
+            infused.add(pos.add(-4, 0, -4));
+            infused.add(pos.add(-4, 1, -4));
+            infused.add(pos.add(-4, 2, -4));
 
             //Catalysts
             catalystBlocks1.add(pos.add(6, 1, 0));
@@ -376,9 +375,6 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
         for (BlockPos pos : chiseled) {
             if (!world.getBlockState(pos).getBlock().equals(AequitasBlocks.CHISELED_INFUSED_STONE)) return false;
         }
-        for (BlockPos pos : pillar) {
-            if (!world.getBlockState(pos).getBlock().equals(AequitasBlocks.INFUSED_STONE_PILLAR)) return false;
-        }
 
         for (BlockPos pos : catalystBlocks1) {
             if (!world.getBlockState(pos).getBlock().equals(AequitasBlocks.CATALYST_I)) return false;
@@ -400,7 +396,6 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
         List<BlockPos> activeBlocks = new ArrayList<>();
         activeBlocks.addAll(infused);
         activeBlocks.addAll(chiseled);
-        activeBlocks.addAll(pillar);
         activeBlocks.addAll(catalystBlocks1);
         activeBlocks.addAll(catalystBlocks2);
         activeBlocks.addAll(catalystBlocks3);
