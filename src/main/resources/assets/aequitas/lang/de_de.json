@@ -100,5 +100,9 @@
   "advancements.aequitas.pristine_armor.title": "Ursprüngliche Rüstung",
   "advancements.aequitas.pristine_armor.description": "Erlange ein volles Set der Ursprünglichen Rüstung",
   "patchouli_books.aequitas.name": "Essenzen-Helfer",
-  "patchouli_books.aequitas.landing_text": "Willkommen zu Aequitas!"
+  "patchouli_books.aequitas.landing_text": "Willkommen zu Aequitas!",
+  "rei.info.aequitas.essence.name": "Essenz-Säulen",
+  "rei.info.aequitas.essence.description": "Manchmal kann sich Essenz in der Welt festsetzen und Essenz-Säulen bilden.\nLeider ist die Versteinerter Essenz noch nicht sehr nützlich und du kannst nur die seltene Ur-, Urweltliche- und Ursprüngliche Essenz weiterverarbeiten.",
+  "advancements.aequitas.essence_pillar.title": "Du kannst es anfassen?!",
+  "advancements.aequitas.essence_pillar.description": "Finde eine Essenz-Säule"
 }
