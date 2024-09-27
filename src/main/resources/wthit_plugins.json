@@ -1,0 +1,6 @@
+{
+  "aequitas:plugin": {
+    "initializer": "net.zelythia.aequitas.compat.wthit.WailaIntegration",
+    "side": "*"
+  }
+}
