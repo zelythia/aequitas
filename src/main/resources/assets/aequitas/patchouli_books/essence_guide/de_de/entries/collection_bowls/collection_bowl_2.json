@@ -7,7 +7,7 @@
     {
       "type": "patchouli:text",
       "title": "Sammelschale II",
-      "text": "Erbaue die benötigte Struktur der für die Sammelschale II. Sie wird die Essenz doppelt so schnell wie die erste einsammeln (30s)$(br)(Tipp: Das Muster des Bodens kann aus allen möglichen Kombinationen von Durchdrungenen Steinen bestehen)."
+      "text": "Erbaue die benötigte Struktur der für die Sammelschale II. Sie wird die Essenz doppelt so schnell wie die erste einsammeln (30s)$(br)(Tipp: Das Muster des Bodens kann aus allen möglichen Kombinationen von Durchdrungenen Steinen bestehen).$(br)Materials:$(li)1 Sammelschale II$()$(li)4 Ur-Katalysatoren$()$(li)5 Urweltliche Katalysatoren$()$(li)4 Gemeißelter durchdrungener Stein$()$(li)57 Durchdrungener Stein$()"
     },
     {
       "type": "patchouli:multiblock",
