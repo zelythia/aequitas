@@ -5,6 +5,11 @@
   "advancement": "aequitas:primordial_armor",
   "pages": [
     {
+      "type": "patchouli:text",
+      "title": "Pristine Armor",
+      "text": "Using the Pristine Essence you manage to craft te most powerful armor.$(br)The purity of te Pristine Essence even allows the Armor to be dyed, so be creative!"
+    },
+    {
       "type": "patchouli:spotlight",
       "item": {
         "item": "aequitas:pristine_essence_helmet"
@@ -18,7 +23,7 @@
         "item": "aequitas:pristine_essence_chestplate"
       },
       "title": "Pristine Essence Chestplate",
-      "text": "Grants the wearer $(l)Regeneration$() and $(l)Fire Protection$().$(br)$(br)Equipping the full Pristine Armor set allows the player to $(l)fly$() for an unlimited amount of time."
+      "text": "Additionally grants the wearer $(l)Regeneration$() and $(l)Fire Protection$().$(br)$(br)Equipping the full Pristine Armor set allows the player to $(l)fly$() for an unlimited amount of time."
     },
     {
       "type": "patchouli:spotlight",
