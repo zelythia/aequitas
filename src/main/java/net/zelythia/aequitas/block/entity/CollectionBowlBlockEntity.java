@@ -225,6 +225,18 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
             catalystBlocks3.clear();
             r = 6;
 
+
+            //Bigger circle
+            infused.add(pos.add(2, -1, 1));
+            infused.add(pos.add(2, -1, -1));
+            infused.add(pos.add(-2, -1, 1));
+            infused.add(pos.add(-2, -1, -1));
+            infused.add(pos.add(1, -1, 2));
+            infused.add(pos.add(-1, -1, 2));
+            infused.add(pos.add(1, -1, -2));
+            infused.add(pos.add(-1, -1, -2));
+
+
             //T
             infused.add(pos.add(6, -1, 1));
             infused.add(pos.add(6, -1, -1));
