@@ -2,6 +2,6 @@
   "parent": "minecraft:block/cube_column",
   "textures": {
     "end": "aequitas:block/infused_stone_pillar_top",
-    "side": "aequitas:block/infused_stone_pillar_both"
+    "side": "aequitas:block/infused_stone_pillar_both_active"
   }
 }
