@@ -10,7 +10,7 @@
         "item": "aequitas:primordial_essence_helmet"
       },
       "title": "Primordial Essence Helmet",
-      "text": "Gives the wearer $(l) of water breathing$()."
+      "text": "Gives the wearer $(l)60s of water breathing$()."
     },
     {
       "type": "patchouli:spotlight",
