@@ -30,7 +30,7 @@
         "item": "aequitas:primal_essence_leggings"
       },
       "title": "Primal Essence Leggings",
-      "text": "Constantly gives the player $(l)SPEED I$()"
+      "text": "Constantly gives you $(l)SPEED I$()"
     },
     {
       "type": "patchouli:spotlight",
