@@ -1,40 +1,45 @@
 {
-  "name": "Pristine Armor",
+  "name": "Ursprüngliche Essenz-Rüstung",
   "icon": "aequitas:pristine_essence_chestplate",
   "category": "aequitas:equipment",
   "advancement": "aequitas:primordial_armor",
   "pages": [
     {
+      "type": "patchouli:text",
+      "title": "Pristine Armor",
+      "text": "Mithilfe der Ursprünglichen Essenz kann du dir stärkte Rüstung herstellen.$(br)The Reinheit der Ursprünglichen Essenz ermöglicht es sogar die Rüstung zu färben, also sei kreativ!"
+    },
+    {
       "type": "patchouli:spotlight",
       "item": {
         "item": "aequitas:pristine_essence_helmet"
       },
-      "title": "Pristine Essence Helmet",
-      "text": "The wearer can $(l)breathe underwater$() for an unlimited amount of time."
+      "title": "Ursprünglicher Essenz Helm",
+      "text": "Ermöglicht dem Spieler beliebig lange $(l)unterwasser zu Atmen$()."
     },
     {
       "type": "patchouli:spotlight",
       "item": {
         "item": "aequitas:pristine_essence_chestplate"
       },
-      "title": "Pristine Essence Chestplate",
-      "text": "Grants the wearer $(l)Regeneration$() and $(l)Fire Protection$().$(br)$(br)Equipping the full Pristine Armor set allows the player to $(l)fly$() for an unlimited amount of time."
+      "title": "Ursprünglicher Essenz Harnisch",
+      "text": "Gibt dem Spieler zusätzlich $(l)Regeneration$() und $(l)Feuerresistenz$().$(br)$(br)Wenn du eine vollständige Ursprüngliche Essenz Rüstung anhast kannst dur beliebig lange $(l)fliegen$()."
     },
     {
       "type": "patchouli:spotlight",
       "item": {
         "item": "aequitas:pristine_essence_leggings"
       },
-      "title": "Pristine Essence Leggings",
-      "text": "Constantly gives the wearer $(l)SPEED II$() and $(l)SPEED III while sprinting$()."
+      "title": "Ursprüngliche Essenz Host",
+      "text": "Gibt dem Spieler $(l)Schnelligkeit II$() und $(l)Schnelligkeit III beim Sprinten$()."
     },
     {
       "type": "patchouli:spotlight",
       "item": {
         "item": "aequitas:pristine_essence_boots"
       },
-      "title": "Pristine Essence Boots",
-      "text": "Negates all fall damage."
+      "title": "Ursprüngliche Essenz Schuhe",
+      "text": "Verhindert allen Fallschaden."
     }
   ]
 }

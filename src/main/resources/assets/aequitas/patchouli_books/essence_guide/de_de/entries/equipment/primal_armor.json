@@ -6,39 +6,39 @@
     {
       "type": "patchouli:text",
       "title": "Ur-Essenz Rüstung",
-      "text": "Using the primal Essence you collected from all around the world, you manage to infuse the already powerful Netherite Armor with it to make it even stronger.$(br)Each piece of the set grants you unique effects.$(br)When you have the full set equipped you can additionally $(l)double jump$() by pressing the key a second time while in the air.$(br)It also seems that $(l)Piglins aren't aggressive$(), when you are wearing a piece of Essence Armor."
+      "text": "Mitihlfe der Ur-Essenz die du gesammelt hast, ist es jetzt möglich die schon starke Netherit-Rüstung noch stärker zu machen.$(br)Jedes einzelne Rüstungsteil gibt einen besonderen Effekt. Wenn du eine vollständige Ur-Essenz Rüstung anhast, kannst du zusätzlich noch ein $(l)zweites mal Springen$(), indem du die Taste in der Luft einfach ein zweites mal drückst.$(br)Außerdem scheinen Piglins nicht aggresiv zu sein, wenn du Essenz-Rüstung trägst."
     },
     {
       "type": "patchouli:spotlight",
       "item": {
         "item": "aequitas:primal_essence_helmet"
       },
-      "title": "Primal Essence Helmet",
-      "text": "The Primal Essence allows you to fuse the Turtle Shell with your netherite helmet, giving you $(l)10s of Water Breathing$()."
+      "title": "Ur-Essenz Helm",
+      "text": "Die Ur-Essenz erlaubt dir den Schildkrötenpanzer mit dem Netherit-Helm zusammenzufügen, und gibt dir dadurch $(l)10s Unterwasseratmung."
     },
     {
       "type": "patchouli:spotlight",
       "item": {
         "item": "aequitas:primal_essence_chestplate"
       },
-      "title": "Primal Essence Chestplate",
-      "text": "The Primal Essence allows you to fuse the $(l)Elytra$() with your Netherite Chestplate, allowing you the fly like you're used to without loosing the chestplates protection."
+      "title": "Ur-Essenz Harnisch",
+      "text": "Die Ur-Essenz erlaubt dir die $(l)Elytrene$() mit dem Netherit-Harmisch zusammenzufügen, was dir ermöglicht wie gewohnt zu fliegen ohne auf den Schutz eines Harnisches zu verzichten."
     },
     {
       "type": "patchouli:spotlight",
       "item": {
         "item": "aequitas:primal_essence_leggings"
       },
-      "title": "Primal Essence Leggings",
-      "text": "Constantly gives the player $(l)SPEED I$()"
+      "title": "Ur-Essenz Hose",
+      "text": "Gibt dem Spieler $(l)Schnelligkeit I$()."
     },
     {
       "type": "patchouli:spotlight",
       "item": {
         "item": "aequitas:primal_essence_boots"
       },
-      "title": "Primal Essence Boots",
-      "text": "Allows you to sustain a two block higher fall without taking damage."
+      "title": "Ur-Essenz Schuhe",
+      "text": "Ermöglicht dir 2 Blöcke weiter zu fallen one schaden zu nehmen."
     }
   ]
 }
