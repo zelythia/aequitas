@@ -7,7 +7,7 @@
     {
       "type": "patchouli:text",
       "title": "Collection Bowl III",
-      "text": "Erbaue die benötigte Struktur der für die Sammelschale III. Sie wird die Essenz doppelt so schnell wie die Sammelschale II einsammeln (15s)$(br)(Tipp: Das Muster des Bodens kann aus allen möglichen Kombinationen von Durchdrungenen Steinen bestehen).$(br)Materials:$(li)1 Sammelschale III$()$(li)4 Ur-Katalysatoren$()$(li)8 Urweltliche Katalysatoren$()$(li)4 Ursprüngliche Katalysatoren$()$(li)4 Gemeißelter durchdrungener Stein$()$(li)109 Durchdrungener Stein$()"
+      "text": "Erbaue die benötigte Struktur der für die Sammelschale III. Sie wird die Essenz doppelt so schnell wie die Sammelschale II einsammeln (15s)$(br)(Tipp: Das Muster des Bodens kann aus allen möglichen Kombinationen von Durchdrungenen Steinen bestehen).$(br)Materials:$(li)1 Sammelschale III$()$(li)4 Ur-Katalysatoren$()$(li)8 Urweltliche Katalysatoren$()$(li)5 Ursprüngliche Katalysatoren$()$(li)4 Gemeißelter durchdrungener Stein$()$(li)109 Durchdrungener Stein$()"
     },
     {
       "type": "patchouli:multiblock",

@@ -7,7 +7,7 @@
     {
       "type": "patchouli:text",
       "title": "Collection Bowl III",
-      "text": "Build the Structure for the Collection Bowl 3. It will collect essence twice as fast as the Collection Bowl 2(15s) and has even more Inventory space.$(br)(Note: The floor pattern can be of any Infused Stone Block)$(br)Materials:$(li)1 Collection Bowl III$()$(li)4 Primal Catalysts$()$(li)8 Primordial Catalysts$()$(li)4 Pristine Catalysts$()$(li)4 Chiseled Infused Stone$()$(li)109 Infused stone$()"
+      "text": "Build the Structure for the Collection Bowl 3. It will collect essence twice as fast as the Collection Bowl 2(15s) and has even more Inventory space.$(br)(Note: The floor pattern can be of any Infused Stone Block)$(br)Materials:$(li)1 Collection Bowl III$()$(li)4 Primal Catalysts$()$(li)8 Primordial Catalysts$()$(li)5 Pristine Catalysts$()$(li)4 Chiseled Infused Stone$()$(li)109 Infused stone$()"
     },
     {
       "type": "patchouli:multiblock",
