@@ -7,7 +7,7 @@
     {
       "type": "patchouli:text",
       "title": "Collection Bowl I",
-      "text": "Build the supporting Structure for the first Collection Bowl.$(br)(Note: The floor pattern can be of any Infused Stone Block)$(br)But collecting essence is no easy or quick task and it will take about 60s to generate a full item.$(br)Materials:$(li)1 Collection Bowl I$()$(li)5 Primal Catalysts$()$(li)4 Chiseled Infused Stone$()$(li)29 Infused stone$()"
+      "text": "Build the supporting Structure for the first Collection Bowl.$(br)(Note: The floor pattern and pillars can be of any Infused Stone Block)$(br)But collecting essence is no easy or quick task and it will take about 60s to generate a full item.$(br)Materials:$(li)1 Collection Bowl I$()$(li)5 Primal Catalysts$()$(li)4 Chiseled Infused Stone$()$(li)29 Infused stone$()"
     },
     {
       "type": "patchouli:multiblock",

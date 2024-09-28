@@ -7,7 +7,7 @@
     {
       "type": "patchouli:text",
       "title": "Sammelschale I",
-      "text": "Erbaue die benötigte Struktur der ersten Sammelschale.$(br)(Tipp: Das Muster des Bodens kann aus allen möglichen Kombinationen von Durchdrungenen Steinen bestehen)$(br)Aber die Essenz zu Sammeln ist kein leuchte oder Schnelle aufgabe und es werden ungefähr 60s benötigt um einen ganzen Gegenstand herzustellen.$(br)Materialien:$(li)1 Sammelschale I$()$(li)5 Ur-Katalysatoren$()$(li)4 Gemeißelter durchdrungener Stein$()$(li)29 DurchdrungenerStein$()"
+      "text": "Erbaue die benötigte Struktur der ersten Sammelschale.$(br)(Tipp: Das Muster des Bodens und die Säulen können aus allen möglichen Kombinationen von Durchdrungenen Steinen bestehen)$(br)Aber die Essenz zu Sammeln ist kein leuchte oder Schnelle aufgabe und es werden ungefähr 60s benötigt um einen ganzen Gegenstand herzustellen.$(br)Materialien:$(li)1 Sammelschale I$()$(li)5 Ur-Katalysatoren$()$(li)4 Gemeißelter durchdrungener Stein$()$(li)29 DurchdrungenerStein$()"
     },
     {
       "type": "patchouli:multiblock",

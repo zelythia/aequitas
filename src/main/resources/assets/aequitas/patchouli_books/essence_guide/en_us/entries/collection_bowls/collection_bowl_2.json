@@ -7,7 +7,7 @@
     {
       "type": "patchouli:text",
       "title": "Collection Bowl II",
-      "text": "Build the Structure for the Collection Bowl 2. It will collect essence twice as fast as the first one(30s) and has more Inventory space.$(br)(Note: The floor pattern can be of any Infused Stone Block)$(br)Materials:$(li)1 Collection Bowl II$()$(li)4 Primal Catalysts$()$(li)5 Primordial Catalysts$()$(li)4 Chiseled Infused Stone$()$(li)57 Infused stone$()"
+      "text": "Build the Structure for the Collection Bowl 2. It will collect essence twice as fast as the first one(30s) and has more Inventory space.$(br)(Note: The floor pattern and pillars can be of any Infused Stone Block)$(br)Materials:$(li)1 Collection Bowl II$()$(li)4 Primal Catalysts$()$(li)5 Primordial Catalysts$()$(li)4 Chiseled Infused Stone$()$(li)57 Infused stone$()"
     },
     {
       "type": "patchouli:multiblock",
