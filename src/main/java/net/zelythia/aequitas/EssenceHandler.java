@@ -44,21 +44,17 @@ public class EssenceHandler {
     }
 
     public static void setCustomRecipes(Map<Item, List<Recipe<?>>> customRecipes) {
-//        RecipeMapper.customRecipes.clear();
-//        RecipeMapper.customRecipes.putAll(map);
-
         customRecipes.forEach((item, recipes) -> {
-            if(!RecipeMapper.itemRecipes.containsKey(item)){
-                RecipeMapper.itemRecipes.put(item ,recipes);
-            }
-            else{
+            if (!RecipeMapper.itemRecipes.containsKey(item)) {
+                RecipeMapper.itemRecipes.put(item, recipes);
+            } else {
                 RecipeMapper.itemRecipes.get(item).addAll(recipes);
             }
         });
     }
 
     public static void reloadEssenceValues(Map<Item, Long> newValues) {
-        if (newValues.size() > 0) map.clear();
+        if (!newValues.isEmpty()) map.clear();
 
         map.putAll(newValues);
         RecipeMapper.mapRecipes(recipeManager);
@@ -87,21 +83,16 @@ public class EssenceHandler {
                 if (!itemRecipes.containsKey(output)) {
                     itemRecipes.put(output, new ArrayList<>());
                 }
-                if(!itemRecipes.get(output).contains(recipe)){
-                    if(recipe instanceof SmithingTransformRecipe){
+                if (!itemRecipes.get(output).contains(recipe)) {
+                    //Transforming smithing recipes into normal ones that can be handled by aequitas
+                    if (recipe instanceof SmithingTransformRecipe) {
                         SmithingTransformRecipeAccessor smithingRecipe = (SmithingTransformRecipeAccessor) recipe;
                         DefaultedList<Ingredient> ingredients = DefaultedList.copyOf(Ingredient.EMPTY, smithingRecipe.getTemplate(), smithingRecipe.getBase(), smithingRecipe.getAddition());
 
-                        itemRecipes.get(output).add(new ShapelessRecipe(new Identifier("aequitas", "custom"),"custom", CraftingRecipeCategory.MISC, new ItemStack(output, recipe.getOutput(registryManager).getCount()), ingredients));
-                    }
-                    else itemRecipes.get(output).add(recipe);
+                        itemRecipes.get(output).add(new ShapelessRecipe(new Identifier("aequitas", "custom"), "custom", CraftingRecipeCategory.MISC, new ItemStack(output, recipe.getOutput(registryManager).getCount()), ingredients));
+                    } else itemRecipes.get(output).add(recipe);
                 }
             }
-
-
-//            Item testItem = Registries.ITEM.get(new Identifier("minecraft", "raw_iron"));
-//            RecipeMapper.calculateValue(testItem, itemRecipes.get(testItem), false);
-
 
             for (Map.Entry<Item, List<Recipe<?>>> entry : itemRecipes.entrySet()) {
                 Item key = entry.getKey();
@@ -116,10 +107,8 @@ public class EssenceHandler {
                 RecipeMapper.calculateValue(item, itemRecipes.get(item), false);
             });
 
-
-
             Aequitas.LOGGER.info("Finished mapping recipes. Time elapsed: {}ms", System.currentTimeMillis() - startTime);
-            if (!no_value.isEmpty()){
+            if (!no_value.isEmpty()) {
                 StringBuilder s = new StringBuilder();
                 for (Item item : no_value) {
                     s.append(Registries.ITEM.getId(item));
@@ -128,7 +117,6 @@ public class EssenceHandler {
                 Aequitas.LOGGER.warn("Could not calculate essence values for {} items.", no_value.size());
             }
 
-
             List<Item> noValue = new ArrayList<>();
             Registries.ITEM.getEntrySet().forEach(registryKeyItemEntry -> {
                 if (!map.containsKey(registryKeyItemEntry.getValue())) {
@@ -136,7 +124,7 @@ public class EssenceHandler {
                         noValue.add(registryKeyItemEntry.getValue());
                 }
             });
-            if (!noValue.isEmpty()){
+            if (!noValue.isEmpty()) {
                 StringBuilder s = new StringBuilder();
                 for (Item item : noValue) {
                     s.append(Registries.ITEM.getId(item));
@@ -150,9 +138,6 @@ public class EssenceHandler {
         private static final ArrayList<Item> current_run = new ArrayList<>();
 
         private static long calculateValue(Item item, List<Recipe<?>> recipes, boolean b) {
-
-//            System.out.println(item);
-
             //Item has already been mapped
             if (getEssenceValue(item) > 0) {
                 return getEssenceValue(item);
@@ -179,7 +164,7 @@ public class EssenceHandler {
                 for (Ingredient ingredient : inputs) {
                     ItemStack[] stacks = ingredient.getMatchingStacks();
 
-                    if(stacks.length > 0) {
+                    if (stacks.length > 0) {
                         long lowestIngredientCost = 0;
                         for (ItemStack stack : stacks) {
                             if (stack.getItem() == item) continue;
@@ -187,7 +172,7 @@ public class EssenceHandler {
                             long l = calculateValue(stack.getItem(), itemRecipes.get(stack.getItem()), b);
                             l = l * stack.getCount();
 
-                            if(recipe instanceof CraftingRecipe craftingRecipe){
+                            if (recipe instanceof CraftingRecipe craftingRecipe) {
                                 DefaultedList<ItemStack> remainder = craftingRecipe.getRemainder(new RecipeCalculationInputInventory(stack));
                                 l -= EssenceHandler.getEssenceValue(remainder.get(0));
                             }
@@ -205,32 +190,29 @@ public class EssenceHandler {
                 ItemStack output = recipe.getOutput(registryManager);
 
                 //Adding crafting costs for specific crafting type like e.g. smelting
-                if(recipe_cost > 0){
-                    if(craftingCost.getOrDefault(recipe.getType(), 0L) < 0) continue;
+                if (recipe_cost > 0) {
+                    if (craftingCost.getOrDefault(recipe.getType(), 0L) < 0) continue;
 
                     recipe_cost += craftingCost.getOrDefault(recipe.getType(), 0L);
                 }
 
                 if (output.getCount() != 0) {
                     long l = recipe_cost / output.getCount();
-                    recipe_cost = (l<1 && recipe_cost > 0) ? 1 : l;
+                    recipe_cost = (l < 1 && recipe_cost > 0) ? 1 : l;
                 }
 
-                if (lowest_recipe_cost == 0 || (recipe_cost > 0 && recipe_cost < lowest_recipe_cost)) lowest_recipe_cost = recipe_cost;
+                if (lowest_recipe_cost == 0 || (recipe_cost > 0 && recipe_cost < lowest_recipe_cost))
+                    lowest_recipe_cost = recipe_cost;
             }
 
-            if(lowest_recipe_cost > 0){
-                if(map.getOrDefault(item, Long.MAX_VALUE) > lowest_recipe_cost){
+            if (lowest_recipe_cost > 0) {
+                if (map.getOrDefault(item, Long.MAX_VALUE) > lowest_recipe_cost) {
                     map.put(item, lowest_recipe_cost);
                 }
 
                 no_value.remove(item);
-//                current_run.remove(item);
-//                current_run.clear();
-            }
-            else if (!no_value.contains(item)) no_value.add(item);
+            } else if (!no_value.contains(item)) no_value.add(item);
 
-//            System.out.println(item+": "+lowest_recipe_cost);
             return lowest_recipe_cost;
         }
     }
