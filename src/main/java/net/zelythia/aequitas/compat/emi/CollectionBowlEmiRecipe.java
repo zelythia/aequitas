@@ -10,7 +10,11 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.tooltip.OrderedTextTooltipComponent;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
+import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntryList;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -25,7 +29,7 @@ import java.util.stream.Stream;
 public class CollectionBowlEmiRecipe implements EmiRecipe {
 
     public final List<Identifier> conditions;
-    public final Map<EmiStack, Double> outputs = new HashMap<>();
+    public final Map<EmiIngredient, Double> outputs = new HashMap<>();
     public final String name;
 
     public static final int X = 0;
@@ -36,13 +40,20 @@ public class CollectionBowlEmiRecipe implements EmiRecipe {
         this.name = name;
 
         double weight = 0;
-        for (ItemEntry itemEntry : items) {
-            weight += itemEntry.weight();
+        for (ItemEntry item : items) {
+            if(item.id().startsWith("#")) {
+                Optional<RegistryEntryList.Named<Item>> tagItems = Registries.ITEM.getEntryList(TagKey.of(RegistryKeys.ITEM, new Identifier(item.id().replace("#", ""))));
+                weight += item.weight() * tagItems.get().size();
+            }
+            else weight += item.weight();
         }
 
         for (ItemEntry item : items) {
-            if (!new Identifier("minecraft", "air").equals(item.id())) {
-                outputs.put(EmiStack.of(Registries.ITEM.get(item.id())), ((int) ((item.weight() / weight) * 10000)) / 100d);
+            if(item.id().startsWith("#")){
+                outputs.put(EmiIngredient.of(TagKey.of(RegistryKeys.ITEM, new Identifier(item.id().replace("#", "")))), ((int) ((item.weight() / weight) * 10000)) / 100d);
+            }
+            else if(!new Identifier("minecraft", "air").equals(new Identifier(item.id()))){
+                outputs.put(EmiStack.of(Registries.ITEM.get(new Identifier(item.id()))), ((int) ((item.weight() / weight) * 10000)) / 100d);
             }
         }
     }
@@ -66,11 +77,20 @@ public class CollectionBowlEmiRecipe implements EmiRecipe {
     @Override
     public List<EmiStack> getOutputs() {
         return outputs.entrySet().stream().sorted(
-                        Comparator.comparingDouble(value -> ((Map.Entry<EmiStack, Double>) value).getValue()).reversed()
-                                .thenComparing(value -> ((Map.Entry<EmiStack, Double>) value).getKey().getId().getPath()))
+                        Comparator.comparingDouble(value -> ((Map.Entry<EmiIngredient, Double>) value).getValue()).reversed()
+                                .thenComparing(value -> ((Map.Entry<EmiIngredient, Double>) value).getKey().getEmiStacks().get(0).getId().getPath()))
+                .flatMap(entry -> entry.getKey().getEmiStacks().stream())
+                .toList();
+    }
+
+    public List<EmiIngredient> getOutputAsIngredients() {
+        return outputs.entrySet().stream().sorted(
+                        Comparator.comparingDouble(value -> ((Map.Entry<EmiIngredient, Double>) value).getValue()).reversed()
+                                .thenComparing(value -> ((Map.Entry<EmiIngredient, Double>) value).getKey().getEmiStacks().get(0).getId().getPath()))
                 .flatMap(entry -> Stream.of(entry.getKey()))
                 .toList();
     }
+
 
     @Override
     public int getDisplayWidth() {
@@ -84,7 +104,7 @@ public class CollectionBowlEmiRecipe implements EmiRecipe {
 
     @Override
     public void addWidgets(WidgetHolder widgets) {
-        List<EmiStack> outputs = this.getOutputs();
+        List<EmiIngredient> outputs = this.getOutputAsIngredients();
         TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 
         StringBuilder conditionText = new StringBuilder();

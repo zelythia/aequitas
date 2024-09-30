@@ -13,7 +13,7 @@ import java.util.Set;
 
 public class LootTableParser {
 
-    public record ItemEntry(Identifier id, int min, int max, int weight) {
+    public record ItemEntry(String id, int min, int max, int weight) {
 
     }
 
@@ -32,8 +32,24 @@ public class LootTableParser {
 
                 break;
             }
+            case "minecraft:tag": {
+                String id = "#" + entry.get("name").getAsString();
+                int weight = 1;
+                if (entry.has("weight")) weight = entry.get("weight").getAsInt();
+
+                //Assuming we only have minecraft:set_count with minecraft:uniform
+                if (entry.has("functions")) {
+                    JsonObject count = entry.getAsJsonArray("functions").get(0).getAsJsonObject().getAsJsonObject("count");
+
+                    list.add(new ItemEntry(id, count.get("min").getAsInt(), count.get("max").getAsInt(), weight));
+                } else {
+                    list.add(new ItemEntry(id, 1, 1, weight));
+                }
+
+                break;
+            }
             case "minecraft:item": {
-                Identifier id = new Identifier(entry.get("name").getAsString());
+                String id = entry.get("name").getAsString();
                 int weight = 1;
                 if (entry.has("weight")) weight = entry.get("weight").getAsInt();
 
@@ -52,7 +68,7 @@ public class LootTableParser {
                 int weight = 1;
                 if (entry.has("weight")) weight = entry.get("weight").getAsInt();
 
-                list.add(new ItemEntry(new Identifier("air"), 1, 1, weight));
+                list.add(new ItemEntry("minecraft:air", 1, 1, weight));
 
                 break;
             }

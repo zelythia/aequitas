@@ -174,7 +174,6 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
 
             map.forEach((key, value) -> {
                 if (key.startsWith("#")) {
-
                     Collection<RegistryEntry<?>> registryEntries = ResourceConditionsImpl.LOADED_TAGS.get().get(RegistryKeys.ITEM).get(new Identifier(key.replace("#", "")));
 
                     if (registryEntries != null) {
@@ -303,8 +302,6 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
                             modLoot.entrySet().forEach(modEntry -> {
 
                                 if (FabricLoader.getInstance().isModLoaded(modEntry.getKey())) {
-
-
                                     try {
                                         Gson gson = LootGsons.getTableGsonBuilder().create();
 
@@ -312,9 +309,14 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
                                         lootTables.entrySet().forEach(entry -> {
                                             List<LootPoolEntry> lootPoolEntries = new ArrayList<>();
                                             for (JsonElement lootEntry : entry.getValue().getAsJsonArray()) {
-                                                lootPoolEntries.add(gson.fromJson(lootEntry, LootPoolEntry.class));
+                                                try{
+                                                    lootPoolEntries.add(gson.fromJson(lootEntry, LootPoolEntry.class));
+                                                }
+                                                catch (Exception e){
+                                                    Aequitas.LOGGER.error("Error while loading loot pool {} for {} :", entry.getKey(), modEntry.getKey());
+                                                    Aequitas.LOGGER.error(e);
+                                                }
                                             }
-
                                             map.computeIfAbsent(new Identifier("aequitas", entry.getKey()), k -> new ArrayList<>()).addAll(lootPoolEntries);
                                         });
                                     } catch (Exception e) {

@@ -31,7 +31,6 @@ public class ReiPlugin implements REIClientPlugin {
         net.zelythia.aequitas.client.NetworkingHandler.updateLootTables();
 
         for (JsonElement element : net.zelythia.aequitas.client.NetworkingHandler.LOOTTABLES.get(new Identifier("aequitas", "gameplay/biomes")).getAsJsonArray("pools")) {
-
             try {
                 List<Identifier> conditions = new ArrayList<>();
                 for (JsonElement condition : element.getAsJsonObject().getAsJsonArray("conditions")) {
@@ -46,9 +45,8 @@ public class ReiPlugin implements REIClientPlugin {
 
                 registry.add(new CollectionBowlDisplay(entries, conditions, name.toString()));
             } catch (Exception e) {
-                Aequitas.LOGGER.error("REI: Error parsing loot tables");
+                Aequitas.LOGGER.error("REI: Error parsing loot tables", e);
             }
-
         }
 
         registry.add(

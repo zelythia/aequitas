@@ -4,15 +4,15 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
+import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntryList;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
-
 import net.zelythia.aequitas.compat.LootTableParser.ItemEntry;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -27,13 +27,18 @@ public class CollectionBowlDisplay implements Display {
         this.name = name;
 
         double weight = 0;
-        for (ItemEntry itemEntry : items) {
-            weight += itemEntry.weight();
+        for (ItemEntry item : items) {
+            if (item.id().startsWith("#")) {
+                Optional<RegistryEntryList.Named<Item>> tagItems = Registries.ITEM.getEntryList(TagKey.of(RegistryKeys.ITEM, new Identifier(item.id().replace("#", ""))));
+                weight += item.weight() * tagItems.get().size();
+            } else weight += item.weight();
         }
 
         for (ItemEntry item : items) {
-            if(!new Identifier("minecraft", "air").equals(item.id())){
-                outputs.put(EntryIngredients.of(Registries.ITEM.get(item.id())), ((int) ((item.weight() / weight) * 10000)) / 100d);
+            if (item.id().startsWith("#")) {
+                outputs.put(EntryIngredients.ofItemTag(TagKey.of(RegistryKeys.ITEM, new Identifier(item.id().replace("#", "")))), ((int) ((item.weight() / weight) * 10000)) / 100d);
+            } else if (!new Identifier("minecraft", "air").equals(new Identifier(item.id()))) {
+                outputs.put(EntryIngredients.of(Registries.ITEM.get(new Identifier(item.id()))), ((int) ((item.weight() / weight) * 10000)) / 100d);
             }
         }
     }

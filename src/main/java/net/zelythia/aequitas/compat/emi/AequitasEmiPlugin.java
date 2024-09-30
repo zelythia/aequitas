@@ -51,10 +51,9 @@ public class AequitasEmiPlugin implements EmiPlugin {
                         LootTableParser.parseEntry(entry.getAsJsonObject(), entries, name);
                     }
 
-                    System.out.println("Emi: added " + name);
                     registry.addRecipe(new CollectionBowlEmiRecipe(entries, conditions, name.toString()));
                 } catch (Exception e) {
-                    Aequitas.LOGGER.error("Emi: Error parsing loot tables");
+                    Aequitas.LOGGER.error("Emi: Error parsing loot tables", e);
                 }
             }
         }

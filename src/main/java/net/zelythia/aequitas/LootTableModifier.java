@@ -36,6 +36,7 @@ public class LootTableModifier {
             //Custom CollectionBowl Loot
             if(customCollectionBowlLoot.containsKey(id)){
                 tableBuilder.modifyPools(builder -> {
+                    Aequitas.LOGGER.info("Added {} loot entries to {}", customCollectionBowlLoot.get(id), id);
                     builder.with(customCollectionBowlLoot.get(id));
                 });
 
