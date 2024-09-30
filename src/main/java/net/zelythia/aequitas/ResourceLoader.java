@@ -9,6 +9,8 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.loot.LootGsons;
+import net.minecraft.loot.entry.LootPoolEntry;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeType;
@@ -35,6 +37,7 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
     private final CustomEssenceLoader customEssenceLoader;
     private final CustomCraftingCostLoader customCraftingCostLoader;
     private final CustomRecipeLoader customRecipeLoader;
+    private final CustomCollectionBowlLootLoader customCollectionBowlLootLoader;
 
     private final List<String> KNOWN_TAGS = List.of("#c:lead_ingots", "#c:zinc_ingots", "#c:silver_ingots", "#c:platinum_ingots", "#c:antimony_ingots", "#c:nickel_ingots", "#c:chromium_ingots", "#c:iridium_ingots", "#c:cadmium_ingots", "#c:uranium_ingots", "#c:titanium_ingots", "#c:plutonium_ingots", "#c:tungsten_ingots", "#c:tin_ingots", "#c:crops");
 
@@ -43,6 +46,7 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
         customEssenceLoader = new CustomEssenceLoader();
         customCraftingCostLoader = new CustomCraftingCostLoader();
         customRecipeLoader = new CustomRecipeLoader();
+        customCollectionBowlLootLoader = new CustomCollectionBowlLootLoader();
     }
 
     @Override
@@ -56,12 +60,13 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
         CompletableFuture<Map<String, Long>> completableFuture = customEssenceLoader.prepareReload(manager, prepareExecutor);
         CompletableFuture<Map<RecipeType<?>, Long>> completableFuture2 = customCraftingCostLoader.prepareReload(manager, prepareExecutor);
         CompletableFuture<Map<Item, List<Recipe<?>>>> completableFuture3 = customRecipeLoader.prepareReload(manager, prepareExecutor);
-        CompletableFuture futures = CompletableFuture.allOf(completableFuture, completableFuture2, completableFuture3);
-        synchronizer.getClass();
+        CompletableFuture<Map<Identifier, List<LootPoolEntry>>> completableFuture4 = customCollectionBowlLootLoader.prepareReload(manager, prepareExecutor);
+        CompletableFuture<Void> futures = CompletableFuture.allOf(completableFuture, completableFuture2, completableFuture3, completableFuture4);
         return futures.thenCompose(synchronizer::whenPrepared).thenAcceptAsync((void_) -> {
-            customEssenceLoader.applyReload((Map) completableFuture.join());
-            customCraftingCostLoader.applyReload((Map) completableFuture2.join());
-            customRecipeLoader.applyReload((Map) completableFuture3.join());
+            customEssenceLoader.applyReload(completableFuture.join());
+            customCraftingCostLoader.applyReload(completableFuture2.join());
+            customRecipeLoader.applyReload(completableFuture3.join());
+            customCollectionBowlLootLoader.applyReload(completableFuture4.join());
         }, applyExecutor);
     }
 
@@ -275,6 +280,64 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
         public void applyReload(Map<Item, List<Recipe<?>>> map) {
             EssenceHandler.setCustomRecipes(map);
             Aequitas.LOGGER.info("Loaded {} custom recipes", map.size());
+        }
+    }
+
+    private class CustomCollectionBowlLootLoader {
+        public CompletableFuture<Map<Identifier, List<LootPoolEntry>>> prepareReload(ResourceManager manager, Executor prepareExecutor) {
+            return CompletableFuture.supplyAsync(() -> {
+                Map<Identifier, List<LootPoolEntry>> map = new HashMap<>();
+
+                try {
+                    List<Resource> resources = manager.getAllResources(new Identifier(Aequitas.MOD_ID, "essence/collection_bowl.json"));
+                    Iterator<Resource> iterator = resources.iterator();
+
+                    while (iterator.hasNext()) {
+                        Resource resource = iterator.next();
+                        InputStream inputStream = resource.getInputStream();
+
+                        Reader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+
+                        JsonObject modLoot = JsonHelper.deserialize(GSON, reader, JsonObject.class);
+                        if (modLoot != null) {
+                            modLoot.entrySet().forEach(modEntry -> {
+
+                                if (FabricLoader.getInstance().isModLoaded(modEntry.getKey())) {
+
+
+                                    try {
+                                        Gson gson = LootGsons.getTableGsonBuilder().create();
+
+                                        JsonObject lootTables = modEntry.getValue().getAsJsonObject();
+                                        lootTables.entrySet().forEach(entry -> {
+                                            List<LootPoolEntry> lootPoolEntries = new ArrayList<>();
+                                            for (JsonElement lootEntry : entry.getValue().getAsJsonArray()) {
+                                                lootPoolEntries.add(gson.fromJson(lootEntry, LootPoolEntry.class));
+                                            }
+
+                                            map.computeIfAbsent(new Identifier("aequitas", entry.getKey()), k -> new ArrayList<>()).addAll(lootPoolEntries);
+                                        });
+                                    } catch (Exception e) {
+                                        Aequitas.LOGGER.error("Critical error while loading custom loot tables for mod: " + modEntry.getKey());
+                                    }
+                                } else {
+                                    Aequitas.LOGGER.debug("Mod not loaded: {}", modEntry.getKey());
+                                }
+                            });
+                        }
+                    }
+                } catch (RuntimeException | IOException e) {
+                    Aequitas.LOGGER.error(e);
+                }
+
+                //Not very clean but needs to happen here to be registered before loot tables are modified
+                LootTableModifier.setCustomCollectionBowlLoot(map);
+                return map;
+            }, prepareExecutor);
+        }
+
+        public void applyReload(Map<Identifier, List<LootPoolEntry>> map) {
+            Aequitas.LOGGER.info("Loaded custom collection bowl loot for {} mods", map.size());
         }
     }
 }

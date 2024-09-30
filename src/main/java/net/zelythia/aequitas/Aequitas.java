@@ -9,12 +9,6 @@ import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTables;
-import net.minecraft.loot.entry.EmptyEntry;
-import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.function.SetCountLootFunction;
-import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -89,19 +83,6 @@ public class Aequitas implements ModInitializer {
 
         BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.SURFACE_STRUCTURES, PlacedFeatures.ESSENCE_PILLAR);
 
-        LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
-            if (id.toString().startsWith("minecraft:blocks") || id.toString().startsWith("minecraft:entities")) return;
-            if (id.equals(LootTables.DESERT_PYRAMID_CHEST) || id.equals(LootTables.SHIPWRECK_TREASURE_CHEST)) {
-                LootPool.Builder poolBuilder = LootPool.builder()
-                        .with(ItemEntry.builder(AequitasItems.PRIMAL_ESSENCE).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4))).weight(4))
-                        .with(ItemEntry.builder(AequitasItems.PRIMORDIAL_ESSENCE).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4))).weight(2))
-                        .with(ItemEntry.builder(AequitasItems.PRISTINE_ESSENCE).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4))).weight(1))
-                        .with(EmptyEntry.builder().weight(7));
-
-                tableBuilder.pool(poolBuilder);
-            }
-
-            //TODO: Add mod items to collection bowl loot tables
-        });
+        LootTableEvents.MODIFY.register(new LootTableModifier.Modifier());
     }
 }
