@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:amethyst_shard"
+  },
+  "base": {
+    "item": "minecraft:netherite_leggings"
+  },
+  "result": {
+    "item": "aequitas:primal_essence_leggings"
+  },
+  "template": {
+    "item": "aequitas:primal_upgrade_smithing_template"
+  }
+}

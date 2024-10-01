@@ -5,9 +5,12 @@ import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.block.AequitasBlocks;
+
+import java.util.List;
 
 public class AequitasItems {
 
@@ -58,6 +61,10 @@ public class AequitasItems {
     public static final Item COLLECTION_BOWL_I;
     public static final Item COLLECTION_BOWL_II;
     public static final Item COLLECTION_BOWL_III;
+
+    public static final SmithingTemplateItem PRIMAL_UPGRADE;
+    public static final SmithingTemplateItem PRIMORDIAL_UPGRADE;
+    public static final SmithingTemplateItem PRISTINE_UPGRADE;
 
 
     public static final ItemGroup ITEM_GROUP;
@@ -110,6 +117,37 @@ public class AequitasItems {
         COLLECTION_BOWL_I = register("collection_bowl_1", new BlockItem(AequitasBlocks.COLLECTION_BOWL_I, new Item.Settings()));
         COLLECTION_BOWL_II = register("collection_bowl_2", new BlockItem(AequitasBlocks.COLLECTION_BOWL_II, new Item.Settings()));
         COLLECTION_BOWL_III = register("collection_bowl_3", new BlockItem(AequitasBlocks.COLLECTION_BOWL_III, new Item.Settings()));
+
+
+        PRIMAL_UPGRADE = register("primal_upgrade_smithing_template", new SmithingTemplateItem(
+                Text.translatable("item.aequitas.smithing_template.primal_upgrade.applies_to").formatted(Formatting.BLUE),
+                Text.translatable("item.aequitas.smithing_template.primal_upgrade.ingredients").formatted(Formatting.BLUE),
+                Text.translatable("upgrade.aequitas.primal_upgrade").formatted(Formatting.GRAY),
+                Text.translatable("item.aequitas.smithing_template.primal_upgrade.base_slot_description"),
+                Text.translatable("item.aequitas.smithing_template.primal_upgrade.additions_slot_description"),
+                List.of(new Identifier("item/empty_armor_slot_helmet"), new Identifier("item/empty_armor_slot_chestplate"), new Identifier("item/empty_armor_slot_leggings"), new Identifier("item/empty_armor_slot_boots")),
+                List.of(new Identifier("minecraft", "item/empty_slot_amethyst_shard"))
+        ));
+
+        PRIMORDIAL_UPGRADE = register("primordial_upgrade_smithing_template", new SmithingTemplateItem(
+                Text.translatable("item.aequitas.smithing_template.primordial_upgrade.applies_to").formatted(Formatting.BLUE),
+                Text.translatable("item.aequitas.smithing_template.primordial_upgrade.ingredients").formatted(Formatting.BLUE),
+                Text.translatable("upgrade.aequitas.primordial_upgrade").formatted(Formatting.GRAY),
+                Text.translatable("item.aequitas.smithing_template.primordial_upgrade.base_slot_description"),
+                Text.translatable("item.aequitas.smithing_template.primordial_upgrade.additions_slot_description"),
+                List.of(new Identifier("item/empty_armor_slot_helmet"), new Identifier("item/empty_armor_slot_chestplate"), new Identifier("item/empty_armor_slot_leggings"), new Identifier("item/empty_armor_slot_boots")),
+                List.of(new Identifier("aequitas", "item/empty_slot_chorus_flower"))
+        ));
+
+        PRISTINE_UPGRADE = register("pristine_upgrade_smithing_template", new SmithingTemplateItem(
+                Text.translatable("item.aequitas.smithing_template.pristine_upgrade.applies_to").formatted(Formatting.BLUE),
+                Text.translatable("item.aequitas.smithing_template.pristine_upgrade.ingredients").formatted(Formatting.BLUE),
+                Text.translatable("upgrade.aequitas.pristine_upgrade").formatted(Formatting.GRAY),
+                Text.translatable("item.aequitas.smithing_template.pristine_upgrade.base_slot_description"),
+                Text.translatable("item.aequitas.smithing_template.pristine_upgrade.additions_slot_description"),
+                List.of(new Identifier("item/empty_armor_slot_helmet"), new Identifier("item/empty_armor_slot_chestplate"), new Identifier("item/empty_armor_slot_leggings"), new Identifier("item/empty_armor_slot_boots")),
+                List.of(new Identifier("aequitas", "item/empty_slot_nether_star"))
+        ));
 
 
         ITEM_GROUP = Registry.register(Registries.ITEM_GROUP, new Identifier(Aequitas.MOD_ID, "everything"),
@@ -166,7 +204,7 @@ public class AequitasItems {
     }
 
 
-    public static Item register(String id, Item item) {
+    public static <T extends Item> T register(String id, T item) {
         return Registry.register(Registries.ITEM, new Identifier(Aequitas.MOD_ID, id), item);
     }
 

@@ -118,5 +118,20 @@
   "patchouli_books.aequitas.landing_text": "Welcome to Aequitas!",
   "ui.aequitas.portable.search": "Search",
   "ui.aequitas.config.value.true": "True",
-  "ui.aequitas.config.value.false": "False"
+  "ui.aequitas.config.value.false": "False",
+  "upgrade.aequitas.primal_upgrade": "Primal Upgrade",
+  "upgrade.aequitas.primordial_upgrade": "Primordial Upgrade",
+  "upgrade.aequitas.pristine_upgrade": "Pristine Upgrade",
+  "item.aequitas.smithing_template.pristine_upgrade.applies_to": "Primordial Equipment",
+  "item.aequitas.smithing_template.pristine_upgrade.ingredients": "Nether Star",
+  "item.aequitas.smithing_template.pristine_upgrade.base_slot_description": "Add Primordial Armor",
+  "item.aequitas.smithing_template.pristine_upgrade.additions_slot_description": "Add Nether Star",
+  "item.aequitas.smithing_template.primal_upgrade.applies_to": "Netherite Equipment",
+  "item.aequitas.smithing_template.primal_upgrade.ingredients": "Amethyst Shard",
+  "item.aequitas.smithing_template.primal_upgrade.base_slot_description": "Add Netherite Armor",
+  "item.aequitas.smithing_template.primal_upgrade.additions_slot_description": "Add Amethyst Shard",
+  "item.aequitas.smithing_template.primordial_upgrade.applies_to": "Primal",
+  "item.aequitas.smithing_template.primordial_upgrade.ingredients": "Chorus Flower",
+  "item.aequitas.smithing_template.primordial_upgrade.base_slot_description": "Add Primal Armor",
+  "item.aequitas.smithing_template.primordial_upgrade.additions_slot_description": "Add Chorus Flower"
 }

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:chorus_flower"
+  },
+  "base": {
+    "item": "aequitas:primal_essence_helmet"
+  },
+  "result": {
+    "item": "aequitas:primordial_essence_helmet"
+  },
+  "template": {
+    "item": "aequitas:primordial_upgrade_smithing_template"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:nether_star"
+  },
+  "base": {
+    "item": "aequitas:primordial_essence_helmet"
+  },
+  "result": {
+    "item": "aequitas:pristine_essence_helmet"
+  },
+  "template": {
+    "item": "aequitas:pristine_upgrade_smithing_template"
+  }
+}

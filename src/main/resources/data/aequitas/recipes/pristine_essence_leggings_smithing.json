@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:nether_star"
+  },
+  "base": {
+    "item": "aequitas:primordial_essence_leggings"
+  },
+  "result": {
+    "item": "aequitas:pristine_essence_leggings"
+  },
+  "template": {
+    "item": "aequitas:pristine_upgrade_smithing_template"
+  }
+}
