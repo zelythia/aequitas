@@ -116,5 +116,7 @@
 
   "patchouli_books.aequitas.name": "Essence Guide",
   "patchouli_books.aequitas.landing_text": "Welcome to Aequitas!",
-  "ui.aequitas.portable.search": "Search"
+  "ui.aequitas.portable.search": "Search",
+  "ui.aequitas.config.value.true": "True",
+  "ui.aequitas.config.value.false": "False"
 }

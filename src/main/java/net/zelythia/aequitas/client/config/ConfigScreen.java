@@ -17,7 +17,7 @@ public class ConfigScreen extends GameOptionsScreen {
     public static final SimpleOption<Boolean> SHOW_TOOLTIP = SimpleOption.ofBoolean(
             "ui.aequitas.config.showTooltip",
             value -> Tooltip.of(Text.translatable("ui.aequitas.desc.showTooltip")),
-            (optionText, value) -> Text.translatable("ui.aequitas.config.value.%s", value),
+            (optionText, value) -> Text.translatable("ui.aequitas.config.value." + value),
             AequitasConfig.config.getOrDefault("showTooltip", false),
             aBoolean -> AequitasConfig.config.setOrCreate("showTooltip", aBoolean)
     );
@@ -25,7 +25,7 @@ public class ConfigScreen extends GameOptionsScreen {
     public static final SimpleOption<Boolean> PLAY_AMBIENT_SOUND = SimpleOption.ofBoolean(
             "ui.aequitas.config.playAmbientSound",
             value -> Tooltip.of(Text.translatable("ui.aequitas.desc.playAmbientSound")),
-            (optionText, value) -> Text.translatable("ui.aequitas.config.value.%s", value),
+            (optionText, value) -> Text.translatable("ui.aequitas.config.value."  + value),
             AequitasConfig.config.getOrDefault("playAmbientSound", true),
             aBoolean -> AequitasConfig.config.setOrCreate("playAmbientSound", aBoolean)
     );
@@ -34,7 +34,7 @@ public class ConfigScreen extends GameOptionsScreen {
             "ui.aequitas.config.displayFlightDuration",
             value -> Tooltip.of(Text.translatable("ui.aequitas.desc.displayFlightDuration")),
 
-            (optionText, value) -> Text.translatable("ui.aequitas.config.value.%s", value),
+            (optionText, value) -> Text.translatable("ui.aequitas.config.value."  + value),
             AequitasConfig.config.getOrDefault("displayFlightDuration", true),
             aBoolean -> AequitasConfig.config.setOrCreate("displayFlightDuration", aBoolean)
     );
