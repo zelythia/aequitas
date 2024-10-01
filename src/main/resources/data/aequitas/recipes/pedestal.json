@@ -1,0 +1,17 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "pattern" : [
+    "BBB",
+    " B ",
+    "BBB"
+  ],
+  "key" : {
+    "B" : {
+      "item" : "minecraft:polished_basalt"
+    }
+  },
+  "result" : {
+    "item" : "aequitas:pedestal",
+    "count" : 1
+  }
+}
