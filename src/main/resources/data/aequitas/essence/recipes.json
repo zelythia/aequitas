@@ -467,12 +467,6 @@
         "minecraft:tropical_fish": 1
       }
     },
-    "minecraft:enchanted_book": {
-      "count": 1,
-      "ingredients": {
-        "minecraft:book": 1
-      }
-    },
     "minecraft:dragon_breath": {
       "count": 1,
       "ingredients": {
