@@ -224,7 +224,7 @@ public class EssenceHandler {
 
     public static long getEssenceValue(ItemStack stack) {
         if (stack.isDamageable()) {
-            float m = (float) stack.getDamage() / stack.getMaxDamage();
+            float m = (float) (stack.getMaxDamage() - stack.getDamage()) / stack.getMaxDamage();
             return (long) (getEssenceValue(stack.getItem()) * stack.getCount() * m);
         }
         return getEssenceValue(stack.getItem()) * stack.getCount();
