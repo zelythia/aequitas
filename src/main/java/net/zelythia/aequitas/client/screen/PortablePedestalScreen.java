@@ -1,7 +1,6 @@
 package net.zelythia.aequitas.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
@@ -86,11 +85,10 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
             essenceX = (60 - textWidth) / 2;
         }
 
-
-        for(Iterator var7 = textRenderer.wrapLines(StringVisitable.plain(essence), 60).iterator(); var7.hasNext(); y += 9) {
-            OrderedText orderedText = (OrderedText)var7.next();
-            //FIXME maybe
-            textRenderer.draw(orderedText, textureZeroX + essenceX, textureZeroY + 52, 0x404040, false, matrices.getMatrices().peek().getPositionMatrix(), matrices.getVertexConsumers(), TextRenderer.TextLayerType.NORMAL, 0, 0);
+        int essenceY = 52;
+        for(Iterator<OrderedText> text = textRenderer.wrapLines(StringVisitable.plain(essence), 60).iterator(); text.hasNext(); essenceY += 9) {
+            OrderedText orderedText = text.next();
+            matrices.drawText(textRenderer, orderedText, textureZeroX + essenceX, textureZeroY + essenceY, 0x404040, false);
         }
 
         drawMouseoverTooltip(matrices, mouseX, mouseY);
@@ -133,26 +131,13 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        //Original minecraft code for esc and tab
-
-        //FIXME maybe not needed?
-//        if (keyCode == 256 && this.shouldCloseOnEsc()) {
-//            this.close();
-//            return true;
-//        }
-//        if (keyCode == 258) {
-//            boolean bl = !Screen.hasShiftDown();
-//            if (!this.changeFocus(bl)) {
-//                this.changeFocus(bl);
-//            }
-//            return false;
-//        }
-
         if (searchBox.isFocused()) {
             boolean b = searchBox.keyPressed(keyCode, scanCode, modifiers);
-            this.page = 0;
-            updateSearchProperties();
-            return b;
+            if(b){
+                this.page = 0;
+                updateSearchProperties();
+                return true;
+            }
         }
         return super.keyPressed(keyCode, scanCode, modifiers);
     }

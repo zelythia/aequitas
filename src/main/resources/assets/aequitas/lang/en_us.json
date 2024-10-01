@@ -115,5 +115,6 @@
   "advancements.aequitas.essence_pillar.description": "Find an Essence Pillar",
 
   "patchouli_books.aequitas.name": "Essence Guide",
-  "patchouli_books.aequitas.landing_text": "Welcome to Aequitas!"
+  "patchouli_books.aequitas.landing_text": "Welcome to Aequitas!",
+  "ui.aequitas.portable.search": "Search"
 }
