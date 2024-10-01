@@ -121,11 +121,11 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
                     Aequitas.LOGGER.error("Broken Loot table for biome {}", world.getBiome(pos));
                 }
             }
+
+            NetworkingHandler.updateCollectionBowl(be);
         } else {
             be.setStructureBlockProperties(false);
         }
-
-        NetworkingHandler.updateCollectionBowl(be);
     }
 
 
