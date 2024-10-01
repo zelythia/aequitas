@@ -175,7 +175,13 @@
       "aequitas:pristine_essence": 49152,
       "#minecraft:decorated_pot_sherds": 216,
       "minecraft:sponge": 128,
+      "minecraft:piglin_head": 512,
+      "minecraft:dragon_head": 4096,
       "#minecraft:fishes": 64,
+      "aequitas:petrified_essence": 16,
+      "minecraft:frogspawn": 64,
+      "minecraft:elytra":  100000,
+
       "#c:copper_ingots": 256,
       "#c:iron_ingots": 512,
       "#c:gold_ingots": 512,
@@ -282,6 +288,7 @@
   "techreborn": {
     "priority": 0,
     "values": {
+      "techreborn:aluminum_ingot": 512
     }
   },
   "modern_industrialization": {
