@@ -10,6 +10,7 @@ import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.client.util.ClientEntryStacks;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
+import me.shedaniel.rei.api.common.entry.EntryStack;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -111,12 +112,28 @@ public class CollectionBowlCategory implements DisplayCategory<CollectionBowlDis
                 var slot = Widgets.createSlot(new Point(bounds.getMinX() + X + 18 * x, bounds.getMinY() + Y + 18 * y)).markOutput();
                 var index = y * OUTPUT_SLOTS_X + x;
                 if (index < outputs.size()) {
-                    var output = outputs.get(index);
+                    EntryIngredient output = outputs.get(index);
 
-                    List<Tooltip.Entry> tooltips = new ArrayList<>();
-                    String chance = String.valueOf(display.outputs.get(outputs.get(index)));
-                    tooltips.add(Tooltip.entry(Text.literal(chance + "%").formatted(Formatting.GRAY)));
-                    applyTooltip(output, tooltips);
+                    if(y == OUTPUT_SLOTS_Y - 1 && x == OUTPUT_SLOTS_X - 1) {
+                        List<EntryStack<?>> overflow = new ArrayList<>();
+
+                        for (int i = index; i < outputs.size(); i++) {
+                            EntryIngredient entryStacks = outputs.get(i);
+                            overflow.addAll(entryStacks);
+
+                            double overflowChance = display.outputs.get(outputs.get(i));
+                            Tooltip.Entry overflowTooltip = Tooltip.entry(Text.literal(overflowChance + "%").formatted(getColor(overflowChance)));
+                            applyTooltip(entryStacks, overflowTooltip);
+                        }
+
+                        slot.entries(overflow);
+                        widgets.add(slot);
+                        continue;
+                    }
+
+                    double chance = display.outputs.get(outputs.get(index));
+                    Tooltip.Entry tooltip = Tooltip.entry(Text.literal(chance + "%").formatted(getColor(chance)));
+                    applyTooltip(output, tooltip);
 
                     slot.entries(output);
                 }
@@ -127,12 +144,19 @@ public class CollectionBowlCategory implements DisplayCategory<CollectionBowlDis
         return widgets;
     }
 
-    private void applyTooltip(EntryIngredient ingredient, List<Tooltip.Entry> tooltips) {
-        for (var stack : ingredient) {
-            ClientEntryStacks.setTooltipProcessor(stack, ((entryStack, tooltip) -> {
-                tooltip.entries().addAll(1, tooltips);
-                return tooltip;
+    private void applyTooltip(EntryIngredient outputs, Tooltip.Entry tooltip) {
+        for (var stack : outputs) {
+            ClientEntryStacks.setTooltipProcessor(stack, ((entryStack, tooltips) -> {
+                tooltips.entries().add(tooltip);
+                return tooltips;
             }));
         }
+    }
+
+    private Formatting getColor(double chance){
+        if(chance >= 25) return Formatting.GREEN;
+        if(chance >= 10) return Formatting.WHITE;
+        if(chance >= 1) return Formatting.YELLOW;
+        return Formatting.RED;
     }
 }

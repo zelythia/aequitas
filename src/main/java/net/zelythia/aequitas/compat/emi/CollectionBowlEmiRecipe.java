@@ -152,9 +152,9 @@ public class CollectionBowlEmiRecipe implements EmiRecipe {
             for (int x = 0; x < 9; ++x) {
                 var index = y * 9 + x;
                 if (index < outputs.size()) {
-                    String chance = String.valueOf(this.outputs.get(outputs.get(index)));
+                    double chance = this.outputs.get(outputs.get(index));
                     widgets.addSlot(outputs.get(index), X + 18 * x, Y + 18 * y)
-                            .appendTooltip(Text.literal(chance + "%").formatted(Formatting.GRAY)).recipeContext(this);
+                            .appendTooltip(Text.literal(chance + "%").formatted(getColor(chance))).recipeContext(this);
                 }
             }
         }
@@ -163,5 +163,12 @@ public class CollectionBowlEmiRecipe implements EmiRecipe {
     @Override
     public boolean supportsRecipeTree() {
         return false;
+    }
+
+    private Formatting getColor(double chance){
+        if(chance >= 25) return Formatting.GREEN;
+        if(chance >= 10) return Formatting.WHITE;
+        if(chance >= 1) return Formatting.YELLOW;
+        return Formatting.RED;
     }
 }

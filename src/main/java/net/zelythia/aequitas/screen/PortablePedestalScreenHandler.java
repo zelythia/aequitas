@@ -51,7 +51,6 @@ public class PortablePedestalScreenHandler extends ScreenHandler {
 
             @Override
             public boolean canInsert(ItemStack stack) {
-
                 if (stack.getItem() == AequitasItems.PORTABLE_PEDESTAL && stack.hasNbt() && stack.getNbt().getType("unlocked") == NbtType.LIST) {
                     if (((NbtList) stack.getNbt().get("unlocked")).size() > 0) return false;
                 }
