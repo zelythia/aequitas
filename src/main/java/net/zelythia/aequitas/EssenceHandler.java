@@ -100,12 +100,12 @@ public class EssenceHandler {
                 calculateValue(key, value, true);
             }
 
-            List<Item> reRun = List.copyOf(no_value);
-            no_value.clear();
-            current_run.clear();
-            reRun.forEach(item -> {
-                RecipeMapper.calculateValue(item, itemRecipes.get(item), false);
-            });
+//            List<Item> reRun = List.copyOf(no_value);
+//            no_value.clear();
+//            current_run.clear();
+//            reRun.forEach(item -> {
+//                RecipeMapper.calculateValue(item, itemRecipes.get(item), false);
+//            });
 
             Aequitas.LOGGER.info("Finished mapping recipes. Time elapsed: {}ms", System.currentTimeMillis() - startTime);
             if (!no_value.isEmpty()) {
@@ -170,6 +170,7 @@ public class EssenceHandler {
                             if (stack.getItem() == item) continue;
 
                             long l = calculateValue(stack.getItem(), itemRecipes.get(stack.getItem()), b);
+                            if (l <= 0) continue;
                             l = l * stack.getCount();
 
                             if (recipe instanceof CraftingRecipe craftingRecipe) {
@@ -208,6 +209,7 @@ public class EssenceHandler {
             if (lowest_recipe_cost > 0) {
                 if (map.getOrDefault(item, Long.MAX_VALUE) > lowest_recipe_cost) {
                     map.put(item, lowest_recipe_cost);
+                    current_run.clear();
                 }
 
                 no_value.remove(item);
