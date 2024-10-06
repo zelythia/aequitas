@@ -182,6 +182,7 @@
       "minecraft:frogspawn": 64,
       "minecraft:elytra":  100000,
 
+
       "#c:copper_ingots": 256,
       "#c:iron_ingots": 512,
       "#c:gold_ingots": 512,
@@ -302,6 +303,17 @@
     "values": {
       "#dml-refabricated:pristine_matter": 1024,
       "dml-refabricated:physically_condensed_matrix_fragment": 12800
+    }
+  },
+  "mysticalagriculture": {
+    "priority": 0,
+    "values": {
+      "mysticalagriculture:prosperity_shard": 128,
+      "mysticalagriculture:inferium_essence": 256,
+      "mysticalagriculture:soulium_dust": 384,
+      "mysticalagriculture:soulstone": 16,
+      "mysticalagriculture:cognizant_dust": 34816,
+      "mysticalagriculture:air_essence": 85
     }
   }
 }
