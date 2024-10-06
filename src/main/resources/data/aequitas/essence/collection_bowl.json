@@ -1,0 +1,127 @@
+{
+  "botania": {
+    "gameplay/forest": [
+      {
+        "type": "minecraft:item",
+        "name": "botania:grass_seeds",
+        "weight": 1
+      },
+      {
+        "type": "minecraft:tag",
+        "name": "botania:mystical_flowers",
+        "expand": true,
+        "weight": 1
+      }
+    ],
+    "gameplay/taiga": [
+      {
+        "type": "minecraft:item",
+        "name": "botania:podzol_seeds",
+        "weight": 2
+      }
+    ]
+  },
+  "ae2": {
+    "gameplay/overworld": [
+      {
+        "type": "minecraft:item",
+        "name": "ae2:certus_quartz_crystal",
+        "weight": 30
+      },
+      {
+        "type": "minecraft:item",
+        "name": "ae2:sky_stone_block",
+        "weight": 30
+      }
+    ]
+  },
+  "archon": {
+    "gameplay/nether": [
+      {
+        "type": "minecraft:item",
+        "name": "archon:fire_node",
+        "weight": 8
+      }
+    ],
+    "gameplay/end": [
+      {
+        "type": "minecraft:item",
+        "name": "archon:end_node",
+        "weight": 5
+      }
+    ],
+    "gameplay/ocean": [
+      {
+        "type": "minecraft:item",
+        "name": "archon:water_node",
+        "weight": 10
+      }
+    ],
+    "gameplay/overworld": [
+      {
+        "type": "minecraft:item",
+        "name": "archon:earth_node",
+        "weight": 20
+      },
+      {
+        "type": "minecraft:item",
+        "name": "archon:sky_node",
+        "weight": 11
+      }
+    ]
+  },
+  "create": {
+    "gameplay/overworld": [
+      {
+        "type": "minecraft:item",
+        "name": "create:zinc_ore",
+        "weight": 35
+      },
+      {
+        "type": "minecraft:item",
+        "name": "create:deepslate_zinc_ore",
+        "weight": 5
+      }
+    ]
+  },
+  "croptopia": {
+    "gameplay/overworld": [
+      {
+        "type": "minecraft:item",
+        "name": "croptopia:salt_ore",
+        "weight": 30
+      }
+    ]
+  },
+  "mysticalagriculture": {
+    "gameplay/overworld": [
+      {
+        "type": "minecraft:item",
+        "name": "mysticalagriculture:prosperity_ore",
+        "weight": 40
+      },
+      {
+        "type": "minecraft:item",
+        "name": "mysticalagriculture:inferium_ore",
+        "weight": 30
+      },
+      {
+        "type": "minecraft:item",
+        "name": "mysticalagriculture:deepslate_inferium_ore",
+        "weight": 10
+      }
+    ],
+    "gameplay/nether": [
+      {
+        "type": "minecraft:item",
+        "name": "mysticalagriculture:soulium_ore",
+        "weight": 10
+      },
+      {
+        "type": "minecraft:item",
+        "name": "mysticalagriculture:soulstone",
+        "weight": 15
+      }
+    ]
+  }
+}
