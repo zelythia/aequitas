@@ -1,113 +1,5 @@
 {
   "minecraft": {
-    "minecraft:copper_ore": {
-      "count": 1,
-      "ingredients": {
-        "minecraft:copper_ingot": 1
-      }
-    },
-    "minecraft:deepslate_copper_ore": {
-      "count": 1,
-      "ingredients": {
-        "minecraft:copper_ingot": 1
-      }
-    },
-    "minecraft:coal_ore": {
-      "count": 1,
-      "ingredients": {
-        "minecraft:coal": 1
-      }
-    },
-    "minecraft:deepslate_coal_ore": {
-      "count": 1,
-      "ingredients": {
-        "minecraft:coal": 1
-      }
-    },
-    "minecraft:iron_ore": {
-      "count": 1,
-      "ingredients": {
-        "minecraft:iron_ingot": 1
-      }
-    },
-    "minecraft:deepslate_iron_ore": {
-      "count": 1,
-      "ingredients": {
-        "minecraft:iron_ingot": 1
-      }
-    },
-    "minecraft:gold_ore": {
-      "count": 1,
-      "ingredients": {
-        "minecraft:gold_ingot": 1
-      }
-    },
-    "minecraft:deepslate_gold_ore": {
-      "count": 1,
-      "ingredients": {
-        "minecraft:gold_ingot": 1
-      }
-    },
-    "minecraft:emerald_ore": {
-      "count": 1,
-      "ingredients": {
-        "minecraft:emerald": 1
-      }
-    },
-    "minecraft:deepslate_emerald_ore": {
-      "count": 1,
-      "ingredients": {
-        "minecraft:emerald": 1
-      }
-    },
-    "minecraft:diamond_ore": {
-      "count": 1,
-      "ingredients": {
-        "minecraft:diamond": 1
-      }
-    },
-    "minecraft:deepslate_diamond_ore": {
-      "count": 1,
-      "ingredients": {
-        "minecraft:diamond": 1
-      }
-    },
-    "minecraft:redstone_ore": {
-      "count": 1,
-      "ingredients": {
-        "minecraft:redstone": 1
-      }
-    },
-    "minecraft:deepslate_redstone_ore": {
-      "count": 1,
-      "ingredients": {
-        "minecraft:redstone": 1
-      }
-    },
-    "minecraft:lapis_ore": {
-      "count": 1,
-      "ingredients": {
-        "minecraft:lapis_lazuli": 1
-      }
-    },
-    "minecraft:deepslate_lapis_ore": {
-      "count": 1,
-      "ingredients": {
-        "minecraft:lapis_lazuli": 1
-      }
-    },
-    "minecraft:nether_quartz_ore": {
-      "count": 1,
-      "ingredients": {
-        "minecraft:quartz": 1
-      }
-    },
-    "minecraft:nether_gold_ore": {
-      "count": 1,
-      "ingredients": {
-        "minecraft:gold_nugget": 4
-      }
-    },
     "minecraft:filled_map": {
       "count": 1,
       "ingredients": {
@@ -154,7 +46,7 @@
     "minecraft:enchanted_golden_apple": {
       "count": 1,
       "ingredients": {
-        "minecraft:gold_block": 8,
+        "minecraft:gold_block": 16,
         "minecraft:apple": 1
       }
     },
@@ -755,8 +647,7 @@
     "botania:water_bowl": {
       "count": 1,
       "ingredients": {
-        "minecraft:bowl": 1,
-        "_": 1
+        "minecraft:bowl": 1
       }
     },
     "botania:vivid_grass": {
@@ -1136,31 +1027,31 @@
     }
   },
   "archon": {
-    "archon:fire_gem": {
+    "archon:fire_essence": {
       "count": 1,
       "ingredients": {
         "minecraft:diamond": 1
       }
     },
-    "archon:water_gem": {
+    "archon:water_essence": {
       "count": 1,
       "ingredients": {
         "minecraft:diamond": 1
       }
     },
-    "archon:earth_gem": {
+    "archon:earth_essence": {
       "count": 1,
       "ingredients": {
         "minecraft:diamond": 1
       }
     },
-    "archon:sky_gem": {
+    "archon:sky_essence": {
       "count": 1,
       "ingredients": {
         "minecraft:diamond": 1
       }
     },
-    "archon:end_gem": {
+    "archon:end_essence": {
       "count": 1,
       "ingredients": {
         "minecraft:diamond": 1
@@ -1170,35 +1061,35 @@
       "count": 1,
       "ingredients": {
         "minecraft:netherrack": 1,
-        "archon:fire_gem": 1
+        "archon:fire_essence": 1
       }
     },
     "archon:water_node": {
       "count": 1,
       "ingredients": {
         "minecraft:stone": 1,
-        "archon:water_gem": 1
+        "archon:water_essence": 1
       }
     },
     "archon:earth_node": {
       "count": 1,
       "ingredients": {
         "minecraft:deepslate": 1,
-        "archon:earth_gem": 1
+        "archon:earth_essence": 1
       }
     },
     "archon:sky_node": {
       "count": 1,
       "ingredients": {
         "archon:solid_cloud": 1,
-        "archon:sky_gem": 1
+        "archon:sky_essence": 1
       }
     },
     "archon:end_node": {
       "count": 1,
       "ingredients": {
         "minecraft:end_stone": 1,
-        "archon:end_gem": 1
+        "archon:end_essence": 1
       }
     },
     "archon:cloud_iron": {
@@ -1562,7 +1453,6 @@
       }
     }
   },
-
   "dml-refabricated": {
     "dml-refabricated:soot_redstone": {
       "count": 1,
