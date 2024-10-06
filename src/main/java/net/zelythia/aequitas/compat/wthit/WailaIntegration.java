@@ -5,8 +5,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.zelythia.aequitas.Aequitas;
-import net.zelythia.aequitas.EssenceHandler;
 import net.zelythia.aequitas.block.entity.CraftingPedestalBlockEntity;
+import net.zelythia.aequitas.essence.EssenceHandler;
 
 public class WailaIntegration implements IWailaPlugin {
     @Override

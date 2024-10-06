@@ -2,7 +2,7 @@ package net.zelythia.aequitas.networking;
 
 import net.minecraft.item.Item;
 import net.minecraft.network.PacketByteBuf;
-import net.zelythia.aequitas.EssenceHandler;
+import net.zelythia.aequitas.essence.EssenceHandler;
 
 import java.util.HashMap;
 import java.util.Map;

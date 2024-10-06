@@ -16,12 +16,12 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.zelythia.aequitas.Aequitas;
-import net.zelythia.aequitas.EssenceHandler;
 import net.zelythia.aequitas.Util;
 import net.zelythia.aequitas.block.entity.CollectionBowlBlockEntity;
 import net.zelythia.aequitas.client.particle.CraftingParticle;
 import net.zelythia.aequitas.client.particle.Particles;
 import net.zelythia.aequitas.compat.LootTableParser;
+import net.zelythia.aequitas.essence.EssenceHandler;
 import net.zelythia.aequitas.mixin.client.SpriteContentsMixin;
 import net.zelythia.aequitas.networking.EssencePacket;
 

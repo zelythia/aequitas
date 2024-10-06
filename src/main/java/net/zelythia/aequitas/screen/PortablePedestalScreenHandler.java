@@ -10,8 +10,8 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
 import net.zelythia.aequitas.Aequitas;
-import net.zelythia.aequitas.EssenceHandler;
 import net.zelythia.aequitas.PortablePedestalInventory;
+import net.zelythia.aequitas.essence.EssenceHandler;
 import net.zelythia.aequitas.item.AequitasItems;
 
 public class PortablePedestalScreenHandler extends ScreenHandler {

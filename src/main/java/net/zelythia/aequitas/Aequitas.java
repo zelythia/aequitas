@@ -21,6 +21,7 @@ import net.minecraft.world.gen.feature.Feature;
 import net.zelythia.aequitas.advancement.PlayerStatistics;
 import net.zelythia.aequitas.block.AequitasBlocks;
 import net.zelythia.aequitas.block.entity.BlockEntityTypes;
+import net.zelythia.aequitas.essence.EssenceHandler;
 import net.zelythia.aequitas.item.AequitasItems;
 import net.zelythia.aequitas.networking.EssencePacket;
 import net.zelythia.aequitas.networking.NetworkingHandler;

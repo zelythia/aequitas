@@ -18,7 +18,6 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.zelythia.aequitas.Aequitas;
-import net.zelythia.aequitas.EssenceHandler;
 import net.zelythia.aequitas.Sounds;
 import net.zelythia.aequitas.block.entity.BlockEntityTypes;
 import net.zelythia.aequitas.client.block.entity.CollectionBowlBlockEntityRenderer;
@@ -31,6 +30,7 @@ import net.zelythia.aequitas.client.particle.Particles;
 import net.zelythia.aequitas.client.screen.CollectionBowlScreen;
 import net.zelythia.aequitas.client.screen.CraftingPedestalScreen;
 import net.zelythia.aequitas.client.screen.PortablePedestalScreen;
+import net.zelythia.aequitas.essence.EssenceHandler;
 import net.zelythia.aequitas.item.AequitasItems;
 import net.zelythia.aequitas.item.EssenceArmorItem;
 

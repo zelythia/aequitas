@@ -13,6 +13,7 @@ import net.minecraft.nbt.NbtString;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
+import net.zelythia.aequitas.essence.EssenceHandler;
 import net.zelythia.aequitas.item.AequitasItems;
 
 import java.util.ArrayList;

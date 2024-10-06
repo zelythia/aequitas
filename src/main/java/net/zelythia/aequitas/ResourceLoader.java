@@ -11,11 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootGsons;
 import net.minecraft.loot.entry.LootPoolEntry;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeType;
-import net.minecraft.recipe.ShapelessRecipe;
-import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -25,12 +21,17 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.profiler.Profiler;
+import net.zelythia.aequitas.essence.EssenceHandler;
+import net.zelythia.aequitas.essence.SimplifiedIngredient;
+import net.zelythia.aequitas.essence.SimplifiedRecipe;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
+
+import static net.zelythia.aequitas.item.AequitasItems.ESSENCE_HOLDER;
 
 public class ResourceLoader implements IdentifiableResourceReloadListener {
     private final Gson GSON;
@@ -59,7 +60,7 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
     public CompletableFuture<Void> reload(Synchronizer synchronizer, ResourceManager manager, Profiler prepareProfiler, Profiler applyProfiler, Executor prepareExecutor, Executor applyExecutor) {
         CompletableFuture<Map<String, Long>> completableFuture = customEssenceLoader.prepareReload(manager, prepareExecutor);
         CompletableFuture<Map<RecipeType<?>, Long>> completableFuture2 = customCraftingCostLoader.prepareReload(manager, prepareExecutor);
-        CompletableFuture<Map<Item, List<Recipe<?>>>> completableFuture3 = customRecipeLoader.prepareReload(manager, prepareExecutor);
+        CompletableFuture<Map<Item, List<SimplifiedRecipe>>> completableFuture3 = customRecipeLoader.prepareReload(manager, prepareExecutor);
         CompletableFuture<Map<Identifier, List<LootPoolEntry>>> completableFuture4 = customCollectionBowlLootLoader.prepareReload(manager, prepareExecutor);
         CompletableFuture<Void> futures = CompletableFuture.allOf(completableFuture, completableFuture2, completableFuture3, completableFuture4);
         return futures.thenCompose(synchronizer::whenPrepared).thenAcceptAsync((void_) -> {
@@ -204,9 +205,9 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
     }
 
     private class CustomRecipeLoader {
-        public CompletableFuture<Map<Item, List<Recipe<?>>>> prepareReload(ResourceManager manager, Executor prepareExecutor) {
+        public CompletableFuture<Map<Item, List<SimplifiedRecipe>>> prepareReload(ResourceManager manager, Executor prepareExecutor) {
             return CompletableFuture.supplyAsync(() -> {
-                Map<Item, List<Recipe<?>>> map = new HashMap<>();
+                Map<Item, List<SimplifiedRecipe>> map = new HashMap<>();
 
                 try {
                     List<Resource> resources = manager.getAllResources(new Identifier(Aequitas.MOD_ID, "essence/recipes.json"));
@@ -228,24 +229,24 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
                                     recipes.entrySet().forEach(entry -> {
                                         Item output = Registries.ITEM.get(new Identifier(entry.getKey()));
                                         if (output != Items.AIR) {
-                                            DefaultedList<Ingredient> ingredients = DefaultedList.of();
+                                            DefaultedList<SimplifiedIngredient> ingredients = DefaultedList.of();
                                             int outputCount = entry.getValue().getAsJsonObject().get("count").getAsInt();
 
                                             for (Map.Entry<String, JsonElement> jsonIngredient : entry.getValue().getAsJsonObject().get("ingredients").getAsJsonObject().entrySet()) {
                                                 int count = jsonIngredient.getValue().getAsInt();
 
                                                 if (jsonIngredient.getKey().equals("_")) {
-                                                    ingredients.add(Ingredient.EMPTY);
+                                                    ingredients.add(SimplifiedIngredient.of(new ItemStack(ESSENCE_HOLDER, count)));
                                                 } else {
                                                     Item item = Registries.ITEM.get(new Identifier(jsonIngredient.getKey()));
                                                     if (item != Items.AIR) {
                                                         if (count > 0) {
-                                                            ingredients.add(Ingredient.ofStacks(new ItemStack(item, count)));
+                                                            ingredients.add(SimplifiedIngredient.of(new ItemStack(item, count)));
                                                         } else {
                                                             Aequitas.LOGGER.error("Item count must be greater than 0 for {} in {} recipe", jsonIngredient.getKey(), entry.getKey());
                                                         }
                                                     } else {
-                                                        Aequitas.LOGGER.error("Unknown ingredient {} in {}", jsonIngredient.getKey(), entry.getKey());
+                                                        Aequitas.LOGGER.error("Unknown ingredient {} in {} for mod {}", jsonIngredient.getKey(), entry.getKey(), modEntry.getKey());
                                                     }
                                                 }
                                             }
@@ -255,7 +256,7 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
                                                     map.put(output, new ArrayList<>());
                                                 }
 
-                                                map.get(output).add(new ShapelessRecipe(new Identifier("aequitas", "custom"), "custom", CraftingRecipeCategory.MISC, new ItemStack(output, outputCount), ingredients));
+                                                map.get(output).add(new SimplifiedRecipe(ingredients, new ItemStack(output, outputCount), null, false));
                                             }
                                         } else {
                                             Aequitas.LOGGER.error("Unknown output {}", entry.getKey());
@@ -276,7 +277,7 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
             }, prepareExecutor);
         }
 
-        public void applyReload(Map<Item, List<Recipe<?>>> map) {
+        public void applyReload(Map<Item, List<SimplifiedRecipe>> map) {
             EssenceHandler.setCustomRecipes(map);
             Aequitas.LOGGER.info("Loaded {} custom recipes", map.size());
         }

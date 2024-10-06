@@ -16,8 +16,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.zelythia.aequitas.EssenceHandler;
 import net.zelythia.aequitas.ImplementedInventory;
+import net.zelythia.aequitas.essence.EssenceHandler;
 import org.jetbrains.annotations.Nullable;
 
 public class SamplingPedestalBlockEntity extends BlockEntity implements ImplementedInventory {

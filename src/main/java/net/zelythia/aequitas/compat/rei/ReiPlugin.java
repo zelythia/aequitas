@@ -1,6 +1,7 @@
 package net.zelythia.aequitas.compat.rei;
 
 import com.google.gson.JsonElement;
+import me.shedaniel.rei.api.client.entry.filtering.base.BasicFilteringRule;
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
@@ -55,6 +56,11 @@ public class ReiPlugin implements REIClientPlugin {
                         Text.translatable("rei.info.aequitas.essence.name")
                 ).line(Text.translatable("rei.info.aequitas.essence.description"))
         );
+    }
+
+    @Override
+    public void registerBasicEntryFiltering(BasicFilteringRule<?> rule) {
+        rule.hide(EntryStacks.of(AequitasItems.ESSENCE_HOLDER));
     }
 
 }

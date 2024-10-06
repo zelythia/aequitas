@@ -69,6 +69,8 @@ public class AequitasItems {
 
     public static final ItemGroup ITEM_GROUP;
 
+    public static final Item ESSENCE_HOLDER =register("essence_holder",  new Item(new Item.Settings()));
+
     static {
         INFUSED_STONE = register("infused_stone", new BlockItem(AequitasBlocks.INFUSED_STONE, new Item.Settings()));
         INFUSED_STONE_PILLAR = register("infused_stone_pillar", new BlockItem(AequitasBlocks.INFUSED_STONE_PILLAR, new Item.Settings()));
