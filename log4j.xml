@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" packages="com.mojang.util">
+    <Loggers>
+<!--        <Root level="debug">-->
+<!--            <AppenderRef ref="SysOut"/>-->
+<!--            <AppenderRef ref="File"/>-->
+<!--        </Root>-->
+    </Loggers>
+</Configuration>
