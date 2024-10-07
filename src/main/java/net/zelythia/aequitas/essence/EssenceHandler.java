@@ -16,6 +16,9 @@ import static net.zelythia.aequitas.item.AequitasItems.ESSENCE_HOLDER;
 
 
 public class EssenceHandler {
+    private static final int INGREDIENT_LIMIT = 64;
+    private static final int MAX_TIME = 60000;
+
     public static final Map<Item, Long> map = new HashMap<>();
 
     private static RecipeManager recipeManager;
@@ -66,56 +69,70 @@ public class EssenceHandler {
         private static final Map<Item, List<SimplifiedRecipe>> reversedRecipes = new HashMap<>();
 
         private static void mapRecipes(RecipeManager recipeManager) {
-            Aequitas.LOGGER.info("Started mapping recipes");
-
-            long startTime = System.currentTimeMillis();
             if (recipeManager == null || registryManager == null) return;
+
+            Aequitas.LOGGER.info("Started mapping recipes");
+            long startTime = System.currentTimeMillis();
 
             for (Recipe<?> recipe : recipeManager.values()) {
                 Item output = recipe.getOutput(registryManager).getItem();
 
+                if(System.currentTimeMillis() - startTime > 60000) {
+                    Aequitas.LOGGER.error("Recipe: " + recipe.getOutput(registryManager).getItem());
+                    return;
+                }
+
                 if (!itemRecipes.containsKey(output)) {
                     itemRecipes.put(output, new ArrayList<>());
                 }
-                if (!itemRecipes.get(output).contains(recipe)) {
-                    //Transforming smithing recipes into normal ones that can be handled by aequitas
-                    if (recipe instanceof SmithingTransformRecipe) {
-                        SmithingTransformRecipeAccessor smithingRecipe = (SmithingTransformRecipeAccessor) recipe;
 
-                        itemRecipes.get(output).add(new SimplifiedRecipe(List.of(SimplifiedIngredient.of(smithingRecipe.getTemplate()), SimplifiedIngredient.of(smithingRecipe.getBase()), SimplifiedIngredient.of(smithingRecipe.getAddition())), recipe.getOutput(registryManager), recipe.getType(), false));
-                    } else {
-                        itemRecipes.get(output).add(SimplifiedRecipe.of(recipe, registryManager));
+                //Transforming smithing recipes into normal ones that can be handled by aequitas
+                if (recipe instanceof SmithingTransformRecipe) {
+                    SmithingTransformRecipeAccessor smithingRecipe = (SmithingTransformRecipeAccessor) recipe;
 
-                        //Creating a reverse recipe for every ingredient in the original one
-                        for (Ingredient ingredient : recipe.getIngredients()) {
-                            for (ItemStack stack : ingredient.getMatchingStacks()) {
-                                if (!stack.getRecipeRemainder().isEmpty())
-                                    continue; //Ignoring recipe remainders for reversed recipes
+                    itemRecipes.get(output).add(new SimplifiedRecipe(List.of(SimplifiedIngredient.of(smithingRecipe.getTemplate()), SimplifiedIngredient.of(smithingRecipe.getBase()), SimplifiedIngredient.of(smithingRecipe.getAddition())), recipe.getOutput(registryManager), recipe.getType(), false));
+                } else {
+                    itemRecipes.get(output).add(SimplifiedRecipe.of(recipe, registryManager));
 
-                                int outputCount = 0;
-                                List<SimplifiedIngredient> ingredients = new ArrayList<>();
-                                ingredients.add(SimplifiedIngredient.of(recipe.getOutput(registryManager)));
+                    //Creating a reverse recipe for every ingredient in the original one
+                    for (Ingredient ingredient : recipe.getIngredients()) {
+                        for (ItemStack stack : ingredient.getMatchingStacks()) {
+                            if (!stack.getRecipeRemainder().isEmpty())
+                                continue; //Ignoring recipe remainders for reversed recipes
 
-                                for (Ingredient ingredient2 : recipe.getIngredients()) {
-                                    if (ingredient2.equals(ingredient)) {
-                                        outputCount += stack.getCount();
-                                        continue;
-                                    }
+                            int outputCount = 0;
+                            List<SimplifiedIngredient> ingredients = new ArrayList<>();
+                            ingredients.add(SimplifiedIngredient.of(recipe.getOutput(registryManager)));
 
-                                    List<StackHolder> reversedMatchingStacks = new ArrayList<>();
-                                    for (ItemStack ingredientStack : ingredient2.getMatchingStacks()) {
-                                        reversedMatchingStacks.add(new StackHolder(ingredientStack.getItem(), ingredientStack.getCount() * -1, new ItemStack(ingredientStack.getItem())));
-
-                                        ingredients.add(new SimplifiedIngredient(reversedMatchingStacks.toArray(new StackHolder[0])));
-                                    }
+                            for (Ingredient ingredient2 : recipe.getIngredients()) {
+                                if (ingredient2.equals(ingredient)) {
+                                    outputCount += stack.getCount();
+                                    continue;
                                 }
 
-                                reversedRecipes.computeIfAbsent(stack.getItem(), item -> new ArrayList<>()).add(new SimplifiedRecipe(ingredients, new ItemStack(stack.getItem(), outputCount), recipe.getType(), true));
+                                List<StackHolder> reversedMatchingStacks = new ArrayList<>();
+                                for (int i = 0; i < ingredient2.getMatchingStacks().length && i < INGREDIENT_LIMIT; i++) {
+                                    ItemStack ingredientStack = ingredient2.getMatchingStacks()[i];
+
+                                    reversedMatchingStacks.add(new StackHolder(ingredientStack.getItem(), ingredientStack.getCount() * -1, new ItemStack(ingredientStack.getItem())));
+
+                                    ingredients.add(new SimplifiedIngredient(reversedMatchingStacks.toArray(new StackHolder[0])));
+
+                                    if(System.currentTimeMillis() - startTime > MAX_TIME) {
+                                        Aequitas.LOGGER.error("Recipe mapping took to long");
+                                        return;
+                                    }
+                                }
                             }
+
+                            reversedRecipes.computeIfAbsent(stack.getItem(), item -> new ArrayList<>()).add(new SimplifiedRecipe(ingredients, new ItemStack(stack.getItem(), outputCount), recipe.getType(), true));
                         }
                     }
                 }
+
             }
+
+            Aequitas.LOGGER.info("Finished Recipe Mapping, starting essence calculation");
 
             //Normal Recipes
             for (Map.Entry<Item, List<SimplifiedRecipe>> entry : itemRecipes.entrySet()) {
@@ -136,7 +153,7 @@ public class EssenceHandler {
                     noValue.add(registryEntry.getKey().getValue().toString());
                 }
             });
-            Aequitas.LOGGER.info("Could not calculate essence values: {}", Arrays.toString(noValue.toArray()));
+//            Aequitas.LOGGER.info("Could not calculate essence values: {}", Arrays.toString(noValue.toArray()));
             Aequitas.LOGGER.warn("Could not calculate essence values for {} items.", noValue.size());
         }
 
@@ -144,11 +161,17 @@ public class EssenceHandler {
         private static void calculateEssence(Item requestedItem) {
             if (getEssenceValue(requestedItem) > 0) return;
 
+            long startTime = System.currentTimeMillis();
             ArrayList<Item> visited = new ArrayList<>();
             Stack<Item> itemStack = new Stack<>();
             itemStack.push(requestedItem);
 
             while (!itemStack.isEmpty()) {
+                if(System.currentTimeMillis() - startTime > MAX_TIME) {
+                    Aequitas.LOGGER.error("Essence calculation for item {} took too long", requestedItem);
+                    return;
+                }
+
                 Item item = itemStack.peek();
 
                 List<SimplifiedRecipe> recipes = itemRecipes.getOrDefault(item, new ArrayList<>());
