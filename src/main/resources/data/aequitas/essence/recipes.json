@@ -1102,7 +1102,7 @@
     "archon:pixie_leaves": {
       "count": 1,
       "ingredients": {
-        "minecraft:oak_leaves": 1
+        "minecraft:oak_leaves": 30
       }
     },
     "archon:glisteel_ingot": {
@@ -1116,6 +1116,13 @@
       "ingredients": {
         "minecraft:glass_bottle": 1,
         "_": 128
+      }
+    },
+    "archon:spry_dust": {
+      "count": 1,
+      "ingredients": {
+        "minecraft:sand": 1,
+        "_": 10
       }
     }
   },
@@ -1451,6 +1458,25 @@
       "ingredients": {
         "minecraft:sand": 1
       }
+    },
+    "fabricaeexnihilo:raw_silkworm": {
+      "count": 1,
+      "ingredients": {
+        "minecraft:oak_leaves": 2
+      }
+    },
+    "fabricaeexnihilo:witchwater_bucket": {
+      "count": 1,
+      "ingredients": {
+        "fabricaeexnihilo:mycelium_seeds": 1,
+        "minecraft:bucket": 1
+      }
+    },
+    "fabricaeexnihilo:blood_bucket": {
+      "count": 1,
+      "ingredients": {
+        "minecraft:bucket": 1
+      }
     }
   },
   "dml-refabricated": {
@@ -1471,6 +1497,14 @@
       "ingredients": {
         "dml-refabricated:polymer_clay": 1,
         "_": 80
+      }
+    }
+  },
+  "conjuring": {
+    "conjuring:conjuration_essence": {
+      "count": 1,
+      "ingredients": {
+        "minecraft:diamond": 1
       }
     }
   }
