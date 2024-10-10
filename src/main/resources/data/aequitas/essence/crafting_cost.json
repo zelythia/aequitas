@@ -9,8 +9,9 @@
     "smithing": 0
   },
   "botania": {
-    "terra_plate": 128,
-    "mana_infusion": 32
+    "terra_plate": 8196,
+    "mana_infusion": 512,
+    "elven_trade": 512
   },
   "ae2": {
     "charger": 1600
@@ -25,5 +26,8 @@
   "mysticalagriculture": {
     "soul_extraction": -1,
     "reprocessor": -1
+  },
+  "alloy_forgery": {
+    "forging": -1
   }
 }

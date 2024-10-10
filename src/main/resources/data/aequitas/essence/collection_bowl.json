@@ -123,5 +123,14 @@
         "weight": 15
       }
     ]
+  },
+  "tconstruct": {
+    "gameplay/nether": [
+      {
+        "type": "minecraft:item",
+        "name": "tconstruct:cobalt_ore",
+        "weight": 5
+      }
+    ]
   }
 }
