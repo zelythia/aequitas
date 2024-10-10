@@ -19,7 +19,7 @@ public class EssenceHandler {
     private static final int INGREDIENT_LIMIT = 64;
     private static final int MAX_TIME = 60000;
 
-    public static final Map<Item, Long> map = new HashMap<>();
+    public static Map<Item, Long> map = new HashMap<>();
 
     private static RecipeManager recipeManager;
     private static DynamicRegistryManager registryManager;
@@ -65,7 +65,7 @@ public class EssenceHandler {
     private static class RecipeMapper {
         private static final Map<RecipeType<?>, Long> craftingCost = new HashMap<>();
 
-        private static final Map<Item, List<SimplifiedRecipe>> itemRecipes = new HashMap<>();
+        private static Map<Item, List<SimplifiedRecipe>> itemRecipes = new HashMap<>();
         private static final Map<Item, List<SimplifiedRecipe>> reversedRecipes = new HashMap<>();
 
         private static void mapRecipes(RecipeManager recipeManager) {
@@ -261,7 +261,9 @@ public class EssenceHandler {
                     visited.add(item);
                     itemStack.pop();
                     if (lowestRecipeCost > 0) {
-                        map.put(item, Math.min(lowestRecipeCost, map.getOrDefault(item, Long.MAX_VALUE)));
+                        if(getEssenceValue(item) <= 0){
+                            map.put(item,lowestRecipeCost);
+                        }
                     }
                 }
             }
@@ -274,6 +276,12 @@ public class EssenceHandler {
     }
 
     public static long getEssenceValue(ItemStack stack) {
+        if(stack.hasNbt()){
+            if(!(stack.getNbt().getKeys().size() == 1 && stack.getNbt().contains("Damage"))){
+                return -1;
+            }
+        }
+
         if (stack.isDamageable()) {
             float m = (float) (stack.getMaxDamage() - stack.getDamage()) / stack.getMaxDamage();
             return (long) (getEssenceValue(stack.getItem()) * stack.getCount() * m);

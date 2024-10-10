@@ -13,6 +13,7 @@ import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.DyeableItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -71,7 +72,9 @@ public class AequitasClient implements ClientModInitializer {
             }
 
             if (AequitasConfig.config.getOrDefault("showTooltip", false) || Screen.hasShiftDown()) {
-                long value = EssenceHandler.getEssenceValue(stack.getItem());
+                ItemStack singleItem = stack.copy();
+                singleItem.setCount(1);
+                long value = EssenceHandler.getEssenceValue(singleItem);
                 String s = "";
                 if (value >= 0L) s += "Essence: " + NumberFormat.getNumberInstance().format(value);
                 if (stack.getCount() > 1)
