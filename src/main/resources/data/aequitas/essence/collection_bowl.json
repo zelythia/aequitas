@@ -132,5 +132,118 @@
         "weight": 5
       }
     ]
+  },
+  "techreborn": {
+    "gameplay/overworld": [
+      {
+        "type": "minecraft:item",
+        "name": "techreborn:tin_ore",
+        "weight": 50
+      },
+
+      {
+        "type": "minecraft:item",
+        "name": "techreborn:lead_ore",
+        "weight": 20
+      },
+      {
+        "type": "minecraft:item",
+        "name": "techreborn:deepslate_lead_ore",
+        "weight": 20
+      },
+
+      {
+        "type": "minecraft:item",
+        "name": "techreborn:silver_ore",
+        "weight": 30
+      },
+      {
+        "type": "minecraft:item",
+        "name": "techreborn:deepslate_silver_ore",
+        "weight": 10
+      },
+
+      {
+        "type": "minecraft:item",
+        "name": "techreborn:galena_ore",
+        "weight": 20
+      },
+      {
+        "type": "minecraft:item",
+        "name": "techreborn:deepslate_galena_ore",
+        "weight": 30
+      },
+
+      {
+        "type": "minecraft:item",
+        "name": "techreborn:bauxite_ore",
+        "weight": 5
+      },
+      {
+        "type": "minecraft:item",
+        "name": "techreborn:deepslate_bauxite_ore",
+        "weight": 35
+      },
+
+      {
+        "type": "minecraft:item",
+        "name": "techreborn:ruby_ore",
+        "weight": 40
+      },
+      {
+        "type": "minecraft:item",
+        "name": "techreborn:sapphire_ore",
+        "weight": 40
+      },
+
+      {
+        "type": "minecraft:item",
+        "name": "techreborn:deepslate_iridium_ore",
+        "weight": 20
+      }
+
+
+    ],
+
+    "gameplay/nether": [
+      {
+        "type": "minecraft:item",
+        "name": "techreborn:cinnabar_ore",
+        "weight": 5
+      },
+      {
+        "type": "minecraft:item",
+        "name": "techreborn:pyrite_ore",
+        "weight": 6
+      },
+      {
+        "type": "minecraft:item",
+        "name": "techreborn:sphalerite_ore",
+        "weight": 4
+      }
+    ],
+
+    "gameplay/end": [
+      {
+        "type": "minecraft:item",
+        "name": "techreborn:peridot_ore",
+        "weight": 6
+      },
+      {
+        "type": "minecraft:item",
+        "name": "techreborn:sheldonite_ore",
+        "weight": 4
+      },
+      {
+        "type": "minecraft:item",
+        "name": "techreborn:sodalite_ore",
+        "weight": 4
+      },
+      {
+        "type": "minecraft:item",
+        "name": "techreborn:tungsten_ore",
+        "weight": 3
+      }
+    ]
   }
 }
