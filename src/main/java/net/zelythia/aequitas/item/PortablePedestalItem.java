@@ -8,6 +8,7 @@ import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.zelythia.aequitas.PortablePedestalInventory;
@@ -38,5 +39,15 @@ public class PortablePedestalItem extends Item implements NamedScreenHandlerFact
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
         return new PortablePedestalScreenHandler(syncId, inv, new PortablePedestalInventory(player.getStackInHand(Hand.MAIN_HAND)));
+    }
+
+    @Override
+    public boolean hasGlint(ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public Rarity getRarity(ItemStack stack) {
+        return Rarity.EPIC;
     }
 }
