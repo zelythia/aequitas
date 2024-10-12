@@ -207,7 +207,9 @@
       "#c:uranium_ingots": 8192,
       "#c:iridium_ingots": 8192,
       "#c:crops": 64,
-      "#c:seeds": 16
+      "#c:seeds": 16,
+      "#c:cobalt_ingots": 8192,
+      "#c:manyullyn_ingots": 36864
     }
   },
   "botania": {
