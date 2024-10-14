@@ -13,6 +13,18 @@ The Essence is also a powerful and mythical resource and can be crafted into pow
 
 ---
 
+### Compatability
+
+Requires [Fabric API](https://modrinth.com/mod/fabric-api)
+
+Autotools has full Integration with: [WTHIT](https://modrinth.com/mod/wthit), [REI](https://modrinth.com/mod/rei), [EMI](https://modrinth.com/mod/emi), [Patchouli](https://modrinth.com/mod/patchouli)
+
+Since the essence values are calculated based on recipes, Aequitas should work with almost any mod. It has native integration with custom values for: _Botania, AE2, Ad Astra, Bewitchment, Create, Croptopia, TechReborn, Modern Industrialisation, Mystical Agriculture, and more_ 
+
+---
+
+### Resources
+
 For new players: [Gameplay Guide](https://github.com/zelythia/aequitas/wiki/Gameplay)
 
 For developers: [Development Guide](https://github.com/zelythia/aequitas/wiki/Development)
