@@ -32,10 +32,6 @@ public class EssenceHandler {
         registryManager = r;
     }
 
-    private static void cleanEssenceMap() {
-        map.entrySet().removeIf(entry -> entry.getValue() <= 0);
-    }
-
     public static void setCraftingCost(Map<RecipeType<?>, Long> map) {
         RecipeMapper.craftingCost.clear();
         RecipeMapper.craftingCost.putAll(map);
@@ -56,7 +52,6 @@ public class EssenceHandler {
         map.put(ESSENCE_HOLDER, 1L);
         map.putAll(newValues);
         RecipeMapper.mapRecipes(recipeManager);
-        cleanEssenceMap();
 
         NetworkingHandler.updateEssence();
     }
@@ -159,7 +154,7 @@ public class EssenceHandler {
 
 
         private static void calculateEssence(Item requestedItem) {
-            if (getEssenceValue(requestedItem) > 0) return;
+            if (map.containsKey(requestedItem)) return;
 
             long startTime = System.currentTimeMillis();
             ArrayList<Item> visited = new ArrayList<>();
@@ -261,7 +256,7 @@ public class EssenceHandler {
                     visited.add(item);
                     itemStack.pop();
                     if (lowestRecipeCost > 0) {
-                        if(getEssenceValue(item) <= 0){
+                        if(!map.containsKey(item)){
                             map.put(item,lowestRecipeCost);
                         }
                     }
