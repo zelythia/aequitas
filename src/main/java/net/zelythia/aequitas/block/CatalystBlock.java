@@ -13,6 +13,7 @@ import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -20,15 +21,8 @@ import net.zelythia.aequitas.Util;
 import net.zelythia.aequitas.client.particle.CatalystParticle;
 import net.zelythia.aequitas.client.particle.Particles;
 
-import java.util.Random;
-
 public class CatalystBlock extends FacingBlock {
-
     private final int tier;
-
-    public CatalystBlock(Settings settings) {
-        this(settings, 1);
-    }
 
     public CatalystBlock(Settings settings, int tier) {
         super(settings);
@@ -104,8 +98,7 @@ public class CatalystBlock extends FacingBlock {
                 velY *= r;
                 velZ *= r;
 
-
-                CatalystParticle particle = (CatalystParticle) Particles.spawnParticle(MinecraftClient.getInstance(), Particles.CATALYST_PARTICLE, false, true, x, y, z, velX, velY, velZ);
+                CatalystParticle particle = (CatalystParticle) Particles.spawnParticle(MinecraftClient.getInstance(), Particles.CATALYST_PARTICLE, true, false, x, y, z, velX, velY, velZ);
 
                 if (particle != null) {
                     particle.setMaxDistanceSq(Util.distanceSq(x, y, z, end_x, end_y, end_z));
