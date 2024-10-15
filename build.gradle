@@ -31,10 +31,19 @@ repositories {
 
 loom {
 	log4jConfigs.from(file("log4j.xml"))
-}
 
-fabricApi {
-	configureDataGeneration()
+	runs {
+		// This adds a new gradle task that runs the datagen API: "gradlew runDatagen"
+		datagen {
+			inherit server
+			name "Data Generation"
+			vmArg "-Dfabric-api.datagen"
+			vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
+			vmArg "-Dfabric-api.datagen.modid=${archives_base_name}"
+
+			runDir "build/datagen"
+		}
+	}
 }
 
 sourceSets {
@@ -46,6 +55,10 @@ sourceSets {
 		}
 	}
 }
+
+//fabricApi {
+//	configureDataGeneration()
+//}
 
 dependencies {
 	// To change the versions see the gradle.properties file
