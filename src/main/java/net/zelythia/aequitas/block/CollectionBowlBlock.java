@@ -27,20 +27,6 @@ import org.jetbrains.annotations.Nullable;
 public class CollectionBowlBlock extends BlockWithEntity {
     private final int size;
 
-//    public static final MapCodec<CollectionBowlBlock> CODEC = createCodec(CollectionBowlBlock::new);
-//
-//    public MapCodec<CollectionBowlBlock> getCodec() {
-//        return CODEC;
-//    }
-
-    /**
-     * Only used for the codec
-     */
-    public CollectionBowlBlock(Settings settings) {
-        this(settings, 1);
-    }
-
-
     public CollectionBowlBlock(Settings settings, int size) {
         super(settings);
         this.size = size;

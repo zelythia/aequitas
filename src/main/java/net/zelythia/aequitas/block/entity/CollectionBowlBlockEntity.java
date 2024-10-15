@@ -331,6 +331,10 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
             catalystBlocks2.add(pos.add(5, 2, -2));
             catalystBlocks2.add(pos.add(-5, 2, 2));
             catalystBlocks2.add(pos.add(-5, 2, -2));
+            catalystBlocks2.add(pos.add(2, 2, 5));
+            catalystBlocks2.add(pos.add(2, 2, -5));
+            catalystBlocks2.add(pos.add(-2, 2, 5));
+            catalystBlocks2.add(pos.add(-2, 2, -5));
 
             catalystBlocks3.add(pos.add(4, 3, 4));
             catalystBlocks3.add(pos.add(4, 3, -4));
