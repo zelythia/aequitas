@@ -48,29 +48,29 @@ public class AequitasBlocks {
 
 
     static {
-        INFUSED_STONE = register("infused_stone", new InfusedStoneBlock(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.CALCITE).strength(1.25F, 4.2F)));
-        INFUSED_STONE_PILLAR = register("infused_stone_pillar", new InfusedStonePillar(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.CALCITE).strength(1.25F, 4.2F)));
-        INFUSED_STONE_SLAB = register("infused_stone_slab", new InfusedStoneSlab(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.CALCITE).strength(1.25F, 4.2F)));
-        INFUSED_STONE_STAIRS = register("infused_stone_stairs", new InfusedStoneStairs(INFUSED_STONE.getDefaultState(), AbstractBlock.Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.CALCITE).strength(1.25F, 4.2F)));
-        CHISELED_INFUSED_STONE = register("chiseled_infused_stone", new InfusedStoneBlock(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.CALCITE).strength(1.25F, 4.2F)));
-        ETCHED_INFUSED_STONE = register("etched_infused_stone", new InfusedStoneBlock(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.CALCITE).strength(1.25F, 4.2F)));
-        SMOOTH_INFUSED_STONE = register("smooth_infused_stone", new InfusedStoneBlock(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.CALCITE).strength(1.25F, 4.2F)));
-        PETRIFIED_ESSENCE = register("petrified_essence", new Block(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).sounds(BlockSoundGroup.AMETHYST_BLOCK).strength(0.8f)));
+        INFUSED_STONE = register("infused_stone", new InfusedStoneBlock(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.BASALT).requiresTool().strength(1.25F, 4.2F)));
+        INFUSED_STONE_PILLAR = register("infused_stone_pillar", new InfusedStonePillar(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.BASALT).strength(1.25F, 4.2F)));
+        INFUSED_STONE_SLAB = register("infused_stone_slab", new InfusedStoneSlab(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.BASALT).strength(1.25F, 4.2F)));
+        INFUSED_STONE_STAIRS = register("infused_stone_stairs", new InfusedStoneStairs(INFUSED_STONE.getDefaultState(), AbstractBlock.Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.BASALT).strength(1.25F, 4.2F)));
+        CHISELED_INFUSED_STONE = register("chiseled_infused_stone", new InfusedStoneBlock(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.BASALT).strength(1.25F, 4.2F)));
+        ETCHED_INFUSED_STONE = register("etched_infused_stone", new InfusedStoneBlock(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.BASALT).strength(1.25F, 4.2F)));
+        SMOOTH_INFUSED_STONE = register("smooth_infused_stone", new InfusedStoneBlock(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.BASALT).strength(1.25F, 4.2F)));
+        PETRIFIED_ESSENCE = register("petrified_essence", new Block(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).sounds(BlockSoundGroup.CALCITE).strength(0.8f)));
 
-        PRIMAL_ESSENCE_BLOCK = register("primal_essence_block", new Block(AbstractBlock.Settings.create().mapColor(MapColor.GREEN).sounds(BlockSoundGroup.GLASS).strength(0.3F)));
-        PRIMORDIAL_ESSENCE_BLOCK = register("primordial_essence_block", new Block(AbstractBlock.Settings.create().mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.GLASS).strength(0.3F)));
-        PRISTINE_ESSENCE_BLOCK = register("pristine_essence_block", new Block(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).sounds(BlockSoundGroup.GLASS).strength(0.3F)));
+        PRIMAL_ESSENCE_BLOCK = register("primal_essence_block", new Block(AbstractBlock.Settings.create().mapColor(MapColor.GREEN).strength(1.5F).requiresTool()));
+        PRIMORDIAL_ESSENCE_BLOCK = register("primordial_essence_block", new Block(AbstractBlock.Settings.create().mapColor(MapColor.LIGHT_BLUE).strength(1.5F).requiresTool()));
+        PRISTINE_ESSENCE_BLOCK = register("pristine_essence_block", new Block(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).strength(1.5F).requiresTool()));
 
         PEDESTAL = register("pedestal", new PedestalBlock(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).requiresTool().strength(1.25F, 4.2F)));
         CRAFTING_PEDESTAL = register("crafting_pedestal", new CraftingPedestalBlock(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).requiresTool().strength(1.25F, 4.2F)));
         SAMPLING_PEDESTAL = register("sampling_pedestal", new SamplingPedestalBlock(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).requiresTool().strength(1.25F, 4.2F)));
 
-        CATALYST_I = register("primal_catalyst", new CatalystBlock(AbstractBlock.Settings.create().mapColor(MapColor.GREEN).sounds(BlockSoundGroup.GLASS).strength(0.3F).luminance((blockState) -> (Boolean) blockState.get(ACTIVE_BLOCK_PROPERTY) ? 15 : 0), 1));
-        CATALYST_II = register("primordial_catalyst", new CatalystBlock(AbstractBlock.Settings.create().mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.GLASS).luminance((blockState) -> (Boolean) blockState.get(ACTIVE_BLOCK_PROPERTY) ? 15 : 0), 2));
-        CATALYST_III = register("pristine_catalyst", new CatalystBlock(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).sounds(BlockSoundGroup.GLASS).luminance((blockState) -> (Boolean) blockState.get(ACTIVE_BLOCK_PROPERTY) ? 15 : 0), 3));
-        COLLECTION_BOWL_I = register("collection_bowl_1", new CollectionBowlBlock(AbstractBlock.Settings.create().requiresTool().strength(1.8F), 1));
-        COLLECTION_BOWL_II = register("collection_bowl_2", new CollectionBowlBlock(AbstractBlock.Settings.create().requiresTool().strength(1.8F), 9));
-        COLLECTION_BOWL_III = register("collection_bowl_3", new CollectionBowlBlock(AbstractBlock.Settings.create().requiresTool().strength(1.8F), 15));
+        CATALYST_I = register("primal_catalyst", new CatalystBlock(AbstractBlock.Settings.create().strength(1.5F).requiresTool().sounds(BlockSoundGroup.AMETHYST_BLOCK).mapColor(MapColor.GREEN).strength(0.3F).luminance((blockState) -> (Boolean) blockState.get(ACTIVE_BLOCK_PROPERTY) ? 15 : 0), 1));
+        CATALYST_II = register("primordial_catalyst", new CatalystBlock(AbstractBlock.Settings.create().strength(1.5F).requiresTool().sounds(BlockSoundGroup.AMETHYST_BLOCK).mapColor(MapColor.LIGHT_BLUE).luminance((blockState) -> (Boolean) blockState.get(ACTIVE_BLOCK_PROPERTY) ? 15 : 0), 2));
+        CATALYST_III = register("pristine_catalyst", new CatalystBlock(AbstractBlock.Settings.create().strength(1.5F).requiresTool().sounds(BlockSoundGroup.AMETHYST_BLOCK).mapColor(MapColor.WHITE).luminance((blockState) -> (Boolean) blockState.get(ACTIVE_BLOCK_PROPERTY) ? 15 : 0), 3));
+        COLLECTION_BOWL_I = register("collection_bowl_1", new CollectionBowlBlock(AbstractBlock.Settings.create().requiresTool().strength(1.25F, 4.2F).requiresTool().mapColor(MapColor.GRAY), 1));
+        COLLECTION_BOWL_II = register("collection_bowl_2", new CollectionBowlBlock(AbstractBlock.Settings.create().requiresTool().strength(1.25F, 4.2F).requiresTool().mapColor(MapColor.GRAY), 9));
+        COLLECTION_BOWL_III = register("collection_bowl_3", new CollectionBowlBlock(AbstractBlock.Settings.create().requiresTool().strength(1.25F, 4.2F).requiresTool().mapColor(MapColor.GRAY), 15));
     }
 
     public static Block register(String id, Block block) {
