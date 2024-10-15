@@ -12,8 +12,6 @@ import net.minecraft.text.Text;
 
 public class ConfigScreen extends GameOptionsScreen {
 
-    private OptionListWidget list;
-
     public static final SimpleOption<Boolean> SHOW_TOOLTIP = SimpleOption.ofBoolean(
             "ui.aequitas.config.showTooltip",
             value -> Tooltip.of(Text.translatable("ui.aequitas.desc.showTooltip")),
@@ -50,30 +48,17 @@ public class ConfigScreen extends GameOptionsScreen {
         AequitasConfig.config.loadConfig();
 
 
-        this.list = new OptionListWidget(this.client, this.width, this.height, 32,this.height - 32, 25);
+        OptionListWidget list = new OptionListWidget(this.client, this.width, this.height, 32, this.height - 32, 25);
 
         list.addSingleOptionEntry(SHOW_TOOLTIP);
         list.addSingleOptionEntry(PLAY_AMBIENT_SOUND);
         list.addSingleOptionEntry(DISPLAY_FLIGHT_DURATION);
 
-        this.addDrawableChild(this.list);
+        this.addDrawableChild(list);
 
         this.addDrawableChild(ButtonWidget.builder(ScreenTexts.DONE, (button) -> {
             this.client.setScreen(this.parent);
         }).dimensions(this.width / 2 - 100, this.height - 27, 200, 20).build());
     }
 
-//    @Override
-//    public void render(@NotNull MatrixStack matrices, int mouseX, int mouseY, float delta) {
-//        this.renderBackground(matrices);
-//        this.list.render(matrices, mouseX, mouseY, delta);
-//        drawCenteredText(matrices, this.textRenderer, this.title, this.width / 2, 15, 16777215);
-//        super.render(matrices, mouseX, mouseY, delta);
-//
-//        //Drawing tooltips to the screen
-//        List<OrderedText> list = getHoveredButtonTooltip(this.list, mouseX, mouseY);
-//        if (list != null) {
-//            this.renderOrderedTooltip(matrices, list, mouseX, mouseY);
-//        }
-//    }
 }

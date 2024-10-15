@@ -27,7 +27,7 @@ public class PortablePedestalInventory implements Inventory {
     public long storedEssence;
     public List<Item> unlockedItems = new ArrayList<>();
 
-    private DefaultedList<ItemStack> items = DefaultedList.ofSize(11, ItemStack.EMPTY);
+    private final DefaultedList<ItemStack> items = DefaultedList.ofSize(11, ItemStack.EMPTY);
     private String filter = "";
     private int page = 0;
     public int maxPage;

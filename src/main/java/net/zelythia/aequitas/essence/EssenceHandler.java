@@ -65,7 +65,7 @@ public class EssenceHandler {
     private static class RecipeMapper {
         private static final Map<RecipeType<?>, Long> craftingCost = new HashMap<>();
 
-        private static Map<Item, List<SimplifiedRecipe>> itemRecipes = new HashMap<>();
+        private static final Map<Item, List<SimplifiedRecipe>> itemRecipes = new HashMap<>();
         private static final Map<Item, List<SimplifiedRecipe>> reversedRecipes = new HashMap<>();
 
         private static void mapRecipes(RecipeManager recipeManager) {

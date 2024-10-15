@@ -31,11 +31,11 @@ public class CatalystBlock extends FacingBlock {
     }
 
     public BlockState rotate(BlockState state, BlockRotation rotation) {
-        return (BlockState) state.with(FACING, rotation.rotate((Direction) state.get(FACING)));
+        return state.with(FACING, rotation.rotate(state.get(FACING)));
     }
 
     public BlockState mirror(BlockState state, BlockMirror mirror) {
-        return (BlockState) state.with(FACING, mirror.apply((Direction) state.get(FACING)));
+        return state.with(FACING, mirror.apply(state.get(FACING)));
     }
 
     @Override
@@ -67,7 +67,7 @@ public class CatalystBlock extends FacingBlock {
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         Direction direction = ctx.getSide();
         BlockState blockState = ctx.getWorld().getBlockState(ctx.getBlockPos().offset(direction.getOpposite()));
-        return blockState.isOf(this) && blockState.get(FACING) == direction ? (BlockState) this.getDefaultState().with(FACING, direction.getOpposite()) : (BlockState) this.getDefaultState().with(FACING, direction);
+        return blockState.isOf(this) && blockState.get(FACING) == direction ? this.getDefaultState().with(FACING, direction.getOpposite()) : this.getDefaultState().with(FACING, direction);
     }
 
     @Environment(EnvType.CLIENT)

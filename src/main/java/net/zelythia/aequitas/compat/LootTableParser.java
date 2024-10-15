@@ -178,11 +178,12 @@ public class LootTableParser {
 
     public static JsonElement readJson(PacketByteBuf buf) {
         byte type = buf.readByte();
+        int size = 0;
         switch (type) {
             case 0:
                 return JsonNull.INSTANCE;
             case 12:
-                int size = buf.readVarInt();
+                size = buf.readVarInt();
                 JsonArray array = new JsonArray(size);
                 for (int i = 0; i < size; i++) {
                     array.add(readJson(buf));

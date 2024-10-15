@@ -134,6 +134,8 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
         int r = 3;
 
         if (tier == 1) {
+            catalystBlocks1.clear();
+
             //Diagonals
             infused.add(pos.add(2, -1, 2));
             infused.add(pos.add(2, -1, -2));
@@ -149,7 +151,6 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
             infused.add(pos.add(1, -1, -3));
             infused.add(pos.add(-1, -1, -3));
 
-            catalystBlocks1.clear();
             catalystBlocks1.add(pos.add(3, 1, 0));
             catalystBlocks1.add(pos.add(-3, 1, 0));
             catalystBlocks1.add(pos.add(0, 1, 3));

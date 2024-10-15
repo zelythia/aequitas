@@ -132,7 +132,7 @@ public class SamplingPedestalBlockEntity extends BlockEntity implements Implemen
 
         NbtList listTag = tag.getList("Items", 10);
         NbtCompound compoundTag = listTag.getCompound(0);
-        ItemStack stack = new ItemStack((Item) Registries.ITEM.get(new Identifier(compoundTag.getString("id"))));
+        ItemStack stack = new ItemStack(Registries.ITEM.get(new Identifier(compoundTag.getString("id"))));
         stack.setCount(compoundTag.getInt("Count"));
         this.inventory.set(0, stack);
     }

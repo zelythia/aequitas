@@ -49,7 +49,7 @@ public enum ArmorMaterials implements ArmorMaterial {
     private final float knockbackResistance;
     private final Lazy<Ingredient> repairIngredientSupplier;
 
-    private ArmorMaterials(String name, int durabilityMultiplier, EnumMap protectionAmounts, int enchantability, SoundEvent equipSound, float toughness, float knockbackResistance, Supplier repairIngredientSupplier) {
+    ArmorMaterials(String name, int durabilityMultiplier, EnumMap protectionAmounts, int enchantability, SoundEvent equipSound, float toughness, float knockbackResistance, Supplier repairIngredientSupplier) {
         this.name = name;
         this.durabilityMultiplier = durabilityMultiplier;
         this.protectionAmounts = protectionAmounts;
@@ -61,11 +61,11 @@ public enum ArmorMaterials implements ArmorMaterial {
     }
 
     public int getDurability(ArmorItem.Type type) {
-        return (Integer)BASE_DURABILITY.get(type) * this.durabilityMultiplier;
+        return BASE_DURABILITY.get(type) * this.durabilityMultiplier;
     }
 
     public int getProtection(ArmorItem.Type type) {
-        return (Integer)this.protectionAmounts.get(type);
+        return this.protectionAmounts.get(type);
     }
 
     public int getEnchantability() {
@@ -77,7 +77,7 @@ public enum ArmorMaterials implements ArmorMaterial {
     }
 
     public Ingredient getRepairIngredient() {
-        return (Ingredient)this.repairIngredientSupplier.get();
+        return this.repairIngredientSupplier.get();
     }
 
     public String getName() {

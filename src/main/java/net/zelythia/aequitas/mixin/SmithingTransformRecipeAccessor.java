@@ -9,12 +9,12 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface SmithingTransformRecipeAccessor {
 
     @Accessor
-    abstract Ingredient getTemplate();
+    Ingredient getTemplate();
 
     @Accessor
-    abstract Ingredient getBase();
+    Ingredient getBase();
 
     @Accessor
-    abstract Ingredient getAddition();
+    Ingredient getAddition();
 
 }
