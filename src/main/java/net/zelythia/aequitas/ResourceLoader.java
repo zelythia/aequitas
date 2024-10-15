@@ -40,7 +40,7 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
     private final CustomRecipeLoader customRecipeLoader;
     private final CustomCollectionBowlLootLoader customCollectionBowlLootLoader;
 
-    private final List<String> KNOWN_TAGS = List.of("#c:seeds", "#c:lead_ingots", "#c:zinc_ingots", "#c:silver_ingots", "#c:platinum_ingots", "#c:antimony_ingots", "#c:nickel_ingots", "#c:chromium_ingots", "#c:iridium_ingots", "#c:cadmium_ingots", "#c:uranium_ingots", "#c:titanium_ingots", "#c:plutonium_ingots", "#c:tungsten_ingots", "#c:tin_ingots", "#c:crops");
+    private final List<String> KNOWN_TAGS = List.of("#c:cobalt_ingots", "#c:manyullyn_ingots", "#c:seeds", "#c:lead_ingots", "#c:zinc_ingots", "#c:silver_ingots", "#c:platinum_ingots", "#c:antimony_ingots", "#c:nickel_ingots", "#c:chromium_ingots", "#c:iridium_ingots", "#c:cadmium_ingots", "#c:uranium_ingots", "#c:titanium_ingots", "#c:plutonium_ingots", "#c:tungsten_ingots", "#c:tin_ingots", "#c:crops");
 
     public ResourceLoader() {
         GSON = new Gson();
