@@ -318,5 +318,11 @@
       "mysticalagriculture:cognizant_dust": 34816,
       "mysticalagriculture:air_essence": 85
     }
+  },
+  "powah": {
+    "priority": 0,
+    "values": {
+      "powah:uraninite": 8192
+    }
   }
 }

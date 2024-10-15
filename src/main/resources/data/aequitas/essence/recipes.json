@@ -1507,5 +1507,76 @@
         "minecraft:diamond": 1
       }
     }
+  },
+  "powah": {
+    "powah:steel_energized": {
+      "count": 2,
+      "ingredients": {
+        "minecraft:iron_ingot": 1,
+        "minecraft:gold_ingot": 1,
+        "_": 14
+      }
+    },
+    "powah:dry_ice": {
+      "count": 1,
+      "ingredients": {
+        "minecraft:blue_ice": 2,
+        "_": 14
+      }
+    },
+    "powah:uraninite": {
+      "count": 6,
+      "ingredients": {
+        "powah:uraninite_ore_poor": 1,
+        "powah:deepslate_uraninite_ore_poor": 1,
+        "_": 68
+      }
+    },
+    "powah:crystal_blazing": {
+      "count": 1,
+      "ingredients": {
+        "minecraft:blaze_rod": 1,
+        "_": 120
+      }
+    },
+    "powah:charged_snowball": {
+      "count": 1,
+      "ingredients": {
+        "minecraft:snowball": 1,
+        "_": 667
+      }
+    },
+    "powah:crystal_spirited": {
+      "count": 1,
+      "ingredients": {
+        "minecraft:emerald": 1,
+        "_": 1334
+      }
+    },
+    "powah:crystal_nitro": {
+      "count": 16,
+      "ingredients": {
+        "minecraft:nether_star": 1,
+        "minecraft:redstone_block": 2,
+        "powah:blazing_crystal_block": 1,
+        "_": 26667
+      }
+    },
+    "powah:crystal_niotic": {
+      "count": 1,
+      "ingredients": {
+        "minecraft:diamond": 1,
+        "_": 400
+      }
+    },
+    "powah:ender_core": {
+      "count": 1,
+      "ingredients": {
+        "minecraft:ender_eye": 1,
+        "powah:dielectric_casing": 1,
+        "powah:capacitor_basic_tiny": 1,
+        "_": 67
+      }
+    }
   }
 }
