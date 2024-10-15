@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "aequitas:infused_stone",
+    "aequitas:infused_stone_pillar",
+    "aequitas:infused_stone_slab",
+    "aequitas:infused_stone_stairs",
+    "aequitas:chiseled_infused_stone",
+    "aequitas:etched_infused_stone",
+    "aequitas:smooth_infused_stone",
+    "aequitas:petrified_essence",
+    "aequitas:pedestal",
+    "aequitas:crafting_pedestal",
+    "aequitas:sampling_pedestal",
+    "aequitas:collection_bowl_1",
+    "aequitas:collection_bowl_2",
+    "aequitas:collection_bowl_3"
+  ]
+}

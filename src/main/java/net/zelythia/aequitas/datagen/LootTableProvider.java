@@ -32,15 +32,6 @@ public class LootTableProvider extends FabricBlockLootTableProvider {
         addDrop(AequitasBlocks.PRIMAL_ESSENCE_BLOCK);
         addDrop(AequitasBlocks.PRIMORDIAL_ESSENCE_BLOCK);
         addDrop(AequitasBlocks.PRISTINE_ESSENCE_BLOCK);
-        addDrop(AequitasBlocks.CATALYST_I);
-        addDrop(AequitasBlocks.CATALYST_II);
-        addDrop(AequitasBlocks.CATALYST_III);
-        addDrop(AequitasBlocks.COLLECTION_BOWL_I);
-        addDrop(AequitasBlocks.COLLECTION_BOWL_II);
-        addDrop(AequitasBlocks.COLLECTION_BOWL_III);
-        addDrop(AequitasBlocks.PEDESTAL);
-        addDrop(AequitasBlocks.CRAFTING_PEDESTAL);
-        addDrop(AequitasBlocks.SAMPLING_PEDESTAL);
 
         addDrop(AequitasBlocks.INFUSED_STONE);
         addDrop(AequitasBlocks.INFUSED_STONE_PILLAR);
@@ -49,11 +40,25 @@ public class LootTableProvider extends FabricBlockLootTableProvider {
         addDrop(AequitasBlocks.CHISELED_INFUSED_STONE);
         addDrop(AequitasBlocks.ETCHED_INFUSED_STONE);
         addDrop(AequitasBlocks.SMOOTH_INFUSED_STONE);
+
+        addDrop(AequitasBlocks.PETRIFIED_ESSENCE);
+
+        addDrop(AequitasBlocks.PEDESTAL);
+        addDrop(AequitasBlocks.CRAFTING_PEDESTAL);
+        addDrop(AequitasBlocks.SAMPLING_PEDESTAL);
+
+        addDrop(AequitasBlocks.CATALYST_I);
+        addDrop(AequitasBlocks.CATALYST_II);
+        addDrop(AequitasBlocks.CATALYST_III);
+        addDrop(AequitasBlocks.COLLECTION_BOWL_I);
+        addDrop(AequitasBlocks.COLLECTION_BOWL_II);
+        addDrop(AequitasBlocks.COLLECTION_BOWL_III);
     }
 
 
     @Override
     public void accept(BiConsumer<Identifier, LootTable.Builder> biConsumer) {
+        super.accept(biConsumer);
 
         //Will always generate an item
         biConsumer.accept(new Identifier("aequitas", "gameplay/overworld"), LootTable.builder()
@@ -662,7 +667,5 @@ public class LootTableProvider extends FabricBlockLootTableProvider {
                         ))
                 )
         );
-
-
     }
 }
