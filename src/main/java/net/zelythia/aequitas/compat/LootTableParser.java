@@ -24,8 +24,8 @@ public class LootTableParser {
             case "minecraft:loot_table": {
                 //Assuming sub loot tables don't have conditions
 
-                String s = entry.get("name").getAsString();
-                for (JsonElement subEntry : net.zelythia.aequitas.client.NetworkingHandler.LOOTTABLES.get(new Identifier(s)).getAsJsonArray("pools").get(0).getAsJsonObject().getAsJsonArray("entries")) {
+                String s = entry.get("value").getAsString();
+                for (JsonElement subEntry : net.zelythia.aequitas.client.NetworkingHandler.LOOTTABLES.get(Identifier.of(s)).getAsJsonArray("pools").get(0).getAsJsonObject().getAsJsonArray("entries")) {
                     if (name.isEmpty()) name.append(s);
                     parseEntry(subEntry.getAsJsonObject(), list, name);
                 }
@@ -81,7 +81,7 @@ public class LootTableParser {
         switch (type) {
             case "minecraft:location_check": {
                 for (Map.Entry<String, JsonElement> predicate : condition.getAsJsonObject("predicate").entrySet()) {
-                    list.add(new Identifier(predicate.getValue().getAsString()));
+                    list.add(Identifier.of(predicate.getValue().getAsString()));
                 }
                 break;
             }

@@ -1,6 +1,7 @@
 package net.zelythia.aequitas.item;
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -9,8 +10,11 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.block.AequitasBlocks;
+import net.zelythia.aequitas.component.Components;
 
 import java.util.List;
+
+import static net.zelythia.aequitas.item.EssenceArmorItem.PRISTINE_DEFAULT_COLOR;
 
 public class AequitasItems {
 
@@ -89,20 +93,20 @@ public class AequitasItems {
         PRISTINE_ESSENCE_BLOCK = register("pristine_essence_block", new BlockItem(AequitasBlocks.PRISTINE_ESSENCE_BLOCK, new Item.Settings()));
 
 
-        PRIMAL_ESSENCE_HELMET = register("primal_essence_helmet", new EssenceArmorItem(ArmorMaterials.PRIMAL, ArmorItem.Type.HELMET, new Item.Settings()));
-        PRIMAL_ESSENCE_CHESTPLATE = register("primal_essence_chestplate", new EssenceArmorItem(ArmorMaterials.PRIMAL, ArmorItem.Type.CHESTPLATE, new Item.Settings()));
-        PRIMAL_ESSENCE_LEGGINGS = register("primal_essence_leggings", new EssenceArmorItem(ArmorMaterials.PRIMAL, ArmorItem.Type.LEGGINGS, new Item.Settings()));
-        PRIMAL_ESSENCE_BOOTS = register("primal_essence_boots", new ArmorItem(ArmorMaterials.PRIMAL, ArmorItem.Type.BOOTS, new Item.Settings()));
+        PRIMAL_ESSENCE_HELMET = register("primal_essence_helmet", new EssenceArmorItem(ArmorMaterials.PRIMAL, ArmorItem.Type.HELMET, new Item.Settings().maxCount(1).maxDamage(ArmorItem.Type.HELMET.getMaxDamage(48)).fireproof()));
+        PRIMAL_ESSENCE_CHESTPLATE = register("primal_essence_chestplate", new EssenceArmorItem(ArmorMaterials.PRIMAL, ArmorItem.Type.CHESTPLATE, new Item.Settings().maxCount(1).maxDamage(ArmorItem.Type.HELMET.getMaxDamage(48)).fireproof()));
+        PRIMAL_ESSENCE_LEGGINGS = register("primal_essence_leggings", new EssenceArmorItem(ArmorMaterials.PRIMAL, ArmorItem.Type.LEGGINGS, new Item.Settings().maxCount(1).maxDamage(ArmorItem.Type.HELMET.getMaxDamage(48)).fireproof()));
+        PRIMAL_ESSENCE_BOOTS = register("primal_essence_boots", new ArmorItem(ArmorMaterials.PRIMAL, ArmorItem.Type.BOOTS, new Item.Settings().maxCount(1).maxDamage(ArmorItem.Type.HELMET.getMaxDamage(48)).fireproof()));
 
-        PRIMORDIAL_ESSENCE_HELMET = register("primordial_essence_helmet", new EssenceArmorItem(ArmorMaterials.PRIMORDIAL, ArmorItem.Type.HELMET, new Item.Settings()));
-        PRIMORDIAL_ESSENCE_CHESTPLATE = register("primordial_essence_chestplate", new EssenceArmorItem(ArmorMaterials.PRIMORDIAL, ArmorItem.Type.CHESTPLATE, new Item.Settings()));
-        PRIMORDIAL_ESSENCE_LEGGINGS = register("primordial_essence_leggings", new EssenceArmorItem(ArmorMaterials.PRIMORDIAL, ArmorItem.Type.LEGGINGS, new Item.Settings()));
-        PRIMORDIAL_ESSENCE_BOOTS = register("primordial_essence_boots", new ArmorItem(ArmorMaterials.PRIMORDIAL, ArmorItem.Type.BOOTS, new Item.Settings()));
+        PRIMORDIAL_ESSENCE_HELMET = register("primordial_essence_helmet", new EssenceArmorItem(ArmorMaterials.PRIMORDIAL, ArmorItem.Type.HELMET, new Item.Settings().maxCount(1).maxDamage(ArmorItem.Type.HELMET.getMaxDamage(64)).fireproof()));
+        PRIMORDIAL_ESSENCE_CHESTPLATE = register("primordial_essence_chestplate", new EssenceArmorItem(ArmorMaterials.PRIMORDIAL, ArmorItem.Type.CHESTPLATE, new Item.Settings().maxCount(1).maxDamage(ArmorItem.Type.HELMET.getMaxDamage(64)).fireproof()));
+        PRIMORDIAL_ESSENCE_LEGGINGS = register("primordial_essence_leggings", new EssenceArmorItem(ArmorMaterials.PRIMORDIAL, ArmorItem.Type.LEGGINGS, new Item.Settings().maxCount(1).maxDamage(ArmorItem.Type.HELMET.getMaxDamage(64)).fireproof()));
+        PRIMORDIAL_ESSENCE_BOOTS = register("primordial_essence_boots", new ArmorItem(ArmorMaterials.PRIMORDIAL, ArmorItem.Type.BOOTS, new Item.Settings().maxCount(1).maxDamage(ArmorItem.Type.HELMET.getMaxDamage(64)).fireproof()));
 
-        PRISTINE_ESSENCE_HELMET = register("pristine_essence_helmet", new PristineEssenceArmor(ArmorMaterials.PRISTINE, ArmorItem.Type.HELMET, new Item.Settings()));
-        PRISTINE_ESSENCE_CHESTPLATE = register("pristine_essence_chestplate", new PristineEssenceArmor(ArmorMaterials.PRISTINE, ArmorItem.Type.CHESTPLATE, new Item.Settings()));
-        PRISTINE_ESSENCE_LEGGINGS = register("pristine_essence_leggings", new PristineEssenceArmor(ArmorMaterials.PRISTINE, ArmorItem.Type.LEGGINGS, new Item.Settings()));
-        PRISTINE_ESSENCE_BOOTS = register("pristine_essence_boots", new PristineEssenceArmor(ArmorMaterials.PRISTINE, ArmorItem.Type.BOOTS, new Item.Settings()));
+        PRISTINE_ESSENCE_HELMET = register("pristine_essence_helmet", new EssenceArmorItem(ArmorMaterials.PRISTINE, ArmorItem.Type.HELMET, new Item.Settings().maxCount(1).fireproof().component(DataComponentTypes.DYED_COLOR, PRISTINE_DEFAULT_COLOR)));
+        PRISTINE_ESSENCE_CHESTPLATE = register("pristine_essence_chestplate", new EssenceArmorItem(ArmorMaterials.PRISTINE, ArmorItem.Type.CHESTPLATE, new Item.Settings().maxCount(1).fireproof().component(DataComponentTypes.DYED_COLOR, PRISTINE_DEFAULT_COLOR)));
+        PRISTINE_ESSENCE_LEGGINGS = register("pristine_essence_leggings", new EssenceArmorItem(ArmorMaterials.PRISTINE, ArmorItem.Type.LEGGINGS, new Item.Settings().maxCount(1).fireproof().component(DataComponentTypes.DYED_COLOR, PRISTINE_DEFAULT_COLOR)));
+        PRISTINE_ESSENCE_BOOTS = register("pristine_essence_boots", new EssenceArmorItem(ArmorMaterials.PRISTINE, ArmorItem.Type.BOOTS, new Item.Settings().maxCount(1).fireproof().component(DataComponentTypes.DYED_COLOR, PRISTINE_DEFAULT_COLOR)));
 
 
         SAMPLING_PEDESTAL_CORE = register("sampling_pedestal_core", new Item(new Item.Settings()));
@@ -111,7 +115,7 @@ public class AequitasItems {
         PEDESTAL = register("pedestal", new BlockItem(AequitasBlocks.PEDESTAL, new Item.Settings()));
         CRAFTING_PEDESTAL = register("crafting_pedestal", new BlockItem(AequitasBlocks.CRAFTING_PEDESTAL, new Item.Settings()));
         SAMPLING_PEDESTAL = register("sampling_pedestal", new BlockItem(AequitasBlocks.SAMPLING_PEDESTAL, new Item.Settings()));
-        PORTABLE_PEDESTAL = register("portable_pedestal", new PortablePedestalItem(new Item.Settings().maxCount(1)));
+        PORTABLE_PEDESTAL = register("portable_pedestal", new PortablePedestalItem(new Item.Settings().maxCount(1).component(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true).component(Components.STORED_ESSENCE, 0L).component(Components.UNLOCKED_ITEMS, List.of(Identifier.of("minecraft:stone")))));
 
         CATALYST_I = register("primal_catalyst", new BlockItem(AequitasBlocks.CATALYST_I, new Item.Settings()));
         CATALYST_II = register("primordial_catalyst", new BlockItem(AequitasBlocks.CATALYST_II, new Item.Settings()));
@@ -127,8 +131,8 @@ public class AequitasItems {
                 Text.translatable("upgrade.aequitas.primal_upgrade").formatted(Formatting.GRAY),
                 Text.translatable("item.aequitas.smithing_template.primal_upgrade.base_slot_description"),
                 Text.translatable("item.aequitas.smithing_template.primal_upgrade.additions_slot_description"),
-                List.of(new Identifier("item/empty_armor_slot_helmet"), new Identifier("item/empty_armor_slot_chestplate"), new Identifier("item/empty_armor_slot_leggings"), new Identifier("item/empty_armor_slot_boots")),
-                List.of(new Identifier("minecraft", "item/empty_slot_amethyst_shard"))
+                List.of(Identifier.of("item/empty_armor_slot_helmet"), Identifier.of("item/empty_armor_slot_chestplate"), Identifier.of("item/empty_armor_slot_leggings"), Identifier.of("item/empty_armor_slot_boots")),
+                List.of(Identifier.of("minecraft", "item/empty_slot_amethyst_shard"))
         ));
 
         PRIMORDIAL_UPGRADE = register("primordial_upgrade_smithing_template", new SmithingTemplateItem(
@@ -137,8 +141,8 @@ public class AequitasItems {
                 Text.translatable("upgrade.aequitas.primordial_upgrade").formatted(Formatting.GRAY),
                 Text.translatable("item.aequitas.smithing_template.primordial_upgrade.base_slot_description"),
                 Text.translatable("item.aequitas.smithing_template.primordial_upgrade.additions_slot_description"),
-                List.of(new Identifier("item/empty_armor_slot_helmet"), new Identifier("item/empty_armor_slot_chestplate"), new Identifier("item/empty_armor_slot_leggings"), new Identifier("item/empty_armor_slot_boots")),
-                List.of(new Identifier("aequitas", "item/empty_slot_chorus_flower"))
+                List.of(Identifier.of("item/empty_armor_slot_helmet"), Identifier.of("item/empty_armor_slot_chestplate"), Identifier.of("item/empty_armor_slot_leggings"), Identifier.of("item/empty_armor_slot_boots")),
+                List.of(Identifier.of("aequitas", "item/empty_slot_chorus_flower"))
         ));
 
         PRISTINE_UPGRADE = register("pristine_upgrade_smithing_template", new SmithingTemplateItem(
@@ -147,12 +151,12 @@ public class AequitasItems {
                 Text.translatable("upgrade.aequitas.pristine_upgrade").formatted(Formatting.GRAY),
                 Text.translatable("item.aequitas.smithing_template.pristine_upgrade.base_slot_description"),
                 Text.translatable("item.aequitas.smithing_template.pristine_upgrade.additions_slot_description"),
-                List.of(new Identifier("item/empty_armor_slot_helmet"), new Identifier("item/empty_armor_slot_chestplate"), new Identifier("item/empty_armor_slot_leggings"), new Identifier("item/empty_armor_slot_boots")),
-                List.of(new Identifier("aequitas", "item/empty_slot_nether_star"))
+                List.of(Identifier.of("item/empty_armor_slot_helmet"), Identifier.of("item/empty_armor_slot_chestplate"), Identifier.of("item/empty_armor_slot_leggings"), Identifier.of("item/empty_armor_slot_boots")),
+                List.of(Identifier.of("aequitas", "item/empty_slot_nether_star"))
         ));
 
 
-        ITEM_GROUP = Registry.register(Registries.ITEM_GROUP, new Identifier(Aequitas.MOD_ID, "everything"),
+        ITEM_GROUP = Registry.register(Registries.ITEM_GROUP, Identifier.of(Aequitas.MOD_ID, "everything"),
                 FabricItemGroup.builder()
                         .icon(() -> new ItemStack(CRAFTING_PEDESTAL))
                         .displayName(Text.translatable("itemGroup.aequitas.item_group"))
@@ -207,7 +211,7 @@ public class AequitasItems {
 
 
     public static <T extends Item> T register(String id, T item) {
-        return Registry.register(Registries.ITEM, new Identifier(Aequitas.MOD_ID, id), item);
+        return Registry.register(Registries.ITEM, Identifier.of(Aequitas.MOD_ID, id), item);
     }
 
 

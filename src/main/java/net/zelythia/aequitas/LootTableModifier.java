@@ -1,8 +1,6 @@
 package net.zelythia.aequitas;
 
-import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
-import net.fabricmc.fabric.api.loot.v2.LootTableSource;
-import net.minecraft.loot.LootManager;
+import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.LootTables;
@@ -11,7 +9,8 @@ import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.entry.LootPoolEntry;
 import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
-import net.minecraft.resource.ResourceManager;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import net.zelythia.aequitas.item.AequitasItems;
 
@@ -23,18 +22,18 @@ public class LootTableModifier {
 
     private static final Map<Identifier, List<LootPoolEntry>> customCollectionBowlLoot = new HashMap<>();
 
-    public static void setCustomCollectionBowlLoot(Map<Identifier, List<LootPoolEntry>> map){
+    public static void setCustomCollectionBowlLoot(Map<Identifier, List<LootPoolEntry>> map) {
         customCollectionBowlLoot.clear();
         customCollectionBowlLoot.putAll(map);
     }
 
-
-    public static class Modifier implements LootTableEvents.Modify{
+    public static class Modifier implements LootTableEvents.Modify {
         @Override
-        public void modifyLootTable(ResourceManager resourceManager, LootManager lootManager, Identifier id, LootTable.Builder tableBuilder, LootTableSource source) {
+        public void modifyLootTable(RegistryKey<LootTable> key, LootTable.Builder tableBuilder, net.fabricmc.fabric.api.loot.v3.LootTableSource source, RegistryWrapper.WrapperLookup registries) {
+            Identifier id = key.getValue();
 
             //Custom CollectionBowl Loot
-            if(customCollectionBowlLoot.containsKey(id)){
+            if (customCollectionBowlLoot.containsKey(id)) {
                 tableBuilder.modifyPools(builder -> {
                     Aequitas.LOGGER.info("Added {} loot entries to {}", customCollectionBowlLoot.get(id), id);
                     builder.with(customCollectionBowlLoot.get(id));
@@ -44,7 +43,7 @@ public class LootTableModifier {
             }
 
             if (id.toString().startsWith("minecraft:blocks") || id.toString().startsWith("minecraft:entities")) return;
-            if (id.equals(LootTables.DESERT_PYRAMID_CHEST) || id.equals(LootTables.SHIPWRECK_TREASURE_CHEST)) {
+            if (key.equals(LootTables.DESERT_PYRAMID_CHEST) || key.equals(LootTables.SHIPWRECK_TREASURE_CHEST)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .with(ItemEntry.builder(AequitasItems.PRIMAL_ESSENCE).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4))).weight(4))
                         .with(ItemEntry.builder(AequitasItems.PRIMORDIAL_ESSENCE).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4))).weight(2))

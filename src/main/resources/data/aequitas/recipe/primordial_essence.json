@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aequitas:primordial_essence_block"
+    }
+  ],
+  "result": {
+    "id": "aequitas:primordial_essence",
+    "count": 4
+  }
+}

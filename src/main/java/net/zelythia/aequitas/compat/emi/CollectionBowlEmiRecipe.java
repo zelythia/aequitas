@@ -42,7 +42,7 @@ public class CollectionBowlEmiRecipe implements EmiRecipe {
         double weight = 0;
         for (ItemEntry item : items) {
             if(item.id().startsWith("#")) {
-                Optional<RegistryEntryList.Named<Item>> tagItems = Registries.ITEM.getEntryList(TagKey.of(RegistryKeys.ITEM, new Identifier(item.id().replace("#", ""))));
+                Optional<RegistryEntryList.Named<Item>> tagItems = Registries.ITEM.getEntryList(TagKey.of(RegistryKeys.ITEM, Identifier.of(item.id().replace("#", ""))));
                 weight += item.weight() * tagItems.get().size();
             }
             else weight += item.weight();
@@ -50,10 +50,9 @@ public class CollectionBowlEmiRecipe implements EmiRecipe {
 
         for (ItemEntry item : items) {
             if(item.id().startsWith("#")){
-                outputs.put(EmiIngredient.of(TagKey.of(RegistryKeys.ITEM, new Identifier(item.id().replace("#", "")))), ((int) ((item.weight() / weight) * 10000)) / 100d);
-            }
-            else if(!new Identifier("minecraft", "air").equals(new Identifier(item.id()))){
-                outputs.put(EmiStack.of(Registries.ITEM.get(new Identifier(item.id()))), ((int) ((item.weight() / weight) * 10000)) / 100d);
+                outputs.put(EmiIngredient.of(TagKey.of(RegistryKeys.ITEM, Identifier.of(item.id().replace("#", "")))), ((int) ((item.weight() / weight) * 10000)) / 100d);
+            } else if (!Identifier.of("minecraft", "air").equals(Identifier.of(item.id()))) {
+                outputs.put(EmiStack.of(Registries.ITEM.get(Identifier.of(item.id()))), ((int) ((item.weight() / weight) * 10000)) / 100d);
             }
         }
     }
@@ -114,9 +113,9 @@ public class CollectionBowlEmiRecipe implements EmiRecipe {
         conditionText.delete(conditionText.length() - 1, conditionText.length());
 
 
-        Identifier icon = new Identifier(Aequitas.MOD_ID, "textures/biomes/" + name.replace("aequitas:gameplay/", "") + ".png");
+        Identifier icon = Identifier.of(Aequitas.MOD_ID, "textures/biomes/" + name.replace("aequitas:gameplay/", "") + ".png");
         if (MinecraftClient.getInstance().getResourceManager().getResource(icon).isEmpty()) {
-            icon = new Identifier("textures/painting/earth.png");
+            icon = Identifier.of("textures/painting/earth.png");
         }
         widgets.addTexture(icon, 0, 0, 32, 32, 0, 0, 32, 32, 32, 32);
 

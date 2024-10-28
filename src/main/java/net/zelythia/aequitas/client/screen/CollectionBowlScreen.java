@@ -17,7 +17,7 @@ public class CollectionBowlScreen extends HandledScreen<CollectionBowlScreenHand
 
     public CollectionBowlScreen(CollectionBowlScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
-        TEXTURE = new Identifier(Aequitas.MOD_ID, "textures/gui/collection_bowl_" + handler.getSize() + ".png");
+        TEXTURE = Identifier.of(Aequitas.MOD_ID, "textures/gui/collection_bowl_" + handler.getSize() + ".png");
     }
 
     @Override
@@ -31,7 +31,7 @@ public class CollectionBowlScreen extends HandledScreen<CollectionBowlScreenHand
     }
 
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        renderBackground(context);
+        renderBackground(context, mouseX, mouseY, delta);
         super.render(context, mouseX, mouseY, delta);
         drawMouseoverTooltip(context, mouseX, mouseY);
     }

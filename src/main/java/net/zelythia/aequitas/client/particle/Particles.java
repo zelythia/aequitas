@@ -5,8 +5,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.ParticlesMode;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.render.Camera;
-import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -15,14 +15,14 @@ import org.jetbrains.annotations.Nullable;
 
 public class Particles {
 
-    public static final DefaultParticleType CRAFTING_PARTICLE;
-    public static final DefaultParticleType CATALYST_PARTICLE;
+    public static final SimpleParticleType CRAFTING_PARTICLE;
+    public static final SimpleParticleType CATALYST_PARTICLE;
 
     public static final Float[][] TIER_COLORS = new Float[4][3];
 
     static {
-        CRAFTING_PARTICLE = Registry.register(Registries.PARTICLE_TYPE, new Identifier(Aequitas.MOD_ID, "crafting_particle"), FabricParticleTypes.simple());
-        CATALYST_PARTICLE = Registry.register(Registries.PARTICLE_TYPE, new Identifier(Aequitas.MOD_ID, "catalyst_particle"), FabricParticleTypes.simple());
+        CRAFTING_PARTICLE = Registry.register(Registries.PARTICLE_TYPE, Identifier.of(Aequitas.MOD_ID, "crafting_particle"), FabricParticleTypes.simple());
+        CATALYST_PARTICLE = Registry.register(Registries.PARTICLE_TYPE, Identifier.of(Aequitas.MOD_ID, "catalyst_particle"), FabricParticleTypes.simple());
 
         TIER_COLORS[1][0] = 0.8313725490f;
         TIER_COLORS[1][1] = 0.9254901961f;

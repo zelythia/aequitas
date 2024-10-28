@@ -1,57 +1,47 @@
 package net.zelythia.aequitas.advancement;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.advancement.AdvancementCriterion;
 import net.minecraft.advancement.criterion.AbstractCriterion;
-import net.minecraft.advancement.criterion.AbstractCriterionConditions;
 import net.minecraft.item.ItemStack;
-import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
-import net.minecraft.predicate.entity.AdvancementEntityPredicateSerializer;
+import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.Identifier;
+
+import java.util.Optional;
 
 public class ItemDuplicatedCriterion extends AbstractCriterion<ItemDuplicatedCriterion.Conditions> {
-
-    static final Identifier ID = new Identifier("duplicated_item");
-
-    public ItemDuplicatedCriterion() {
-    }
-
-    public Identifier getId() {
-        return ID;
-    }
-
-    public Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate lootContextPredicate, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
-        ItemPredicate itemPredicate = ItemPredicate.fromJson(jsonObject.get("item"));
-        return new Conditions(lootContextPredicate, itemPredicate);
-    }
 
     public void trigger(ServerPlayerEntity player, ItemStack stack) {
         this.trigger(player, (conditions) -> conditions.test(stack));
     }
 
+    @Override
+    public Codec<Conditions> getConditionsCodec() {
+        return ItemDuplicatedCriterion.Conditions.CODEC;
+    }
 
-    public static class Conditions extends AbstractCriterionConditions {
-        private final ItemPredicate item;
 
-        public Conditions(LootContextPredicate player, ItemPredicate item) {
-            super(ID, player);
-            this.item = item;
+    public record Conditions(Optional<LootContextPredicate> player,
+                             Optional<ItemPredicate> item) implements AbstractCriterion.Conditions {
+        public static final Codec<ItemDuplicatedCriterion.Conditions> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+                EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC.optionalFieldOf("player").forGetter(ItemDuplicatedCriterion.Conditions::player),
+                ItemPredicate.CODEC.optionalFieldOf("item").forGetter(ItemDuplicatedCriterion.Conditions::item)).apply(instance, ItemDuplicatedCriterion.Conditions::new));
+
+
+        public static AdvancementCriterion<ItemDuplicatedCriterion.Conditions> createAny() {
+            return PlayerStatistics.ITEM_DUPLICATED_CRITERION.create(new ItemDuplicatedCriterion.Conditions(Optional.empty(), Optional.empty()));
         }
 
-        public static Conditions create(ItemPredicate item) {
-            return new Conditions(LootContextPredicate.EMPTY, item);
+        public static AdvancementCriterion<ItemDuplicatedCriterion.Conditions> create(ItemPredicate itemPredicate) {
+            return PlayerStatistics.ITEM_DUPLICATED_CRITERION.create(new ItemDuplicatedCriterion.Conditions(Optional.empty(), Optional.of(itemPredicate)));
         }
+
 
         public boolean test(ItemStack stack) {
-            return this.item.test(stack);
-        }
-
-        public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
-            JsonObject jsonObject = super.toJson(predicateSerializer);
-            jsonObject.add("item", this.item.toJson());
-            return jsonObject;
+            return this.item.isEmpty() || this.item.get().test(stack);
         }
     }
 }

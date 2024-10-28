@@ -4,12 +4,10 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.resource.ResourceType;
@@ -21,10 +19,12 @@ import net.minecraft.world.gen.feature.Feature;
 import net.zelythia.aequitas.advancement.PlayerStatistics;
 import net.zelythia.aequitas.block.AequitasBlocks;
 import net.zelythia.aequitas.block.entity.BlockEntityTypes;
+import net.zelythia.aequitas.component.Components;
 import net.zelythia.aequitas.essence.EssenceHandler;
 import net.zelythia.aequitas.item.AequitasItems;
-import net.zelythia.aequitas.networking.EssencePacket;
 import net.zelythia.aequitas.networking.NetworkingHandler;
+import net.zelythia.aequitas.networking.packet.EssencePacket;
+import net.zelythia.aequitas.networking.packet.screen.CollectionBowlScreenData;
 import net.zelythia.aequitas.screen.CollectionBowlScreenHandler;
 import net.zelythia.aequitas.screen.CraftingPedestalScreenHandler;
 import net.zelythia.aequitas.screen.PortablePedestalScreenHandler;
@@ -33,8 +33,6 @@ import net.zelythia.aequitas.world.gen.EssencePillarFeatureConfig;
 import net.zelythia.aequitas.world.gen.PlacedFeatures;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.HashMap;
 
 public class Aequitas implements ModInitializer {
 
@@ -50,11 +48,11 @@ public class Aequitas implements ModInitializer {
 
     static {
         //Screens
-        CRAFTING_PEDESTAL_SCREEN_HANDLER = Registry.register(Registries.SCREEN_HANDLER, new Identifier(MOD_ID, "crafting_pedestal"), new ScreenHandlerType<>(CraftingPedestalScreenHandler::new, FeatureFlags.VANILLA_FEATURES));
-        PORTABLE_PEDESTAL_SCREEN_HANDLER = Registry.register(Registries.SCREEN_HANDLER, new Identifier(MOD_ID, "portable_pedestal"), new ScreenHandlerType<>(PortablePedestalScreenHandler::new, FeatureFlags.VANILLA_FEATURES));
-        COLLECTION_BOWL_SCREEN_HANDLER = Registry.register(Registries.SCREEN_HANDLER, new Identifier(MOD_ID, "collection_bowl"), new ExtendedScreenHandlerType<>(CollectionBowlScreenHandler::new));
+        CRAFTING_PEDESTAL_SCREEN_HANDLER = Registry.register(Registries.SCREEN_HANDLER, Identifier.of(MOD_ID, "crafting_pedestal"), new ScreenHandlerType<>(CraftingPedestalScreenHandler::new, FeatureFlags.VANILLA_FEATURES));
+        PORTABLE_PEDESTAL_SCREEN_HANDLER = Registry.register(Registries.SCREEN_HANDLER, Identifier.of(MOD_ID, "portable_pedestal"), new ScreenHandlerType<>(PortablePedestalScreenHandler::new, FeatureFlags.VANILLA_FEATURES));
+        COLLECTION_BOWL_SCREEN_HANDLER = Registry.register(Registries.SCREEN_HANDLER, Identifier.of(MOD_ID, "collection_bowl"), new ExtendedScreenHandlerType<>(CollectionBowlScreenHandler::new, CollectionBowlScreenData.PACKET_CODEC));
 
-        ESSENCE_PILLAR_FEATURE = Registry.register(Registries.FEATURE, new Identifier(MOD_ID, "essence_pillar_feature"), new EssencePillarFeature(EssencePillarFeatureConfig.CODEC));
+        ESSENCE_PILLAR_FEATURE = Registry.register(Registries.FEATURE, Identifier.of(MOD_ID, "essence_pillar_feature"), new EssencePillarFeature(EssencePillarFeatureConfig.CODEC));
     }
 
 
@@ -63,6 +61,7 @@ public class Aequitas implements ModInitializer {
         new AequitasItems();
         new AequitasBlocks();
         new BlockEntityTypes();
+        new Components();
 
         PlayerStatistics.register();
         NetworkingHandler.onInitialize();
@@ -72,14 +71,11 @@ public class Aequitas implements ModInitializer {
             NetworkingHandler.setServer(server);
             EssenceHandler.registerRecipeManager(server.getRecipeManager());
             EssenceHandler.registerRegistryManager(server.getRegistryManager());
-            EssenceHandler.reloadEssenceValues(new HashMap<>());
+            EssenceHandler.reloadEssenceValues();
         });
 
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-            PacketByteBuf buf = PacketByteBufs.create();
-            EssencePacket.encode(buf);
-
-            sender.sendPacket(NetworkingHandler.ESSENCE_UPDATE, buf);
+            sender.sendPacket(new EssencePacket(EssenceHandler.map));
         });
 
         BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.SURFACE_STRUCTURES, PlacedFeatures.ESSENCE_PILLAR);

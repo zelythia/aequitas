@@ -15,8 +15,9 @@ import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.loot.context.LootContextType;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -36,13 +37,14 @@ import net.zelythia.aequitas.advancement.PlayerStatistics;
 import net.zelythia.aequitas.block.AequitasBlocks;
 import net.zelythia.aequitas.client.config.AequitasConfig;
 import net.zelythia.aequitas.networking.NetworkingHandler;
+import net.zelythia.aequitas.networking.packet.screen.CollectionBowlScreenData;
 import net.zelythia.aequitas.screen.CollectionBowlScreenHandler;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CollectionBowlBlockEntity extends BlockEntity implements ImplementedInventory, ExtendedScreenHandlerFactory {
+public class CollectionBowlBlockEntity extends BlockEntity implements ImplementedInventory, ExtendedScreenHandlerFactory<CollectionBowlScreenData> {
 
     private final DefaultedList<ItemStack> inventory;
 
@@ -99,8 +101,7 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
                 LootContextType lootContextType = new LootContextType.Builder().require(LootContextParameters.ORIGIN).build();
                 LootContextParameterSet lootContext = new LootContextParameterSet.Builder((ServerWorld) world).add(LootContextParameters.ORIGIN, new Vec3d(pos.getX(), pos.getY(), pos.getZ())).build(lootContextType);
 
-
-                List<ItemStack> items = be.world.getServer().getLootManager().getLootTable(new Identifier("aequitas", "gameplay/biomes")).generateLoot(lootContext);
+                List<ItemStack> items = be.world.getServer().getReloadableRegistries().getRegistryManager().get(RegistryKeys.LOOT_TABLE).get(Identifier.of(Aequitas.MOD_ID, "gameplay/biomes")).generateLoot(lootContext);
 
                 if (!items.isEmpty()) {
                     ItemStack item = items.get(world.random.nextInt(items.size()));
@@ -452,10 +453,9 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
     }
 
     @Override
-    public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
-        buf.writeInt(inventory.size());
+    public CollectionBowlScreenData getScreenOpeningData(ServerPlayerEntity player) {
+        return new CollectionBowlScreenData(inventory.size());
     }
-
 
     @Nullable
     @Override
@@ -465,19 +465,19 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
 
 
     @Override
-    public void writeNbt(NbtCompound tag) {
-        super.writeNbt(tag);
-        Inventories.writeNbt(tag, this.inventory);
-        tag.putInt("collection_time", collectionTime);
-        tag.putInt("collection_time_total", collectionTimeTotal);
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.writeNbt(nbt, registryLookup);
+        Inventories.writeNbt(nbt, this.inventory, registryLookup);
+        nbt.putInt("collection_time", collectionTime);
+        nbt.putInt("collection_time_total", collectionTimeTotal);
     }
 
     @Override
-    public void readNbt(NbtCompound tag) {
-        super.readNbt(tag);
-        Inventories.readNbt(tag, this.inventory);
-        this.collectionTime = tag.getInt("collection_time");
-        this.collectionTimeTotal = tag.getInt("collection_time_total");
+    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.readNbt(nbt, registryLookup);
+        Inventories.readNbt(nbt, this.inventory, registryLookup);
+        this.collectionTime = nbt.getInt("collection_time");
+        this.collectionTimeTotal = nbt.getInt("collection_time_total");
         updateStructurePositions();
     }
 
@@ -568,10 +568,7 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
         int i = stack.getCount();
         ItemStack itemStack = this.getStack(slot);
         if (itemStack.isEmpty()) {
-            itemStack = new ItemStack(item, 0);
-            if (stack.hasNbt()) {
-                itemStack.setNbt(stack.getNbt().copy());
-            }
+            itemStack = stack.copyComponentsToNewStack(item, 0);
 
             this.setStack(slot, itemStack);
         }
@@ -588,5 +585,4 @@ public class CollectionBowlBlockEntity extends BlockEntity implements Implemente
         }
         return i;
     }
-
 }

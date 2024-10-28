@@ -5,7 +5,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.util.math.BlockPos;
 import net.zelythia.aequitas.Util;
 
@@ -38,7 +38,7 @@ public class CraftingParticle extends SpriteBillboardParticle {
             this.markDead();
         } else {
             double newY = startY + calculateHeight(Util.distance(startX, startZ, this.x, this.z));
-            this.velocityY = newY -y;
+            this.velocityY = newY - y;
             move(this.velocityX, this.velocityY, this.velocityZ);
         }
     }
@@ -46,7 +46,7 @@ public class CraftingParticle extends SpriteBillboardParticle {
 
     private double calculateHeight(double x) {
         // y = \frac{-x(x-a)}{a^2/4} * maxHeight
-        return ( (-x*(x-Math.sqrt(this.maxDistanceSq)))/(this.maxDistanceSq/4d) ) * 0.4d;
+        return ((-x * (x - Math.sqrt(this.maxDistanceSq))) / (this.maxDistanceSq / 4d)) * 0.4d;
     }
 
 
@@ -68,14 +68,14 @@ public class CraftingParticle extends SpriteBillboardParticle {
 
 
     @Environment(EnvType.CLIENT)
-    public static class Factory implements ParticleFactory<DefaultParticleType> {
+    public static class Factory implements ParticleFactory<SimpleParticleType> {
         private final SpriteProvider spriteProvider;
 
         public Factory(SpriteProvider spriteProvider) {
             this.spriteProvider = spriteProvider;
         }
 
-        public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
+        public Particle createParticle(SimpleParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
             CraftingParticle craftingParticle = new CraftingParticle(clientWorld, d, e, f, g, h, i);
             craftingParticle.setSprite(this.spriteProvider);
             return craftingParticle;

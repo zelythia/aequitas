@@ -390,6 +390,81 @@
         "minecraft:copper_block": 1
       }
     },
+    "minecraft:exposed_copper_door": {
+      "count": 1,
+      "ingredients": {
+        "minecraft:copper_door": 1
+      }
+    },
+    "minecraft:weathered_copper_door": {
+      "count": 1,
+      "ingredients": {
+        "minecraft:copper_door": 1
+      }
+    },
+    "minecraft:oxidized_copper_door": {
+      "count": 1,
+      "ingredients": {
+        "minecraft:copper_door": 1
+      }
+    },
+    "minecraft:waxed_exposed_copper_door": {
+      "count": 1,
+      "ingredients": {
+        "minecraft:waxed_copper_door": 1
+      }
+    },
+    "minecraft:waxed_weathered_copper_door": {
+      "count": 1,
+      "ingredients": {
+        "minecraft:waxed_copper_door": 1
+      }
+    },
+    "minecraft:waxed_oxidized_copper_door": {
+      "count": 1,
+      "ingredients": {
+        "minecraft:waxed_copper_door": 1
+      }
+    },
+    "minecraft:exposed_copper_trapdoor": {
+      "count": 1,
+      "ingredients": {
+        "minecraft:copper_trapdoor": 1
+      }
+    },
+    "minecraft:weathered_copper_trapdoor": {
+      "count": 1,
+      "ingredients": {
+        "minecraft:copper_trapdoor": 1
+      }
+    },
+    "minecraft:oxidized_copper_trapdoor": {
+      "count": 1,
+      "ingredients": {
+        "minecraft:copper_trapdoor": 1
+      }
+    },
+    "minecraft:waxed_exposed_copper_trapdoor": {
+      "count": 1,
+      "ingredients": {
+        "minecraft:waxed_copper_trapdoor": 1
+      }
+    },
+    "minecraft:waxed_weathered_copper_trapdoor": {
+      "count": 1,
+      "ingredients": {
+        "minecraft:waxed_copper_trapdoor": 1
+      }
+    },
+    "minecraft:waxed_oxidized_copper_trapdoor": {
+      "count": 1,
+      "ingredients": {
+        "minecraft:waxed_copper_trapdoor": 1
+      }
+    },
+
+
+
     "minecraft:glow_ink_sac": {
       "count": 1,
       "ingredients": {

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "minecraft:amethyst_shard"
+    }
+  ],
+  "result": {
+    "components": {
+      "patchouli:book": "aequitas:essence_guide"
+    },
+    "count": 1,
+    "id": "patchouli:guide_book"
+  }
+}

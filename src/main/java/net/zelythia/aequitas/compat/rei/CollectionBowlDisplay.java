@@ -29,16 +29,16 @@ public class CollectionBowlDisplay implements Display {
         double weight = 0;
         for (ItemEntry item : items) {
             if (item.id().startsWith("#")) {
-                Optional<RegistryEntryList.Named<Item>> tagItems = Registries.ITEM.getEntryList(TagKey.of(RegistryKeys.ITEM, new Identifier(item.id().replace("#", ""))));
+                Optional<RegistryEntryList.Named<Item>> tagItems = Registries.ITEM.getEntryList(TagKey.of(RegistryKeys.ITEM, Identifier.of(item.id().replace("#", ""))));
                 weight += item.weight() * tagItems.get().size();
             } else weight += item.weight();
         }
 
         for (ItemEntry item : items) {
             if (item.id().startsWith("#")) {
-                outputs.put(EntryIngredients.ofItemTag(TagKey.of(RegistryKeys.ITEM, new Identifier(item.id().replace("#", "")))), ((int) ((item.weight() / weight) * 10000)) / 100d);
-            } else if (!new Identifier("minecraft", "air").equals(new Identifier(item.id()))) {
-                outputs.put(EntryIngredients.of(Registries.ITEM.get(new Identifier(item.id()))), ((int) ((item.weight() / weight) * 10000)) / 100d);
+                outputs.put(EntryIngredients.ofItemTag(TagKey.of(RegistryKeys.ITEM, Identifier.of(item.id().replace("#", "")))), ((int) ((item.weight() / weight) * 10000)) / 100d);
+            } else if (!Identifier.of("minecraft", "air").equals(Identifier.of(item.id()))) {
+                outputs.put(EntryIngredients.of(Registries.ITEM.get(Identifier.of(item.id()))), ((int) ((item.weight() / weight) * 10000)) / 100d);
             }
         }
     }

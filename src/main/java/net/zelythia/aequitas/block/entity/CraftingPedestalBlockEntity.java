@@ -12,6 +12,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -75,20 +76,22 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
         return inventory;
     }
 
+
     @Override
-    public void writeNbt(NbtCompound tag) {
-        super.writeNbt(tag);
-        Inventories.writeNbt(tag, inventory);
-        tag.putLong("Essence", storedEssence);
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.writeNbt(nbt, registryLookup);
+
+        Inventories.writeNbt(nbt, inventory, registryLookup);
+        nbt.putLong("Essence", storedEssence);
     }
 
     @Override
-    public void readNbt(NbtCompound tag) {
-        super.readNbt(tag);
+    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.readNbt(nbt, registryLookup);
 
         this.inventory.clear();
-        Inventories.readNbt(tag, this.inventory);
-        this.storedEssence = tag.getLong("Essence");
+        Inventories.readNbt(nbt, this.inventory, registryLookup);
+        this.storedEssence = nbt.getLong("Essence");
     }
 
     @Nullable
@@ -98,10 +101,9 @@ public class CraftingPedestalBlockEntity extends BlockEntity implements NamedScr
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt() {
-        return createNbt();
+    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
+        return createNbt(registryLookup);
     }
-
 
     public long getStoredEssence() {
         return storedEssence;

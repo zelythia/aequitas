@@ -1,0 +1,26 @@
+{
+  "parent": "aequitas:root",
+  "criteria": {
+    "duplicated_item": {
+      "trigger": "minecraft:duplicated_item"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.aequitas.duplicated_item.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "aequitas:crafting_pedestal"
+    },
+    "title": {
+      "translate": "advancements.aequitas.duplicated_item.title"
+    }
+  },
+  "requirements": [
+    [
+      "duplicated_item"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

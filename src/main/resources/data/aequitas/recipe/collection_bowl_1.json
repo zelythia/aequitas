@@ -1,0 +1,26 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "pattern" : [
+    "E E",
+    "QBQ",
+    "SSS"
+  ],
+  "key" : {
+    "B" : {
+      "item" : "aequitas:primal_essence_block"
+    },
+    "S" : {
+      "item": "aequitas:infused_stone"
+    },
+    "E" : {
+      "item": "aequitas:primal_essence"
+    },
+    "Q" : {
+      "item": "minecraft:quartz_block"
+    }
+  },
+  "result" : {
+    "id": "aequitas:collection_bowl_1",
+    "count" : 1
+  }
+}

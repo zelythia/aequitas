@@ -1,5 +1,6 @@
 package net.zelythia.aequitas.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
@@ -9,10 +10,8 @@ import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -22,10 +21,18 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.zelythia.aequitas.block.entity.BlockEntityTypes;
 import net.zelythia.aequitas.block.entity.SamplingPedestalBlockEntity;
+import net.zelythia.aequitas.component.Components;
 import net.zelythia.aequitas.item.AequitasItems;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public class SamplingPedestalBlock extends BlockWithEntity {
+    public static final MapCodec<SamplingPedestalBlock> CODEC = createCodec(SamplingPedestalBlock::new);
+
+    public MapCodec<SamplingPedestalBlock> getCodec() {
+        return CODEC;
+    }
 
     public SamplingPedestalBlock(Settings settings) {
         super(settings);
@@ -44,34 +51,33 @@ public class SamplingPedestalBlock extends BlockWithEntity {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, BlockEntityTypes.SAMPLING_PEDESTAL_BLOCK_ENTITY, SamplingPedestalBlockEntity::tick);
+        return validateTicker(type, BlockEntityTypes.SAMPLING_PEDESTAL_BLOCK_ENTITY, SamplingPedestalBlockEntity::tick);
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+        ItemStack stack = player.getMainHandStack();
 
-        if (player.getStackInHand(hand).getItem() == AequitasItems.PORTABLE_PEDESTAL && player.getStackInHand(hand).hasNbt() && player.getStackInHand(hand).getNbt().getType("unlocked") == NbtElement.LIST_TYPE) {
-            if (((NbtList) player.getStackInHand(hand).getNbt().get("unlocked")).size() > 0) return ActionResult.FAIL;
+        if (stack.getItem() == AequitasItems.PORTABLE_PEDESTAL && stack.getComponents().contains(Components.UNLOCKED_ITEMS)) {
+            if ((stack.getOrDefault(Components.UNLOCKED_ITEMS, List.of()).size() > 0)) return ActionResult.FAIL;
         }
 
         if (world.isClient) return ActionResult.SUCCESS;
 
-
-
         Inventory blockEntity = (Inventory) world.getBlockEntity(pos);
-        if (!player.getStackInHand(hand).isEmpty() && world.getBlockState(pos.add(0,1,0)).isAir()) {
+        if (!stack.isEmpty() && world.getBlockState(pos.add(0, 1, 0)).isAir()) {
             if (blockEntity.getStack(0).isEmpty()) {
-                blockEntity.setStack(0, player.getStackInHand(hand).copy());
-                player.getStackInHand(hand).setCount(0);
-            } else if (blockEntity.getStack(0).getItem().equals(player.getStackInHand(hand).getItem())) {
-                int i = blockEntity.getStack(0).getCount() + player.getStackInHand(hand).getCount();
+                blockEntity.setStack(0, stack.copy());
+                stack.setCount(0);
+            } else if (blockEntity.getStack(0).getItem().equals(stack.getItem())) {
+                int i = blockEntity.getStack(0).getCount() + stack.getCount();
 
                 if (i <= blockEntity.getMaxCountPerStack()) {
                     blockEntity.getStack(0).setCount(i);
-                    player.getStackInHand(hand).setCount(0);
+                    stack.setCount(0);
                 } else {
                     blockEntity.getStack(0).setCount(blockEntity.getMaxCountPerStack());
-                    player.getStackInHand(hand).setCount(i - blockEntity.getMaxCountPerStack());
+                    stack.setCount(i - blockEntity.getMaxCountPerStack());
                 }
             }
         }

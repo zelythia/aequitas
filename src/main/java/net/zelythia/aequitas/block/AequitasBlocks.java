@@ -44,7 +44,7 @@ public class AequitasBlocks {
     public static final BooleanProperty TOP_BLOCK_PROPERTY = BooleanProperty.of("top");
     public static final BooleanProperty BOTTOM_BLOCK_PROPERTY = BooleanProperty.of("bottom");
 
-    public static final TagKey<Block> INFUSED_BLOCKS = TagKey.of(RegistryKeys.BLOCK, new Identifier("aequitas", "infused_blocks"));
+    public static final TagKey<Block> INFUSED_BLOCKS = TagKey.of(RegistryKeys.BLOCK, Identifier.of("aequitas", "infused_blocks"));
 
 
     static {
@@ -74,7 +74,7 @@ public class AequitasBlocks {
     }
 
     public static Block register(String id, Block block) {
-        return Registry.register(Registries.BLOCK, new Identifier(Aequitas.MOD_ID, id), block);
+        return Registry.register(Registries.BLOCK, Identifier.of(Aequitas.MOD_ID, id), block);
     }
 
     public AequitasBlocks() {

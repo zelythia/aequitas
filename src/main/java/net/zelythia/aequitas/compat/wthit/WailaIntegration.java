@@ -11,8 +11,8 @@ import net.zelythia.aequitas.essence.EssenceHandler;
 public class WailaIntegration implements IWailaPlugin {
     @Override
     public void register(IRegistrar registrar) {
-        registrar.addConfig(new Identifier(Aequitas.MOD_ID, "sampling_pedestal"), true);
-        registrar.addConfig(new Identifier(Aequitas.MOD_ID, "crafting_pedestal"), true);
+        registrar.addConfig(Identifier.of(Aequitas.MOD_ID, "sampling_pedestal"), true);
+        registrar.addConfig(Identifier.of(Aequitas.MOD_ID, "crafting_pedestal"), true);
 
         registrar.addBlockData(new CraftingPedestalBlockDataProvider(), CraftingPedestalBlockEntity.class);
         registrar.addComponent(new CraftingPedestalBlockComponentProvider(), TooltipPosition.BODY, CraftingPedestalBlockEntity.class);
@@ -31,7 +31,7 @@ public class WailaIntegration implements IWailaPlugin {
     private static class CraftingPedestalBlockComponentProvider implements IBlockComponentProvider {
         @Override
         public void appendBody(ITooltip tooltip, IBlockAccessor accessor, IPluginConfig config) {
-            if (config.getBoolean(new Identifier(Aequitas.MOD_ID, "crafting_pedestal"))) {
+            if (config.getBoolean(Identifier.of(Aequitas.MOD_ID, "crafting_pedestal"))) {
                 NbtCompound data = accessor.getData().raw();
 
                 if (data.contains("storedEssence")) {

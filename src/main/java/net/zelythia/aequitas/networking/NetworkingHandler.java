@@ -1,97 +1,92 @@
 package net.zelythia.aequitas.networking;
 
-import com.google.gson.Gson;
-import io.netty.buffer.Unpooled;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.JsonOps;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootGsons;
-import net.minecraft.loot.LootManager;
 import net.minecraft.loot.LootTable;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryOps;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.block.entity.CollectionBowlBlockEntity;
 import net.zelythia.aequitas.block.entity.CraftingPedestalBlockEntity;
-import net.zelythia.aequitas.compat.LootTableParser;
+import net.zelythia.aequitas.essence.EssenceHandler;
 import net.zelythia.aequitas.item.FallFlying;
+import net.zelythia.aequitas.networking.packet.*;
+import net.zelythia.aequitas.networking.packet.compat.LootInfoReq;
+import net.zelythia.aequitas.networking.packet.compat.LootInfoRes;
 import net.zelythia.aequitas.screen.PortablePedestalScreenHandler;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class NetworkingHandler {
-
     private static MinecraftServer server;
 
-    public static final Identifier ESSENCE_UPDATE = new Identifier(Aequitas.MOD_ID, "essence_event");
-    public static final Identifier CRAFTING_PARTICLE = new Identifier(Aequitas.MOD_ID, "crafting_particle");
-    public static final Identifier COLLECTION_PROGRESS = new Identifier(Aequitas.MOD_ID, "collection_progress");
-
-    public static final Identifier START_FLYING = new Identifier(Aequitas.MOD_ID, "start_flying");
-
-
-    public static final Identifier C2S_UPDATE_FILTER = new Identifier(Aequitas.MOD_ID, "update_filter");
-
-
-
-    //Rei + Emi compat
-    public static final Identifier ASK_SYNC_INFO = new Identifier("aequitas_rei", "asi");
-    public static final Identifier SEND_LOOT_INFO = new Identifier("aequitas_rei", "sli");
-    public static final Gson GSON = LootGsons.getTableGsonBuilder().create();
-
-
     public static void onInitialize() {
+        PayloadTypeRegistry.playC2S().register(LootInfoReq.PACKET_ID, LootInfoReq.PACKET_CODEC);
+        PayloadTypeRegistry.playC2S().register(StartFallFlying.PACKET_ID, StartFallFlying.PACKET_CODEC);
+        PayloadTypeRegistry.playC2S().register(UpdatePortablePedestalFilter.PACKET_ID, UpdatePortablePedestalFilter.PACKET_CODEC);
+
+        PayloadTypeRegistry.playS2C().register(LootInfoRes.PACKET_ID, LootInfoRes.PACKET_CODEC);
+        PayloadTypeRegistry.playS2C().register(CollectionBowlProgress.PACKET_ID, CollectionBowlProgress.PACKET_CODEC);
+        PayloadTypeRegistry.playS2C().register(CraftingParticlePacket.PACKET_ID, CraftingParticlePacket.PACKET_CODEC);
+        PayloadTypeRegistry.playS2C().register(EssencePacket.PACKET_ID, EssencePacket.PACKET_CODEC);
+
+
         List<Identifier> syncedLootTables = new ArrayList<>();
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/biomes"));
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/nether"));
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/end"));
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/overworld"));
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/badlands"));
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/cherry"));
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/dark_forest"));
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/deep_dark"));
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/desert"));
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/dripstone"));
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/emerald"));
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/forest"));
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/gravel"));
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/ice"));
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/jungle"));
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/lush_caves"));
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/mangrove"));
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/mushroom"));
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/ocean"));
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/river"));
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/savanna"));
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/snow"));
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/stone"));
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/swamp"));
-        syncedLootTables.add(new Identifier("aequitas", "gameplay/taiga"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/biomes"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/nether"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/end"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/overworld"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/badlands"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/cherry"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/dark_forest"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/deep_dark"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/desert"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/dripstone"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/emerald"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/forest"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/gravel"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/ice"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/jungle"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/lush_caves"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/mangrove"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/mushroom"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/ocean"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/river"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/savanna"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/snow"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/stone"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/swamp"));
+        syncedLootTables.add(Identifier.of("aequitas", "gameplay/taiga"));
 
 
-        ServerPlayNetworking.registerGlobalReceiver(START_FLYING, (server1, player, handler, buf, responseSender) -> {
-            server1.execute(() -> {
-                if (!FallFlying.startFallFlying(player)) {
-                    player.stopFallFlying();
+        ServerPlayNetworking.registerGlobalReceiver(StartFallFlying.PACKET_ID, (payload, context) -> {
+            context.server().execute(() -> {
+                if (!FallFlying.startFallFlying(context.player())) {
+                    context.player().stopFallFlying();
                 }
             });
         });
 
+        ServerPlayNetworking.registerGlobalReceiver(UpdatePortablePedestalFilter.PACKET_ID, (payload, context) -> {
+            context.server().execute(() -> {
+                ServerPlayerEntity player = context.player();
 
-        ServerPlayNetworking.registerGlobalReceiver(NetworkingHandler.C2S_UPDATE_FILTER, (server, player, handler, buf, responseSender) -> {
-            int syncId = buf.readInt();
-            String filter = buf.readString();
-            int page = buf.readInt();
-
-            server.execute(() -> {
-                if (player.currentScreenHandler.syncId == syncId && player.currentScreenHandler.canUse(player)) {
+                if (player.currentScreenHandler.syncId == payload.syncId() && player.currentScreenHandler.canUse(player)) {
                     if (player.currentScreenHandler instanceof PortablePedestalScreenHandler) {
-                        ((PortablePedestalScreenHandler) player.currentScreenHandler).updateSearchProperties(filter, page);
+                        ((PortablePedestalScreenHandler) player.currentScreenHandler).updateSearchProperties(payload.filter(), payload.page());
                     }
                 }
             });
@@ -99,24 +94,20 @@ public class NetworkingHandler {
 
 
         //Rei + Emi compat
-        ServerPlayNetworking.registerGlobalReceiver(ASK_SYNC_INFO, (server, player, handler, buf, responseSender) -> {
-            server.execute(() -> {
-                LootManager lootManager = server.getLootManager();
+        ServerPlayNetworking.registerGlobalReceiver(LootInfoReq.PACKET_ID, (payload, context) -> {
+            context.server().execute(() -> {
+                Registry<LootTable> lootManager = context.server().getReloadableRegistries().getRegistryManager().get(RegistryKeys.LOOT_TABLE);
+                Map<Identifier, JsonObject> loottables = new HashMap<>();
 
-                int size = 50;
-                for (int i = 0; i < syncedLootTables.size(); i += size) {
-                    int end = Math.min(syncedLootTables.size(), i + size);
-                    PacketByteBuf res = new PacketByteBuf(Unpooled.buffer());
-                    res.writeInt(end - i);
-                    for (int j = i; j < end; j++) {
-                        Identifier identifier = syncedLootTables.get(j);
-                        LootTable table = lootManager.getLootTable(identifier);
-                        LootTableParser.writeIdentifier(res, identifier);
-                        LootTableParser.writeJson(res, GSON.toJsonTree(table));
-                    }
 
-                    responseSender.sendPacket(SEND_LOOT_INFO, new PacketByteBuf(res.duplicate()));
+                for (Identifier identifier : syncedLootTables) {
+                    LootTable table = lootManager.get(identifier);
+                    DataResult<JsonElement> json = LootTable.CODEC.encodeStart(RegistryOps.of(JsonOps.INSTANCE, context.server().getRegistryManager()), table);
+
+                    loottables.put(identifier, json.result().get().getAsJsonObject());
                 }
+
+                context.responseSender().sendPacket(new LootInfoRes(loottables));
             });
         });
     }
@@ -125,35 +116,22 @@ public class NetworkingHandler {
     public static void updateEssence() {
         if (server == null) return;
 
-        PacketByteBuf buf = PacketByteBufs.create();
-        EssencePacket.encode(buf);
-
         for (ServerPlayerEntity player : PlayerLookup.all(server)) {
-            ServerPlayNetworking.send(player, NetworkingHandler.ESSENCE_UPDATE, buf);
+            ServerPlayNetworking.send(player, new EssencePacket(EssenceHandler.map));
         }
     }
 
     public static void sendParticle(CraftingPedestalBlockEntity be, BlockPos from, BlockPos to, ItemStack stack) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeBlockPos(from);
-        buf.writeBlockPos(to);
-        buf.writeItemStack(stack);
-
         for (ServerPlayerEntity player : PlayerLookup.tracking(be)) {
-            ServerPlayNetworking.send(player, NetworkingHandler.CRAFTING_PARTICLE, buf);
+            ServerPlayNetworking.send(player, new CraftingParticlePacket(from, to, stack));
         }
     }
 
     public static void updateCollectionBowl(CollectionBowlBlockEntity be) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeBlockPos(be.getPos());
-        buf.writeFloat(be.getServerCollectionProgress());
-
         for (ServerPlayerEntity player : PlayerLookup.tracking(be)) {
-            ServerPlayNetworking.send(player, NetworkingHandler.COLLECTION_PROGRESS, buf);
+            ServerPlayNetworking.send(player, new CollectionBowlProgress(be.getPos(), be.getServerCollectionProgress()));
         }
     }
-
 
 
     public static void setServer(MinecraftServer server) {

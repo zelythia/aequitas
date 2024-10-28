@@ -1,0 +1,36 @@
+{
+  "parent": "aequitas:duplicate_item",
+  "criteria": {
+    "get_portable_pedestal": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aequitas:portable_pedestal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.aequitas.get_portable_pedestal.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "aequitas:portable_pedestal"
+    },
+    "title": {
+      "translate": "advancements.aequitas.get_portable_pedestal.title"
+    }
+  },
+  "requirements": [
+    [
+      "get_portable_pedestal"
+    ]
+  ],
+  "rewards": {
+    "experience": 1000
+  },
+  "sends_telemetry_event": true
+}

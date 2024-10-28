@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "aequitas:infused_stone"
-  },
-  "result": "aequitas:infused_stone_pillar",
-  "count": 1
-}

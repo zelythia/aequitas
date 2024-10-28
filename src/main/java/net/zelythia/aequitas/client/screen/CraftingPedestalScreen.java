@@ -13,7 +13,7 @@ import net.zelythia.aequitas.screen.CraftingPedestalScreenHandler;
 public class CraftingPedestalScreen extends HandledScreen<CraftingPedestalScreenHandler> {
 
     //A path to the gui texture. In this example we use the texture from the dispenser
-    private static final Identifier TEXTURE = new Identifier(Aequitas.MOD_ID, "textures/gui/crafting_pedestal.png");
+    private static final Identifier TEXTURE = Identifier.of(Aequitas.MOD_ID, "textures/gui/crafting_pedestal.png");
 
     public CraftingPedestalScreen(CraftingPedestalScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
@@ -30,7 +30,7 @@ public class CraftingPedestalScreen extends HandledScreen<CraftingPedestalScreen
     }
 
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        renderBackground(context);
+        renderBackground(context, mouseX, mouseY, delta);
         super.render(context, mouseX, mouseY, delta);
         drawMouseoverTooltip(context, mouseX, mouseY);
     }

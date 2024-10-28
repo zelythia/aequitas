@@ -29,24 +29,27 @@ public class ReiPlugin implements REIClientPlugin {
 
     @Override
     public void registerDisplays(DisplayRegistry registry) {
-        net.zelythia.aequitas.client.NetworkingHandler.updateLootTables();
+        boolean b = net.zelythia.aequitas.client.NetworkingHandler.updateLootTables();
+//        boolean b = false;
 
-        for (JsonElement element : net.zelythia.aequitas.client.NetworkingHandler.LOOTTABLES.get(new Identifier("aequitas", "gameplay/biomes")).getAsJsonArray("pools")) {
-            try {
-                List<Identifier> conditions = new ArrayList<>();
-                for (JsonElement condition : element.getAsJsonObject().getAsJsonArray("conditions")) {
-                    LootTableParser.parseCondition(condition.getAsJsonObject(), conditions);
+        if (b) {
+            for (JsonElement element : net.zelythia.aequitas.client.NetworkingHandler.LOOTTABLES.get(Identifier.of("aequitas", "gameplay/biomes")).getAsJsonArray("pools")) {
+                try {
+                    List<Identifier> conditions = new ArrayList<>();
+                    for (JsonElement condition : element.getAsJsonObject().getAsJsonArray("conditions")) {
+                        LootTableParser.parseCondition(condition.getAsJsonObject(), conditions);
+                    }
+
+                    StringBuilder name = new StringBuilder();
+                    List<ItemEntry> entries = new ArrayList<>();
+                    for (JsonElement entry : element.getAsJsonObject().getAsJsonArray("entries")) {
+                        LootTableParser.parseEntry(entry.getAsJsonObject(), entries, name);
+                    }
+
+                    registry.add(new CollectionBowlDisplay(entries, conditions, name.toString()));
+                } catch (Exception e) {
+                    Aequitas.LOGGER.error("REI: Error parsing loot tables", e);
                 }
-
-                StringBuilder name = new StringBuilder();
-                List<ItemEntry> entries = new ArrayList<>();
-                for (JsonElement entry : element.getAsJsonObject().getAsJsonArray("entries")) {
-                    LootTableParser.parseEntry(entry.getAsJsonObject(), entries, name);
-                }
-
-                registry.add(new CollectionBowlDisplay(entries, conditions, name.toString()));
-            } catch (Exception e) {
-                Aequitas.LOGGER.error("REI: Error parsing loot tables", e);
             }
         }
 

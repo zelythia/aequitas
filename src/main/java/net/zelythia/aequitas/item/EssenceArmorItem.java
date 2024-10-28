@@ -1,5 +1,6 @@
 package net.zelythia.aequitas.item;
 
+import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -9,16 +10,19 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.world.World;
 
 public class EssenceArmorItem extends ArmorItem {
-    public EssenceArmorItem(ArmorMaterial material, ArmorItem.Type type, Settings settings) {
-        super(material, type, settings);
-    }
+    public static final DyedColorComponent PRISTINE_DEFAULT_COLOR = new DyedColorComponent(16383998, true);
 
     private static final int MAX_FLY_TIME = 600;
     private int timeFlown = 0;
+
+    public EssenceArmorItem(RegistryEntry<ArmorMaterial> material, Type type, Settings settings) {
+        super(material, type, settings);
+    }
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
@@ -36,7 +40,7 @@ public class EssenceArmorItem extends ArmorItem {
             if (player.getInventory().armor.get(3).getItem().equals(AequitasItems.PRIMORDIAL_ESSENCE_HELMET))
                 time = time * 3;
 
-            if (!player.isSubmergedIn(FluidTags.WATER)) {
+            if (!player.isSubmergedIn(FluidTags.WATER) || player.getInventory().armor.get(3).getItem().equals(AequitasItems.PRISTINE_ESSENCE_HELMET)) {
                 player.addStatusEffect(new StatusEffectInstance(StatusEffects.WATER_BREATHING, time, 0, false, false, false));
             }
 
@@ -53,16 +57,28 @@ public class EssenceArmorItem extends ArmorItem {
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 20, 1, false, false, false));
             return;
         }
-
+        if (stack.getItem().equals(AequitasItems.PRISTINE_ESSENCE_LEGGINGS)) {
+            if (player.isSprinting()) {
+                player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 2, 2, false, false, false));
+            } else {
+                player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 20, 1, false, false, false));
+            }
+            return;
+        }
 
         //CHESTPLATE:
         if (stack.getItem().equals(AequitasItems.PRIMORDIAL_ESSENCE_CHESTPLATE)) {
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.SATURATION, 20, 0, false, false, false));
         }
+        if (stack.getItem().equals(AequitasItems.PRISTINE_ESSENCE_CHESTPLATE)) {
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.SATURATION, 20, 0, false, false, false));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 20, 0, false, false, false));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 20, 0, false, false, false));
+        }
 
         if (player.getAbilities().creativeMode || player.isSpectator()) return;
 
-        if ((checkSetPrimordial(player) && timeFlown <= MAX_FLY_TIME)) {
+        if ((checkSetPrimordial(player) && timeFlown <= MAX_FLY_TIME) || checkSetPristine(player)) {
             player.getAbilities().allowFlying = true;
         } else {
             player.getAbilities().allowFlying = false;
@@ -86,5 +102,9 @@ public class EssenceArmorItem extends ArmorItem {
 
     public static boolean checkSetPrimordial(PlayerEntity player) {
         return player.getEquippedStack(EquipmentSlot.FEET).getItem().equals(AequitasItems.PRIMORDIAL_ESSENCE_BOOTS) && player.getEquippedStack(EquipmentSlot.LEGS).getItem().equals(AequitasItems.PRIMORDIAL_ESSENCE_LEGGINGS) && player.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(AequitasItems.PRIMORDIAL_ESSENCE_CHESTPLATE) && player.getEquippedStack(EquipmentSlot.HEAD).getItem().equals(AequitasItems.PRIMORDIAL_ESSENCE_HELMET);
+    }
+
+    public static boolean checkSetPristine(PlayerEntity player) {
+        return player.getEquippedStack(EquipmentSlot.FEET).getItem().equals(AequitasItems.PRISTINE_ESSENCE_BOOTS) && player.getEquippedStack(EquipmentSlot.LEGS).getItem().equals(AequitasItems.PRISTINE_ESSENCE_LEGGINGS) && player.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(AequitasItems.PRISTINE_ESSENCE_CHESTPLATE) && player.getEquippedStack(EquipmentSlot.HEAD).getItem().equals(AequitasItems.PRISTINE_ESSENCE_HELMET);
     }
 }

@@ -18,10 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AequitasEmiPlugin implements EmiPlugin {
-    public static final Identifier MY_SPRITE_SHEET = new Identifier("emi", "textures/gui/widgets.png");
+    public static final Identifier MY_SPRITE_SHEET = Identifier.of("emi", "textures/gui/widgets.png");
     public static final EmiStack COLLECTION_BOWL_BLOCK_ITEM_I = EmiStack.of(AequitasItems.COLLECTION_BOWL_I);
     public static final EmiRecipeCategory COLLECTION_BOWL_CATEGORY
-            = new EmiRecipeCategory(new Identifier(Aequitas.MOD_ID, "collection_bowl"), COLLECTION_BOWL_BLOCK_ITEM_I, new EmiTexture(MY_SPRITE_SHEET, 0, 0, 16, 16));
+            = new EmiRecipeCategory(Identifier.of(Aequitas.MOD_ID, "collection_bowl"), COLLECTION_BOWL_BLOCK_ITEM_I, new EmiTexture(MY_SPRITE_SHEET, 0, 0, 16, 16));
 
 
     @Override
@@ -37,7 +37,7 @@ public class AequitasEmiPlugin implements EmiPlugin {
         registry.addWorkstation(COLLECTION_BOWL_CATEGORY, EmiStack.of(AequitasItems.COLLECTION_BOWL_III));
 
         if (b) {
-            for (JsonElement element : net.zelythia.aequitas.client.NetworkingHandler.LOOTTABLES.get(new Identifier("aequitas", "gameplay/biomes")).getAsJsonArray("pools")) {
+            for (JsonElement element : net.zelythia.aequitas.client.NetworkingHandler.LOOTTABLES.get(Identifier.of("aequitas", "gameplay/biomes")).getAsJsonArray("pools")) {
 
                 try {
                     List<Identifier> conditions = new ArrayList<>();
@@ -62,7 +62,7 @@ public class AequitasEmiPlugin implements EmiPlugin {
         registry.addRecipe(new EmiInfoRecipe(
                 List.of(EmiStack.of(AequitasItems.PRIMAL_ESSENCE), EmiStack.of(AequitasItems.PRIMORDIAL_ESSENCE), EmiStack.of(AequitasItems.PRISTINE_ESSENCE)),
                 List.of(Text.translatable("rei.info.aequitas.essence.description")),
-                new Identifier("aequitas", "essence_pillars")
+                Identifier.of("aequitas", "essence_pillars")
         ));
     }
 }

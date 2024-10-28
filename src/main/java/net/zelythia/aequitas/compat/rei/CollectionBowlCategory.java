@@ -7,7 +7,6 @@ import me.shedaniel.rei.api.client.gui.widgets.Tooltip;
 import me.shedaniel.rei.api.client.gui.widgets.Widget;
 import me.shedaniel.rei.api.client.gui.widgets.Widgets;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
-import me.shedaniel.rei.api.client.util.ClientEntryStacks;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.entry.EntryStack;
@@ -74,9 +73,9 @@ public class CollectionBowlCategory implements DisplayCategory<CollectionBowlDis
 
         Widget description = Widgets.createDrawableWidget((graphics, mouseX, mouseY, delta) -> {
             //Icon
-            Identifier icon = new Identifier(Aequitas.MOD_ID, "textures/biomes/" + display.getName().replace("aequitas:gameplay/", "") + ".png");
+            Identifier icon = Identifier.of(Aequitas.MOD_ID, "textures/biomes/" + display.getName().replace("aequitas:gameplay/", "") + ".png");
             if (MinecraftClient.getInstance().getResourceManager().getResource(icon).isEmpty()) {
-                icon = new Identifier("textures/painting/earth.png");
+                icon = Identifier.of("textures/painting/earth.png");
             }
             graphics.drawTexture(icon, bounds.getMinX(), bounds.getMinY(), 32, 32, 0, 0, 32, 32, 32, 32);
 
@@ -145,11 +144,11 @@ public class CollectionBowlCategory implements DisplayCategory<CollectionBowlDis
     }
 
     private void applyTooltip(EntryIngredient outputs, Tooltip.Entry tooltip) {
-        for (var stack : outputs) {
-            ClientEntryStacks.setTooltipProcessor(stack, ((entryStack, tooltips) -> {
+        for (EntryStack<?> stack : outputs) {
+            stack.tooltipProcessor((entryStack, tooltips) -> {
                 tooltips.entries().add(tooltip);
                 return tooltips;
-            }));
+            });
         }
     }
 

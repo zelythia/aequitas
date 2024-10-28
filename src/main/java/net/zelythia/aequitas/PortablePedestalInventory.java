@@ -1,18 +1,15 @@
 package net.zelythia.aequitas;
 
-import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.nbt.NbtString;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
+import net.zelythia.aequitas.component.Components;
 import net.zelythia.aequitas.essence.EssenceHandler;
 import net.zelythia.aequitas.item.AequitasItems;
 
@@ -37,21 +34,14 @@ public class PortablePedestalInventory implements Inventory {
 
         this.item = item;
 
-        NbtCompound nbt = item.getOrCreateNbt();
+        storedEssence = item.getOrDefault(Components.STORED_ESSENCE, 0L);
 
-        if (!nbt.contains("essence")) {
-            nbt.putLong("essence", 0);
+        List<Identifier> unlocked = item.getOrDefault(Components.UNLOCKED_ITEMS, List.of());
+        for (Identifier i : unlocked) {
+            Item item1 = Registries.ITEM.get(i);
+            if (item1 != Items.AIR) unlockedItems.add(item1);
         }
 
-        storedEssence = nbt.getLong("essence");
-
-        if (nbt.getType("unlocked") == NbtType.LIST) {
-            NbtList nbtList = (NbtList) nbt.get("unlocked");
-            for (int i = 0; i < nbtList.size(); ++i) {
-                Item item1 = Registries.ITEM.get(new Identifier(nbtList.getString(i)));
-                if (item1 != Items.AIR) unlockedItems.add(item1);
-            }
-        }
 
         updateFilter("", 0);
     }
@@ -79,7 +69,13 @@ public class PortablePedestalInventory implements Inventory {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        for (int i = 0; i < size(); i++) {
+            ItemStack stack = getStack(i);
+            if (!stack.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -138,7 +134,7 @@ public class PortablePedestalInventory implements Inventory {
 
     public void essenceToTag() {
         if (item == null) return;
-        this.item.getNbt().putLong("essence", storedEssence);
+        this.item.set(Components.STORED_ESSENCE, storedEssence);
     }
 
 
@@ -146,16 +142,8 @@ public class PortablePedestalInventory implements Inventory {
     public void markDirty() {
         if (item == null) return;
 
-        essenceToTag();
-
-        NbtList nbtList = new NbtList();
-
-        for (Item item1 : unlockedItems) {
-            Identifier identifier = Registries.ITEM.getId(item1);
-            nbtList.add(NbtString.of(identifier.toString()));
-        }
-
-        this.item.getNbt().put("unlocked", nbtList);
+        this.item.set(Components.STORED_ESSENCE, storedEssence);
+        this.item.set(Components.UNLOCKED_ITEMS, unlockedItems.stream().map(Registries.ITEM::getId).toList());
     }
 
     @Override

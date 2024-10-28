@@ -1,11 +1,18 @@
 package net.zelythia.aequitas.essence;
 
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.recipe.*;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.entry.RegistryEntryList;
+import net.minecraft.registry.tag.TagKey;
+import net.minecraft.util.Identifier;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.mixin.SmithingTransformRecipeAccessor;
 import net.zelythia.aequitas.networking.NetworkingHandler;
@@ -16,7 +23,8 @@ import static net.zelythia.aequitas.item.AequitasItems.ESSENCE_HOLDER;
 
 
 public class EssenceHandler {
-    private static final int INGREDIENT_LIMIT = 64;
+    private static final List<String> KNOWN_TAGS = List.of("#c:seeds", "#c:ingots/chromium", "#c:ingots/tungsten", "#c:ingots/antimony", "#c:ingots/zinc", "#c:ingots/lead", "#c:ingots/iridium", "#c:ingots/titanium", "#c:ingots/nickel", "#c:ingots/platinum", "#c:ingots/plutonium", "#c:ingots/manyullyn", "#c:ingots/silver", "#c:ingots/tin", "#c:ingots/cadmium", "#c:ingots/cobalt", "#c:ingots/uranium");
+    private static final int INGREDIENT_LIMIT = 32;
     private static final int MAX_TIME = 60000;
 
     public static Map<Item, Long> map = new HashMap<>();
@@ -46,13 +54,46 @@ public class EssenceHandler {
         });
     }
 
-    public static void reloadEssenceValues(Map<Item, Long> newValues) {
-        if (!newValues.isEmpty()) map.clear();
+    static Map<String, Long> customValues = new HashMap<>();
 
+    public static void setCustomValues(Map<String, Long> map) {
+        customValues.clear();
+        customValues.putAll(map);
+    }
+
+    public static void reloadEssenceValues() {
         map.put(ESSENCE_HOLDER, 1L);
-        map.putAll(newValues);
-        RecipeMapper.mapRecipes(recipeManager);
 
+        customValues.forEach((key, value) -> {
+            if (key.startsWith("#")) {
+                Optional<RegistryEntryList.Named<Item>> entryList = Registries.ITEM.getEntryList(TagKey.of(RegistryKeys.ITEM, Identifier.of(key.replace("#", ""))));
+
+                if (entryList.isPresent()) {
+                    for (RegistryEntry<?> registryEntry : entryList.get()) {
+                        registryEntry.getKey().ifPresent(registryKey -> {
+                            registryKey.tryCast(RegistryKeys.ITEM).ifPresent(itemRegistryKey -> {
+                                if (!map.containsKey(Registries.ITEM.get(itemRegistryKey)))
+                                    map.put(Registries.ITEM.get(itemRegistryKey), value);
+                            });
+                        });
+                    }
+                } else {
+                    if (!KNOWN_TAGS.contains(key))
+                        Aequitas.LOGGER.error("Unknown tag {}", key);
+                }
+
+            } else {
+                Item item = Registries.ITEM.get(Identifier.of(key));
+                if (item != Items.AIR) {
+                    if (!map.containsKey(item))
+                        map.put(item, value);
+                } else {
+                    Aequitas.LOGGER.error("Unknown item {}", key);
+                }
+            }
+        });
+
+        RecipeMapper.startEssenceCalc(recipeManager);
         NetworkingHandler.updateEssence();
     }
 
@@ -63,19 +104,15 @@ public class EssenceHandler {
         private static final Map<Item, List<SimplifiedRecipe>> itemRecipes = new HashMap<>();
         private static final Map<Item, List<SimplifiedRecipe>> reversedRecipes = new HashMap<>();
 
-        private static void mapRecipes(RecipeManager recipeManager) {
+        private static void startEssenceCalc(RecipeManager recipeManager) {
             if (recipeManager == null || registryManager == null) return;
 
-            Aequitas.LOGGER.info("Started mapping recipes");
+            Aequitas.LOGGER.info("Started mapping {} recipes", recipeManager.values().size());
             long startTime = System.currentTimeMillis();
 
-            for (Recipe<?> recipe : recipeManager.values()) {
-                Item output = recipe.getOutput(registryManager).getItem();
-
-                if(System.currentTimeMillis() - startTime > 60000) {
-                    Aequitas.LOGGER.error("Recipe: " + recipe.getOutput(registryManager).getItem());
-                    return;
-                }
+            for (RecipeEntry<?> recipeEntry : recipeManager.values()) {
+                Recipe<?> recipe = recipeEntry.value();
+                Item output = recipe.getResult(registryManager).getItem();
 
                 if (!itemRecipes.containsKey(output)) {
                     itemRecipes.put(output, new ArrayList<>());
@@ -85,7 +122,7 @@ public class EssenceHandler {
                 if (recipe instanceof SmithingTransformRecipe) {
                     SmithingTransformRecipeAccessor smithingRecipe = (SmithingTransformRecipeAccessor) recipe;
 
-                    itemRecipes.get(output).add(new SimplifiedRecipe(List.of(SimplifiedIngredient.of(smithingRecipe.getTemplate()), SimplifiedIngredient.of(smithingRecipe.getBase()), SimplifiedIngredient.of(smithingRecipe.getAddition())), recipe.getOutput(registryManager), recipe.getType(), false));
+                    itemRecipes.get(output).add(new SimplifiedRecipe(List.of(SimplifiedIngredient.of(smithingRecipe.getTemplate()), SimplifiedIngredient.of(smithingRecipe.getBase()), SimplifiedIngredient.of(smithingRecipe.getAddition())), recipe.getResult(registryManager), recipe.getType(), false));
                 } else {
                     itemRecipes.get(output).add(SimplifiedRecipe.of(recipe, registryManager));
 
@@ -97,7 +134,7 @@ public class EssenceHandler {
 
                             int outputCount = 0;
                             List<SimplifiedIngredient> ingredients = new ArrayList<>();
-                            ingredients.add(SimplifiedIngredient.of(recipe.getOutput(registryManager)));
+                            ingredients.add(SimplifiedIngredient.of(recipe.getResult(registryManager)));
 
                             for (Ingredient ingredient2 : recipe.getIngredients()) {
                                 if (ingredient2.equals(ingredient)) {
@@ -271,8 +308,8 @@ public class EssenceHandler {
     }
 
     public static long getEssenceValue(ItemStack stack) {
-        if(stack.hasNbt()){
-            if(!(stack.getNbt().getKeys().size() == 1 && stack.getNbt().contains("Damage"))){
+        if (stack.getComponentChanges().size() > 0) {
+            if (!(stack.getComponentChanges().size() == 1 && stack.getComponentChanges().get(DataComponentTypes.DAMAGE) != null && stack.getComponentChanges().get(DataComponentTypes.DAMAGE).isPresent())) {
                 return -1;
             }
         }

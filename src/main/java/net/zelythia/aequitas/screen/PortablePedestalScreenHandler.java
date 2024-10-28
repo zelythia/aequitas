@@ -1,18 +1,15 @@
 package net.zelythia.aequitas.screen;
 
-import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtList;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.PortablePedestalInventory;
 import net.zelythia.aequitas.essence.EssenceHandler;
-import net.zelythia.aequitas.item.AequitasItems;
 
 public class PortablePedestalScreenHandler extends ScreenHandler {
     public final PortablePedestalInventory inventory;
@@ -51,10 +48,6 @@ public class PortablePedestalScreenHandler extends ScreenHandler {
 
             @Override
             public boolean canInsert(ItemStack stack) {
-                if (stack.getItem() == AequitasItems.PORTABLE_PEDESTAL && stack.hasNbt() && stack.getNbt().getType("unlocked") == NbtType.LIST) {
-                    if (((NbtList) stack.getNbt().get("unlocked")).size() > 0) return false;
-                }
-
                 return EssenceHandler.getEssenceValue(stack) > 0 && !ItemStack.areEqual(stack, PortablePedestalScreenHandler.this.inventory.item);
             }
         });
@@ -151,8 +144,6 @@ public class PortablePedestalScreenHandler extends ScreenHandler {
     //Override is needed in insert essence check
     @Override
     public void onSlotClick(int i, int j, SlotActionType slotActionType, PlayerEntity playerEntity) {
-        ItemStack itemStack = ItemStack.EMPTY;
-
         if (slotActionType != SlotActionType.QUICK_CRAFT && slotActionType != SlotActionType.QUICK_MOVE) {
             if (!(slotActionType != SlotActionType.PICKUP || j != 0 && j != 1) && i != -999) {
                 if (i < 0) {
@@ -162,14 +153,11 @@ public class PortablePedestalScreenHandler extends ScreenHandler {
                 if (slot3 != null) {
                     ItemStack itemStack3 = slot3.getStack();
                     ItemStack itemStack2 = this.getCursorStack();
-                    if (!itemStack3.isEmpty()) {
-                        itemStack = itemStack3.copy();
-                    }
 
                     if (!itemStack3.isEmpty() && slot3.canTakeItems(playerEntity)) {
                         int o;
                         if (!itemStack2.isEmpty() && !slot3.canInsert(itemStack2)) {
-                            if (itemStack2.getMaxCount() > 1 && ItemStack.canCombine(itemStack3, itemStack2) && !itemStack3.isEmpty() && (o = itemStack3.getCount()) + itemStack2.getCount() <= itemStack2.getMaxCount()) {
+                            if (itemStack2.getMaxCount() > 1 && ItemStack.areItemsAndComponentsEqual(itemStack3, itemStack2) && !itemStack3.isEmpty() && (o = itemStack3.getCount()) + itemStack2.getCount() <= itemStack2.getMaxCount()) {
                                 long e = EssenceHandler.getEssenceValue(itemStack3);
                                 if (e <= inventory.storedEssence) {
                                     itemStack2.increment(o);

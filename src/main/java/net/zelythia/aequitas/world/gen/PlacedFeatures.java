@@ -14,7 +14,7 @@ import net.zelythia.aequitas.Aequitas;
 import java.util.List;
 
 public class PlacedFeatures {
-    public static final RegistryKey<PlacedFeature> ESSENCE_PILLAR = RegistryKey.of(RegistryKeys.PLACED_FEATURE, new Identifier(Aequitas.MOD_ID, "essence_pillar"));
+    public static final RegistryKey<PlacedFeature> ESSENCE_PILLAR = RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier.of(Aequitas.MOD_ID, "essence_pillar"));
 
     public static void bootstrap(Registerable<PlacedFeature> context) {
         RegistryEntryLookup<ConfiguredFeature<?, ?>> registryLookup = context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);

@@ -16,7 +16,7 @@ import net.zelythia.aequitas.client.particle.Particles;
 @Environment(EnvType.CLIENT)
 public class CollectionBowlBlockEntityRenderer implements BlockEntityRenderer<CollectionBowlBlockEntity> {
 
-    public static final Identifier TEXTURE = new Identifier(Aequitas.MOD_ID, "textures/entity/collection_bowl_essence.png");
+    public static final Identifier TEXTURE = Identifier.of(Aequitas.MOD_ID, "textures/entity/collection_bowl_essence.png");
 
     public CollectionBowlBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {}
 
@@ -36,10 +36,10 @@ public class CollectionBowlBlockEntityRenderer implements BlockEntityRenderer<Co
             float b = Particles.TIER_COLORS[blockEntity.tier][2];
             VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntitySolid(TEXTURE));
 
-            vertexConsumer.vertex(matrices.peek().getPositionMatrix(), -6, 0, 6).color(r, g, b, 1f).texture(0, 12).overlay(overlay).light(light).normal(matrices.peek().getNormalMatrix(), 0, 1, 0).next();
-            vertexConsumer.vertex(matrices.peek().getPositionMatrix(), 6, 0, 6).color(r, g, b, 1).texture(12, 12).overlay(overlay).light(light).normal(matrices.peek().getNormalMatrix(), 0, 1, 0).next();
-            vertexConsumer.vertex(matrices.peek().getPositionMatrix(), 6, 0, -6).color(r, g, b, 1f).texture(12, 0).overlay(overlay).light(light).normal(matrices.peek().getNormalMatrix(), 0, 1, 0).next();
-            vertexConsumer.vertex(matrices.peek().getPositionMatrix(), -6, 0, -6).color(r, g, b, 1f).texture(0, 0).overlay(overlay).light(light).normal(matrices.peek().getNormalMatrix(), 0, 1, 0).next();
+            vertexConsumer.vertex(matrices.peek().getPositionMatrix(), -6, 0, 6).color(r, g, b, 1f).texture(0, 12).overlay(overlay).light(light).normal(0, 1, 0);
+            vertexConsumer.vertex(matrices.peek().getPositionMatrix(), 6, 0, 6).color(r, g, b, 1).texture(12, 12).overlay(overlay).light(light).normal(0, 1, 0);
+            vertexConsumer.vertex(matrices.peek().getPositionMatrix(), 6, 0, -6).color(r, g, b, 1f).texture(12, 0).overlay(overlay).light(light).normal(0, 1, 0);
+            vertexConsumer.vertex(matrices.peek().getPositionMatrix(), -6, 0, -6).color(r, g, b, 1f).texture(0, 0).overlay(overlay).light(light).normal(0, 1, 0);
             matrices.pop();
         }
     }

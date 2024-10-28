@@ -10,7 +10,7 @@ import net.zelythia.aequitas.block.AequitasBlocks;
 
 public class ConfiguredFeatures {
 
-    public static final RegistryKey<ConfiguredFeature<?, ?>> ESSENCE_PILLAR = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, new Identifier(Aequitas.MOD_ID, "essence_pillar"));
+    public static final RegistryKey<ConfiguredFeature<?, ?>> ESSENCE_PILLAR = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, Identifier.of(Aequitas.MOD_ID, "essence_pillar"));
 
     public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
         context.register(ESSENCE_PILLAR, new ConfiguredFeature<>(Aequitas.ESSENCE_PILLAR_FEATURE, new EssencePillarFeatureConfig(8, AequitasBlocks.PETRIFIED_ESSENCE.getDefaultState())));

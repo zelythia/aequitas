@@ -1,5 +1,6 @@
 package net.zelythia.aequitas.block;
 
+import com.mojang.serialization.MapCodec;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
@@ -22,6 +23,17 @@ import net.zelythia.aequitas.client.particle.CatalystParticle;
 import net.zelythia.aequitas.client.particle.Particles;
 
 public class CatalystBlock extends FacingBlock {
+    public static final MapCodec<CatalystBlock> CODEC = createCodec(CatalystBlock::new);
+
+    public MapCodec<CatalystBlock> getCodec() {
+        return CODEC;
+    }
+
+    public CatalystBlock(Settings settings) {
+        this(settings, 1);
+    }
+
+
     private final int tier;
 
     public CatalystBlock(Settings settings, int tier) {

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aequitas:infused_stone"
+  },
+  "result": {
+    "id": "aequitas:infused_stone_stairs",
+    "count": 1
+  }
+}

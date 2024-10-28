@@ -1,0 +1,26 @@
+{
+  "criteria": {
+    "root": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "background": "minecraft:textures/gui/advancements/backgrounds/adventure.png",
+    "description": {
+      "translate": "advancements.aequitas.welcome.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "aequitas:crafting_pedestal"
+    },
+    "title": {
+      "translate": "advancements.aequitas.welcome.title"
+    }
+  },
+  "requirements": [
+    [
+      "root"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

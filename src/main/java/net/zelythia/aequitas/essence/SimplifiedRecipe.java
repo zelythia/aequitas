@@ -18,6 +18,6 @@ public record SimplifiedRecipe(List<SimplifiedIngredient> ingredients, ItemStack
             ingredients.add(SimplifiedIngredient.of(ingredient));
         }
 
-        return new SimplifiedRecipe(ingredients, recipe.getOutput(registryManager), recipe.getType(), false);
+        return new SimplifiedRecipe(ingredients, recipe.getResult(registryManager), recipe.getType(), false);
     }
 }

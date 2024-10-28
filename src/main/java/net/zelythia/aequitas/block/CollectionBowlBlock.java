@@ -1,5 +1,6 @@
 package net.zelythia.aequitas.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
@@ -12,7 +13,6 @@ import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -25,6 +25,18 @@ import net.zelythia.aequitas.block.entity.CollectionBowlBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class CollectionBowlBlock extends BlockWithEntity {
+    public static final MapCodec<CollectionBowlBlock> CODEC = createCodec(CollectionBowlBlock::new);
+
+    public MapCodec<CollectionBowlBlock> getCodec() {
+        return CODEC;
+    }
+
+    public CollectionBowlBlock(Settings settings) {
+        this(settings, 1);
+    }
+
+
+
     private final int size;
 
     public CollectionBowlBlock(Settings settings, int size) {
@@ -32,14 +44,17 @@ public class CollectionBowlBlock extends BlockWithEntity {
         this.size = size;
     }
 
+
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (world.isClient) {
-            return ActionResult.SUCCESS;
-        } else {
-            this.openScreen(world, pos, player);
-            return ActionResult.CONSUME;
+    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+        if (!world.isClient) {
+            NamedScreenHandlerFactory screenHandlerFactory = state.createScreenHandlerFactory(world, pos);
+
+            if (screenHandlerFactory != null) {
+                player.openHandledScreen(screenHandlerFactory);
+            }
         }
+        return ActionResult.SUCCESS;
     }
 
     @Override
@@ -95,6 +110,6 @@ public class CollectionBowlBlock extends BlockWithEntity {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, size == 15 ? BlockEntityTypes.COLLECTION_BOWL_BLOCK_ENTITY_III : size == 9 ? BlockEntityTypes.COLLECTION_BOWL_BLOCK_ENTITY_II : BlockEntityTypes.COLLECTION_BOWL_BLOCK_ENTITY_I, CollectionBowlBlockEntity::tick);
+        return validateTicker(type, size == 15 ? BlockEntityTypes.COLLECTION_BOWL_BLOCK_ENTITY_III : size == 9 ? BlockEntityTypes.COLLECTION_BOWL_BLOCK_ENTITY_II : BlockEntityTypes.COLLECTION_BOWL_BLOCK_ENTITY_I, CollectionBowlBlockEntity::tick);
     }
 }

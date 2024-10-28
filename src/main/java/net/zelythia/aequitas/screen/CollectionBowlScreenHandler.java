@@ -5,17 +5,17 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.zelythia.aequitas.Aequitas;
+import net.zelythia.aequitas.networking.packet.screen.CollectionBowlScreenData;
 
 public class CollectionBowlScreenHandler extends ScreenHandler {
     private final Inventory inventory;
 
     //Called from client, inventory is synced later
-    public CollectionBowlScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
-        this(syncId, playerInventory, new SimpleInventory(buf.readInt()));
+    public CollectionBowlScreenHandler(int syncId, PlayerInventory playerInventory, CollectionBowlScreenData collectionBowlScreenData) {
+        this(syncId, playerInventory, new SimpleInventory(collectionBowlScreenData.size()));
     }
 
     //This constructor gets directly called from the BlockEntity on the server without calling the other constructor first, the server knows the inventory of the container

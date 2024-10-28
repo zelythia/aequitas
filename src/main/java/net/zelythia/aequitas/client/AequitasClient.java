@@ -11,13 +11,14 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.DyeableItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.ColorHelper;
 import net.zelythia.aequitas.Aequitas;
 import net.zelythia.aequitas.Sounds;
 import net.zelythia.aequitas.block.entity.BlockEntityTypes;
@@ -31,6 +32,7 @@ import net.zelythia.aequitas.client.particle.Particles;
 import net.zelythia.aequitas.client.screen.CollectionBowlScreen;
 import net.zelythia.aequitas.client.screen.CraftingPedestalScreen;
 import net.zelythia.aequitas.client.screen.PortablePedestalScreen;
+import net.zelythia.aequitas.component.Components;
 import net.zelythia.aequitas.essence.EssenceHandler;
 import net.zelythia.aequitas.item.AequitasItems;
 import net.zelythia.aequitas.item.EssenceArmorItem;
@@ -40,7 +42,7 @@ import java.text.NumberFormat;
 @Environment(EnvType.CLIENT)
 public class AequitasClient implements ClientModInitializer {
 
-    private static final Identifier FLIGHT_PROGRESS = new Identifier(Aequitas.MOD_ID, "textures/gui/flight_progress.png");
+    private static final Identifier FLIGHT_PROGRESS = Identifier.of(Aequitas.MOD_ID, "textures/gui/flight_progress.png");
 
     @Override
     public void onInitializeClient() {
@@ -60,14 +62,11 @@ public class AequitasClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(Particles.CRAFTING_PARTICLE, CraftingParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(Particles.CATALYST_PARTICLE, CatalystParticle.Factory::new);
 
-        ItemTooltipCallback.EVENT.register((stack, context, lines) -> {
-
+        ItemTooltipCallback.EVENT.register((stack, tooltipContext, tooltipType, lines) -> {
             if (stack.getItem() == AequitasItems.PORTABLE_PEDESTAL) {
-                if (stack.hasNbt()) {
-                    if (stack.getNbt().contains("essence")) {
-                        long storedEssence = stack.getNbt().getLong("essence");
-                        lines.add(Text.translatable("tooltip.aequitas.portable_pedestal", storedEssence));
-                    }
+                if (stack.getComponents().contains(Components.STORED_ESSENCE)) {
+                    long storedEssence = stack.get(Components.STORED_ESSENCE);
+                    lines.add(Text.translatable("tooltip.aequitas.portable_pedestal", storedEssence));
                 }
             }
 
@@ -82,7 +81,6 @@ public class AequitasClient implements ClientModInitializer {
                 if (value >= 0L) lines.addAll(Text.of(s).getWithStyle(Style.EMPTY.withColor(Formatting.GRAY)));
             }
         });
-
 
         HudRenderCallback.EVENT.register((matrices, tickDelta) -> {
             MinecraftClient client = MinecraftClient.getInstance();
@@ -104,7 +102,13 @@ public class AequitasClient implements ClientModInitializer {
         });
 
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {
-            return tintIndex > 0 ? -1 : ((DyeableItem)stack.getItem()).getColor(stack);
+            int color = 16383998;
+
+            if (stack.getComponents().contains(DataComponentTypes.DYED_COLOR)) {
+                color = stack.getComponents().get(DataComponentTypes.DYED_COLOR).rgb();
+            }
+
+            return ColorHelper.Argb.fullAlpha(color);
         }, AequitasItems.PRISTINE_ESSENCE_HELMET, AequitasItems.PRISTINE_ESSENCE_CHESTPLATE, AequitasItems.PRISTINE_ESSENCE_LEGGINGS, AequitasItems.PRISTINE_ESSENCE_BOOTS);
     }
 }

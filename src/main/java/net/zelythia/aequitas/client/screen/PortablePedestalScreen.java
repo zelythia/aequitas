@@ -2,6 +2,7 @@ package net.zelythia.aequitas.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.screen.ButtonTextures;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
@@ -22,6 +23,8 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
 
     //A path to the gui texture. In this example we use the texture from the dispenser
     private final Identifier TEXTURE;
+    private final ButtonTextures BUTTON_UP;
+    private final ButtonTextures BUTTON_DOWN;
 
     private TextFieldWidget searchBox;
 
@@ -32,7 +35,9 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
 
     public PortablePedestalScreen(PortablePedestalScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
-        TEXTURE = new Identifier(Aequitas.MOD_ID, "textures/gui/portable_pedestal.png");
+        TEXTURE = Identifier.of(Aequitas.MOD_ID, "textures/gui/portable_pedestal.png");
+        BUTTON_UP = new ButtonTextures(Identifier.of(Aequitas.MOD_ID, "up"), Identifier.of(Aequitas.MOD_ID, "up_focused"));
+        BUTTON_DOWN = new ButtonTextures(Identifier.of(Aequitas.MOD_ID, "down"), Identifier.of(Aequitas.MOD_ID, "down_focused"));
     }
 
     @Override
@@ -43,14 +48,14 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
 
         searchBox = new TextFieldWidget(this.textRenderer, textureZeroX + 61, textureZeroY + 16, 107, 11, Text.translatable("ui.aequitas.portable.search"));
 
-        TexturedButtonWidget pageUp = new TexturedButtonWidget(textureZeroX + 154, textureZeroY + 33, 13, 13, 177, 0, 13, TEXTURE, button -> {
+        TexturedButtonWidget pageUp = new TexturedButtonWidget(textureZeroX + 154, textureZeroY + 33, 13, 13, BUTTON_UP, button -> {
             if (page > 0) {
                 page--;
                 updateSearchProperties();
             }
         });
 
-        TexturedButtonWidget pageDown = new TexturedButtonWidget(textureZeroX + 154, textureZeroY + 52, 13, 13, 190, 0, 13, TEXTURE, button -> {
+        TexturedButtonWidget pageDown = new TexturedButtonWidget(textureZeroX + 154, textureZeroY + 52, 13, 13, BUTTON_DOWN, button -> {
             if (!handler.inventory.getStack(10).isEmpty()) {
                 page++;
                 updateSearchProperties();
@@ -74,7 +79,7 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
 
     @Override
     public void render(DrawContext matrices, int mouseX, int mouseY, float delta) {
-        renderBackground(matrices);
+        renderBackground(matrices, mouseX, mouseY, delta);
         super.render(matrices, mouseX, mouseY, delta);
 
         String essence = NumberFormat.getNumberInstance().format(handler.inventory.storedEssence);
@@ -107,10 +112,10 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
 
 
     @Override
-    public boolean  mouseScrolled(double mouseX, double mouseY, double amount) {
+    public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
         if (mouseX >= textureZeroX + 53 && mouseX <= textureZeroX + 143) {
             if (mouseY >= textureZeroY + 32 && mouseY <= textureZeroY + 68) {
-                if (amount < 0) {
+                if (verticalAmount < 0) {
                     if (!handler.inventory.getStack(10).isEmpty() && page < handler.inventory.maxPage) {
                         Aequitas.LOGGER.info(page + "/" + handler.inventory.maxPage);
                         page++;
@@ -125,19 +130,26 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
                 return true;
             }
         }
-        return super.mouseScrolled(mouseX, mouseY, amount);
+
+        return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
     }
 
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (searchBox.isFocused()) {
+            if (keyCode == 256 || (keyCode >= 258 && keyCode <= 265)) {
+                return super.keyPressed(keyCode, scanCode, modifiers);
+            }
+
             boolean b = searchBox.keyPressed(keyCode, scanCode, modifiers);
             if(b){
                 this.page = 0;
                 updateSearchProperties();
                 return true;
             }
+
+            return false;
         }
         return super.keyPressed(keyCode, scanCode, modifiers);
     }

@@ -3,18 +3,18 @@ package net.zelythia.aequitas;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.JsonOps;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
-import net.fabricmc.fabric.impl.resource.conditions.ResourceConditionsImpl;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.loot.LootGsons;
 import net.minecraft.loot.entry.LootPoolEntry;
+import net.minecraft.loot.entry.LootPoolEntryTypes;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
@@ -40,8 +40,6 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
     private final CustomRecipeLoader customRecipeLoader;
     private final CustomCollectionBowlLootLoader customCollectionBowlLootLoader;
 
-    private final List<String> KNOWN_TAGS = List.of("#c:cobalt_ingots", "#c:manyullyn_ingots", "#c:seeds", "#c:lead_ingots", "#c:zinc_ingots", "#c:silver_ingots", "#c:platinum_ingots", "#c:antimony_ingots", "#c:nickel_ingots", "#c:chromium_ingots", "#c:iridium_ingots", "#c:cadmium_ingots", "#c:uranium_ingots", "#c:titanium_ingots", "#c:plutonium_ingots", "#c:tungsten_ingots", "#c:tin_ingots", "#c:crops");
-
     public ResourceLoader() {
         GSON = new Gson();
         customEssenceLoader = new CustomEssenceLoader();
@@ -52,7 +50,7 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
 
     @Override
     public Identifier getFabricId() {
-        return new Identifier(Aequitas.MOD_ID, "essence_loader");
+        return Identifier.of(Aequitas.MOD_ID, "essence_loader");
     }
 
 
@@ -78,7 +76,7 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
                 Map<RecipeType<?>, Long> map = new HashMap<>();
 
                 try {
-                    List<Resource> resources = manager.getAllResources(new Identifier(Aequitas.MOD_ID, "essence/crafting_cost.json"));
+                    List<Resource> resources = manager.getAllResources(Identifier.of(Aequitas.MOD_ID, "essence/crafting_cost.json"));
                     Iterator<Resource> iterator = resources.iterator();
 
                     while (iterator.hasNext()) {
@@ -96,7 +94,7 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
 
                                     craftingCost.entrySet().forEach(entry -> {
                                         try {
-                                            map.put(Registries.RECIPE_TYPE.get(new Identifier(modEntry.getKey(), entry.getKey())), entry.getValue().getAsLong());
+                                            map.put(Registries.RECIPE_TYPE.get(Identifier.of(modEntry.getKey(), entry.getKey())), entry.getValue().getAsLong());
                                         } catch (ClassCastException | IllegalStateException e) {
                                             Aequitas.LOGGER.error("Incorrect value for recipe type {} in {}", entry.getKey(), modEntry.getKey());
                                         }
@@ -127,7 +125,7 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
                 List<JsonObject> objects = new ArrayList<>();
 
                 try {
-                    List<Resource> resources = manager.getAllResources(new Identifier(Aequitas.MOD_ID, "essence/values.json"));
+                    List<Resource> resources = manager.getAllResources(Identifier.of(Aequitas.MOD_ID, "essence/values.json"));
                     Iterator<Resource> iterator = resources.iterator();
 
                     while (iterator.hasNext()) {
@@ -171,36 +169,8 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
         }
 
         public void applyReload(Map<String, Long> map) {
-            Map<Item, Long> map2 = new HashMap<>();
-
-            map.forEach((key, value) -> {
-                if (key.startsWith("#")) {
-                    Collection<RegistryEntry<?>> registryEntries = ResourceConditionsImpl.LOADED_TAGS.get().get(RegistryKeys.ITEM).get(new Identifier(key.replace("#", "")));
-
-                    if (registryEntries != null) {
-                        for (RegistryEntry<?> registryEntry : registryEntries) {
-                            registryEntry.getKey().ifPresent(registryKey -> {
-                                registryKey.tryCast(RegistryKeys.ITEM).ifPresent(itemRegistryKey -> {
-                                    map2.put(Registries.ITEM.get(itemRegistryKey), value);
-                                });
-                            });
-                        }
-                    } else {
-                        if (!KNOWN_TAGS.contains(key)) Aequitas.LOGGER.error("Unknown tag {}", key);
-                    }
-
-                } else {
-                    Item item = Registries.ITEM.get(new Identifier(key));
-                    if (item != Items.AIR) {
-                        map2.put(item, value);
-                    } else {
-                        Aequitas.LOGGER.error("Unknown item {}", key);
-                    }
-                }
-            });
-
-            EssenceHandler.reloadEssenceValues(map2);
-            Aequitas.LOGGER.info("Loaded {} custom item values", map2.size());
+            EssenceHandler.setCustomValues(map);
+            Aequitas.LOGGER.info("Loaded {} custom item values", map.size());
         }
     }
 
@@ -210,7 +180,7 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
                 Map<Item, List<SimplifiedRecipe>> map = new HashMap<>();
 
                 try {
-                    List<Resource> resources = manager.getAllResources(new Identifier(Aequitas.MOD_ID, "essence/recipes.json"));
+                    List<Resource> resources = manager.getAllResources(Identifier.of(Aequitas.MOD_ID, "essence/recipes.json"));
                     Iterator<Resource> iterator = resources.iterator();
 
                     while (iterator.hasNext()) {
@@ -227,7 +197,7 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
                                     JsonObject recipes = modEntry.getValue().getAsJsonObject();
 
                                     recipes.entrySet().forEach(entry -> {
-                                        Item output = Registries.ITEM.get(new Identifier(entry.getKey()));
+                                        Item output = Registries.ITEM.get(Identifier.of(entry.getKey()));
                                         if (output != Items.AIR) {
                                             DefaultedList<SimplifiedIngredient> ingredients = DefaultedList.of();
                                             int outputCount = entry.getValue().getAsJsonObject().get("count").getAsInt();
@@ -238,7 +208,7 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
                                                 if (jsonIngredient.getKey().equals("_")) {
                                                     ingredients.add(SimplifiedIngredient.of(new ItemStack(ESSENCE_HOLDER, count)));
                                                 } else {
-                                                    Item item = Registries.ITEM.get(new Identifier(jsonIngredient.getKey()));
+                                                    Item item = Registries.ITEM.get(Identifier.of(jsonIngredient.getKey()));
                                                     if (item != Items.AIR) {
                                                         if (count > 0) {
                                                             ingredients.add(SimplifiedIngredient.of(new ItemStack(item, count)));
@@ -289,7 +259,7 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
                 Map<Identifier, List<LootPoolEntry>> map = new HashMap<>();
 
                 try {
-                    List<Resource> resources = manager.getAllResources(new Identifier(Aequitas.MOD_ID, "essence/collection_bowl.json"));
+                    List<Resource> resources = manager.getAllResources(Identifier.of(Aequitas.MOD_ID, "essence/collection_bowl.json"));
                     Iterator<Resource> iterator = resources.iterator();
 
                     while (iterator.hasNext()) {
@@ -304,21 +274,22 @@ public class ResourceLoader implements IdentifiableResourceReloadListener {
 
                                 if (FabricLoader.getInstance().isModLoaded(modEntry.getKey())) {
                                     try {
-                                        Gson gson = LootGsons.getTableGsonBuilder().create();
-
                                         JsonObject lootTables = modEntry.getValue().getAsJsonObject();
                                         lootTables.entrySet().forEach(entry -> {
                                             List<LootPoolEntry> lootPoolEntries = new ArrayList<>();
                                             for (JsonElement lootEntry : entry.getValue().getAsJsonArray()) {
                                                 try{
-                                                    lootPoolEntries.add(gson.fromJson(lootEntry, LootPoolEntry.class));
+
+                                                    DataResult<Pair<LootPoolEntry, JsonElement>> result = LootPoolEntryTypes.CODEC.decode(JsonOps.INSTANCE, lootEntry);
+                                                    lootPoolEntries.add(result.getPartialOrThrow().getFirst());
+
                                                 }
                                                 catch (Exception e){
                                                     Aequitas.LOGGER.error("Error while loading loot pool {} for {} :", entry.getKey(), modEntry.getKey());
                                                     Aequitas.LOGGER.error(e);
                                                 }
                                             }
-                                            map.computeIfAbsent(new Identifier("aequitas", entry.getKey()), k -> new ArrayList<>()).addAll(lootPoolEntries);
+                                            map.computeIfAbsent(Identifier.of("aequitas", entry.getKey()), k -> new ArrayList<>()).addAll(lootPoolEntries);
                                         });
                                     } catch (Exception e) {
                                         Aequitas.LOGGER.error("Critical error while loading custom loot tables for mod: " + modEntry.getKey());

@@ -97,6 +97,12 @@ public class TagGenerator {
                     .add(AequitasItems.PRISTINE_ESSENCE_CHESTPLATE)
                     .add(AequitasItems.PRISTINE_ESSENCE_LEGGINGS)
                     .add(AequitasItems.PRISTINE_ESSENCE_BOOTS);
+
+            getOrCreateTagBuilder(ItemTags.DYEABLE)
+                    .add(AequitasItems.PRISTINE_ESSENCE_HELMET)
+                    .add(AequitasItems.PRISTINE_ESSENCE_CHESTPLATE)
+                    .add(AequitasItems.PRISTINE_ESSENCE_LEGGINGS)
+                    .add(AequitasItems.PRISTINE_ESSENCE_BOOTS);
         }
     }
 }

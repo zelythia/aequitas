@@ -11,6 +11,7 @@ import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
@@ -106,12 +107,13 @@ public class SamplingPedestalBlockEntity extends BlockEntity implements Implemen
         return 256;
     }
 
-    @Override
-    public void writeNbt(NbtCompound tag) {
-        super.writeNbt(tag);
 
-        tag.putLong("Essence", storedEssence);
-        tag.putString("displayItem", Registries.ITEM.getId(getCurrentlyConsuming()).toString());
+    @Override
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.writeNbt(nbt, registryLookup);
+
+        nbt.putLong("Essence", storedEssence);
+        nbt.putString("displayItem", Registries.ITEM.getId(getCurrentlyConsuming()).toString());
 
         NbtList listTag = new NbtList();
         NbtCompound compoundTag = new NbtCompound();
@@ -119,20 +121,20 @@ public class SamplingPedestalBlockEntity extends BlockEntity implements Implemen
         compoundTag.putString("id", identifier.toString());
         compoundTag.putInt("Count", this.inventory.get(0).getCount());
         listTag.add(compoundTag);
-        tag.put("Items", listTag);
+        nbt.put("Items", listTag);
     }
 
     @Override
-    public void readNbt(NbtCompound tag) {
-        super.readNbt(tag);
+    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.readNbt(nbt, registryLookup);
 
-        this.storedEssence = tag.getLong("Essence");
-        if (tag.contains("displayItem"))
-            this.currentlyConsuming = Registries.ITEM.get(new Identifier(tag.getString("displayItem")));
+        this.storedEssence = nbt.getLong("Essence");
+        if (nbt.contains("displayItem"))
+            this.currentlyConsuming = Registries.ITEM.get(Identifier.of(nbt.getString("displayItem")));
 
-        NbtList listTag = tag.getList("Items", 10);
+        NbtList listTag = nbt.getList("Items", 10);
         NbtCompound compoundTag = listTag.getCompound(0);
-        ItemStack stack = new ItemStack(Registries.ITEM.get(new Identifier(compoundTag.getString("id"))));
+        ItemStack stack = new ItemStack(Registries.ITEM.get(Identifier.of(compoundTag.getString("id"))));
         stack.setCount(compoundTag.getInt("Count"));
         this.inventory.set(0, stack);
     }
@@ -145,8 +147,8 @@ public class SamplingPedestalBlockEntity extends BlockEntity implements Implemen
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt() {
-        return createNbt();
+    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
+        return createNbt(registryLookup);
     }
 
     @Override

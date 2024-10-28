@@ -8,7 +8,6 @@ import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Rarity;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.zelythia.aequitas.PortablePedestalInventory;
@@ -23,8 +22,10 @@ public class PortablePedestalItem extends Item implements NamedScreenHandlerFact
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        if (hand == Hand.MAIN_HAND) {
-            player.openHandledScreen(this);
+        if (!world.isClient) {
+            if (hand == Hand.MAIN_HAND) {
+                player.openHandledScreen(this);
+            }
         }
 
         return super.use(world, player, hand);
@@ -44,10 +45,5 @@ public class PortablePedestalItem extends Item implements NamedScreenHandlerFact
     @Override
     public boolean hasGlint(ItemStack stack) {
         return true;
-    }
-
-    @Override
-    public Rarity getRarity(ItemStack stack) {
-        return Rarity.EPIC;
     }
 }
