@@ -151,7 +151,7 @@ public class NetworkingHandler {
 
         while (!loottablesUpdated.get()) {
             long current = System.currentTimeMillis();
-            if(current - start > 10000){
+            if(current - start > 3000){
                 Aequitas.LOGGER.error("Failed to sync loot tables (took more than 10s to sync). EMI or REI won't work");
                 return false;
             }

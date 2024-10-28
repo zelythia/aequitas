@@ -14,24 +14,24 @@ import java.util.EnumMap;
 import java.util.function.Supplier;
 
 public enum ArmorMaterials implements ArmorMaterial {
-    PRIMAL("primal_essence", 37, Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
+    PRIMAL("primal_essence", 48, Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
         map.put(ArmorItem.Type.BOOTS, 4);
         map.put(ArmorItem.Type.LEGGINGS, 7);
         map.put(ArmorItem.Type.CHESTPLATE, 9);
         map.put(ArmorItem.Type.HELMET, 4);
     }), 25, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 4.0F, 0.2F, () -> Ingredient.ofItems(AequitasItems.PRIMAL_ESSENCE)),
-    PRIMORDIAL("primordial_essence", 37, Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
+    PRIMORDIAL("primordial_essence", 64, Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
         map.put(ArmorItem.Type.BOOTS, 5);
         map.put(ArmorItem.Type.LEGGINGS, 8);
         map.put(ArmorItem.Type.CHESTPLATE, 10);
         map.put(ArmorItem.Type.HELMET, 5);
-    }), 30, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 5.0F, 0.3F, () -> Ingredient.ofItems(AequitasItems.PRIMAL_ESSENCE)),
-    PRISTINE("pristine_essence", 37, Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
+    }), 30, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 5.0F, 0.3F, () -> Ingredient.ofItems(AequitasItems.PRIMORDIAL_ESSENCE)),
+    PRISTINE("pristine_essence", 128, Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
         map.put(ArmorItem.Type.BOOTS, 6);
         map.put(ArmorItem.Type.LEGGINGS, 9);
         map.put(ArmorItem.Type.CHESTPLATE, 11);
         map.put(ArmorItem.Type.HELMET, 6);
-    }), 35, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 6.0F, 0.4F, () -> Ingredient.ofItems(AequitasItems.PRIMAL_ESSENCE));
+    }), 35, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 6.0F, 0.4F, () -> Ingredient.ofItems(AequitasItems.PRISTINE_ESSENCE));
 
     public static final  StringIdentifiable.Codec<net.minecraft.item.ArmorMaterials>  CODEC = StringIdentifiable.createCodec(net.minecraft.item.ArmorMaterials::values);
     private static final EnumMap<ArmorItem.Type, Integer> BASE_DURABILITY = (EnumMap) Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {

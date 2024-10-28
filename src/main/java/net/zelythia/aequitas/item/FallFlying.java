@@ -11,18 +11,12 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ElytraItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
 import net.zelythia.aequitas.client.DoubleJumpEntity;
 import net.zelythia.aequitas.networking.NetworkingHandler;
 
 public class FallFlying {
-
-    public static final TagKey<Item> ELYTRA = TagKey.of(RegistryKeys.ITEM, new Identifier("c", "elytra"));
 
     public static boolean canFly(LivingEntity livingEntity, boolean flag) {
         return flag && !livingEntity.isOnGround() && !livingEntity.hasVehicle() && !livingEntity.hasStatusEffect(StatusEffects.LEVITATION) && canFly(livingEntity);
@@ -30,7 +24,7 @@ public class FallFlying {
 
     private static boolean canFly(LivingEntity livingEntity) {
         ItemStack stack = livingEntity.getEquippedStack(EquipmentSlot.CHEST);
-        return stack.isIn(ELYTRA) && ElytraItem.isUsable(stack);
+        return stack.isOf(AequitasItems.PRIMAL_ESSENCE_CHESTPLATE) && ElytraItem.isUsable(stack);
     }
 
     @Environment(EnvType.CLIENT)
@@ -46,7 +40,7 @@ public class FallFlying {
         ItemStack itemStack = playerEntity.getEquippedStack(EquipmentSlot.CHEST);
 
         if (!playerEntity.isOnGround() && !playerEntity.isFallFlying() && !playerEntity.isTouchingWater() && !playerEntity.hasStatusEffect(StatusEffects.LEVITATION)
-                && itemStack.isIn(ELYTRA) && ElytraItem.isUsable(itemStack)) {
+                && itemStack.isOf(AequitasItems.PRIMAL_ESSENCE_CHESTPLATE) && ElytraItem.isUsable(itemStack)) {
 
             if (playerEntity instanceof DoubleJumpEntity) {
                 if (((DoubleJumpEntity) playerEntity).canDoubleJump()) return false;

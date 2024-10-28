@@ -75,9 +75,6 @@ public class PristineEssenceArmor extends DyeableArmorItem {
             player.getAbilities().flying = false;
         }
 
-        if (player.getAbilities().flying) ++timeFlown;
-        if (player.isOnGround() || player.isTouchingWater()) timeFlown = 0;
-
         player.sendAbilitiesUpdate(); //FIXME maybe needed in 1.16
     }
 

@@ -16,7 +16,7 @@ import static net.zelythia.aequitas.item.AequitasItems.ESSENCE_HOLDER;
 
 
 public class EssenceHandler {
-    private static final int INGREDIENT_LIMIT = 64;
+    private static final int INGREDIENT_LIMIT = 32;
     private static final int MAX_TIME = 60000;
 
     public static Map<Item, Long> map = new HashMap<>();
@@ -66,16 +66,11 @@ public class EssenceHandler {
         private static void mapRecipes(RecipeManager recipeManager) {
             if (recipeManager == null || registryManager == null) return;
 
-            Aequitas.LOGGER.info("Started mapping recipes");
+            Aequitas.LOGGER.info("Started mapping {} recipes", recipeManager.values().size());
             long startTime = System.currentTimeMillis();
 
             for (Recipe<?> recipe : recipeManager.values()) {
                 Item output = recipe.getOutput(registryManager).getItem();
-
-                if(System.currentTimeMillis() - startTime > 60000) {
-                    Aequitas.LOGGER.error("Recipe: " + recipe.getOutput(registryManager).getItem());
-                    return;
-                }
 
                 if (!itemRecipes.containsKey(output)) {
                     itemRecipes.put(output, new ArrayList<>());

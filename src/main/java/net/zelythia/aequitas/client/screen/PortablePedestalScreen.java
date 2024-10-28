@@ -132,12 +132,18 @@ public class PortablePedestalScreen extends HandledScreen<PortablePedestalScreen
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (searchBox.isFocused()) {
+            if (keyCode == 256 || (keyCode >= 258 && keyCode <= 265)) {
+                return super.keyPressed(keyCode, scanCode, modifiers);
+            }
+
             boolean b = searchBox.keyPressed(keyCode, scanCode, modifiers);
             if(b){
                 this.page = 0;
                 updateSearchProperties();
                 return true;
             }
+
+            return false;
         }
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
