@@ -15,7 +15,6 @@
 
   "license": "MIT",
   "icon": "assets/aequitas/icon.png",
-
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -45,11 +44,12 @@
     "fabricloader": ">=0.7.4",
     "fabric": "*",
     "fabric-api": "*",
-    "minecraft": "1.20.1"
+    "minecraft": "1.20.*"
   },
   "suggests": {
     "autotools": "*",
     "emi": "*",
-    "patchouli": "*"
+    "patchouli": "*",
+    "wthit": "*"
   }
 }

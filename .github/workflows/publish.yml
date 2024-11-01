@@ -1,0 +1,81 @@
+name: Publish on GitHub, CurseForge & Modrinth
+
+on: [ workflow_dispatch ]
+
+env:
+  MINECRAFT_VERSION: 1.20.1
+  VERSION: 1.0.0
+  VERSION_RANGE: |
+    1.20
+    1.20.1
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Environment Variables
+        run: env
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: 21
+
+      - name: Make Gradle Wrapper Executable
+        if: ${{ runner.os != 'Windows' }}
+        run: chmod +x ./gradlew
+
+      - name: Build
+        run: ./gradlew publish
+
+      - name: Publish on Curseforge/Modrinth
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: yoBiijZt
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+
+          curseforge-id: 1121404
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+
+          files: |
+            build/libs/!(*-@(dev|shadow|sources|javadoc)).jar
+
+          name: Aequitas ${{env.MINECRAFT_VERSION}} v${{env.VERSION}}
+          version: "${{env.VERSION}}"
+          version-type: release
+          changelog-file: CHANGELOG.md
+          loaders: |
+            fabric
+            quilt
+          game-versions: ${{env.VERSION_RANGE}}
+
+          dependencies: |
+            fabric(required){modrinth:P7dR8mSH}{curseforge:306612}#(ignore:github)
+            wthit(optional){modrinth:6AQIaxuO}{curseforge:440979}#(ignore:github)
+            emi(optional){modrinth:fRiHVvU7}{curseforge:580555}#(ignore:github)
+            rei(optional){modrinth:nfn13YXA}{curseforge:310111}#(ignore:github)
+            patchouli(optional){modrinth:nU0bVIaL}{curseforge:306770}#(ignore:github)
+
+      - name: Publish on Github
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          github-token: ${{ secrets.GITH_TOKEN }}
+
+          files: |
+            build/libs/!(*-@(dev|shadow|sources|javadoc)).jar
+            build/libs/*-@(dev|shadow|sources).jar
+
+          name: Aequitas ${{env.MINECRAFT_VERSION}} v${{env.VERSION}}
+          version: "${{env.VERSION}}"
+          changelog-file: CHANGELOG.md
+
+          github-tag: ${{env.MINECRAFT_VERSION}}-${{env.VERSION}}
+
+      - name: Release on Mavencentral
+        run: ./gradlew jreleaserFullRelease
