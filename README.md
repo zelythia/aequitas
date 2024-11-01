@@ -1,5 +1,6 @@
-[![modrinth](https://img.shields.io/modrinth/dt/aequitas?style=for-the-badge&logo=modrinth&label=Modrinth&color=1bd96a)](https://modrinth.com/mod/minecraft_autotools)
-[![modrinth](https://cf.way2muchnoise.eu/1121404.svg?badge_style=for_the_badge)]([https://modrinth.com/mod/aequitas](https://www.curseforge.com/minecraft/mc-mods/aequitas))
+[![modrinth](https://img.shields.io/modrinth/dt/aequitas?style=for-the-badge&logo=modrinth&label=Modrinth&color=1bd96a)](https://modrinth.com/mod/aequitas)
+[![curseforge](https://cf.way2muchnoise.eu/1121404.svg?badge_style=for_the_badge)](https://www.curseforge.com/minecraft/mc-mods/aequitas)
+[![discord](https://dcbadge.limes.pink/api/server/https://discord.gg/KFPXSW566b)](https://discord.gg/KFPXSW566b)
 
 ![Aequitas](https://cdn.modrinth.com/data/yoBiijZt/images/fd403d065c5f83ed5c741aab898f2b76ab11b41d.png)
 ## About
