@@ -1,9 +1,11 @@
 plugins {
 	id 'fabric-loom' version '1.7-SNAPSHOT'
 	id 'maven-publish'
+	id 'signing'
+	id 'org.jreleaser' version '1.14.0'
 }
 
-version = project.mod_version
+version = project.mod_version + "+" + project.minecraft_version
 group = project.maven_group
 
 base {
@@ -100,9 +102,7 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 java {
-	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-	// if it is present.
-	// If you remove this line, sources will not be generated.
+	withJavadocJar()
 	withSourcesJar()
 
 	sourceCompatibility = JavaVersion.VERSION_17
@@ -121,14 +121,84 @@ publishing {
 		mavenJava(MavenPublication) {
 			artifactId = project.archives_base_name
 			from components.java
+			pom {
+				name = 'Aequitas'
+				description = 'A Minecraft mod for changing and generating items'
+				url = 'https://github.com/zelythia/aequitas'
+				licenses {
+					license {
+						name = 'MIT License'
+						url = 'https://opensource.org/license/mit'
+					}
+				}
+				developers {
+					developer {
+						id = 'zelythia'
+						name = 'Lukas Z'
+						email = 'dev@zelythia.net'
+					}
+				}
+				scm {
+					connection = 'scm:git:git://github.com/zelytiha/aequitas.git'
+					developerConnection = 'scm:git:ssh://github.com/zelythia/aequitas.git'
+					url = 'http://github.com/zelythia/aequitas'
+				}
+			}
 		}
 	}
 
-	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
 	repositories {
-		// Add repositories to publish to here.
-		// Notice: This block does NOT have the same function as the block in the top level.
-		// The repositories here will be used for publishing your artifact, not for
-		// retrieving dependencies.
+		maven {
+			url = layout.buildDirectory.dir('staging-deploy')
+		}
+	}
+}
+
+
+jreleaser {
+	project {
+		name = this.project.archives_base_name
+		java {
+			artifactId = this.project.archives_base_name
+		}
+	}
+
+	release {
+		github {
+			checksums = false
+			signatures = false
+			catalogs = false
+
+			commitAuthor {
+				name= "lukas/zelythia"
+				email= "dev@zelythia.net"
+			}
+
+			changelog {
+				external = "CHANGELOG.md"
+			}
+		}
+	}
+
+	signing {
+		active = 'ALWAYS'
+		armored = true
+	}
+	deploy {
+		maven {
+			mavenCentral {
+				sonatype {
+					active = 'ALWAYS'
+					url = 'https://central.sonatype.com/api/v1/publisher'
+					stagingRepository('build/staging-deploy')
+				}
+			}
+		}
+	}
+}
+
+javadoc {
+	if(JavaVersion.current().isJava9Compatible()) {
+		options.addBooleanOption('html5', true)
 	}
 }

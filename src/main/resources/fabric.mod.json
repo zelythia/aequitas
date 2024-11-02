@@ -50,6 +50,7 @@
   "suggests": {
     "autotools": "*",
     "emi": "*",
-    "patchouli": "*"
+    "patchouli": "*",
+    "wthit": "*"
   }
 }
